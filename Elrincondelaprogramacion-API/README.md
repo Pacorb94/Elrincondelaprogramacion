@@ -1,12 +1,5 @@
 ## Descripción
-Back-end en forma de API RESTful en el cual trata sobre un blog de noticias referentes 
-al sector de la programación.
-
-Tiene 3 tipos de usuarios: 
-1. Usuario lector: puede leer posts, comentar en los posts y buscar posts.
-2. Usuario redactor: puede hacer todo lo anterior más publicar posts y crear categorías.
-3. Usuario admin: puede hacer lo mismo que el usuario lector más revisar comentarios y posts por
-si son ofensivos borrarlos o banear al que lo hizo.
+Back-end en forma de API RESTful.
 
 ## Requisitos
 * Composer 2
