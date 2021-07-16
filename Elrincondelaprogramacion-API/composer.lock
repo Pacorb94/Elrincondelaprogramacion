@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ea38e8fee69d3ad07a1c37109acb7b1",
+    "content-hash": "99d174b46d2c92ba619a067c2e199099",
     "packages": [
         {
             "name": "knplabs/knp-components",
