@@ -57,5 +57,5 @@ create table if not exists Reviews(
     constraint pk_reviews primary key (id),
     constraint fk_reviews_users foreign key (user_id) references Users(id),
     constraint fk_reviews_posts foreign key (post_id) references Posts(id),
-    constraint fk_comments_comments foreign key (comment_id) references Comments(id)
+    constraint fk_reviews_comments foreign key (comment_id) references Comments(id)
 )ENGINE=InnoDB;
