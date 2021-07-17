@@ -57,16 +57,16 @@ class Post
     private $image;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
     private $updatedAt;
 

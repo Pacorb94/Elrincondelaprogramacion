@@ -7,9 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Reviews
  *
- * @ORM\Table(name="reviews", indexes={@ORM\Index(name="fk_reviews_users", columns={"user_id"}), 
- * @ORM\Index(name="fk_reviews_posts", columns={"post_id"}), 
- * @ORM\Index(name="fk_reviews_comments", columns={"comment_id"})})
+ * @ORM\Table(name="reviews", indexes={@ORM\Index(name="fk_reviews_posts", columns={"post_id"}), @ORM\Index(name="fk_reviews_comments", columns={"comment_id"}), @ORM\Index(name="fk_reviews_users", columns={"user_id"})})
  * @ORM\Entity
  */
 class Review
@@ -24,16 +22,16 @@ class Review
     private $id;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
     private $updatedAt;
 

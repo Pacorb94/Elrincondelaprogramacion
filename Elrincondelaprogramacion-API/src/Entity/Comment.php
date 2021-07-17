@@ -7,8 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Comments
  *
- * @ORM\Table(name="comments", indexes={@ORM\Index(name="fk_comments_users", columns={"user_id"}), 
- * @ORM\Index(name="fk_comments_posts", columns={"post_id"})})
+ * @ORM\Table(name="comments", indexes={@ORM\Index(name="fk_comments_posts", columns={"post_id"}), @ORM\Index(name="fk_comments_users", columns={"user_id"})})
  * @ORM\Entity
  */
 class Comment
@@ -30,16 +29,16 @@ class Comment
     private $content;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
     private $updatedAt;
 
