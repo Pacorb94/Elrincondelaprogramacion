@@ -1,4 +1,4 @@
-index:
+login:
     path: /login
     methods: POST
     
