@@ -5,12 +5,12 @@ namespace AppEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Reviews
+ * Comments
  *
- * @ORM\Table(name="reviews", indexes={@ORM\Index(name="fk_reviews_users", columns={"user_id"}), @ORM\Index(name="fk_reviews_posts", columns={"post_id"}), @ORM\Index(name="fk_reviews_comments", columns={"comment_id"})})
+ * @ORM\Table(name="comments", indexes={@ORM\Index(name="fk_comments_users", columns={"user_id"}), @ORM\Index(name="fk_comments_posts", columns={"post_id"})})
  * @ORM\Entity
  */
-class Reviews
+class Comment
 {
     /**
      * @var int
@@ -20,6 +20,13 @@ class Reviews
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content", type="text", length=0, nullable=false)
+     */
+    private $content;
 
     /**
      * @var \DateTime|null
@@ -34,16 +41,6 @@ class Reviews
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
-
-    /**
-     * @var \Comments
-     *
-     * @ORM\ManyToOne(targetEntity="Comments")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="comment_id", referencedColumnName="id")
-     * })
-     */
-    private $comment;
 
     /**
      * @var \Posts
