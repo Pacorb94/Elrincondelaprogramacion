@@ -1,6 +1,18 @@
 create database if not exists `El_rincon_de_la_programacion`;
 use `El_rincon_de_la_programacion`;
 
+create table if not exists Users(
+    id int(255) auto_increment not null,
+    nick varchar(50) unique not null,
+    email varchar(50) unique not null,
+    password varchar(255) not null,
+    profile_image varchar(200),
+    roles longtext not null,
+    created_at datetime not null,
+    updated_at datetime not null,
+    constraint pk_users primary key (id)
+)ENGINE=InnoDB;
+
 create table if not exists Posts(
     id int(255) auto_increment not null,
     user_id int(255),
