@@ -2,3 +2,7 @@ login:
     path: /api/login
     methods: POST
     
+register:
+    path: /api/register
+    controller: 
+    methods: POST
