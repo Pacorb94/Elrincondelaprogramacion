@@ -1,4 +1,4 @@
 login:
-    path: /login
+    path: /api/login
     methods: POST
     
