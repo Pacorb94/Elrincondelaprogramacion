@@ -4,6 +4,6 @@ login:
     
 register:
     path: /api/register
-    controller: 
+    controller: App\Controller\UserController::register
     methods: POST
 
