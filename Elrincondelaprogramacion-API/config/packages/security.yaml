@@ -3,7 +3,8 @@ security:
     enable_authenticator_manager: true
     password_hashers:
         App\Entity\User:
-            algorithm: auto
+            #Podemos usar diferentes tipos de encriptación
+            algorithm: bcrypt
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
@@ -11,13 +12,16 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: nick
+                property: email
     firewalls:
         login:
             pattern: ^/api/login
             stateless: true
             json_login:
                 check_path: /api/login
+                #Cambiamos la clave "username" por "email" cuando enviamos el json con los datos
+                #del usuario
+                username_path: email
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
