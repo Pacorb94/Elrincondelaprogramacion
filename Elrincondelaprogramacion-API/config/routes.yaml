@@ -6,3 +6,4 @@ register:
     path: /api/register
     controller: 
     methods: POST
+
