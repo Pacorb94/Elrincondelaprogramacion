@@ -13,5 +13,17 @@ use App\Entity\User;
 class UserController extends AbstractController
 {
  
-    
+    /**
+     * Función que registra un usuario
+     * @param $request
+     * @return
+     */
+    public function register(Request $request): JsonResponse
+    {
+        $request=$request->get('json', null);
+        if ($request) {
+            
+        }
+        return $this->json($request);
+    }
 }
