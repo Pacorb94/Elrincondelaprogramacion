@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +43,17 @@ class Category
      */
     private $updatedAt='current_timestamp()';
 
+    /**
+     * @var \Post
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="category")
+     */
+    private $posts;
+
+    public function __construct() {
+        $this->posts = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +89,17 @@ class Category
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+
+    public function setPosts(?Post $posts)
+    {
+        $this->posts=$posts;
         return $this;
     }
 }

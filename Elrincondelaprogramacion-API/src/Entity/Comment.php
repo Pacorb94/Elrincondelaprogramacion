@@ -44,16 +44,6 @@ class Comment
     private $updatedAt='current_timestamp()';
 
     /**
-     * @var \Post
-     *
-     * @ORM\ManyToOne(targetEntity="Post")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="post_id", referencedColumnName="id")
-     * })
-     */
-    private $post;
-
-    /**
      * @var \User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
@@ -62,6 +52,13 @@ class Comment
      * })
      */
     private $user;
+
+    /**
+     * @var \Post
+     * 
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
+     */
+    private $post;
 
     public function getId(): ?int
     {
@@ -101,17 +98,6 @@ class Comment
         return $this;
     }
 
-    public function getPost()
-    {
-        return $this->post;
-    }
-
-    public function setPost(?Post $post): self
-    {
-        $this->post = $post;
-        return $this;
-    }
-
     public function getUser()
     {
         return $this->user;
@@ -120,6 +106,17 @@ class Comment
     public function setUser(?User $user): self
     {
         $this->user = $user;
+        return $this;
+    }
+
+    public function getPost()
+    {
+        return $this->post;
+    }
+
+    public function setPost(?Post $post): self
+    {
+        $this->post=$post;
         return $this;
     }
 }

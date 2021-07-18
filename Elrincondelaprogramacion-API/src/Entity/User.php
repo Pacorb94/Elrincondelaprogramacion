@@ -76,7 +76,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $updatedAt='current_timestamp()';
 
     /**
-     * @var
+     * @var \Post
      * Para obtener todos los posts de un usuario hacemos una relación, donde "targetEntity"
      * apunta al modelo y "mappedBy" está mapeada por el modelo usuario
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user")
@@ -232,7 +232,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
-
         return $this;
     }
 
@@ -240,9 +239,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Función que obtiene todos los posts
      * @return Collection|Post[]
      */
-    public function getPosts(): Collection
+    public function getPosts()
     {
-        return $this->post;
+        return $this->posts;
     }
 
     /**
