@@ -34,14 +34,14 @@ class Comment
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt;
+    private $createdAt='current_timestamp()';
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
-    private $updatedAt;
+    private $updatedAt='current_timestamp()';
 
     /**
      * @var \Post
