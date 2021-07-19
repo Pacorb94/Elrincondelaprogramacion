@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
+use Symfony\Component\Validator\Constraints\File;
 
 class UserController extends AbstractController
 {
@@ -100,10 +101,21 @@ class UserController extends AbstractController
      */
     public function uploadProfileImage(Request $request)
     {
-        $image=$request->files->get('file0', null);
-        //Debemos configurar la fecha y tiempo
-        date_default_timezone_set('Europe/Madrid');
-        $imageName=date('d-m-Y_H-i-s').'_'.$image->getClientOriginalName();
+        
+            $image=$request->files->get('file0', null);
+            if ($image) {;
+                if($this->validations('uploadProfileImage', null, $image)){
+                    dump('hola');die();
+                }
+                return $this->json(['code'=>400, 'message'=>'Wrong image']);
+            }
+           
+            //Debemos configurar la fecha y tiempo
+            date_default_timezone_set('Europe/Madrid');
+            $imageName=date('d-m-Y_H-i-s').'_'.$image->getClientOriginalName();
+
+        
+     
         
     }
 
@@ -113,7 +125,7 @@ class UserController extends AbstractController
      * @param $decodedRequest
      * @return
      */
-    public function validations($action, $decodedRequest)
+    public function validations($action, $decodedRequest, $image=null)
     {
         //Instanciamos el validador
         $validator=Validation::createValidator();
@@ -129,6 +141,10 @@ class UserController extends AbstractController
             &&count($this->emailValidation($validator, $decodedRequest['email']))==0) 
                 return true;
             return false;   
+        }else if($action=='uploadProfileImage'){
+            if (count($this->profileImageValidation($validator, $image))) 
+                return true;
+            return false;
         }
     }
 
@@ -222,10 +238,10 @@ class UserController extends AbstractController
     public function profileImageValidation($validator, $profileImage)
     {
         $profileImageValidation=$validator->validate($profileImage,
-            new Assert\Image(
+            new File(
                 [
-                    'mimesTypes'=>['image/jpg', 'image/jpeg', 'image/png', 'image/gif'],
-                    'mimesTypesMessage'=>'This image is not valid'
+                    'mimeTypes'=>'application/image',
+                    'mimeTypesMessage'=>'This image is not valid'
                 ]
             )
         );
