@@ -248,7 +248,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Función que obtiene todos los comentarios
      * @return Collection|Comment[]
      */
-    public function getComments(): Collection
+    public function getComments()
     {
         return $this->comments;
     }
@@ -258,7 +258,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * las propiedades que queremos serializar (la contraseña obviamente no para no mostrarla) 
      * @return array
      */
-    public function jsonSerialize(): Array
+    public function jsonSerialize()
     {
         return [
             'id'=>$this->id,
@@ -277,7 +277,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @param $user
      * @param $action
      */
-    public function execute($em, User $user, $action): void
+    public function execute($em, User $user, $action)
     {       
         if ($action=='insert'||$action=='update') {
             //Guardamos o modificamos el usuario en el ORM
