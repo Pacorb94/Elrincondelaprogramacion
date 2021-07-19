@@ -23,7 +23,7 @@ class UserController extends AbstractController
         $request=$request->get('json', null);
         if ($request) {
             $decodedRequest=json_decode($request);
-            if ($this->validations($decodedRequest, 'register')) {
+            if ($this->registerValidations($decodedRequest)) {
                 $userRepo=$this->getDoctrine()->getRepository(User::class);
                 //Si no existe
                 if (!$userRepo->findOneBy(['email'=>$decodedRequest->email])) {
@@ -36,34 +36,94 @@ class UserController extends AbstractController
                 }
                 return $this->json(['code'=>500, 'message'=>'That user already exists']);
             }
-            return $this->json(['code'=>400, 'message'=>'Bad request']);      
+            return $this->json(['code'=>400, 'message'=>'Wrong field']);      
         }
         return $this->json(['code'=>400, 'message'=>'Wrong json']);
     }
 
     /**
-     * Función que agrupa los validadores de las funciones registrar e iniciar sesión
+     * Función que modifica un usuario
+     * @param $id
+     * @param $request
+     * @return JsonResponse
+     */
+    public function update($id, Request $request)
+    {
+        if ($this->idValidation($id)) {
+            $request=$request->get('json', null);
+            if ($request) {
+                $userRepo=$this->getDoctrine()->getRepository(User::class);
+                $user=$userRepo->findOneBy(['id'=>$id]);
+                //Si existe el usuario
+                if ($user) {
+                    //Si el usuario que modificamos es el nuestro
+                    if ($user->getId()==$id) {
+                        $decodedRequest=json_decode($request);
+                        $nick=$decodedRequest->nick??$user->getNick();
+                        $email=$decodedRequest->email??$user->getEmail();
+                        $data=[$nick, $email];
+                        $this->updateValidations($data, $user);
+                        $em=$this->getDoctrine()->getManager();
+                        $user->execute($em, $user, 'update');
+                        return $this->json($user, 201);
+                    }
+                    return $this->json(['code'=>400, 'message'=>'You can\'t modify that user']);       
+                }
+                return $this->json(['code'=>404, 'message'=>'User not found']);
+            }
+            return $this->json(['code'=>400, 'message'=>'Wrong json']);
+        }
+        return $this->json(['code'=>400, 'message'=>'Wrong id']);
+    }
+
+    /**
+     * Función que sube una imagen de perfil
+     * @param $request
+     * @return JsonResponse
+     */
+    public function uploadProfileImage(Request $request)
+    {
+        
+    }
+
+    /**
+     * Función que valida los datos del registro
      * @param $decodedRequest
-     * @param $action
      * @return
      */
-    public function validations($decodedRequest, $action)
+    public function registerValidations($decodedRequest)
     {
         //Instanciamos el validador
         $validator=Validation::createValidator();
-        if ($action=='register') {
-            //Si no hay errores
-            if (count($this->nickValidation($validator, $decodedRequest->nick))==0
-            &&count($this->emailValidation($validator, $decodedRequest->email))==0
-            &&count($this->passwordValidation($validator, $decodedRequest->password))==0)
-                return true;
-            return false;
-        }else if($action=='login'){
-            if (count($this->emailValidation($validator, $decodedRequest->email))==0
-            &&count($this->passwordValidation($validator, $decodedRequest->password))==0) 
-                return true;
-            return false; 
-        }   
+        //Si no hay errores
+        if (count($this->nickValidation($validator, $decodedRequest->nick))==0
+        &&count($this->emailValidation($validator, $decodedRequest->email))==0
+        &&count($this->passwordValidation($validator, $decodedRequest->password))==0)
+            return true;
+        return false;
+    }
+
+    /**
+     * Función que valida los datos de la modificación
+     * @param $data
+     * @param $user
+     * @return JsonResponse
+     */
+    public function updateValidations($data, $user)
+    {
+        //Instanciamos el validador
+        $validator=Validation::createValidator();
+        //Si no hay errores
+        if (count($this->nickValidation($validator, $data[0]))==0){
+            $user->setNick($data[0]);
+        }
+        if(count($this->emailValidation($validator, $data[1]))==0){
+            $user->setEmail($data[1]);
+        }
+        if (count($this->nickValidation($validator, $data[0]))!=0
+        ||count($this->emailValidation($validator, $data[1]))!=0) {
+            return $this->json(['code'=>400, 'message'=>'Wrong field']);
+        }
     }
 
     /**
@@ -145,5 +205,24 @@ class UserController extends AbstractController
             ]
         );
         return $passwordValidation;
+    }
+
+    /**
+     * Función que valida la imagen de perfil
+     * @param $validator
+     * @param $profileImage
+     * @return
+     */
+    public function profileImageValidation($validator, $profileImage)
+    {
+        $profileImageValidation=$validator->validate($profileImage,
+            new Assert\Image(
+                [
+                    'mimesTypes'=>['image/jpg', 'image/jpeg', 'image/png', 'image/gif'],
+                    'mimesTypesMessage'=>'This image is not valid'
+                ]
+            )
+        );
+        return $profileImageValidation;
     }
 }
