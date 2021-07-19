@@ -1,3 +1,4 @@
+#Users
 login:
     path: /api/login
     methods: POST
@@ -6,4 +7,9 @@ register:
     path: /api/register
     controller: App\Controller\UserController::register
     methods: POST
+
+updateUser:
+    path: /api/users/{id}/update
+    controller: App\Controller\UserController::update
+    methods: PUT
 
