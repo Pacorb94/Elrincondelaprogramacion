@@ -22,14 +22,18 @@ class UserController extends AbstractController
     {
         $request=$request->get('json', null);
         if ($request) {
-            $decodedRequest=json_decode($request);
+            //Con true decodificamos la petición a un array
+            $decodedRequest=json_decode($request, true);
             if ($this->validations('register', $decodedRequest)) {
                 $userRepo=$this->getDoctrine()->getRepository(User::class);
                 //Si no existe
                 if (!$userRepo->findOneBy(['email'=>$decodedRequest->email])) {
-                    $encryptedPassword=hash('sha256', $decodedRequest->password);
-                    $user=new User($decodedRequest->nick, $decodedRequest->email, $encryptedPassword, null, 
-                        [$decodedRequest->role], new \DateTime('now'), new \DateTime('now'));
+                    /*array_map itera sobre los elementos de $decodedRequest ejecutando 
+                    la función trim*/
+                    $decodedRequest=array_map('trim', $decodedRequest);
+                    $encryptedPassword=hash('sha256', $decodedRequest['password']);
+                    $user=new User($decodedRequest['nick'], $decodedRequest['email'], $encryptedPassword, 
+                        null, [$decodedRequest['role']], new \DateTime('now'), new \DateTime('now'));
                     $em=$this->getDoctrine()->getManager();
                     $user->execute($em, $user, 'insert');
                     return $this->json($user, 201);
@@ -60,16 +64,22 @@ class UserController extends AbstractController
                         $user=$userRepo->findOneBy(['id'=>$id]);
                         //Si existe el usuario
                         if ($user) {
-                            $decodedRequest=json_decode($request);
-                            $decodedRequest->nick=$decodedRequest->nick|$user->getNick();
-                            $decodedRequest->email=$decodedRequest->email|$user->getEmail();
+                            //Con true decodificamos la petición a un array
+                            $decodedRequest=json_decode($request, true);
+                            /*array_map itera sobre los elementos de $decodedRequest ejecutando 
+                            la función trim*/
+                            $decodedRequest=array_map('trim', $decodedRequest);
+                            /*?: indica que $decodedRequest->nick si tiene valor será ese 
+                            sino $user->getNick()*/
+                            $decodedRequest['nick']=$decodedRequest['nick']?:$user->getNick();
+                            $decodedRequest['email']=$decodedRequest['email']?:$user->getEmail();
                             if (!$this->validations('update', $decodedRequest)) 
                                 return $this->json(['code'=>400, 'message'=>'Wrong validation']);
-                            $user->setNick($decodedRequest->nick);
-                            $user->setEmail($decodedRequest->email);
+                            $user->setNick($decodedRequest['nick']);
+                            $user->setEmail($decodedRequest['email']);
                             $em=$this->getDoctrine()->getManager();
                             $user->execute($em, $user, 'update');
-                            return $this->json($user, 201);                          
+                            return $this->json($user);                          
                         }
                         return $this->json(['code'=>404, 'message'=>'User not found']);
                     }
@@ -90,7 +100,10 @@ class UserController extends AbstractController
      */
     public function uploadProfileImage(Request $request)
     {
-        
+
+        //Debemos configurar la fecha y tiempo
+        date_default_timezone_set('Europe/Madrid');
+      //  $imageName=date('d-m-Y_H-i-s').'_'.$image->getClientOriginalName();
     }
 
     /**
@@ -105,14 +118,14 @@ class UserController extends AbstractController
         $validator=Validation::createValidator();
         if ($action=='register') {
             //Si no hay errores
-            if (count($this->nickValidation($validator, $decodedRequest->nick))==0
-            &&count($this->emailValidation($validator, $decodedRequest->email))==0
-            &&count($this->passwordValidation($validator, $decodedRequest->password))==0)
+            if (count($this->nickValidation($validator, $decodedRequest['nick']))==0
+            &&count($this->emailValidation($validator, $decodedRequest['email']))==0
+            &&count($this->passwordValidation($validator, $decodedRequest['password']))==0)
                 return true;
             return false;
         }else if($action=='update'){
-            if (count($this->nickValidation($validator, $decodedRequest->nick))==0
-            &&count($this->emailValidation($validator, $decodedRequest->email))==0) 
+            if (count($this->nickValidation($validator, $decodedRequest['nick']))==0
+            &&count($this->emailValidation($validator, $decodedRequest['email']))==0) 
                 return true;
             return false;   
         }
