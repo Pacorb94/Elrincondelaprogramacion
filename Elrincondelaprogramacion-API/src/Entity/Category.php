@@ -46,7 +46,7 @@ class Category
     /**
      * @var \Post
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="categoryId")
      */
     private $posts;
 
