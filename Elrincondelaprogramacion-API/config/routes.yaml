@@ -13,3 +13,8 @@ updateUser:
     controller: App\Controller\UserController::update
     methods: PUT
 
+uploadProfileImage:
+    path: /api/profile-image/upload
+    controller: App\Controller\UserController::class
+    methods: POST
+
