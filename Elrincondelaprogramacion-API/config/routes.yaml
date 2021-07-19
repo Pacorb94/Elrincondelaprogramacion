@@ -15,6 +15,6 @@ updateUser:
 
 uploadProfileImage:
     path: /api/profile-image/upload
-    controller: App\Controller\UserController::class
+    controller: App\Controller\UserController::uploadProfileImage
     methods: POST
 
