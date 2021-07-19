@@ -100,10 +100,11 @@ class UserController extends AbstractController
      */
     public function uploadProfileImage(Request $request)
     {
-
+        $image=$request->files->get('file0', null);
         //Debemos configurar la fecha y tiempo
         date_default_timezone_set('Europe/Madrid');
-      //  $imageName=date('d-m-Y_H-i-s').'_'.$image->getClientOriginalName();
+        $imageName=date('d-m-Y_H-i-s').'_'.$image->getClientOriginalName();
+        
     }
 
     /**
