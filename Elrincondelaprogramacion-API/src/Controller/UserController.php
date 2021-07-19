@@ -23,7 +23,7 @@ class UserController extends AbstractController
         $request=$request->get('json', null);
         if ($request) {
             $decodedRequest=json_decode($request);
-            if ($this->registerValidations($decodedRequest)) {
+            if ($this->validations('register', $decodedRequest)) {
                 $userRepo=$this->getDoctrine()->getRepository(User::class);
                 //Si no existe
                 if (!$userRepo->findOneBy(['email'=>$decodedRequest->email])) {
@@ -49,31 +49,38 @@ class UserController extends AbstractController
      */
     public function update($id, Request $request)
     {
-        if ($this->idValidation($id)) {
-            $request=$request->get('json', null);
-            if ($request) {
-                $userRepo=$this->getDoctrine()->getRepository(User::class);
-                $user=$userRepo->findOneBy(['id'=>$id]);
-                //Si existe el usuario
-                if ($user) {
-                    //Si el usuario que modificamos es el nuestro
-                    if ($user->getId()==$id) {
-                        $decodedRequest=json_decode($request);
-                        $nick=$decodedRequest->nick??$user->getNick();
-                        $email=$decodedRequest->email??$user->getEmail();
-                        $data=[$nick, $email];
-                        $this->updateValidations($data, $user);
-                        $em=$this->getDoctrine()->getManager();
-                        $user->execute($em, $user, 'update');
-                        return $this->json($user, 201);
+        try {
+            if ($this->idValidation($id)) {
+                $tokenId=$this->get('security.token_storage')->getToken()->getUser()->getId();
+                //Si el usuario que modificamos es el nuestro
+                if ($tokenId==$id) {
+                    $request=$request->get('json', null);
+                    if ($request) {
+                        $userRepo=$this->getDoctrine()->getRepository(User::class);
+                        $user=$userRepo->findOneBy(['id'=>$id]);
+                        //Si existe el usuario
+                        if ($user) {
+                            $decodedRequest=json_decode($request);
+                            $decodedRequest->nick=$decodedRequest->nick|$user->getNick();
+                            $decodedRequest->email=$decodedRequest->email|$user->getEmail();
+                            if (!$this->validations('update', $decodedRequest)) 
+                                return $this->json(['code'=>400, 'message'=>'Wrong validation']);
+                            $user->setNick($decodedRequest->nick);
+                            $user->setEmail($decodedRequest->email);
+                            $em=$this->getDoctrine()->getManager();
+                            $user->execute($em, $user, 'update');
+                            return $this->json($user, 201);                          
+                        }
+                        return $this->json(['code'=>404, 'message'=>'User not found']);
                     }
-                    return $this->json(['code'=>400, 'message'=>'You can\'t modify that user']);       
+                    return $this->json(['code'=>400, 'message'=>'Wrong json']);
                 }
-                return $this->json(['code'=>404, 'message'=>'User not found']);
+                return $this->json(['code'=>400, 'message'=>'You can\'t modify that user']);
             }
-            return $this->json(['code'=>400, 'message'=>'Wrong json']);
-        }
-        return $this->json(['code'=>400, 'message'=>'Wrong id']);
+            return $this->json(['code'=>400, 'message'=>'Wrong id']);
+        } catch (\Throwable $th) {
+            return $this->json(['code'=>500, 'message'=>$th->getMessage()]);
+        }          
     }
 
     /**
@@ -88,48 +95,33 @@ class UserController extends AbstractController
 
     /**
      * Función que valida los datos del registro
+     * @param $action
      * @param $decodedRequest
      * @return
      */
-    public function registerValidations($decodedRequest)
+    public function validations($action, $decodedRequest)
     {
         //Instanciamos el validador
         $validator=Validation::createValidator();
-        //Si no hay errores
-        if (count($this->nickValidation($validator, $decodedRequest->nick))==0
-        &&count($this->emailValidation($validator, $decodedRequest->email))==0
-        &&count($this->passwordValidation($validator, $decodedRequest->password))==0)
-            return true;
-        return false;
-    }
-
-    /**
-     * Función que valida los datos de la modificación
-     * @param $data
-     * @param $user
-     * @return JsonResponse
-     */
-    public function updateValidations($data, $user)
-    {
-        //Instanciamos el validador
-        $validator=Validation::createValidator();
-        //Si no hay errores
-        if (count($this->nickValidation($validator, $data[0]))==0){
-            $user->setNick($data[0]);
-        }
-        if(count($this->emailValidation($validator, $data[1]))==0){
-            $user->setEmail($data[1]);
-        }
-        if (count($this->nickValidation($validator, $data[0]))!=0
-        ||count($this->emailValidation($validator, $data[1]))!=0) {
-            return $this->json(['code'=>400, 'message'=>'Wrong field']);
+        if ($action=='register') {
+            //Si no hay errores
+            if (count($this->nickValidation($validator, $decodedRequest->nick))==0
+            &&count($this->emailValidation($validator, $decodedRequest->email))==0
+            &&count($this->passwordValidation($validator, $decodedRequest->password))==0)
+                return true;
+            return false;
+        }else if($action=='update'){
+            if (count($this->nickValidation($validator, $decodedRequest->nick))==0
+            &&count($this->emailValidation($validator, $decodedRequest->email))==0) 
+                return true;
+            return false;   
         }
     }
 
     /**
      * Función que valida el id de la ruta
      * @param $id
-     * @return Bool
+     * @return bool
      */
     public function idValidation($id): Bool
     {
@@ -150,7 +142,7 @@ class UserController extends AbstractController
                 new Assert\NotBlank(),
                 new Assert\Length(
                     [
-                        'max'=>150
+                        'max'=>50
                     ]
                 )
             ]
@@ -172,7 +164,7 @@ class UserController extends AbstractController
                 new Assert\Email(),
                 new Assert\Length(
                     [
-                        'max'=>255
+                        'max'=>50
                     ]
                 )
             ]
