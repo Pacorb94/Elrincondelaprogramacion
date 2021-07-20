@@ -45,7 +45,7 @@ getCategories:
     methods: GET
 
 getCategory:
-    path: /api/category/{id}
+    path: /api/categories/{id}
     controller: App\Controller\CategoryController::getCategory
     methods: GET
 
