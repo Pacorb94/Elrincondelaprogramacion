@@ -29,10 +29,12 @@ create table if not exists Posts(
 
 create table if not exists Categories(
     id int(255) auto_increment not null,
+    user_id int(255),
     name varchar(255) unique not null,
     created_at datetime not null,
     updated_at datetime not null,
-    constraint pk_categories primary key (id)
+    constraint pk_categories primary key (id),
+    constraint fk_categories_users foreign key (user_id) references Users(id)
 )ENGINE=InnoDB;
 
 create table if not exists Comments(
