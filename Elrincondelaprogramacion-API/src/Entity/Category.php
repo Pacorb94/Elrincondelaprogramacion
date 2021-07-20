@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Categories
+ * Category
  *
- * @ORM\Table(name="categories", indexes={@ORM\Index(name="fk_categories_users", columns={"user_id"})}, 
- * uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"})})
+ * @ORM\Table(name="categories", uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"})}, 
+ * indexes={@ORM\Index(name="fk_categories_users", columns={"user_id"})})
  * @ORM\Entity
  */
 class Category
@@ -22,16 +22,6 @@ class Category
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @var \User
-     *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="categories")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * })
-     */
-    private $user;
 
     /**
      * @var string
@@ -55,19 +45,29 @@ class Category
     private $updatedAt='current_timestamp()';
 
     /**
-     * @var \Post
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
+
+    /**
+     * 
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="categoryId")
      */
-    private $posts;
+    //private $posts;
 
-    public function __construct($userId, $name) {
+    public function __construct($user, $name) {
         $this->id=null;
-        $this->user=$userId;
+        $this->user=$user;
         $this->name=$name;
         $this->createdAt=new \DateTime('now');
         $this->updatedAt=new \DateTime('now');
-        $this->posts = new ArrayCollection();
+      //  $this->posts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -108,7 +108,7 @@ class Category
         return $this;
     }
 
-    public function getPosts()
+    /*public function getPosts()
     {
         return $this->posts;
     }
@@ -117,7 +117,7 @@ class Category
     {
         $this->posts=$posts;
         return $this;
-    }
+    }*/
 
     public function getUser()
     {
@@ -131,7 +131,7 @@ class Category
     }
 
     /**
-     * Función que ejecuta una consulta
+     * Función que ejecuta una acción
      * @param $em
      * @param $category
      * @param $action
@@ -139,7 +139,7 @@ class Category
     public function execute($em, Category $category, $action)
     {       
         if ($action=='insert'||$action=='update') {
-            //Guardamos o modificamos el usuario en el ORM
+            //Guardamos o modificamos la categoría en el ORM
             $em->persist($category);
         } else if ($action=='delete') {
             $em->remove($category);

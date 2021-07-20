@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Posts
+ * Post
  *
  * @ORM\Table(name="posts", indexes={@ORM\Index(name="fk_posts_users", columns={"user_id"})})
  * @ORM\Entity
@@ -26,7 +26,6 @@ class Post
      * @var int|null
      *
      * @ORM\Column(name="category_id", type="integer", nullable=true)
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="posts")
      */
     private $categoryId;
 
@@ -45,11 +44,11 @@ class Post
     private $content;
 
     /**
-     * @var string|null
+     * @var bool
      *
-     * @ORM\Column(name="status", type="string", length=50, nullable=true)
+     * @ORM\Column(name="inadequate", type="boolean", nullable=false)
      */
-    private $status;
+    private $inadequate;
 
     /**
      * @var string|null
@@ -75,7 +74,7 @@ class Post
     /**
      * @var \User
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
@@ -89,12 +88,13 @@ class Post
      */
     private $comments;
 
-    public function __construct($title, $content, $status, $image) {
+    public function __construct($title, $content, $inadequate, $image, $user) {
         $this->id=null;
         $this->title=$title;
         $this->content=$content;
-        $this->status=$status;
+        $this->inadequate=$inadequate;
         $this->image=$image;
+        $this->user=$user;
         $this->createdAt=new \DateTime('now');
         $this->updatedAt=new \DateTime('now');
         $this->comments = new ArrayCollection();
@@ -113,7 +113,6 @@ class Post
     public function setCategoryId(?int $categoryId): self
     {
         $this->categoryId = $categoryId;
-
         return $this;
     }
 
@@ -125,7 +124,6 @@ class Post
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
         return $this;
     }
 
@@ -137,19 +135,17 @@ class Post
     public function setContent(string $content): self
     {
         $this->content = $content;
-
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getInadequate(): ?bool
     {
-        return $this->status;
+        return $this->inadequate;
     }
 
-    public function setStatus(?string $status): self
+    public function setInadequate(?bool $inadequate): self
     {
-        $this->status = $status;
-
+        $this->inadequate = $inadequate;
         return $this;
     }
 
@@ -161,7 +157,6 @@ class Post
     public function setImage(?string $image): self
     {
         $this->image = $image;
-
         return $this;
     }
 
@@ -173,7 +168,6 @@ class Post
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
 
@@ -185,7 +179,6 @@ class Post
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
-
         return $this;
     }
 

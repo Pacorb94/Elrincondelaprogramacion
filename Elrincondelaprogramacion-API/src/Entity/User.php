@@ -12,8 +12,8 @@ use Doctrine\Common\Collections\Collection;
 /**
  * User
  *
- * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="nick", columns={"nick"}), 
- * @ORM\UniqueConstraint(name="email", columns={"email"})})
+ * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"}), 
+ * @ORM\UniqueConstraint(name="nick", columns={"nick"})})
  * @ORM\Entity
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSerializable
@@ -58,9 +58,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
     /**
      * @var array
      *
-     * @ORM\Column(name="roles", type="json", nullable=false)
+     * @ORM\Column(name="roles", type="json", length=0, nullable=false)
      */
-    private $roles=[];
+    private $roles;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="banned", type="boolean", nullable=false)
+     */
+    private $banned;
 
     /**
      * @var \DateTime
@@ -96,12 +103,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
      */
     private $categories;
 
-    public function __construct($nick, $email, $password, $profileImage, $role) {
+    public function __construct($nick, $email, $password, $profileImage, $banned, $role) {
         $this->id=null;
         $this->nick=$nick;
         $this->email=$email;
         $this->password=$password;
         $this->profileImage=$profileImage;
+        $this->banned=$banned;
         $this->roles=$role;
         $this->createdAt=new \DateTime('now');
         $this->updatedAt=new \DateTime('now');
@@ -236,6 +244,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    public function getBanned()
+    {
+        return $this->banned;
+    }
+
+    public function setBanned(?bool $banned)
+    {
+        $this->banned=$banned;
         return $this;
     }
 

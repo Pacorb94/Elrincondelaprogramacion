@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Comments
+ * Comment
  *
  * @ORM\Table(name="comments", indexes={@ORM\Index(name="fk_comments_posts", columns={"post_id"}), 
  * @ORM\Index(name="fk_comments_users", columns={"user_id"})})
@@ -31,6 +31,13 @@ class Comment
     private $content;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="inadequate", type="boolean", nullable=false)
+     */
+    private $inadequate;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
@@ -45,21 +52,24 @@ class Comment
     private $updatedAt='current_timestamp()';
 
     /**
+     * @var \Post
+     *
+     * @ORM\ManyToOne(targetEntity="Post")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+     * })
+     */
+    private $post;
+
+    /**
      * @var \User
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
      */
     private $user;
-
-    /**
-     * @var \Post
-     * 
-     * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
-     */
-    private $posts;
 
     public function __construct($content) {
         $this->id = null;
@@ -82,6 +92,17 @@ class Comment
     public function setContent(string $content): self
     {
         $this->content = $content;
+        return $this;
+    }
+
+    public function getInadequate(): ?bool
+    {
+        return $this->inadequate;
+    }
+
+    public function setInadequate(bool $inadequate): self
+    {
+        $this->inadequate = $inadequate;
         return $this;
     }
 
