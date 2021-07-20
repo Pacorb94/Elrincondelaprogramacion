@@ -29,7 +29,7 @@ create table if not exists Posts(
 
 create table if not exists Categories(
     id int(255) auto_increment not null,
-    name varchar(255) not null,
+    name varchar(255) unique not null,
     created_at datetime not null,
     updated_at datetime not null,
     constraint pk_categories primary key (id)
