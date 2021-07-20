@@ -56,9 +56,9 @@ class UserController extends AbstractController
     {
         try {
             if ($this->idValidation($id)) {
-                $tokenId=$this->get('security.token_storage')->getToken()->getUser()->getId();
-                //Si el usuario que modificamos es el nuestro
-                if ($tokenId==$id) {
+                $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
+                //Si el usuario que modificamos es el que está logueado
+                if ($userLoggedIn->getId()==$id) {
                     $request=$request->get('json', null);
                     if ($request) {
                         $userRepo=$this->getDoctrine()->getRepository(User::class);
