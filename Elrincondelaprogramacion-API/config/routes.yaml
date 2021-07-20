@@ -28,6 +28,11 @@ getUser:
     controller: App\Controller\UserController::getUserDetail
     methods: GET
 
+banUser:
+    path: /api/users/{id}/ban
+    controller: App\Controller\UserController::ban
+    methods: POST
+
 #Category
 createCategory:
     path: /api/category/create
@@ -48,6 +53,11 @@ getCategory:
     path: /api/categories/{id}
     controller: App\Controller\CategoryController::getCategory
     methods: GET
+
+deleteCategory:
+    path: /api/categories/{id}/delete
+    controller: App\Controller\CategoryController::delete
+    methods: DELETE
 
 #Post
 createPost:
