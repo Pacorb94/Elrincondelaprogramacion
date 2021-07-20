@@ -12,7 +12,6 @@
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ##
-/public/profile-images/*.jpg
-/public/profile-images/*.jpeg
-/public/profile-images/*.png
-/public/profile-images/*.gif
+/public/profile-images/*
+!/public/profile-images/README.md
+
