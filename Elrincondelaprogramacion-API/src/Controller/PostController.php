@@ -4,16 +4,23 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\Post;
+use Symfony\Component\Filesystem\Filesystem;
 
 class PostController extends AbstractController
 {
-    #[Route('/post', name: 'post')]
-    public function index(): Response
+
+    /**
+     * Función que crea un post
+     * @param $request
+     * @return JsonResponse
+     */
+    public function create(Request $request)
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/PostController.php',
-        ]);
+       
     }
 }
