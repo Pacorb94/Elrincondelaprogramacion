@@ -90,6 +90,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
      */
     private $comments;
 
+    /**
+     * @var
+     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="user")
+     */
+    private $categories;
+
     public function __construct($nick, $email, $password, $profileImage, $role) {
         $this->id=null;
         $this->nick=$nick;
@@ -101,6 +107,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
         $this->updatedAt=new \DateTime('now');
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->categories=new ArrayCollection();
     }
 
     /**
@@ -248,6 +255,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Función que obtiene todos las categorías
+     * @return Collection|Comment[]
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 
     /**

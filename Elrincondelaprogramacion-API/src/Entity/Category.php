@@ -8,7 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Categories
  *
- * @ORM\Table(name="categories", uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"})})
+ * @ORM\Table(name="categories", indexes={@ORM\Index(name="fk_categories_users", columns={"user_id"})}, 
+ * uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"})})
  * @ORM\Entity
  */
 class Category
@@ -21,6 +22,16 @@ class Category
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="categories")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
 
     /**
      * @var string
@@ -104,6 +115,17 @@ class Category
     public function setPosts(?Post $posts)
     {
         $this->posts=$posts;
+        return $this;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user)
+    {
+        $this->user=$user;
         return $this;
     }
 
