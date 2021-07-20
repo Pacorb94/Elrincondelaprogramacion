@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
-use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Filesystem\Filesystem;
 
 class UserController extends AbstractController
 {
@@ -101,22 +101,41 @@ class UserController extends AbstractController
      */
     public function uploadProfileImage(Request $request)
     {
-        
-            $image=$request->files->get('file0', null);
-            if ($image) {;
-                if($this->validations('uploadProfileImage', null, $image)){
-                    dump('hola');die();
-                }
-                return $this->json(['code'=>400, 'message'=>'Wrong image']);
+        $image=$request->files->get('file0', null);
+        if ($image) {;
+            if($this->validations('uploadProfileImage', null, $image)){
+                //Debemos configurar la fecha y tiempo
+                date_default_timezone_set('Europe/Madrid');
+                $imageName=date('d-m-Y_H-i-s').'_'.$image->getClientOriginalName();
+                //Obtenemos la carpeta donde se guardará la imagen de perfil
+                $profileImagesDirectory=$this->getParameter('profileImagesDirectory');
+                //Movemos la imagen de perfil a esa carpeta
+                $image->move($profileImagesDirectory, $imageName);
+                return $this->json(['image'=>$imageName], 201);
             }
-           
-            //Debemos configurar la fecha y tiempo
-            date_default_timezone_set('Europe/Madrid');
-            $imageName=date('d-m-Y_H-i-s').'_'.$image->getClientOriginalName();
+            return $this->json(['code'=>400, 'message'=>'Wrong image']);
+        }
+    }
 
-        
-     
-        
+    /**
+     * Función que obtiene una imagen de perfil
+     * @param $imageName
+     * @return JsonResponse
+     */
+    public function getProfileImage($imageName)
+    {
+        if ($imageName) {
+            $filesystem=new Filesystem();
+            //Obtenemos la carpeta donde se guardará la imagen de perfil
+            $profileImagesDirectory=$this->getParameter('profileImagesDirectory');
+            if($filesystem->exists($profileImagesDirectory.'/'.$imageName)){
+                //Obtenemos la imagen
+                $image=readfile($profileImagesDirectory.'/'.$imageName);
+                return new Response($image);
+            }
+            return $this->json(['code'=>404, 'message'=>'Image not found']);
+        }
+        return $this->json(['code'=>400, 'message'=>'You must send an image name']);
     }
 
     /**
@@ -142,7 +161,7 @@ class UserController extends AbstractController
                 return true;
             return false;   
         }else if($action=='uploadProfileImage'){
-            if (count($this->profileImageValidation($validator, $image))) 
+            if (count($this->profileImageValidation($validator, $image))==0) 
                 return true;
             return false;
         }
@@ -237,14 +256,7 @@ class UserController extends AbstractController
      */
     public function profileImageValidation($validator, $profileImage)
     {
-        $profileImageValidation=$validator->validate($profileImage,
-            new File(
-                [
-                    'mimeTypes'=>'application/image',
-                    'mimeTypesMessage'=>'This image is not valid'
-                ]
-            )
-        );
+        $profileImageValidation=$validator->validate($profileImage, new Assert\Image());
         return $profileImageValidation;
     }
 }
