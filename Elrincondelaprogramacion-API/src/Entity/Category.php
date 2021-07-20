@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Categories
  *
- * @ORM\Table(name="categories")
+ * @ORM\Table(name="categories", uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"}))
  * @ORM\Entity
  */
 class Category
@@ -50,7 +50,11 @@ class Category
      */
     private $posts;
 
-    public function __construct() {
+    public function __construct($name) {
+        $this->id=null;
+        $this->name=$name;
+        $this->createdAt=new \DateTime('now');
+        $this->updatedAt=new \DateTime('now');
         $this->posts = new ArrayCollection();
     }
 
@@ -101,5 +105,23 @@ class Category
     {
         $this->posts=$posts;
         return $this;
+    }
+
+    /**
+     * Función que ejecuta una consulta
+     * @param $em
+     * @param $category
+     * @param $action
+     */
+    public function execute($em, Category $category, $action)
+    {       
+        if ($action=='insert'||$action=='update') {
+            //Guardamos o modificamos el usuario en el ORM
+            $em->persist($category);
+        } else if ($action=='delete') {
+            $em->remove($category);
+        }
+        //Ejecutamos la sentencia en la base de datos
+        $em->flush();
     }
 }
