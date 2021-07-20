@@ -29,7 +29,7 @@ getUser:
     methods: GET
 
 #Category
-create:
+createCategory:
     path: /api/category/create
     controller: App\Controller\CategoryController::create
     methods: POST
@@ -50,7 +50,7 @@ getCategory:
     methods: GET
 
 #Post
-create:
+createPost:
     path: /api/post/create
     controller: App\Controller\PostController::create
     methods: POST
