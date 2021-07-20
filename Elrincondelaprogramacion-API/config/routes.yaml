@@ -8,7 +8,7 @@ register:
     controller: App\Controller\UserController::register
     methods: POST
 
-updateUser:
+update:
     path: /api/users/{id}/update
     controller: App\Controller\UserController::update
     methods: PUT
@@ -27,6 +27,27 @@ getUser:
     path: /api/users/{id}
     controller: App\Controller\UserController::getUserDetail
     methods: GET
+
+#Category:
+create:
+    path: /api/category/create
+    controller: App\Controller\CategoryController::create
+    methodds: POST
+
+update:
+    path: api/categories/{id}/update
+    controller: App\Controller\CategoryController::update
+    methods: PUT
+
+getCategories:
+    path: /api/categories
+    controller: App\Controller\CategoryController::getCategories
+    methodds: GET
+
+getCategory:
+    path: /api/category/{id}
+    controller: App\Controller\CategoryController::getCategory
+    methodds: GET
 
 #Post
 create:
