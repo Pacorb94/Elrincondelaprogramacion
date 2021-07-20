@@ -185,7 +185,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
     public function setNick(string $nick): self
     {
         $this->nick = $nick;
-
         return $this;
     }
 
@@ -197,7 +196,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -209,7 +207,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
     public function setProfileImage(?string $profileImage): self
     {
         $this->profileImage = $profileImage;
-
         return $this;
     }
 
@@ -221,7 +218,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
 
