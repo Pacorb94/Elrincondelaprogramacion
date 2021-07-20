@@ -154,6 +154,11 @@ class UserController extends AbstractController
         return $this->json(['code'=>400, 'message'=>'Wrong id']);
     }
 
+    public function ban($id)
+    {
+        
+    }
+
     /**
      * Función que valida los datos del registro
      * @param $action
