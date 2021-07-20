@@ -32,7 +32,7 @@ getUser:
 create:
     path: /api/category/create
     controller: App\Controller\CategoryController::create
-    methodds: POST
+    methods: POST
 
 update:
     path: api/categories/{id}/update
@@ -42,12 +42,12 @@ update:
 getCategories:
     path: /api/categories
     controller: App\Controller\CategoryController::getCategories
-    methodds: GET
+    methods: GET
 
 getCategory:
     path: /api/category/{id}
     controller: App\Controller\CategoryController::getCategory
-    methodds: GET
+    methods: GET
 
 #Post
 create:
