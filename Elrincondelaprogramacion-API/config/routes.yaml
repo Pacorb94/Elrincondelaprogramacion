@@ -19,7 +19,7 @@ uploadProfileImage:
     methods: POST
 
 getProfileImage:
-    path: /api/profile-image/{imageName}
+    path: /api/profile-image/{image-name}
     controller: App\Controller\UserController::getProfileImage
     methods: GET
 
