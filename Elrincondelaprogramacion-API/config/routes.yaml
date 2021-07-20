@@ -23,6 +23,11 @@ getProfileImage:
     controller: App\Controller\UserController::getProfileImage
     methods: GET
 
+getUser:
+    path: /api/users/{id}
+    controller: App\Controller\UserController::getUserDetail
+    methods: GET
+
 #Post
 create:
     path: /api/post/create
