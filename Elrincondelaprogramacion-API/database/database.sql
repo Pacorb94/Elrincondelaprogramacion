@@ -8,6 +8,7 @@ create table if not exists Users(
     password varchar(255) not null,
     profile_image varchar(200),
     roles longtext not null,
+    banned tinyint not null,
     created_at datetime not null,
     updated_at datetime not null,
     constraint pk_users primary key (id)
@@ -19,7 +20,7 @@ create table if not exists Posts(
     category_id int (255),
     title varchar(255) not null,
     content longtext not null,
-    status varchar(50),
+    inadequate tinyint not null,
     image varchar(200),
     created_at datetime not null,
     updated_at datetime not null,
@@ -42,22 +43,10 @@ create table if not exists Comments(
     user_id int(255),
     post_id int(255),
     content longtext not null,
+    inadequate tinyint not null,
     created_at datetime not null,
     updated_at datetime not null,
     constraint pk_comments primary key (id),
     constraint fk_comments_users foreign key (user_id) references Users(id),
     constraint fk_comments_posts foreign key (post_id) references Posts(id)
-)ENGINE=InnoDB;
-
-create table if not exists Reviews(
-    id int(255) auto_increment not null,
-    user_id int(255),
-    post_id int(255),
-    comment_id int(255),
-    created_at datetime not null,
-    updated_at datetime not null,
-    constraint pk_reviews primary key (id),
-    constraint fk_reviews_users foreign key (user_id) references Users(id),
-    constraint fk_reviews_posts foreign key (post_id) references Posts(id),
-    constraint fk_reviews_comments foreign key (comment_id) references Comments(id)
 )ENGINE=InnoDB;
