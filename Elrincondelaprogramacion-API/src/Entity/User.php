@@ -101,7 +101,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
      * @var
      * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="user")
      */
-    private $categories;
+  //  private $categories;
 
     public function __construct($nick, $email, $password, $profileImage, $banned, $role) {
         $this->id=null;
@@ -115,7 +115,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
         $this->updatedAt=new \DateTime('now');
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->categories=new ArrayCollection();
+      //  $this->categories=new ArrayCollection();
     }
 
     /**
