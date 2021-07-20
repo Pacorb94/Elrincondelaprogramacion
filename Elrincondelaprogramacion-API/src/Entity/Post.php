@@ -89,7 +89,14 @@ class Post
      */
     private $comments;
 
-    public function __construct() {
+    public function __construct($title, $content, $status, $image) {
+        $this->id=null;
+        $this->title=$title;
+        $this->content=$content;
+        $this->status=$status;
+        $this->image=$image;
+        $this->createdAt=new \DateTime('now');
+        $this->updatedAt=new \DateTime('now');
         $this->comments = new ArrayCollection();
     }
 

@@ -90,15 +90,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
      */
     private $comments;
 
-    public function __construct($nick, $email, $password, $profileImage, $role, $createdAt, $updatedAt) {
+    public function __construct($nick, $email, $password, $profileImage, $role) {
         $this->id=null;
         $this->nick=$nick;
         $this->email=$email;
         $this->password=$password;
         $this->profileImage=$profileImage;
         $this->roles=$role;
-        $this->createdAt=$createdAt;
-        $this->updatedAt=$updatedAt;
+        $this->createdAt=new \DateTime('now');
+        $this->updatedAt=new \DateTime('now');
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }

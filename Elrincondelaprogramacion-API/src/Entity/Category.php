@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Categories
  *
- * @ORM\Table(name="categories", uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"}))
+ * @ORM\Table(name="categories", uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"})})
  * @ORM\Entity
  */
 class Category

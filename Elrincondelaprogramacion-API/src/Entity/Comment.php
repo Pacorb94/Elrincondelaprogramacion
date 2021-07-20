@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -58,7 +59,15 @@ class Comment
      * 
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
      */
-    private $post;
+    private $posts;
+
+    public function __construct($content) {
+        $this->id = null;
+        $this->content=$content;
+        $this->createdAt=new \DateTime('now');
+        $this->updatedAt=new \DateTime('now');
+        $this->posts=new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -109,14 +118,14 @@ class Comment
         return $this;
     }
 
-    public function getPost()
+    public function getPosts()
     {
-        return $this->post;
+        return $this->posts;
     }
 
-    public function setPost(?Post $post): self
+    public function setPosts(?Post $posts): self
     {
-        $this->post=$post;
+        $this->posts=$posts;
         return $this;
     }
 }

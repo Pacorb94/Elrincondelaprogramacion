@@ -67,6 +67,12 @@ class Review
      */
     private $user;
 
+    public function __construct() {
+        $this->id = null;
+        $this->createdAt=new \DateTime('now');
+        $this->updatedAt=new \DateTime('now');
+    }
+
     public function getId(): ?int
     {
         return $this->id;
