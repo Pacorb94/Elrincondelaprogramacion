@@ -1,4 +1,4 @@
-#Users
+#User
 login:
     path: /api/login
     methods: POST
@@ -8,7 +8,7 @@ register:
     controller: App\Controller\UserController::register
     methods: POST
 
-update:
+updateUser:
     path: /api/users/{id}/update
     controller: App\Controller\UserController::update
     methods: PUT
@@ -28,13 +28,13 @@ getUser:
     controller: App\Controller\UserController::getUserDetail
     methods: GET
 
-#Category:
+#Category
 create:
     path: /api/category/create
     controller: App\Controller\CategoryController::create
     methods: POST
 
-update:
+updateCategory:
     path: api/categories/{id}/update
     controller: App\Controller\CategoryController::update
     methods: PUT
