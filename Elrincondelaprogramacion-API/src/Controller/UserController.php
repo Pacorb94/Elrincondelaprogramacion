@@ -34,7 +34,7 @@ class UserController extends AbstractController
                     $decodedRequest=array_map('trim', $decodedRequest);
                     $encryptedPassword=hash('sha256', $decodedRequest['password']);
                     $user=new User($decodedRequest['nick'], $decodedRequest['email'], $encryptedPassword, 
-                        null, [$decodedRequest['role']], 0);
+                        null, [$decodedRequest['role']], false);
                     $em=$this->getDoctrine()->getManager();
                     $user->execute($em, $user, 'insert');
                     return $this->json($user, 201);
