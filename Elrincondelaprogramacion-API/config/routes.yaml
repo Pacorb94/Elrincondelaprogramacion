@@ -54,11 +54,6 @@ getCategory:
     controller: App\Controller\CategoryController::getCategory
     methods: GET
 
-deleteCategory:
-    path: /api/categories/{id}/delete
-    controller: App\Controller\CategoryController::delete
-    methods: DELETE
-
 #Post
 createPost:
     path: /api/post/create
