@@ -115,6 +115,7 @@ class UserController extends AbstractController
             }
             return $this->json(['code'=>400, 'message'=>'Wrong image']);
         }
+        return $this->json(['code'=>400, 'message'=>'You must send an image']);
     }
 
     /**
@@ -122,10 +123,9 @@ class UserController extends AbstractController
      * @param $imageName
      * @return JsonResponse
      */
-    public function getProfileImage($imageName)
+    public function getProfileImage($imageName, Filesystem $filesystem)
     {
         if ($imageName) {
-            $filesystem=new Filesystem();
             //Obtenemos la carpeta donde se guardará la imagen de perfil
             $profileImagesDirectory=$this->getParameter('profileImagesDirectory');
             if($filesystem->exists($profileImagesDirectory.'/'.$imageName)){
