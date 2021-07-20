@@ -61,8 +61,9 @@ class Category
      */
     private $posts;
 
-    public function __construct($name) {
+    public function __construct($userId, $name) {
         $this->id=null;
+        $this->user=$userId;
         $this->name=$name;
         $this->createdAt=new \DateTime('now');
         $this->updatedAt=new \DateTime('now');
