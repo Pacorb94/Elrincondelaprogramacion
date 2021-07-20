@@ -1,1 +1,4 @@
-./profile-images/*
+./profile-images/*.jpg
+./profile-images/*.jpeg
+./profile-images/*.png
+./profile-images/*.gif
