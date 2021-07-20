@@ -139,6 +139,22 @@ class UserController extends AbstractController
     }
 
     /**
+     * Función que obtiene un usuario
+     * @param $id
+     * @return JsonResponse
+     */
+    public function getUserDetail($id)
+    {
+        if ($this->idValidation($id)) {
+            $userRepo=$this->getDoctrine()->getRepository(User::class);
+            $user=$userRepo->find($id);
+            if ($user) return $this->json($user);
+            return $this->json(['code'=>404, 'message'=>'User not found']);
+        }
+        return $this->json(['code'=>400, 'message'=>'Wrong id']);
+    }
+
+    /**
      * Función que valida los datos del registro
      * @param $action
      * @param $decodedRequest
