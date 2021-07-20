@@ -40,6 +40,17 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * Función que modifica una categoría
+     * @param $id
+     * @param $request
+     * @return JsonResponse
+     */
+    public function update($id, Request $request)
+    {
+        
+    }
+
+    /**
      * Función que obtiene las categorías
      * @return JsonResponse
      */
