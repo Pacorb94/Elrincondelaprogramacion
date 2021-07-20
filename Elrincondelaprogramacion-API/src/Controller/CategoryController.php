@@ -27,7 +27,9 @@ class CategoryController extends AbstractController
                 $decodedRequest['name']=trim($decodedRequest['name']);
                 $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
                 if (!$categoryRepo->findOneBy(['name'=>$decodedRequest['name']])) {
-                    $category=new Category($decodedRequest['name']);
+                    $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
+                    //Aunque espera el id del usuario tenemos que pasarle el usuario completo
+                    $category=new Category($userLoggedIn, $decodedRequest['name']);
                     $em=$this->getDoctrine()->getManager();
                     $category->execute($em, $category, 'insert');
                     return $this->json($category, 201);
@@ -47,7 +49,14 @@ class CategoryController extends AbstractController
      */
     public function update($id, Request $request)
     {
-        
+        if ($this->idValidation($id)) {
+                $request=$request->get('json', null);
+                if ($request) {
+                    
+                }
+                return $this->json(['code'=>400, 'message'=>'Wrong json']);
+        }
+        return $this->json(['code'=>400, 'message'=>'Wrong id']);
     }
 
     /**
