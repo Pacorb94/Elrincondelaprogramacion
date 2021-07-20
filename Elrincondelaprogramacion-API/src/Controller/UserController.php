@@ -62,7 +62,7 @@ class UserController extends AbstractController
                     $request=$request->get('json', null);
                     if ($request) {
                         $userRepo=$this->getDoctrine()->getRepository(User::class);
-                        $user=$userRepo->findOneBy(['id'=>$id]);
+                        $user=$userRepo->find(['id'=>$id]);
                         //Si existe el usuario
                         if ($user) {
                             //Con true decodificamos la petición a un array
