@@ -26,6 +26,7 @@ class CategoryController extends AbstractController
             if (count($this->nameValidation($decodedRequest['name']))==0) {
                 $decodedRequest['name']=trim($decodedRequest['name']);
                 $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
+                //Si el nombre no existe
                 if (!$categoryRepo->findOneBy(['name'=>$decodedRequest['name']])) {
                     $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
                     //Aunque espera el id del usuario tenemos que pasarle el usuario completo
@@ -51,21 +52,18 @@ class CategoryController extends AbstractController
     {
         try {
             if ($this->idValidation($id)) {
-                $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
                 $request=$request->get('json', null);
                 if ($request) {
                     $decodedRequest=json_decode($request, true);
                     if ($this->nameValidation($decodedRequest['name'])) {
                         $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
                         $category=$categoryRepo->find($id);
+                        //Si existe
                         if ($category) {
-                            if ($userLoggedIn->getId()==$category->getUser()->getId()) {
-                                $category->setName($decodedRequest['name']);
-                                $em=$this->getDoctrine()->getManager();
-                                $category->execute($em, $category, 'update');
-                                return $this->json($category);
-                            }
-                            return $this->json(['code'=>400, 'message'=>'You can\'t modify that category']);
+                            $category->setName($decodedRequest['name']);
+                            $em=$this->getDoctrine()->getManager();
+                            $category->execute($em, $category, 'update');
+                            return $this->json($category);                          
                         }
                         return $this->json(['code'=>404, 'message'=>'Category not found']);
                     }
@@ -100,6 +98,7 @@ class CategoryController extends AbstractController
         if ($this->idValidation($id)) {
             $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
             $category=$categoryRepo->find($id);
+            //Si existe
             if ($category) return $this->json($category);
             return $this->json(['code'=>404, 'message'=>'Category not found']);
         }
