@@ -6,11 +6,11 @@ al proyecto
 Es un blog de noticias referentes al sector de la programación.
 
 Tiene 3 tipos de usuarios: 
-1. Usuario lector: puede leer posts, comentar en los posts y buscar posts.
-2. Usuario redactor: puede hacer todo lo anterior más publicar posts y crear categorías.
-3. Usuario admin: puede hacer lo mismo que el usuario lector más revisar comentarios y posts por
-si son ofensivos borrarlos o banear al que lo hizo.
+1. Usuario lector
+2. Usuario redactor
+3. Usuario admin
 
+Puedes ver lo que puede hacer cada tipo de usuario [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/master/Diagramas/Casos%20de%20uso.png)
 
 Este proyecto el front-end y el back-end están separados, por lo que [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrincondelaprogramacion) accedes 
 al front-end y [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrincondelaprogramacion-API) al back-end
