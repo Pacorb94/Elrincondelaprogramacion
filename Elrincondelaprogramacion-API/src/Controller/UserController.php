@@ -28,13 +28,13 @@ class UserController extends AbstractController
             if ($this->validations('register', $decodedRequest)) {
                 $userRepo=$this->getDoctrine()->getRepository(User::class);
                 //Si no existe
-                if (!$userRepo->findOneBy(['email'=>$decodedRequest->email])) {
+                if (!$userRepo->findOneBy(['email'=>$decodedRequest['email']])) {
                     /*array_map itera sobre los elementos de $decodedRequest ejecutando 
                     la función trim*/
                     $decodedRequest=array_map('trim', $decodedRequest);
-                    $encryptedPassword=hash('sha256', $decodedRequest['password']);
+                    $encryptedPassword=password_hash($decodedRequest['password'], PASSWORD_BCRYPT);
                     $user=new User($decodedRequest['nick'], $decodedRequest['email'], $encryptedPassword, 
-                        null, [$decodedRequest['role']], false);
+                        null, false, [$decodedRequest['role']]);
                     $em=$this->getDoctrine()->getManager();
                     $user->execute($em, $user, 'insert');
                     return $this->json($user, 201);
@@ -154,9 +154,26 @@ class UserController extends AbstractController
         return $this->json(['code'=>400, 'message'=>'Wrong id']);
     }
 
+    /**
+     * Función que banea a un usuario
+     * @param $id
+     * @return JsonRespose
+     */
     public function ban($id)
     {
-        
+        if ($this->idValidation($id)) {
+            $userRepo=$this->getDoctrine()->getRepository(User::class);
+            $user=$userRepo->find($id);
+            //Si existe
+            if ($user) {
+                $user->setBanned(true);
+                $em=$this->getDoctrine()->getManager();
+                $user->execute($em, $user, 'update');
+                return $this->json($user);
+            }
+            return $this->json(['code'=>404, 'message'=>'User not found']);
+        }
+        return $this->json(['code'=>400, 'message'=>'Wrong id']);
     }
 
     /**
