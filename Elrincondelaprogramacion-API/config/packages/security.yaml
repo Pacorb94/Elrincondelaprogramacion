@@ -38,3 +38,7 @@ security:
         - { path: /api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #Sólo entrarán los usuarios logueados
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        #Rutas de usuario con ROLE_ADMIN
+        - { path: /api/users/[0-9]+/ban, roles: ROLE_ADMIN }
+        - { path: ^/api/[category|categories], roles: ROLE_ADMIN }
+        - { path: ^/api/posts/[0-9]+/delete, roles: ROLE_ADMIN }
