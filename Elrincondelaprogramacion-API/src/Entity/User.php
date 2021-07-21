@@ -141,8 +141,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-      
+        $roles = $this->roles;      
         return array_unique($roles);
     }
 
