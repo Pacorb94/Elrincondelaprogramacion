@@ -31,7 +31,7 @@ getUser:
 banUser:
     path: /api/users/{id}/ban
     controller: App\Controller\UserController::ban
-    methods: POST
+    methods: PUT
 
 #Category
 createCategory:
