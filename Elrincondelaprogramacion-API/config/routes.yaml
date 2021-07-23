@@ -1,11 +1,11 @@
 #User
-login:
-    path: /api/login
-    methods: POST
-    
 register:
     path: /api/register
     controller: App\Controller\UserController::register
+    methods: POST
+
+login:
+    path: /api/login
     methods: POST
 
 updateUser:
@@ -53,7 +53,7 @@ getCategory:
     path: /api/categories/{id}
     controller: App\Controller\CategoryController::getCategory
     methods: GET
-
+  
 #Post
 createPost:
     path: /api/post/create
