@@ -25,7 +25,8 @@ create table if not exists Posts(
     created_at datetime not null,
     updated_at datetime not null,
     constraint pk_posts primary key (id),
-    constraint fk_posts_users foreign key (user_id) references Users(id)
+    constraint fk_posts_users foreign key (user_id) references Users(id),
+    constraint fk_posts_categories foreign key (category_id) references Categories(id)
 )ENGINE=InnoDB;
 
 create table if not exists Categories(
