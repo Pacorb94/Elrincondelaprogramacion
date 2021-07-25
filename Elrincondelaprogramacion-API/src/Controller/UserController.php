@@ -70,7 +70,7 @@ class UserController extends AbstractController
                             /*array_map itera sobre los elementos de $decodedRequest ejecutando 
                             la función trim*/
                             $decodedRequest=array_map('trim', $decodedRequest);
-                            /*?: indica que $decodedRequest->nick si tiene valor será ese 
+                            /*?: indica que $decodedRequest['nick'] si tiene valor será ese 
                             sino $user->getNick()*/
                             $decodedRequest['nick']=$decodedRequest['nick']?:$user->getNick();
                             $decodedRequest['email']=$decodedRequest['email']?:$user->getEmail();
