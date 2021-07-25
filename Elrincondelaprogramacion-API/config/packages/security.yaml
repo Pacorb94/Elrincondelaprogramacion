@@ -42,3 +42,4 @@ security:
         - { path: /api/users/[0-9]+/ban, roles: ROLE_ADMIN }
         - { path: ^/api/[category|categories], roles: ROLE_ADMIN }
         - { path: ^/api/posts/[0-9]+/delete, roles: ROLE_ADMIN }
+     
