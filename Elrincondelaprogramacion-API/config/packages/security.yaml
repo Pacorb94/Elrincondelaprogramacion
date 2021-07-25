@@ -42,4 +42,7 @@ security:
         - { path: /api/users/[0-9]+/ban, roles: ROLE_ADMIN }
         - { path: ^/api/[category|categories], roles: ROLE_ADMIN }
         - { path: ^/api/posts/[0-9]+/delete, roles: ROLE_ADMIN }
+        #Rutas de usuario con ROLE_WRITER
+        - {path: /api/post/create, roles: ROLE_WRITER}
+        - {path: /api/posts/[0-9]+/update, roles: ROLE_WRITER}
      
