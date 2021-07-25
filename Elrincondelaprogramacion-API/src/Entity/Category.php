@@ -59,6 +59,7 @@ class Category
         $this->user=$user;
         $this->name=$name;
         $this->createdAt=new \DateTime('now');
+        $this->updatedAt=new \DateTime('now');
     }
 
     public function getId(): ?int
