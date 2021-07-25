@@ -26,7 +26,7 @@ class CategoryController extends AbstractController
             if (count($this->nameValidation($decodedRequest['name']))==0) {
                 $decodedRequest['name']=trim($decodedRequest['name']);
                 $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
-                //Si el nombre no existe
+                //Si la categoría con ese nombre no existe
                 if (!$categoryRepo->findOneBy(['name'=>$decodedRequest['name']])) {
                     $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
                     //Aunque espera el id del usuario tenemos que pasarle el usuario completo
@@ -103,6 +103,27 @@ class CategoryController extends AbstractController
             return $this->json(['code'=>404, 'message'=>'Category not found']);
         }
         return $this->json(['code'=>400, 'message'=>'Wrong id']); 
+    }
+
+    /**
+     * Función que borra una categoría
+     * @param $id
+     * @return JsonResponse
+     */
+    public function delete($id)
+    {
+        if ($this->idValidation($id)) {
+            $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
+            $category=$categoryRepo->find($id);
+            //Si existe
+            if ($category) {
+                $em=$this->getDoctrine()->getManager();
+                $category->execute($em, $category, 'delete');
+                return $this->json(['message'=>'Deleted category']);
+            }
+            return $this->json(['code'=>404, 'message'=>'Category not found']);
+        }
+        return $this->json(['code'=>400, 'message'=>'Wrong id']);
     }
 
     /**
