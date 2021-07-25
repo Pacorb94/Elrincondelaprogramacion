@@ -53,9 +53,45 @@ getCategory:
     path: /api/categories/{id}
     controller: App\Controller\CategoryController::getCategory
     methods: GET
+
+deleteCategory:
+    path: api/categories/{id}/delete
+    controller: App\Controller\CategoryController::delete
+    methods: DELETE
   
 #Post
 createPost:
     path: /api/post/create
     controller: App\Controller\PostController::create
     methods: POST
+
+updatePost:
+    path: /api/posts/{id}/update
+    controller: App\Controller\PostController::update
+    methods: PUT
+
+getPosts:
+    path: /api/posts
+    controller: App\Controller\PostController::getPosts
+    methods: GET
+
+getPost:
+    path: /api/posts/{id}
+    controller: App\Controller\PostController::getPost
+    methods: GET
+
+deletePost:
+    path: /api/posts/{id}/delete
+    controller: App\Controller\PostController::delete
+    methods: DELETE
+
+#Comment
+createComment:
+    path: /api/comment/create
+    controller: App\Controller\CommentController::create
+    methods: POST
+
+deleteComment:
+    path: /api/comments/{id}/delete
+    controller: App\Controller\CommentController::delete
+    methods: DELETE
