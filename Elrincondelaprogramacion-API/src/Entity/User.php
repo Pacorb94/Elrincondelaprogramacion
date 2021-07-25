@@ -6,8 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use JsonSerializable;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 
 /**
  * User
@@ -83,26 +81,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
      */
     private $updatedAt='current_timestamp()';
 
-    /**
-     * @var \Post
-     * Para obtener todos los posts de un usuario hacemos una relación, donde "targetEntity"
-     * apunta al modelo y "mappedBy" está mapeada por el modelo usuario
-     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user")
-     */
-    private $posts;
-
-    /**
-     * @var
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
-     */
-    private $comments;
-
-    /**
-     * @var
-     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="user")
-     */
-  //  private $categories;
-
     public function __construct($nick, $email, $password, $profileImage, $banned, $role) {
         $this->id=null;
         $this->nick=$nick;
@@ -113,9 +91,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
         $this->roles=$role;
         $this->createdAt=new \DateTime('now');
         $this->updatedAt=new \DateTime('now');
-        $this->posts = new ArrayCollection();
-        $this->comments = new ArrayCollection();
-      //  $this->categories=new ArrayCollection();
     }
 
     /**
@@ -232,33 +207,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
     {
         $this->banned=$banned;
         return $this;
-    }
-
-    /**
-     * Función que obtiene todos los posts
-     * @return Collection|Post[]
-     */
-    public function getPosts()
-    {
-        return $this->posts;
-    }
-
-    /**
-     * Función que obtiene todos los comentarios
-     * @return Collection|Comment[]
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-
-    /**
-     * Función que obtiene todos las categorías
-     * @return Collection|Comment[]
-     */
-    public function getCategories()
-    {
-        return $this->categories;
     }
 
     /**

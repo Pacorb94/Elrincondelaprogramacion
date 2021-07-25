@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Comment
@@ -52,16 +51,6 @@ class Comment
     private $updatedAt='current_timestamp()';
 
     /**
-     * @var \Post
-     *
-     * @ORM\ManyToOne(targetEntity="Post")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="post_id", referencedColumnName="id")
-     * })
-     */
-    private $post;
-
-    /**
      * @var \User
      *
      * @ORM\ManyToOne(targetEntity="User")
@@ -71,12 +60,14 @@ class Comment
      */
     private $user;
 
-    public function __construct($content) {
+    public function __construct($user, $postId, $content, $inadequate) {
         $this->id = null;
+        $this->user=$user;
+        $this->post=$postId;
         $this->content=$content;
+        $this->inadequate=$inadequate;
         $this->createdAt=new \DateTime('now');
         $this->updatedAt=new \DateTime('now');
-        $this->posts=new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,17 +105,6 @@ class Comment
     public function setUser(?User $user): self
     {
         $this->user = $user;
-        return $this;
-    }
-
-    public function getPosts()
-    {
-        return $this->posts;
-    }
-
-    public function setPosts(?Post $posts): self
-    {
-        $this->posts=$posts;
         return $this;
     }
 

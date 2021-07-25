@@ -26,8 +26,11 @@ class Post
      * @var int|null
      *
      * @ORM\Column(name="category_id", type="integer", nullable=true)
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * })
      */
-    private $categoryId;
+    private $category;
 
     /**
      * @var string
@@ -88,10 +91,11 @@ class Post
      */
     private $comments;
 
-    public function __construct($title, $content, $inadequate, $image, $user) {
+    public function __construct($title, $content, $category, $inadequate, $image, $user) {
         $this->id=null;
         $this->title=$title;
         $this->content=$content;
+        $this->category=$category;
         $this->inadequate=$inadequate;
         $this->image=$image;
         $this->user=$user;
@@ -105,14 +109,14 @@ class Post
         return $this->id;
     }
 
-    public function getCategoryId(): ?int
+    public function getCategory(): ?int
     {
-        return $this->categoryId;
+        return $this->category;
     }
 
-    public function setCategoryId(?int $categoryId): self
+    public function setCategory(?int $category): self
     {
-        $this->categoryId = $categoryId;
+        $this->category = $category;
         return $this;
     }
 
