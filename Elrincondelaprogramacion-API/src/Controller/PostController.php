@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Post;
+use App\Entity\Category;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -35,8 +36,10 @@ class PostController extends AbstractController
                 //Si no existe
                 if (!$postRepo->findOneBy(['title'=>$decodedRequest['title']])) {
                     $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
+                    $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
+                    $category=$categoryRepo->findOneBy(['name'=>$decodedRequest['category']]);
                     $post=new Post($decodedRequest['title'], $decodedRequest['content'], 
-                        $decodedRequest['categoryId'], false, null, $userLoggedIn);
+                        $category, false, null, $userLoggedIn);
                     $em=$this->getDoctrine()->getManager();
                     $post->execute($em, $post, 'insert');
                     return $this->json(['code'=>201,'message'=>'Post created']);
@@ -73,11 +76,12 @@ class PostController extends AbstractController
                             sino $post->getTitle()*/
                             $decodedRequest['title']=$decodedRequest['title']?:$post->getTitle();  
                             $decodedRequest['content']=$decodedRequest['content']?:$post->getContent();
-                            $decodedRequest['categoryId']=$decodedRequest['categoryId']?:$post->getCategoryId();
+                            $decodedRequest['category']=$decodedRequest['category']?:$post->getCategory();
+                            
                             if ($this->validations($decodedRequest)) {
                                 $post->setTitle($decodedRequest['title']);  
                                 $post->setContent($decodedRequest['content']);
-                                $post->setCategory($decodedRequest['categoryId']);
+                                $post->setCategory($decodedRequest['category']);
                                 $em=$this->getDoctrine()->getManager();
                                 $post->execute($em, $post, 'update');
                                 return $this->json($post);
@@ -235,7 +239,7 @@ class PostController extends AbstractController
         }else{
             if (count($this->titleValidation($validator, $decodedRequest['title']))==0
             &&count($this->contentValidation($validator, $decodedRequest['content']))==0
-            &&$this->idValidation($decodedRequest['categoryId'])) 
+            &&count($this->categoryValidation($validator, $decodedRequest['category']))==0) 
                 return true;
             return false;   
         }
@@ -272,6 +276,27 @@ class PostController extends AbstractController
     {
         $contentValidation=$validator->validate($content, new Assert\NotBlank());
         return $contentValidation;
+    }
+
+     /**
+     * Función que valida la categoría
+     * @param $validator
+     * @param $category
+     * @return
+     */
+    public function categoryValidation($validator, $category)
+    {
+        $categoryValidation=$validator->validate($category, 
+            [
+                new Assert\NotBlank(),
+                new Assert\Length(
+                    [
+                        'max'=>50
+                    ]
+                ) 
+            ]
+        );
+        return $categoryValidation;
     }
 
     /**
