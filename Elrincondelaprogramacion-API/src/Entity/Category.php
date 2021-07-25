@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * Category
@@ -54,20 +54,11 @@ class Category
      */
     private $user;
 
-    /**
-     * 
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="categoryId")
-     */
-    //private $posts;
-
     public function __construct($user, $name) {
         $this->id=null;
         $this->user=$user;
         $this->name=$name;
         $this->createdAt=new \DateTime('now');
-        $this->updatedAt=new \DateTime('now');
-      //  $this->posts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -85,17 +76,6 @@ class Category
         $this->name = $name;
         return $this;
     }
-
-    /*public function getPosts()
-    {
-        return $this->posts;
-    }
-
-    public function setPosts(?Post $posts)
-    {
-        $this->posts=$posts;
-        return $this;
-    }*/
 
     public function getUser()
     {

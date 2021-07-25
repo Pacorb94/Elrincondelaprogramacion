@@ -8,7 +8,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Post
  *
- * @ORM\Table(name="posts", indexes={@ORM\Index(name="fk_posts_users", columns={"user_id"})})
+ * @ORM\Table(name="posts", 
+ * indexes={
+ *  @ORM\Index(name="fk_posts_categories", columns={"category_id"}),
+ *  @ORM\Index(name="fk_posts_users", columns={"user_id"})
+ * })
  * @ORM\Entity
  */
 class Post
@@ -23,9 +27,9 @@ class Post
     private $id;
 
     /**
-     * @var int|null
+     * @var \Category
      *
-     * @ORM\Column(name="category_id", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Category")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      * })
