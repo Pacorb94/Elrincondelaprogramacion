@@ -84,7 +84,7 @@ class Post
     /**
      * @var \Comment
      *
-     * @ORM\ManyToOne(targetEntity="Comment", inversedBy="post")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
      */
     private $comments;
 
@@ -180,5 +180,23 @@ class Post
     {
         $this->comments = $comments;
         return $this;
+    }
+
+    /**
+     * Función que ejecuta una consulta
+     * @param $em
+     * @param $model
+     * @param $action
+     */
+    public function execute($em, $model, $action)
+    {       
+        if ($action=='insert'||$action=='update') {
+            //Guardamos o modificamos el modelo en el ORM
+            $em->persist($model);
+        } else if ($action=='delete') {
+            $em->remove($model);
+        }
+        //Ejecutamos la sentencia en la base de datos
+        $em->flush();
     }
 }

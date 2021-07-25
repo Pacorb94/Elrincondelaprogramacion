@@ -282,16 +282,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
     /**
      * Función que ejecuta una consulta
      * @param $em
-     * @param $user
+     * @param $model
      * @param $action
      */
-    public function execute($em, User $user, $action)
+    public function execute($em, $model, $action)
     {       
         if ($action=='insert'||$action=='update') {
-            //Guardamos o modificamos el usuario en el ORM
-            $em->persist($user);
+            //Guardamos o modificamos el modelo en el ORM
+            $em->persist($model);
         } else if ($action=='delete') {
-            $em->remove($user);
+            $em->remove($model);
         }
         //Ejecutamos la sentencia en la base de datos
         $em->flush();

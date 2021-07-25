@@ -109,18 +109,18 @@ class Category
     }
 
     /**
-     * Función que ejecuta una acción
+     * Función que ejecuta una consulta
      * @param $em
-     * @param $category
+     * @param $model
      * @param $action
      */
-    public function execute($em, Category $category, $action)
+    public function execute($em, $model, $action)
     {       
         if ($action=='insert'||$action=='update') {
-            //Guardamos o modificamos la categoría en el ORM
-            $em->persist($category);
+            //Guardamos o modificamos el modelo en el ORM
+            $em->persist($model);
         } else if ($action=='delete') {
-            $em->remove($category);
+            $em->remove($model);
         }
         //Ejecutamos la sentencia en la base de datos
         $em->flush();
