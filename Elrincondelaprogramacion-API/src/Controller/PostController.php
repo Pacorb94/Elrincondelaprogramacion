@@ -9,8 +9,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Post;
-use App\Entity\Comment;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class PostController extends AbstractController
 {
@@ -29,13 +30,13 @@ class PostController extends AbstractController
             /*array_map itera sobre los elementos de $decodedRequest ejecutando 
             la función trim*/
             $decodedRequest=array_map('trim', $decodedRequest);
-            if ($this->validations('create', $decodedRequest)) {
+            if ($this->validations($decodedRequest)) {
                 $postRepo=$this->getDoctrine()->getRepository(Post::class);
                 //Si no existe
                 if (!$postRepo->findOneBy(['title'=>$decodedRequest['title']])) {
                     $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
-                    $post=new Post($decodedRequest['title'], $decodedRequest['content'], false, null, 
-                        $userLoggedIn);
+                    $post=new Post($decodedRequest['title'], $decodedRequest['content'], 
+                        $decodedRequest['categoryId'], false, null, $userLoggedIn);
                     $em=$this->getDoctrine()->getManager();
                     $post->execute($em, $post, 'insert');
                     return $this->json(['code'=>201,'message'=>'Post created']);
@@ -55,20 +56,121 @@ class PostController extends AbstractController
      */
     public function update($id, Request $request)
     {
-        
+        try {
+            if ($this->idValidation($id)) {
+                $request=$request->get('json', null);
+                if ($request) {
+                    $decodedRequest=json_decode($request, true);
+                    $decodedRequest=array_map('trim', $decodedRequest);
+                    $postRepo=$this->getDoctrine()->getRepository(Post::class);
+                    $post=$postRepo->find($id);
+                    //Si existe 
+                    if ($post) {
+                        $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
+                        //Si el post es del usuario logueado
+                        if ($userLoggedIn->getId()==$post->getUser()->getId()) {
+                            /*?: indica que $decodedRequest['title'] si tiene valor será ese 
+                            sino $post->getTitle()*/
+                            $decodedRequest['title']=$decodedRequest['title']?:$post->getTitle();  
+                            $decodedRequest['content']=$decodedRequest['content']?:$post->getContent();
+                            $decodedRequest['categoryId']=$decodedRequest['categoryId']?:$post->getCategoryId();
+                            if ($this->validations($decodedRequest)) {
+                                $post->setTitle($decodedRequest['title']);  
+                                $post->setContent($decodedRequest['content']);
+                                $post->setCategory($decodedRequest['categoryId']);
+                                $em=$this->getDoctrine()->getManager();
+                                $post->execute($em, $post, 'update');
+                                return $this->json($post);
+                            } 
+                            return $this->json(['code'=>400, 'message'=>'Wrong validation']);       
+                        }
+                        return $this->json(['code'=>400, 'message'=>'You can\'t modify that post']);                        
+                    }
+                    return $this->json(['code'=>404, 'message'=>'Post not found']);     
+                }
+                return $this->json(['code'=>400, 'message'=>'Wrong json']); 
+            }
+            return $this->json(['code'=>400, 'message'=>'Wrong id']);             
+        } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
+            return $this->json(['code'=>500, 'message'=>$e->getMessage()]);
+        }
     }
 
-    
-
     /**
-     * Función que obtiene los posts
+     * Función que sube una imagen
+     * @param $request
      * @return JsonResponse
      */
-    public function getPosts()
+    public function uploadImage(Request $request)
     {
-        $postRepo=$this->getDoctrine()->getRepository(Post::class);
-        $posts=$postRepo->findAll();
-        return $this->json($posts);
+        $image=$request->files->get('file0');
+        if ($image) {
+            if ($this->validations(null, 'uploadImage', $image)) {
+                //Debemos configurar la fecha y tiempo
+                date_default_timezone_set('Europe/Madrid');
+                $imageName=date('d-m-Y_H-i-s').'_'.$image->getClientOriginalName();
+                //Obtenemos la carpeta donde se guardará la imagen
+                $postsImagesDirectory=$this->getParameter('postsImagesDirectory');
+                //Movemos la imagen de perfil a esa carpeta
+                $image->move($postsImagesDirectory, $imageName);
+                return $this->json(['image'=>$imageName], 201);
+            }
+            return $this->json(['code'=>400, 'message'=>'Wrong image']);
+        }
+        return $this->json(['code'=>400, 'message'=>'You must send an image']); 
+    }
+
+    /**
+     * Función que obtiene una imagen
+     * @param $imageName
+     * @param $filesystem
+     * @return JsonResponse|Response
+     */
+    public function getImage($imageName, Filesystem $filesystem)
+    {
+        if ($imageName) {
+            //Obtenemos la carpeta donde se guardará la imagen
+            $postsImagesDirectory=$this->getParameter('postsImagesDirectory');
+            if ($filesystem->exists($postsImagesDirectory.'/'.$imageName)) {
+                //Obtenemos la imagen
+                $image=readfile($postsImagesDirectory.'/'.$imageName);
+                return new Response($image);
+            }
+            return $this->json(['code'=>404, 'message'=>'Image not found']);
+        }
+        return $this->json(['code'=>400, 'message'=>'You must send an image name']); 
+    }
+
+    /**
+     * Función que obtiene los posts por usuario
+     * @param $userId
+     * @param $request
+     * @param $paginator
+     * @return JsonResponse
+     */
+    public function getPostsByUser($userId, Request $request, PaginatorInterface $paginator)
+    {
+        if ($this->idValidation($userId)) {
+            $data=$this->paginatedPosts($userId, 'user', $request, $paginator);
+            return $this->json($data);
+        }
+        return $this->json(['code'=>400, 'message'=>'Wrong id']);
+    }
+
+    /**
+     * Función que obtiene los posts por categoría
+     * @param $categoryId
+     * @param $request
+     * @param $paginator
+     * @return JsonResponse
+     */
+    public function getPostsByCategory($categoryId, Request $request, PaginatorInterface $paginator)
+    {
+        if ($this->idValidation($categoryId)) {
+            $data=$this->paginatedPosts($categoryId, 'category', $request, $paginator);
+            return $this->json($data);
+        }
+        return $this->json(['code'=>400, 'message'=>'Wrong id']);
     }
 
     /**
@@ -76,38 +178,41 @@ class PostController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function getPost($id)
+    public function getPostDetail($id)
     {
         if ($this->idValidation($id)) {
             $postRepo=$this->getDoctrine()->getRepository(Post::class);
             $post=$postRepo->find($id);
             //Si existe
-            if ($post) return $this->json($post);
+            if ($post) 
+                /*Como los posts almacenan un array de comentarios por lo tanto no se puede serializar
+                correctamente debemos devolver la respuesta así*/
+                return $this->json($post, 200, [], 
+                    [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}]
+                );
             return $this->json(['code'=>404, 'message'=>'Post not found']);
         }
         return $this->json(['code'=>400, 'message'=>'Wrong id']);  
     }
 
     /**
-     * Función que borra un comentario
+     * Función que marca un post como inadecuado
      * @param $id
      * @return JsonResponse
      */
-    public function delete($id)
+    public function inadequate($id)
     {
         if ($this->idValidation($id)) {
             $postRepo=$this->getDoctrine()->getRepository(Post::class);
             $post=$postRepo->find($id);
             //Si existe
             if ($post) {
+                $post->setInadequate(true);
                 $em=$this->getDoctrine()->getManager();
-                $commentRepo=$this->getDoctrine()->getRepository(Comment::class);
-                //Para borrar un post debemos borrar antes sus comentarios
-                $comments=$commentRepo->findBy(['post_id'=>$id]);
-                foreach ($comments as $comment) $comment->execute($em, $comment, 'delete');
-                $post->execute($em, $post, 'delete');
-                return $this->json(['message'=>'Post deleted']);
+                $post->execute($em, $post, 'update');
+                return $this->json($post);
             }
+            return $this->json(['code'=>404, 'message'=>'Post not found']);
         }
         return $this->json(['code'=>400, 'message'=>'Wrong id']); 
     }
@@ -119,25 +224,20 @@ class PostController extends AbstractController
      * @param $image
      * @return
      */
-    public function validations($action, $decodedRequest, $image=null)
+    public function validations($decodedRequest, $action='', $image=null)
     {
         //Instanciamos el validador
         $validator=Validation::createValidator();
-        if ($action=='create') {
-            //Si no hay errores
-            if (count($this->titleValidation($validator, $decodedRequest['title']))==0
-            &&count($this->contentValidation($validator, $decodedRequest['content']))==0)
-                return true;
-            return false;
-        }else if($action=='update'){
-            if (count($this->titleValidation($validator, $decodedRequest['title']))==0
-            &&count($this->contentValidation($validator, $decodedRequest['content']))==0) 
-                return true;
-            return false;   
-        }else if($action=='uploadImage'){
+        if($action=='uploadImage'){
             if (count($this->imageValidation($validator, $image))==0) 
                 return true;
             return false;
+        }else{
+            if (count($this->titleValidation($validator, $decodedRequest['title']))==0
+            &&count($this->contentValidation($validator, $decodedRequest['content']))==0
+            &&$this->idValidation($decodedRequest['categoryId'])) 
+                return true;
+            return false;   
         }
     }
 
@@ -195,5 +295,37 @@ class PostController extends AbstractController
     {
         if (is_numeric($id)) return true;
         return false;
+    }
+
+    /**
+     * Función que obtiene los posts paginados
+     * @param $id
+     * @param $fieldName
+     * @param $request
+     * @param $paginator
+     * @return
+     */
+    public function paginatedPosts($id, $fieldName, $request, $paginator)
+    {
+        /*Como el parámetro página viene por GET usamos la propiedad "query" y por defecto si 
+        no viene nada tendrá el valor 1*/
+        $page=$request->query->getInt('page', 1);
+        //Paginator necesita sentencias en DQL
+        $dql="select v from App\Entity\Post v where v.$fieldName = $id order by v.id desc";
+        $em=$this->getDoctrine()->getManager();
+        $query=$em->createQuery($dql);
+        //Los posts por página que se verán
+        define('POSTSPERPAGE', 1);
+        //Llamamos al servicio
+        $pagination=$paginator->paginate($query, $page, POSTSPERPAGE);
+        $totalPosts=$pagination->getTotalItemCount();
+        $data=[
+            'postsNumber'=>$totalPosts,
+            'currentPage'=>$page,
+            'postsPerPage'=>POSTSPERPAGE, 
+            'totalPages'=>ceil($totalPosts/POSTSPERPAGE),
+            'posts'=>$pagination
+        ];
+        return $data;
     }
 }
