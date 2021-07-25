@@ -87,7 +87,7 @@ deletePost:
 
 #Comment
 createComment:
-    path: /api/comment/create
+    path: /api/{id_post}/comment/create
     controller: App\Controller\CommentController::create
     methods: POST
 
