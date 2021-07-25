@@ -25,13 +25,13 @@ class UserController extends AbstractController
         if ($request) {
             //Con true decodificamos la petición a un array
             $decodedRequest=json_decode($request, true);
+            /*array_map itera sobre los elementos de $decodedRequest ejecutando 
+            la función trim*/
+            $decodedRequest=array_map('trim', $decodedRequest);
             if ($this->validations('register', $decodedRequest)) {
                 $userRepo=$this->getDoctrine()->getRepository(User::class);
                 //Si no existe
                 if (!$userRepo->findOneBy(['email'=>$decodedRequest['email']])) {
-                    /*array_map itera sobre los elementos de $decodedRequest ejecutando 
-                    la función trim*/
-                    $decodedRequest=array_map('trim', $decodedRequest);
                     $encryptedPassword=password_hash($decodedRequest['password'], PASSWORD_BCRYPT);
                     $user=new User($decodedRequest['nick'], $decodedRequest['email'], $encryptedPassword, 
                         null, false, [$decodedRequest['role']]);
@@ -177,9 +177,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * Función que valida los datos del registro
+     * Función que valida los datos
      * @param $action
      * @param $decodedRequest
+     * @param $image
      * @return
      */
     public function validations($action, $decodedRequest, $image=null)
