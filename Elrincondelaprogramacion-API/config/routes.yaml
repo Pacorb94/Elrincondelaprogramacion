@@ -70,28 +70,48 @@ updatePost:
     controller: App\Controller\PostController::update
     methods: PUT
 
+uploadImage:
+    path: /api/post-image/upload
+    controller: App\Controller\PostController::uploadImage
+    methods: POST
+
+getImage:
+    path: /api/posts-images/{imageName}
+    controller: App\Controller\PostController::getImage
+    methods: GET
+
 getPosts:
     path: /api/posts
     controller: App\Controller\PostController::getPosts
     methods: GET
 
-getPost:
-    path: /api/posts/{id}
-    controller: App\Controller\PostController::getPost
+getPostsByUser:
+    path: /api/posts/users/{userId}
+    controller: App\Controller\PostController::getPostsByUser
     methods: GET
 
-deletePost:
-    path: /api/posts/{id}/delete
-    controller: App\Controller\PostController::delete
-    methods: DELETE
+getPostsByCategory:
+    path: /api/posts/categories/{categoryId}
+    controller: App\Controller\PostController::getPostsByCategory
+    methods: GET
+
+getPostDetail:
+    path: /api/posts/{id}
+    controller: App\Controller\PostController::getPostDetail
+    methods: GET
+
+indequatePost:
+    path: /api/posts/{id}/inadequate
+    controller: App\Controller\PostController::inadequate
+    methods: PUT
 
 #Comment
 createComment:
-    path: /api/{id_post}/comment/create
+    path: /api/{postId}/comment/create
     controller: App\Controller\CommentController::create
     methods: POST
 
-deleteComment:
-    path: /api/comments/{id}/delete
-    controller: App\Controller\CommentController::delete
-    methods: DELETE
+indequateComment:
+    path: /api/comments/{id}/inadequate
+    controller: App\Controller\CommentController::inadequate
+    methods: PUT
