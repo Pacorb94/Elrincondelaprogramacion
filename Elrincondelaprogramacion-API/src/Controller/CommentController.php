@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Comment;
 use App\Entity\Post;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
 
 class CommentController extends AbstractController
 {
