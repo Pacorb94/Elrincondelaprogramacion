@@ -74,13 +74,14 @@ class UserController extends AbstractController
                             sino $user->getNick()*/
                             $decodedRequest['nick']=$decodedRequest['nick']?:$user->getNick();
                             $decodedRequest['email']=$decodedRequest['email']?:$user->getEmail();
-                            if (!$this->validations('update', $decodedRequest)) 
-                                return $this->json(['code'=>400, 'message'=>'Wrong validation']);
-                            $user->setNick($decodedRequest['nick']);
-                            $user->setEmail($decodedRequest['email']);
-                            $em=$this->getDoctrine()->getManager();
-                            $user->execute($em, $user, 'update');
-                            return $this->json($user);                          
+                            if ($this->validations('update', $decodedRequest)) {
+                                $user->setNick($decodedRequest['nick']);
+                                $user->setEmail($decodedRequest['email']);
+                                $em=$this->getDoctrine()->getManager();
+                                $user->execute($em, $user, 'update');
+                                return $this->json($user);          
+                            }
+                            return $this->json(['code'=>400, 'message'=>'Wrong validation']);  
                         }
                         return $this->json(['code'=>404, 'message'=>'User not found']);
                     }
@@ -89,8 +90,8 @@ class UserController extends AbstractController
                 return $this->json(['code'=>400, 'message'=>'You can\'t modify that user']);
             }
             return $this->json(['code'=>400, 'message'=>'Wrong id']);
-        } catch (\Throwable $th) {
-            return $this->json(['code'=>500, 'message'=>$th->getMessage()]);
+        } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
+            return $this->json(['code'=>500, 'message'=>$e->getMessage()]);
         }          
     }
 
@@ -102,7 +103,7 @@ class UserController extends AbstractController
     public function uploadProfileImage(Request $request)
     {
         $image=$request->files->get('file0', null);
-        if ($image) {;
+        if ($image) {
             if($this->validations('uploadProfileImage', null, $image)){
                 //Debemos configurar la fecha y tiempo
                 date_default_timezone_set('Europe/Madrid');
@@ -121,7 +122,8 @@ class UserController extends AbstractController
     /**
      * Función que obtiene una imagen de perfil
      * @param $imageName
-     * @return JsonResponse
+     * @param $filesystem
+     * @return JsonResponse|Response
      */
     public function getProfileImage($imageName, Filesystem $filesystem)
     {
