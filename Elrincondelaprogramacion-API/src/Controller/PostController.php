@@ -14,6 +14,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
+
 class PostController extends AbstractController
 {
 
@@ -76,12 +77,13 @@ class PostController extends AbstractController
                             sino $post->getTitle()*/
                             $decodedRequest['title']=$decodedRequest['title']?:$post->getTitle();  
                             $decodedRequest['content']=$decodedRequest['content']?:$post->getContent();
-                            $decodedRequest['category']=$decodedRequest['category']?:$post->getCategory();
-                            
-                            if ($this->validations($decodedRequest)) {
+                            $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
+                            $category=$categoryRepo->findOneBy(['name'=>$decodedRequest['category']])
+                                ?:$post->getCategory();
+                            if ($this->validations($decodedRequest)) {                
                                 $post->setTitle($decodedRequest['title']);  
                                 $post->setContent($decodedRequest['content']);
-                                $post->setCategory($decodedRequest['category']);
+                                $post->setCategory($category);
                                 $em=$this->getDoctrine()->getManager();
                                 $post->execute($em, $post, 'update');
                                 return $this->json($post);
@@ -146,13 +148,13 @@ class PostController extends AbstractController
     }
 
     /**
-     * Función que obtiene los posts por usuario
+     * Función que obtiene los posts del usuario
      * @param $userId
      * @param $request
      * @param $paginator
      * @return JsonResponse
      */
-    public function getPostsByUser($userId, Request $request, PaginatorInterface $paginator)
+    public function getUserPosts($userId, Request $request, PaginatorInterface $paginator)
     {
         if ($this->idValidation($userId)) {
             $data=$this->paginatedPosts($userId, 'user', $request, $paginator);
@@ -188,12 +190,13 @@ class PostController extends AbstractController
             $postRepo=$this->getDoctrine()->getRepository(Post::class);
             $post=$postRepo->find($id);
             //Si existe
-            if ($post) 
+            if ($post) {
                 /*Como los posts almacenan un array de comentarios por lo tanto no se puede serializar
                 correctamente debemos devolver la respuesta así*/
                 return $this->json($post, 200, [], 
                     [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}]
                 );
+            }
             return $this->json(['code'=>404, 'message'=>'Post not found']);
         }
         return $this->json(['code'=>400, 'message'=>'Wrong id']);  
@@ -238,8 +241,7 @@ class PostController extends AbstractController
             return false;
         }else{
             if (count($this->titleValidation($validator, $decodedRequest['title']))==0
-            &&count($this->contentValidation($validator, $decodedRequest['content']))==0
-            &&count($this->categoryValidation($validator, $decodedRequest['category']))==0) 
+            &&count($this->contentValidation($validator, $decodedRequest['content']))==0) 
                 return true;
             return false;   
         }
