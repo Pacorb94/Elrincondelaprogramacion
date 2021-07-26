@@ -70,10 +70,10 @@ class Comment
      */
     private $post;
 
-    public function __construct($user, $postId, $content, $inadequate) {
+    public function __construct($user, $post, $content, $inadequate) {
         $this->id = null;
         $this->user=$user;
-        $this->post=$postId;
+        $this->post=$post;
         $this->content=$content;
         $this->inadequate=$inadequate;
         $this->createdAt=new \DateTime('now');
