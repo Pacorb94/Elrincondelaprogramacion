@@ -36,11 +36,10 @@ security:
         #Sólo entrarán los usuarios que no están logueados
         - { path: /api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        #Rutas de usuario con ROLE_ADMIN
         - { path: /api/users/[0-9]+/ban, roles: ROLE_ADMIN }
         - { path: ^/api/[category|categories], roles: ROLE_ADMIN }
         - { path: /api/posts/[0-9]+/inadequate, roles: ROLE_ADMIN }
-        #Rutas de usuario con ROLE_WRITER
-        - { path: /api/post/create, roles: ROLE_WRITER }
-        - { path: /api/posts/[0-9]+/update, roles: ROLE_WRITER }
+        - { path: /api/post/create, roles: [ROLE_ADMIN, ROLE_WRITER] }
+        - { path: /api/posts/[0-9]+/update, roles: [ROLE_ADMIN, ROLE_WRITER] }
+        - { path: /api/comments/[0-9]+/inadequate, roles: ROLE_ADMIN }
      
