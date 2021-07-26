@@ -85,9 +85,9 @@ getPosts:
     controller: App\Controller\PostController::getPosts
     methods: GET
 
-getPostsByUser:
+getUserPosts:
     path: /api/posts/users/{userId}
-    controller: App\Controller\PostController::getPostsByUser
+    controller: App\Controller\PostController::getUserPosts
     methods: GET
 
 getPostsByCategory:
