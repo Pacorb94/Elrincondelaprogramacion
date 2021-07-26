@@ -60,6 +60,16 @@ class Comment
      */
     private $user;
 
+    /**
+     * @var \Post
+     *
+     * @ORM\ManyToOne(targetEntity="Post")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+     * })
+     */
+    private $post;
+
     public function __construct($user, $postId, $content, $inadequate) {
         $this->id = null;
         $this->user=$user;
