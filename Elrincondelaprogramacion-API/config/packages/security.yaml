@@ -33,9 +33,11 @@ security:
                     - lexik_jwt_authentication.jwt_token_authenticator
 
     access_control:
-        #Sólo entrarán los usuarios que no están logueados
+        #Para usuarios no logueados
         - { path: /api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #Para usuarios logueados
+        - { path: /api/users/[0-9]+/update, roles: IS_AUTHENTICATED_FULLY }
         - { path: /api/users/[0-9]+/ban, roles: ROLE_ADMIN }
         - { path: ^/api/[category|categories], roles: ROLE_ADMIN }
         - { path: /api/posts/[0-9]+/inadequate, roles: ROLE_ADMIN }
