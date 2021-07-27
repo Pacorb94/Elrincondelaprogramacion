@@ -219,7 +219,7 @@ class PostController extends AbstractController
                     $post=$postRepo->find($id);
                     //Si existe
                     if ($post) {
-                        $inadequate=($decodedRequest['inadequate']=='yes') ? true : false;
+                        $inadequate=($decodedRequest['inadequate']=='yes')?true:false;
                         $post->setInadequate($inadequate);
                         $em=$this->getDoctrine()->getManager();
                         $post->execute($em, $post, 'update');
