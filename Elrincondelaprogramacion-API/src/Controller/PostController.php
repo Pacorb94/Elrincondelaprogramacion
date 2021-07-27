@@ -203,23 +203,33 @@ class PostController extends AbstractController
     }
 
     /**
-     * Función que marca un post como inadecuado
+     * Función que marca un post como inadecuado o lo desmarca
      * @param $id
+     * @param $request
      * @return JsonResponse
      */
-    public function inadequate($id)
+    public function inadequate($id, Request $request)
     {
         if ($this->idValidation($id)) {
-            $postRepo=$this->getDoctrine()->getRepository(Post::class);
-            $post=$postRepo->find($id);
-            //Si existe
-            if ($post) {
-                $post->setInadequate(true);
-                $em=$this->getDoctrine()->getManager();
-                $post->execute($em, $post, 'update');
-                return $this->json($post);
+            $request=$request->get('json', null);
+            if ($request) {
+                $decodedRequest=json_decode($request, true);
+                if ($decodedRequest['inadequate']) {
+                    $postRepo=$this->getDoctrine()->getRepository(Post::class);
+                    $post=$postRepo->find($id);
+                    //Si existe
+                    if ($post) {
+                        $inadequate=($decodedRequest['inadequate']=='yes') ? true : false;
+                        $post->setInadequate($inadequate);
+                        $em=$this->getDoctrine()->getManager();
+                        $post->execute($em, $post, 'update');
+                        return $this->json($post);
+                    }
+                    return $this->json(['code'=>404, 'message'=>'Post not found']);
+                }
+                return $this->json(['code'=>400, 'message'=>'You must send a value']);    
             }
-            return $this->json(['code'=>404, 'message'=>'Post not found']);
+            return $this->json(['code'=>400, 'message'=>'Wrong json']);   
         }
         return $this->json(['code'=>400, 'message'=>'Wrong id']); 
     }

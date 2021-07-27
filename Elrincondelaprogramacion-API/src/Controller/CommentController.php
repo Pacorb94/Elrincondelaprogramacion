@@ -50,23 +50,33 @@ class CommentController extends AbstractController
     }
 
     /**
-     * Función que marca como inadecuado un comentario
+     * Función que marca como inadecuado un comentario o lo desmarca
      * @param $id
+     * @param $request
      * @return JsonResponse
      */
-    public function inadequate($id)
+    public function inadequate($id, Request $request)
     {
         if ($this->idValidation($id)) {
-            $commentRepo=$this->getDoctrine()->getRepository(Comment::class);
-            $comment=$commentRepo->find($id);
-            //Si existe
-            if ($comment) {
-                $comment->setInadequate(true);
-                $em=$this->getDoctrine()->getManager();
-                $comment->execute($em, $comment, 'update');
-                return $this->json($comment);
+            $request=$request->get('json', null);
+            if ($request) {
+                $decodedRequest=json_decode($request, true);
+                if ($decodedRequest['inadequate']) {
+                    $commentRepo=$this->getDoctrine()->getRepository(Comment::class);
+                    $comment=$commentRepo->find($id);
+                    //Si existe
+                    if ($comment) {
+                        $inadequate=($decodedRequest['inadequate']=='yes')?true:false;
+                        $comment->setInadequate($inadequate);
+                        $em=$this->getDoctrine()->getManager();
+                        $comment->execute($em, $comment, 'update');
+                        return $this->json($comment);
+                    }
+                    return $this->json(['code'=>404, 'message'=>'Comment not found']);
+                }
+                return $this->json(['code'=>400, 'message'=>'You must send a value']);
             }
-            return $this->json(['code'=>404, 'message'=>'Comment not found']);
+            return $this->json(['code'=>400, 'message'=>'Wrong json']);  
         }
         return $this->json(['code'=>400, 'message'=>'Wrong id']);
     }
