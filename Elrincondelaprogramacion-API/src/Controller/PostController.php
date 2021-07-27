@@ -65,6 +65,8 @@ class PostController extends AbstractController
                 $request=$request->get('json', null);
                 if ($request) {
                     $decodedRequest=json_decode($request, true);
+                    /*array_map itera sobre los elementos de $decodedRequest ejecutando 
+                    la función trim*/
                     $decodedRequest=array_map('trim', $decodedRequest);
                     $postRepo=$this->getDoctrine()->getRepository(Post::class);
                     $post=$postRepo->find($id);
@@ -134,6 +136,7 @@ class PostController extends AbstractController
      */
     public function getImage($imageName, Filesystem $filesystem)
     {
+        $imageName=trim($imageName);
         if ($imageName) {
             //Obtenemos la carpeta donde se guardará la imagen
             $postsImagesDirectory=$this->getParameter('postsImagesDirectory');
@@ -214,6 +217,7 @@ class PostController extends AbstractController
             $request=$request->get('json', null);
             if ($request) {
                 $decodedRequest=json_decode($request, true);
+                $decodedRequest['inadequate']=trim($decodedRequest['inadequate']);
                 if ($decodedRequest['inadequate']) {
                     $postRepo=$this->getDoctrine()->getRepository(Post::class);
                     $post=$postRepo->find($id);
@@ -352,7 +356,7 @@ class PostController extends AbstractController
         $em=$this->getDoctrine()->getManager();
         $query=$em->createQuery($dql);
         //Los posts por página que se verán
-        define('POSTSPERPAGE', 1);
+        define('POSTSPERPAGE', 5);
         //Llamamos al servicio
         $pagination=$paginator->paginate($query, $page, POSTSPERPAGE);
         $totalPosts=$pagination->getTotalItemCount();

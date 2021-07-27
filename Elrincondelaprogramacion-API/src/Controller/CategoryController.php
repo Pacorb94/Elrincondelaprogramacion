@@ -22,6 +22,7 @@ class CategoryController extends AbstractController
         $request=$request->get('json', null);
         if ($request) {
             $decodedRequest=json_decode($request, true);
+            $decodedRequest['name']=trim($decodedRequest['name']);
             if (count($this->nameValidation($decodedRequest['name']))==0) {
                 $decodedRequest['name']=trim($decodedRequest['name']);
                 $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
@@ -54,6 +55,7 @@ class CategoryController extends AbstractController
                 $request=$request->get('json', null);
                 if ($request) {
                     $decodedRequest=json_decode($request, true);
+                    $decodedRequest['name']=trim($decodedRequest['name']);
                     if ($this->nameValidation($decodedRequest['name'])) {
                         $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
                         $category=$categoryRepo->find($id);
