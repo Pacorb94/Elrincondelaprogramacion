@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'navbar',
@@ -6,10 +7,31 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
-    constructor() { }
-
-    ngOnInit(): void {
+    userLoggedIn:any;
+    //private _userService:UserService
+    form:any;
+    profileImage:any;
+    constructor() {
+        //this.form=new FormGroup();
     }
 
+    ngOnInit(): void {
+
+    }
+
+    searchPosts(searchText:string){
+
+    }
+
+    logout(){
+
+    }
+
+    checkTouched(field:any){
+
+    }
+
+    wrongValidationMessage(field:any, fieldName:string){
+
+    }
 }
