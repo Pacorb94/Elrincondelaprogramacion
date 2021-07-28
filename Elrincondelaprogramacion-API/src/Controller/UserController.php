@@ -160,21 +160,31 @@ class UserController extends AbstractController
     /**
      * Función que banea a un usuario
      * @param $id
+     * @param $request
      * @return JsonRespose
      */
-    public function ban($id)
+    public function ban($id, Request $request)
     {
         if ($this->idValidation($id)) {
-            $userRepo=$this->getDoctrine()->getRepository(User::class);
-            $user=$userRepo->find($id);
-            //Si existe
-            if ($user) {
-                $user->setBanned(true);
-                $em=$this->getDoctrine()->getManager();
-                $user->execute($em, $user, 'update');
-                return $this->json($user);
+            $request=$request->get('json', true);
+            if ($request) {
+                $decodedRequest=json_decode($request, true);
+                $decodedRequest['ban']=trim($decodedRequest['ban']);
+                if ($decodedRequest['ban']=='yes') {
+                    $userRepo=$this->getDoctrine()->getRepository(User::class);
+                    $user=$userRepo->find($id);
+                    //Si existe
+                    if ($user) {
+                        $user->setBanned(true);
+                        $em=$this->getDoctrine()->getManager();
+                        $user->execute($em, $user, 'update');
+                        return $this->json($user);
+                    }
+                    return $this->json(['code'=>404, 'message'=>'User not found']);
+                }
+                return $this->json(['code'=>400, 'message'=>'You must be send yes as value']); 
             }
-            return $this->json(['code'=>404, 'message'=>'User not found']);
+            return $this->json(['code'=>400, 'message'=>'Wrong json']);  
         }
         return $this->json(['code'=>400, 'message'=>'Wrong id']);
     }
