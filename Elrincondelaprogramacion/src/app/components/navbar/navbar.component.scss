@@ -1,7 +1,22 @@
-.dropdown-menu {
-    a{
-        cursor: pointer;
-    }
+a{
+    cursor: pointer;
+}
+
+.dropdown-item{
+    width: 145%;
+}
+
+.dropdown-divider{
+    width: 145%;
+}
+
+.active:hover{
+    background-color: aqua;
+}
+
+#logout:hover{
+    color: black;
+    background-color: red;
 }
 
 .profileImage {
