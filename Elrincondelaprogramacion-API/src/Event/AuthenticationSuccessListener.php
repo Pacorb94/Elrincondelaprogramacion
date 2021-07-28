@@ -12,7 +12,9 @@
         {
             $data = $event->getData();
             $user = $event->getUser();
-            if (!$user instanceof UserInterface) return;         
+            if (!$user instanceof UserInterface) return;   
+            $user->setCreatedAt($user->getCreatedAt()->format('d/m/Y H:i:s')); 
+            $user->setUpdatedAt($user->getUpdatedAt()->format('d/m/Y H:i:s')); 
             $event->setData([$user]);
         }
     }
