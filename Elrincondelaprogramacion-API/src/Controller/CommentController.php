@@ -61,6 +61,7 @@ class CommentController extends AbstractController
             $request=$request->get('json', null);
             if ($request) {
                 $decodedRequest=json_decode($request, true);
+                $decodedRequest['inadequate']=trim($decodedRequest['inadequate']);
                 if ($decodedRequest['inadequate']=='yes'||$decodedRequest['inadequate']=='no') {
                     $commentRepo=$this->getDoctrine()->getRepository(Comment::class);
                     $comment=$commentRepo->find($id);
