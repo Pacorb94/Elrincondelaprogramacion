@@ -1,9 +1,13 @@
-<main class="container-fluid">
-    <navbar></navbar>
-    <!--Para que funcione las rutas debemos poner esta etiqueta-->
-    <router-outlet></router-outlet>
-</main>
-<footer>
-    <hr>
-    <h6 class="text-center">Hecho por &copy;Pacorb94</h6>
-</footer>
+<div class="container-fluid">
+    <header>
+        <navbar></navbar>
+    </header>
+    <main>
+        <!--Para que funcione las rutas debemos usar este componente-->
+        <router-outlet></router-outlet>
+    </main>
+    <footer>
+        <hr>
+        <h6 class="text-center">Hecho por &copy;Pacorb94</h6>
+    </footer>
+</div>
