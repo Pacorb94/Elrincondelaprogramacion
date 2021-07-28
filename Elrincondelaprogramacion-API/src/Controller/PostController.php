@@ -218,7 +218,7 @@ class PostController extends AbstractController
             if ($request) {
                 $decodedRequest=json_decode($request, true);
                 $decodedRequest['inadequate']=trim($decodedRequest['inadequate']);
-                if ($decodedRequest['inadequate']) {
+                if ($decodedRequest['inadequate']||$decodedRequest['inadequate']=='no') {
                     $postRepo=$this->getDoctrine()->getRepository(Post::class);
                     $post=$postRepo->find($id);
                     //Si existe
@@ -231,7 +231,7 @@ class PostController extends AbstractController
                     }
                     return $this->json(['code'=>404, 'message'=>'Post not found']);
                 }
-                return $this->json(['code'=>400, 'message'=>'You must send a value']);    
+                return $this->json(['code'=>400, 'message'=>'You must send yes or no as values']);    
             }
             return $this->json(['code'=>400, 'message'=>'Wrong json']);   
         }
