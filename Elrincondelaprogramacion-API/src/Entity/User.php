@@ -215,9 +215,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
         return $this->createdAt;
     }
 
-    public function setCreatedAt($value)
+    public function setCreatedAt($createdAt)
     {
-        $this->createdAt=$value;
+        $this->createdAt=$createdAt;
         return $this;
     }
 
@@ -226,9 +226,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt($value)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->updatedAt=$value;
+        $this->updatedAt=$updatedAt;
         return $this;
     }
 
