@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -206,6 +207,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
     public function setBanned(?bool $banned)
     {
         $this->banned=$banned;
+        return $this;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt($value)
+    {
+        $this->createdAt=$value;
+        return $this;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($value)
+    {
+        $this->updatedAt=$value;
         return $this;
     }
 
