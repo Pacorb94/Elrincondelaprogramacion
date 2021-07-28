@@ -61,7 +61,7 @@ class CommentController extends AbstractController
             $request=$request->get('json', null);
             if ($request) {
                 $decodedRequest=json_decode($request, true);
-                if ($decodedRequest['inadequate']) {
+                if ($decodedRequest['inadequate']=='yes'||$decodedRequest['inadequate']=='no') {
                     $commentRepo=$this->getDoctrine()->getRepository(Comment::class);
                     $comment=$commentRepo->find($id);
                     //Si existe
@@ -74,7 +74,7 @@ class CommentController extends AbstractController
                     }
                     return $this->json(['code'=>404, 'message'=>'Comment not found']);
                 }
-                return $this->json(['code'=>400, 'message'=>'You must send a value']);
+                return $this->json(['code'=>400, 'message'=>'You must send yes or no as values']);
             }
             return $this->json(['code'=>400, 'message'=>'Wrong json']);  
         }
