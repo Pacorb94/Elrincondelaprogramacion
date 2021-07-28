@@ -78,7 +78,7 @@ class UserController extends AbstractController
                                 $user->setNick($decodedRequest['nick']);
                                 $user->setEmail($decodedRequest['email']);
                                 $em=$this->getDoctrine()->getManager();
-                                $user->execute($em, $user, 'update');
+                                $user->execute($em, $user, 'update');                       
                                 return $this->json($user);          
                             }
                             return $this->json(['code'=>400, 'message'=>'Wrong validation']);  
