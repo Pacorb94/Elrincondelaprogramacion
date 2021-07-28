@@ -11,6 +11,7 @@ export class NavbarComponent implements OnInit {
     //private _userService:UserService
     form:any;
     profileImage:any;
+    
     constructor() {
         //this.form=new FormGroup();
     }
