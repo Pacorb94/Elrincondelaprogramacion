@@ -33,6 +33,11 @@ banUser:
     controller: App\Controller\UserController::ban
     methods: PUT
 
+logout:
+    path: /api/logout
+    controller: App\Controller\UserController::logout
+    methods: DELETE
+
 #Category
 createCategory:
     path: /api/category/create
