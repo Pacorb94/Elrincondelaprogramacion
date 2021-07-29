@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class UserController extends AbstractController
 {
@@ -34,7 +35,7 @@ class UserController extends AbstractController
                 if (!$userRepo->findOneBy(['email'=>$decodedRequest['email']])) {
                     $encryptedPassword=password_hash($decodedRequest['password'], PASSWORD_BCRYPT);
                     $user=new User($decodedRequest['nick'], $decodedRequest['email'], $encryptedPassword, 
-                        null, false, [$decodedRequest['role']]);
+                        null, false, [$decodedRequest['role']], new \DateTime('now'));
                     $em=$this->getDoctrine()->getManager();
                     $user->execute($em, $user, 'insert');
                     return $this->json($user, 201);
@@ -77,8 +78,9 @@ class UserController extends AbstractController
                             if ($this->validations('update', $decodedRequest)) {
                                 $user->setNick($decodedRequest['nick']);
                                 $user->setEmail($decodedRequest['email']);
+                                $user->setUpdatedAt(new \DateTime('now'));
                                 $em=$this->getDoctrine()->getManager();
-                                $user->execute($em, $user, 'update');                       
+                                $user->execute($em, $user, 'update');                
                                 return $this->json($user);          
                             }
                             return $this->json(['code'=>400, 'message'=>'Wrong validation']);  
@@ -187,6 +189,16 @@ class UserController extends AbstractController
             return $this->json(['code'=>400, 'message'=>'Wrong json']);  
         }
         return $this->json(['code'=>400, 'message'=>'Wrong id']);
+    }
+
+    /**
+     * Función que elimina el token
+     * @return JsonResponse
+     */
+    public function logout()
+    {
+        setcookie('token', '', time()-1, '/', '', false, true);
+        return $this->json(['message'=>'Logout successfully']);
     }
 
     /**
