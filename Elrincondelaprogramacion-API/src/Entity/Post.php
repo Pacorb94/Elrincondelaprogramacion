@@ -95,7 +95,7 @@ class Post
      */
     private $comments;
 
-    public function __construct($title, $content, $category, $inadequate, $image, $user) {
+    public function __construct($title, $content, $category, $inadequate, $image, $user, $createdAt) {
         $this->id=null;
         $this->title=$title;
         $this->content=$content;
@@ -103,8 +103,7 @@ class Post
         $this->inadequate=$inadequate;
         $this->image=$image;
         $this->user=$user;
-        $this->createdAt=new \DateTime('now');
-        $this->updatedAt=new \DateTime('now');
+        $this->createdAt=$createdAt;
         $this->comments = new ArrayCollection();
     }
 
@@ -176,6 +175,12 @@ class Post
     public function setUser(?User $user): self
     {
         $this->user = $user;
+        return $this;
+    }
+
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt=$updatedAt;
         return $this;
     }
 
