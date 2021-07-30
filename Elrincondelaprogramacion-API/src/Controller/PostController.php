@@ -40,7 +40,7 @@ class PostController extends AbstractController
                     $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
                     $category=$categoryRepo->findOneBy(['name'=>$decodedRequest['category']]);
                     $post=new Post($decodedRequest['title'], $decodedRequest['content'], 
-                        $category, false, null, $userLoggedIn);
+                        $category, false, null, $userLoggedIn, new \DateTime('now'));
                     $em=$this->getDoctrine()->getManager();
                     $post->execute($em, $post, 'insert');
                     return $this->json(['code'=>201,'message'=>'Post created']);
@@ -86,6 +86,7 @@ class PostController extends AbstractController
                                 $post->setTitle($decodedRequest['title']);  
                                 $post->setContent($decodedRequest['content']);
                                 $post->setCategory($category);
+                                $post->setUpdatedAt(new \DateTime('now'));
                                 $em=$this->getDoctrine()->getManager();
                                 $post->execute($em, $post, 'update');
                                 return $this->json($post);
