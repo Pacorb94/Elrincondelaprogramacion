@@ -48,4 +48,3 @@ security:
         - { path: /api/posts/[0-9]+/inadequate, roles: ROLE_ADMIN }
         - { path: /api/[0-9]+/comment/create, roles: IS_AUTHENTICATED_FULLY }
         - { path: /api/comments/[0-9]+/inadequate, roles: ROLE_ADMIN }
-     
