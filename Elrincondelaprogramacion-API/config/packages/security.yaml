@@ -38,11 +38,14 @@ security:
         - { path: /api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #Para usuarios logueados
         - { path: /api/users/[0-9]+/update, roles: IS_AUTHENTICATED_FULLY }
+        - { path: /api/profile-image/upload, roles: IS_AUTHENTICATED_FULLY }
         - { path: /api/users/[0-9]+/ban, roles: ROLE_ADMIN }
         - { path: /api/logout, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/[category|categories], roles: ROLE_ADMIN }
-        - { path: /api/posts/[0-9]+/inadequate, roles: ROLE_ADMIN }
         - { path: /api/post/create, roles: [ROLE_ADMIN, ROLE_WRITER] }
         - { path: /api/posts/[0-9]+/update, roles: [ROLE_ADMIN, ROLE_WRITER] }
+        - { path: /api/post-image/upload, roles: [ROLE_ADMIN, ROLE_WRITER] }      
+        - { path: /api/posts/[0-9]+/inadequate, roles: ROLE_ADMIN }
+        - { path: /api/[0-9]+/comment/create, roles: IS_AUTHENTICATED_FULLY }
         - { path: /api/comments/[0-9]+/inadequate, roles: ROLE_ADMIN }
      
