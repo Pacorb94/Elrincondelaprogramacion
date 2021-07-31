@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\User;
 use App\Entity\Post;
 use App\Entity\Category;
 use Knp\Component\Pager\PaginatorInterface;
@@ -17,6 +18,10 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class PostController extends AbstractController
 {
+
+    public function __construct(PaginatorInterface $paginator) {
+        $this->paginator = $paginator;
+    }
 
     /**
      * Función que crea un post
@@ -155,14 +160,19 @@ class PostController extends AbstractController
      * Función que obtiene los posts del usuario
      * @param $userId
      * @param $request
-     * @param $paginator
      * @return JsonResponse
      */
-    public function getUserPosts($userId, Request $request, PaginatorInterface $paginator)
+    public function getUserPosts($userId, Request $request)
     {
         if ($this->idValidation($userId)) {
-            $data=$this->paginatedPosts($userId, 'user', $request, $paginator);
-            return $this->json($data);
+            $userRepo=$this->getDoctrine()->getRepository(User::class);
+            $user=$userRepo->find($userId);
+            //Si existe
+            if ($user) {
+                $data=$this->paginatedObjects($request, 'user', $userId, 'Post');
+                return $this->json($data);
+            }
+            return $this->json(['code'=>404, 'message'=>'User not found']);
         }
         return $this->json(['code'=>400, 'message'=>'Wrong id']);
     }
@@ -171,17 +181,52 @@ class PostController extends AbstractController
      * Función que obtiene los posts por categoría
      * @param $categoryId
      * @param $request
-     * @param $paginator
      * @return JsonResponse
      */
-    public function getPostsByCategory($categoryId, Request $request, PaginatorInterface $paginator)
+    public function getPostsByCategory($categoryId, Request $request)
     {
         if ($this->idValidation($categoryId)) {
-            $data=$this->paginatedPosts($categoryId, 'category', $request, $paginator);
-            return $this->json($data);
+            $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
+            $category=$categoryRepo->find($categoryId);
+            //Si existe
+            if ($category) {
+                $data=$this->paginatedObjects($request, 'category', $categoryId, 'Post');
+                return $this->json($data);
+            }
+            return $this->json(['code'=>404, 'message'=>'Category not found']);
         }
         return $this->json(['code'=>400, 'message'=>'Wrong id']);
     }
+
+        /**
+         * Función que obtiene los objetos paginados
+         * @param $request
+         * @param $modelProperty
+         * @param $id
+         * @param $modelName
+         * @return
+         */
+        public function paginatedObjects($request, $modelProperty, $id, $modelName)
+        {
+            /*Como el parámetro página viene por GET usamos la propiedad "query" y por defecto si 
+            no viene nada tendrá el valor 1*/
+            $page=$request->query->getInt('page', 1);
+            //Paginator necesita sentencias en DQL
+            $dql="select v from App\Entity\\".$modelName." v where v.$modelProperty = $id order by v.id desc";
+            $query=$this->getDoctrine()->getManager()->createQuery($dql);
+            //Los objetos por página que se verán
+            define('OBJECTSPERPAGE', 5);
+            $pagination=$this->paginator->paginate($query, $page, OBJECTSPERPAGE);
+            $totalObjects=$pagination->getTotalItemCount();
+            $data=[
+                'total'.$modelName.''.'s'=>$totalObjects,
+                'currentPage'=>$page,
+                'objectsPerPage'=>OBJECTSPERPAGE, 
+                'totalPages'=>ceil($totalObjects/OBJECTSPERPAGE),
+                $modelName.'s'=>$pagination
+            ];
+            return $data;
+        }
 
     /**
      * Función que obtiene un post
@@ -337,37 +382,5 @@ class PostController extends AbstractController
     {
         if (is_numeric($id)) return true;
         return false;
-    }
-
-    /**
-     * Función que obtiene los posts paginados
-     * @param $id
-     * @param $fieldName
-     * @param $request
-     * @param $paginator
-     * @return
-     */
-    public function paginatedPosts($id, $fieldName, $request, $paginator)
-    {
-        /*Como el parámetro página viene por GET usamos la propiedad "query" y por defecto si 
-        no viene nada tendrá el valor 1*/
-        $page=$request->query->getInt('page', 1);
-        //Paginator necesita sentencias en DQL
-        $dql="select v from App\Entity\Post v where v.$fieldName = $id order by v.id desc";
-        $em=$this->getDoctrine()->getManager();
-        $query=$em->createQuery($dql);
-        //Los posts por página que se verán
-        define('POSTSPERPAGE', 5);
-        //Llamamos al servicio
-        $pagination=$paginator->paginate($query, $page, POSTSPERPAGE);
-        $totalPosts=$pagination->getTotalItemCount();
-        $data=[
-            'postsNumber'=>$totalPosts,
-            'currentPage'=>$page,
-            'postsPerPage'=>POSTSPERPAGE, 
-            'totalPages'=>ceil($totalPosts/POSTSPERPAGE),
-            'posts'=>$pagination
-        ];
-        return $data;
     }
 }
