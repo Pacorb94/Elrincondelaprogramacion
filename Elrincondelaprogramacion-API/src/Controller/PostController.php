@@ -169,7 +169,7 @@ class PostController extends AbstractController
             $user=$userRepo->find($userId);
             //Si existe
             if ($user) {
-                $data=$this->paginatedObjects($request, 'user', $userId, 'Post');
+                $data=$this->paginate($request, 'user', $userId, 'Post');
                 return $this->json($data);
             }
             return $this->json(['code'=>404, 'message'=>'User not found']);
@@ -190,7 +190,7 @@ class PostController extends AbstractController
             $category=$categoryRepo->find($categoryId);
             //Si existe
             if ($category) {
-                $data=$this->paginatedObjects($request, 'category', $categoryId, 'Post');
+                $data=$this->paginate($request, 'category', $categoryId, 'Post');
                 return $this->json($data);
             }
             return $this->json(['code'=>404, 'message'=>'Category not found']);
@@ -206,7 +206,7 @@ class PostController extends AbstractController
          * @param $modelName
          * @return
          */
-        public function paginatedObjects($request, $modelProperty, $id, $modelName)
+        public function paginate($request, $modelProperty, $id, $modelName)
         {
             /*Como el parámetro página viene por GET usamos la propiedad "query" y por defecto si 
             no viene nada tendrá el valor 1*/
