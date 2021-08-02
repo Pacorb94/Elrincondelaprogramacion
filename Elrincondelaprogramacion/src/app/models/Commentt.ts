@@ -1,4 +1,4 @@
-class Commentt {
+export class Commentt {
     private id:number;
     private content:string;
     private user:any;

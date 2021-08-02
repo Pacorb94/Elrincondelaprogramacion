@@ -1,4 +1,4 @@
-class Post {
+export class Post {
     private id: number;
     private categoryId: number;
     private title: string;

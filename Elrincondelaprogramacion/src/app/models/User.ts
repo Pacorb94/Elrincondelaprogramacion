@@ -1,41 +1,40 @@
-class User {
-    private id: number;
+export class User {
+    private id: any;
     private nick: string;
     private email: string;
     private password: string;
-    private profileImage: string;
-    private rol:string;
+    private profileImage: any;
+    private role:string;
     private ban: boolean;
     private createdAt: any;
     private updatedAt: any;
 
-    constructor(id: number, nick:string, email:string, password: string, profileImage:string, 
-    rol:string, ban: boolean, createdAt: any, updatedAt: any) {
+    constructor(id: any, nick:string, email:string, password: string, profileImage:any, 
+    role:string, ban: boolean, createdAt: any) {
         this.id = id;
         this.nick=nick;
         this.email=email;
         this.password=password;
         this.profileImage=profileImage;
-        this.rol=rol;
+        this.role=role;
         this.ban=ban;
         this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
-    setValues(id: number, nick:string, email:string, password: string, profileImage:string, 
-    rol:string, ban: boolean, createdAt: any, updatedAt: any) {
+    setValues(id: any, nick:string, email:string, password: string, profileImage:any, 
+    role:string, ban: boolean, createdAt: any, updatedAt: any) {
         this.setId(id);
         this.setNick(nick);
         this.setEmail(email);
         this.setPassword(password);
         this.setProfileImage(profileImage);
-        this.setRol(rol);
+        this.setRole(role);
         this.setBan(ban);
         this.setCreatedAt(createdAt);
         this.setUpdatedAt(updatedAt);
     }
 
-    setId(id: number) {
+    setId(id: any) {
         this.id = id;
     }
 
@@ -51,12 +50,12 @@ class User {
         this.password = password;
     }
 
-    setProfileImage(profileImage: string) {
+    setProfileImage(profileImage: any) {
         this.profileImage = profileImage;
     }
 
-    setRol(rol:string) {
-        this.rol = rol;
+    setRole(role:string) {
+        this.role = role;
     }
 
     setBan(ban:boolean) {
@@ -91,8 +90,8 @@ class User {
         return this.profileImage;
     }
 
-    getRol() {
-        return this.rol;
+    getRole() {
+        return this.role;
     }
 
     getBan() {
