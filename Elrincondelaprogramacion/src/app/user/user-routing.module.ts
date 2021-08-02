@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { MainComponent } from './user-panel/main/main.component';
 import { CheckRegisterLoginGuard } from './../guards/check-register-login.guard';
-
 
 const routes: Routes = [
     {
@@ -11,13 +11,16 @@ const routes: Routes = [
         path:'', 
         children: [
             {
-                path: 'register', component:RegisterComponent, canActivate:[CheckRegisterLoginGuard]
+                path:'register', component:RegisterComponent, canActivate:[CheckRegisterLoginGuard]
             },
             {
-                path: 'login', component:LoginComponent, canActivate:[CheckRegisterLoginGuard]
+                path:'login', component:LoginComponent, canActivate:[CheckRegisterLoginGuard]
             },
             {
-                path: '**', redirectTo:''
+                path:'user-panel', component:MainComponent, canActivate:[]
+            },
+            {
+                path:'**', redirectTo:''
             }
         ]
     }
