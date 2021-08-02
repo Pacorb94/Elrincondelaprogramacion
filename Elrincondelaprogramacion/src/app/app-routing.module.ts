@@ -5,7 +5,9 @@ import { HomeComponent } from './components/home/home.component';
 //Definimos las rutas
 const routes: Routes = [
     { path: '', component: HomeComponent },
-   // { path: '/user-panel', component: UserPanelComponent }
+    //Cargamos una ruta padre que tendrá rutas hijas con lo cual usará el lazyLoading
+    { path: '', loadChildren: ()=>import('./user/user.module').then(m=>m.UserModule) },
+    { path:'**', redirectTo:''}
 ];
 
 @NgModule({
