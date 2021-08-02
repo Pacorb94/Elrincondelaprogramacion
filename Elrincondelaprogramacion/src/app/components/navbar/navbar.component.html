@@ -41,17 +41,17 @@
             <!--Fin del buscador-->
             </li>
         </ul>   
-        <ul class="navbar-nav navbar-right ml-auto pr-5 mr-5">
-            <li *ngIf="user" class="nav-item">
+        <ul *ngIf="user" class="navbar-nav navbar-right ml-auto">
+            <li class="nav-item">
                 <img [src]="profileImage" alt="Imagen de perfil" class="profileImage">
             </li>
             <!--Lista desplegable-->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span *ngIf="user">{{user.nick}}</span>
+                    <span>{{user.nick}}</span>
                 </a>
-                <div class="dropdown-menu pr-5 mr-5 w-25" aria-labelledby="navbarDropdown">
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" [routerLink]="['/panel']">Panel de usuario</a>
                     <a class="dropdown-item" [routerLink]="['/user-profile', user.id]">
                         Mi perfil
