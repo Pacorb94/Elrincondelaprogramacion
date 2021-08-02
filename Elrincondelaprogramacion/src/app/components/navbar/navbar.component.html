@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light mt-4">
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">El rincón de la programación</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" [routerLink]="['/home']">Inicio<span class="sr-only"></span></a>
+                <a class="nav-link" [routerLink]="['/']">Inicio<span class="sr-only"></span></a>
             </li>
             <!--Lista desplegable-->
             <li class="nav-item active dropdown">
@@ -23,12 +23,12 @@
             <li class="nav-item active">
                 <a class="nav-link active" [routerLink]="['/users']">Comunidad</a>
             </li>
-            <li *ngIf="userLoggedIn" class="nav-item">
+            <li *ngIf="user" class="nav-item">
                 <a class="nav-link active" [routerLink]="['/user-panel']">Panel de usuario</a>
             </li>
             <!--Buscador-->
             <li class="nav-item ml-5">
-                <form class="d-flex form-inline ml-sm-10 my-2 my-lg-0 ml-5">
+                <form [formGroup]="form" class="d-flex form-inline ml-sm-10 my-2 my-lg-0 ml-5">
                     <input type="search" formControlName="postsSearchText" class="form-control" 
                         placeholder="Busca un post" aria-label="Search">
                     <input type="button" (click)="searchPosts(form.get('postsSearchText')?.value)" 
@@ -42,18 +42,18 @@
             </li>
         </ul>   
         <ul class="navbar-nav navbar-right ml-auto pr-5 mr-5">
-            <li *ngIf="userLoggedIn" class="nav-item">
+            <li *ngIf="user" class="nav-item">
                 <img [src]="profileImage" alt="Imagen de perfil" class="profileImage">
             </li>
             <!--Lista desplegable-->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span *ngIf="userLoggedIn">{{userLoggedIn.nick}}</span>
+                    <span *ngIf="user">{{user.nick}}</span>
                 </a>
                 <div class="dropdown-menu pr-5 mr-5 w-25" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" [routerLink]="['/panel']">Panel de usuario</a>
-                    <a class="dropdown-item" [routerLink]="['/user-profile', userLoggedIn.id]">
+                    <a class="dropdown-item" [routerLink]="['/user-profile', user]">
                         Mi perfil
                     </a>
                     <div class="dropdown-divider"></div>
