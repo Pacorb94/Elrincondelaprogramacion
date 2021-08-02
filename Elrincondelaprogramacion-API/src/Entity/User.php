@@ -73,16 +73,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt='current_timestamp()';
+    private $createdAt;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
-    private $updatedAt='current_timestamp()';
+    private $updatedAt;
 
-    public function __construct($nick, $email, $password, $profileImage, $banned, $role, $createdAt) {
+    public function __construct($nick, $email, $password, $profileImage, $banned, $role, $createdAt, 
+    $updatedAt) {
         $this->id=null;
         $this->nick=$nick;
         $this->email=$email;
@@ -91,6 +92,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
         $this->banned=$banned;
         $this->roles=$role;
         $this->createdAt=$createdAt;
+        $this->updatedAt=$updatedAt;
     }
 
     /**
