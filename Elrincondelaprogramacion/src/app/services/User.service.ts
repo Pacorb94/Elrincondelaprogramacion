@@ -66,4 +66,22 @@ export class UserService {
         }
         return user;
     }
+
+    /**
+     * Función que obtiene la imagen de perfil
+     * @param image 
+     * @return 
+     */
+    getProfileImage(image:string):Observable<any>{
+        let header=new HttpHeaders().set('Content-Type', 'image/*');
+        return this._http.get(`${this.url}/profile-image/${image}` ,{headers:header, responseType:'blob'});
+    }
+
+    /**
+     * Función que cierra sesión
+     * @return
+     */
+    logout():Observable<any>{
+        return this._http.delete(`${this.url}/logout`);
+    }
 }
