@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from '../models/User';
 
 @Injectable()
 export class UserService {
@@ -9,11 +10,14 @@ export class UserService {
 
     constructor(private _http:HttpClient) {
         this.url='http://elrincondelaprogramacion.com/api';
-        this.user=new BehaviorSubject(this.getUserLoggedIn$());
+        this.user=new BehaviorSubject(this.getUserLoggedIn());
     }
 
-
-    setUserLoggedIn(value:any){
+    /**
+     * Función que da valor al usuario
+     * @param value 
+     */
+    setUserLoggedIn$(value:any){
         this.user.next(value);
     }
 
@@ -35,7 +39,7 @@ export class UserService {
         //Tenemos que convertir el usuario a json-string
         let data=`json=${JSON.stringify(user)}`;
         //Establecemos el tipo de cabecera
-        let headers=new HttpHeaders().set('Content-Type', 'application/json');
+        let headers=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
         return this._http.post(`${this.url}/register`, data, {headers:headers});
     }
 
