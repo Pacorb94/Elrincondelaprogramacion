@@ -48,13 +48,13 @@ class PostController extends AbstractController
                         $category, false, null, $userLoggedIn, new \DateTime('now'));
                     $em=$this->getDoctrine()->getManager();
                     $post->execute($em, $post, 'insert');
-                    return $this->json(['code'=>201,'message'=>'Post created']);
+                    return $this->json(['message'=>'Post created'], 201);
                 }
-                return $this->json(['code'=>500 , 'message'=>'That post already exists']);
+                return $this->json(['message'=>'That post already exists'], 500);
             }
-            return $this->json(['code'=>400, 'message'=>'Wrong validation']); 
+            return $this->json(['message'=>'Wrong validation'], 400); 
         }
-        return $this->json(['code'=>400, 'message'=>'Wrong json']);
+        return $this->json(['message'=>'Wrong json'], 400);
     }
 
     /**
@@ -96,17 +96,17 @@ class PostController extends AbstractController
                                 $post->execute($em, $post, 'update');
                                 return $this->json($post);
                             } 
-                            return $this->json(['code'=>400, 'message'=>'Wrong validation']);       
+                            return $this->json(['message'=>'Wrong validation'], 400);       
                         }
-                        return $this->json(['code'=>400, 'message'=>'You can\'t modify that post']);                        
+                        return $this->json(['message'=>'You can\'t modify that post'], 400);                        
                     }
-                    return $this->json(['code'=>404, 'message'=>'Post not found']);     
+                    return $this->json(['message'=>'Post not found'], 404);     
                 }
-                return $this->json(['code'=>400, 'message'=>'Wrong json']); 
+                return $this->json(['message'=>'Wrong json'], 400); 
             }
-            return $this->json(['code'=>400, 'message'=>'Wrong id']);             
+            return $this->json(['message'=>'Wrong id'], 400);             
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
-            return $this->json(['code'=>500, 'message'=>$e->getMessage()]);
+            return $this->json(['message'=>$e->getMessage()], 500);
         }
     }
 
@@ -129,9 +129,9 @@ class PostController extends AbstractController
                 $image->move($postsImagesDirectory, $imageName);
                 return $this->json(['image'=>$imageName], 201);
             }
-            return $this->json(['code'=>400, 'message'=>'Wrong image']);
+            return $this->json(['message'=>'Wrong image'], 400);
         }
-        return $this->json(['code'=>400, 'message'=>'You must send an image']); 
+        return $this->json(['message'=>'You must send an image'], 400); 
     }
 
     /**
@@ -151,9 +151,9 @@ class PostController extends AbstractController
                 $image=readfile($postsImagesDirectory.'/'.$imageName);
                 return new Response($image);
             }
-            return $this->json(['code'=>404, 'message'=>'Image not found']);
+            return $this->json(['message'=>'Image not found'], 404);
         }
-        return $this->json(['code'=>400, 'message'=>'You must send an image name']); 
+        return $this->json(['message'=>'You must send an image name'], 400); 
     }
 
     /**
@@ -172,9 +172,9 @@ class PostController extends AbstractController
                 $data=$this->paginate($request, 'user', $userId, 'Post');
                 return $this->json($data);
             }
-            return $this->json(['code'=>404, 'message'=>'User not found']);
+            return $this->json(['message'=>'User not found'], 404);
         }
-        return $this->json(['code'=>400, 'message'=>'Wrong id']);
+        return $this->json(['message'=>'Wrong id'], 400);
     }
 
     /**
@@ -193,9 +193,9 @@ class PostController extends AbstractController
                 $data=$this->paginate($request, 'category', $categoryId, 'Post');
                 return $this->json($data);
             }
-            return $this->json(['code'=>404, 'message'=>'Category not found']);
+            return $this->json(['message'=>'Category not found'], 404);
         }
-        return $this->json(['code'=>400, 'message'=>'Wrong id']);
+        return $this->json(['message'=>'Wrong id'], 400);
     }
 
         /**
@@ -246,9 +246,9 @@ class PostController extends AbstractController
                     [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}]
                 );
             }
-            return $this->json(['code'=>404, 'message'=>'Post not found']);
+            return $this->json(['message'=>'Post not found'], 404);
         }
-        return $this->json(['code'=>400, 'message'=>'Wrong id']);  
+        return $this->json(['message'=>'Wrong id'], 400);  
     }
 
     /**
@@ -275,13 +275,13 @@ class PostController extends AbstractController
                         $post->execute($em, $post, 'update');
                         return $this->json($post);
                     }
-                    return $this->json(['code'=>404, 'message'=>'Post not found']);
+                    return $this->json(['message'=>'Post not found'], 404);
                 }
-                return $this->json(['code'=>400, 'message'=>'You must send yes or no as values']);    
+                return $this->json(['message'=>'You must send yes or no as values'], 400);    
             }
-            return $this->json(['code'=>400, 'message'=>'Wrong json']);   
+            return $this->json(['message'=>'Wrong json'], 400);   
         }
-        return $this->json(['code'=>400, 'message'=>'Wrong id']); 
+        return $this->json(['message'=>'Wrong id'], 400); 
     }
 
     /**

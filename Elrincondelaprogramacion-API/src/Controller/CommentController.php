@@ -41,12 +41,12 @@ class CommentController extends AbstractController
                         $comment->execute($em, $comment, 'insert');
                         return $this->json(['message'=>'Comment created'], 201);
                     }
-                    return $this->json(['code'=>404, 'message'=>'Post not found']);
+                    return $this->json(['message'=>'Post not found'], 404);
                 }
             }
-            return $this->json(['code'=>400, 'message'=>'Wrong json']);             
+            return $this->json(['message'=>'Wrong json'], 400);             
         }
-        return $this->json(['code'=>400, 'message'=>'Wrong id']);
+        return $this->json(['message'=>'Wrong id'], 400);
     }
 
     /**
@@ -73,13 +73,13 @@ class CommentController extends AbstractController
                         $comment->execute($em, $comment, 'update');
                         return $this->json($comment);
                     }
-                    return $this->json(['code'=>404, 'message'=>'Comment not found']);
+                    return $this->json(['message'=>'Comment not found'], 404);
                 }
-                return $this->json(['code'=>400, 'message'=>'You must send yes or no as values']);
+                return $this->json(['message'=>'You must send yes or no as values'], 400);
             }
-            return $this->json(['code'=>400, 'message'=>'Wrong json']);  
+            return $this->json(['message'=>'Wrong json'], 400);  
         }
-        return $this->json(['code'=>400, 'message'=>'Wrong id']);
+        return $this->json(['message'=>'Wrong id'], 400);
     }
 
     /**

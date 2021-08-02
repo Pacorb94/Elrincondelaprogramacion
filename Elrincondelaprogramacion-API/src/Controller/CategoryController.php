@@ -35,11 +35,11 @@ class CategoryController extends AbstractController
                     $category->execute($em, $category, 'insert');
                     return $this->json($category, 201);
                 }
-                return $this->json(['code'=>500, 'message'=>'That name already exists']);
+                return $this->json(['message'=>'That name already exists'], 500);
             }
-            return $this->json(['code'=>400, 'message'=>'The name is longer than 255 characters']);
+            return $this->json(['message'=>'The name is longer than 255 characters'], 400);
         }
-        return $this->json(['code'=>400, 'message'=>'Wrong json']);
+        return $this->json(['message'=>'Wrong json'], 400);
     }
 
     /**
@@ -67,15 +67,15 @@ class CategoryController extends AbstractController
                             $category->execute($em, $category, 'update');
                             return $this->json($category);                          
                         }
-                        return $this->json(['code'=>404, 'message'=>'Category not found']);
+                        return $this->json(['message'=>'Category not found'], 404);
                     }
-                    return $this->json(['code'=>400, 'message'=>'Wrong name']);
+                    return $this->json(['message'=>'Wrong name'], 400);
                 }
-                return $this->json(['code'=>400, 'message'=>'Wrong json']);
+                return $this->json(['message'=>'Wrong json'], 400);
             }
-            return $this->json(['code'=>400, 'message'=>'Wrong id']);
+            return $this->json(['message'=>'Wrong id'], 400);
         } catch (\Throwable $th) {
-            return $this->json(['code'=>500, 'message'=>$th->getMessage()]);
+            return $this->json(['message'=>$th->getMessage()], 500);
         }           
     }
 
@@ -102,9 +102,9 @@ class CategoryController extends AbstractController
             $category=$categoryRepo->find($id);
             //Si existe
             if ($category) return $this->json($category);
-            return $this->json(['code'=>404, 'message'=>'Category not found']);
+            return $this->json(['message'=>'Category not found'], 404);
         }
-        return $this->json(['code'=>400, 'message'=>'Wrong id']); 
+        return $this->json(['message'=>'Wrong id'], 400); 
     }
 
     /**
@@ -123,9 +123,9 @@ class CategoryController extends AbstractController
                 $category->execute($em, $category, 'delete');
                 return $this->json(['message'=>'Deleted category']);
             }
-            return $this->json(['code'=>404, 'message'=>'Category not found']);
+            return $this->json(['message'=>'Category not found'], 404);
         }
-        return $this->json(['code'=>400, 'message'=>'Wrong id']);
+        return $this->json(['message'=>'Wrong id'], 400);
     }
 
     /**
