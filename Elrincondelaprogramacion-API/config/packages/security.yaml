@@ -33,6 +33,7 @@ security:
                     - lexik_jwt_authentication.jwt_token_authenticator
 
     access_control:
+        - { path: ^/api, requires_channel: https }
         #Para usuarios no logueados
         - { path: /api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -40,6 +41,7 @@ security:
         - { path: /api/users/[0-9]+/update, roles: IS_AUTHENTICATED_FULLY }
         - { path: /api/profile-image/upload, roles: IS_AUTHENTICATED_FULLY }
         - { path: /api/users/[0-9]+/ban, roles: ROLE_ADMIN }
+        - { path: /api/logout, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/[category|categories], roles: ROLE_ADMIN }
         - { path: /api/post/create, roles: [ROLE_ADMIN, ROLE_WRITER] }
         - { path: /api/posts/[0-9]+/update, roles: [ROLE_ADMIN, ROLE_WRITER] }
