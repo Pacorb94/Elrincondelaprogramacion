@@ -1,122 +1,122 @@
 #User
 register:
-    path: /api/register
+    path: /register
     controller: App\Controller\UserController::register
     methods: POST
 
 login:
-    path: /api/login
+    path: /login
     methods: POST
 
 updateUser:
-    path: /api/users/{id}/update
+    path: /users/{id}/update
     controller: App\Controller\UserController::update
     methods: PUT
 
 uploadProfileImage:
-    path: /api/profile-image/upload
+    path: /profile-image/upload
     controller: App\Controller\UserController::uploadProfileImage
     methods: POST
 
 getProfileImage:
-    path: /api/profile-image/{image-name}
+    path: /profile-image/{image-name}
     controller: App\Controller\UserController::getProfileImage
     methods: GET
 
 getUser:
-    path: /api/users/{id}
+    path: /users/{id}
     controller: App\Controller\UserController::getUserDetail
     methods: GET
 
 banUser:
-    path: /api/users/{id}/ban
+    path: /users/{id}/ban
     controller: App\Controller\UserController::ban
     methods: PUT
 
 logout:
-    path: /api/logout
+    path: /logout
     controller: App\Controller\UserController::logout
     methods: DELETE
 
 #Category
 createCategory:
-    path: /api/category/create
+    path: /category/create
     controller: App\Controller\CategoryController::create
     methods: POST
 
 updateCategory:
-    path: api/categories/{id}/update
+    path: /categories/{id}/update
     controller: App\Controller\CategoryController::update
     methods: PUT
 
 getCategories:
-    path: /api/categories
+    path: /categories
     controller: App\Controller\CategoryController::getCategories
     methods: GET
 
 getCategory:
-    path: /api/categories/{id}
+    path: /categories/{id}
     controller: App\Controller\CategoryController::getCategory
     methods: GET
 
 deleteCategory:
-    path: api/categories/{id}/delete
+    path: /categories/{id}/delete
     controller: App\Controller\CategoryController::delete
     methods: DELETE
   
 #Post
 createPost:
-    path: /api/post/create
+    path: /post/create
     controller: App\Controller\PostController::create
     methods: POST
 
 updatePost:
-    path: /api/posts/{id}/update
+    path: /posts/{id}/update
     controller: App\Controller\PostController::update
     methods: PUT
 
 uploadImage:
-    path: /api/post-image/upload
+    path: /post-image/upload
     controller: App\Controller\PostController::uploadImage
     methods: POST
 
 getImage:
-    path: /api/posts-images/{imageName}
+    path: /posts-images/{imageName}
     controller: App\Controller\PostController::getImage
     methods: GET
 
 getPosts:
-    path: /api/posts
+    path: /posts
     controller: App\Controller\PostController::getPosts
     methods: GET
 
 getUserPosts:
-    path: /api/posts/users/{userId}
+    path: /posts/users/{userId}
     controller: App\Controller\PostController::getUserPosts
     methods: GET
 
 getPostsByCategory:
-    path: /api/posts/categories/{categoryId}
+    path: /posts/categories/{categoryId}
     controller: App\Controller\PostController::getPostsByCategory
     methods: GET
 
 getPostDetail:
-    path: /api/posts/{id}
+    path: /posts/{id}
     controller: App\Controller\PostController::getPostDetail
     methods: GET
 
 indequatePost:
-    path: /api/posts/{id}/inadequate
+    path: /posts/{id}/inadequate
     controller: App\Controller\PostController::inadequate
     methods: PUT
 
 #Comment
 createComment:
-    path: /api/{postId}/comment/create
+    path: /{postId}/comment/create
     controller: App\Controller\CommentController::create
     methods: POST
 
 indequateComment:
-    path: /api/comments/{id}/inadequate
+    path: /comments/{id}/inadequate
     controller: App\Controller\CommentController::inadequate
     methods: PUT
