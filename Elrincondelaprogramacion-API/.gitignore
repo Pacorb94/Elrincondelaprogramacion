@@ -13,7 +13,7 @@
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ##
 /public/profile-images/*
-!/public/profile-images/README.md
+!/public/profile-images/.gitkeep
 /public/images-posts/*
-!/public/images-posts/README.md
+!/public/images-posts/.gitkeep
 
