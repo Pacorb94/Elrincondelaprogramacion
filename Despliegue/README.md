@@ -4,7 +4,7 @@
 ```
 <VirtualHost *:80>
     ServerName elrincondelaprogramacion.api
-    Redirect / https://elrincondelaprogramacion.api
+    Redirect / https://elrincondelaprogramacion.api/
 </VirtualHost>
 
 <VirtualHost *:443>
