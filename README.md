@@ -37,8 +37,8 @@ al front-end y [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrin
 6. Si tienes XAMPP puedes desplegar en htdocs
 
 #### Dentro de la carpeta "Elrincondelaprogramacion"
-1. `npm i` o `npm install`
-2. `ng s -o` o `ng server -o`
+7. `npm i` o `npm install`
+8. `ng s -o` o `ng server -o`
 
 ## Licencia
 No MIT
