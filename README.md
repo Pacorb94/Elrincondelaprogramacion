@@ -14,5 +14,30 @@ Puedes ver lo que puede hacer cada tipo de usuario [aquí](https://github.com/Pa
 Este proyecto el front-end y el back-end están separados, por lo que [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrincondelaprogramacion) accedes 
 al front-end y [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrincondelaprogramacion-API) al back-end
 
+## Requisitos
+* Composer 2
+* MySQL o MariaDB
+* PHP 8 (puedes probar tu versión)
+* Node.js
+* Angular 12 (puedes probar la versión que tengas)
+
+## Pasos a seguir (dentro de la carpeta "Elrincondelaprogramacion-API")
+1. En un sistema gestor de bbdd importar database.sql de la carpeta database
+2. `composer install`
+3. Generamos una clave para que se firme el token 
+
+    `openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096`
+
+4. Ponemos la clave que hicimos en el paso anterior 
+  
+    `openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout`
+
+5. En "JWT_PASSPHRASE" del archivo .env ponemos la clave del paso anterior
+6. Si tienes XAMPP puedes desplegar en htdocs
+
+## Pasos a seguir (dentro de la carpeta "Elrincondelaprogramacion")
+1. `npm i` o `npm install`
+2. `ng s -o` o `ng server -o`
+
 ## Licencia
 No MIT
