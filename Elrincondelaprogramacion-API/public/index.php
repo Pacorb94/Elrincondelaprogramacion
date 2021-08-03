@@ -1,7 +1,8 @@
 <?php
 
 use App\Kernel;
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: https://localhost:4200");
+header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization, authorization");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Allow: GET, POST, OPTIONS, PUT, DELETE");
