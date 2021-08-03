@@ -22,7 +22,7 @@ al front-end y [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrin
 * Angular 12 (puedes probar tu versión)
 
 ## Pasos a seguir
-##### Dentro de la carpeta "Elrincondelaprogramacion-API"
+#### Dentro de la carpeta "Elrincondelaprogramacion-API"
 1. En un sistema gestor de bbdd importar database.sql de la carpeta database
 2. `composer install`
 3. Generamos una clave para que se firme el token 
@@ -36,7 +36,7 @@ al front-end y [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrin
 5. En "JWT_PASSPHRASE" del archivo .env ponemos la clave del paso anterior
 6. Si tienes XAMPP puedes desplegar en htdocs
 
-##### Dentro de la carpeta "Elrincondelaprogramacion"
+#### Dentro de la carpeta "Elrincondelaprogramacion"
 1. `npm i` o `npm install`
 2. `ng s -o` o `ng server -o`
 
