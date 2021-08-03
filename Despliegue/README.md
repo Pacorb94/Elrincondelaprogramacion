@@ -3,13 +3,13 @@
 
 ```
 <VirtualHost *:80>
-    ServerName elrincondelaprogramacion.com
-    Redirect / https://elrincondelaprogramacion.com/
+    ServerName elrincondelaprogramacion.com/api
+    Redirect / https://elrincondelaprogramacion.com/api
 </VirtualHost>
 
 <VirtualHost *:443>
     DocumentRoot "C:/xampp/htdocs/Proyecto/Elrincondelaprogramacion-API/public"
-    ServerName elrincondelaprogramacion.com
+    ServerName elrincondelaprogramacion.com/api
     SSLEngine on
     SSLCertificateFile "conf/ssl.crt/server.crt"
     SSLCertificateKeyFile "conf/ssl.key/server.key"
@@ -21,7 +21,12 @@
     </Directory> 
 </VirtualHost>
 ```
-2. Añade lo siguiente en etc/hosts `127.0.0.1 elrincondelaprogramacion.com`
+2. Añade lo siguiente en etc/hosts 
+
+```
+127.0.0.1 elrincondelaprogramacion.com
+127.0.0.1 elrincondelaprogramacion.com/api
+```
 
 3. Si estás en Windows agrega el certificado SSL de la siguiente manera:
     
