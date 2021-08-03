@@ -19,7 +19,7 @@ al front-end y [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrin
 * MySQL o MariaDB
 * PHP 8 (puedes probar tu versión)
 * Node.js
-* Angular 12 (puedes probar la versión que tengas)
+* Angular 12 (puedes probar tu versión)
 
 ## Pasos a seguir (dentro de la carpeta "Elrincondelaprogramacion-API")
 1. En un sistema gestor de bbdd importar database.sql de la carpeta database
