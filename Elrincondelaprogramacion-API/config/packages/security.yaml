@@ -15,10 +15,10 @@ security:
                 property: email
     firewalls:
         login:
-            pattern: ^/api/login
+            pattern: /login
             stateless: true
             json_login:
-                check_path: /api/login
+                check_path: /login
                 #Cambiamos la clave "username" por "email" cuando enviamos el json con los datos
                 #del usuario
                 username_path: email
@@ -26,26 +26,26 @@ security:
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
         api:
-            pattern: ^/api
+            pattern: ^/
             stateless: true
             guard: 
                 authenticators: 
                     - lexik_jwt_authentication.jwt_token_authenticator
 
     access_control:
-        - { path: ^/api, requires_channel: https }
+        - { path: ^/, requires_channel: https }
         #Para usuarios no logueados
-        - { path: /api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: /api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #Para usuarios logueados
-        - { path: /api/users/[0-9]+/update, roles: IS_AUTHENTICATED_FULLY }
-        - { path: /api/profile-image/upload, roles: IS_AUTHENTICATED_FULLY }
-        - { path: /api/users/[0-9]+/ban, roles: ROLE_ADMIN }
-        - { path: /api/logout, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/[category|categories], roles: ROLE_ADMIN }
-        - { path: /api/post/create, roles: [ROLE_ADMIN, ROLE_WRITER] }
-        - { path: /api/posts/[0-9]+/update, roles: [ROLE_ADMIN, ROLE_WRITER] }
-        - { path: /api/post-image/upload, roles: [ROLE_ADMIN, ROLE_WRITER] }      
-        - { path: /api/posts/[0-9]+/inadequate, roles: ROLE_ADMIN }
-        - { path: /api/[0-9]+/comment/create, roles: IS_AUTHENTICATED_FULLY }
-        - { path: /api/comments/[0-9]+/inadequate, roles: ROLE_ADMIN }
+        - { path: /users/[0-9]+/update, roles: IS_AUTHENTICATED_FULLY }
+        - { path: /profile-image/upload, roles: IS_AUTHENTICATED_FULLY }
+        - { path: /users/[0-9]+/ban, roles: ROLE_ADMIN }
+        - { path: /logout, roles: IS_AUTHENTICATED_FULLY }
+        - { path: /[category|categories], roles: ROLE_ADMIN }
+        - { path: /post/create, roles: [ROLE_ADMIN, ROLE_WRITER] }
+        - { path: /posts/[0-9]+/update, roles: [ROLE_ADMIN, ROLE_WRITER] }
+        - { path: /post-image/upload, roles: [ROLE_ADMIN, ROLE_WRITER] }      
+        - { path: /posts/[0-9]+/inadequate, roles: ROLE_ADMIN }
+        - { path: /[0-9]+/comment/create, roles: IS_AUTHENTICATED_FULLY }
+        - { path: /comments/[0-9]+/inadequate, roles: ROLE_ADMIN }
