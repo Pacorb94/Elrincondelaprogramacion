@@ -25,7 +25,7 @@
 
 ```
 127.0.0.1 elrincondelaprogramacion.com
-127.0.0.1 elrincondelaprogramacion.com/api
+127.0.0.1 elrincondelaprogramacion.api
 ```
 
 3. Si estás en Windows agrega el certificado SSL de la siguiente manera:
