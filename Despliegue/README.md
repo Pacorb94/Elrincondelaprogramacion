@@ -3,13 +3,13 @@
 
 ```
 <VirtualHost *:80>
-    ServerName elrincondelaprogramacion.com/api
-    Redirect / https://elrincondelaprogramacion.com/api
+    ServerName elrincondelaprogramacion.api
+    Redirect / https://elrincondelaprogramacion.api
 </VirtualHost>
 
 <VirtualHost *:443>
     DocumentRoot "C:/xampp/htdocs/Proyecto/Elrincondelaprogramacion-API/public"
-    ServerName elrincondelaprogramacion.com/api
+    ServerName elrincondelaprogramacion.api
     SSLEngine on
     SSLCertificateFile "conf/ssl.crt/server.crt"
     SSLCertificateKeyFile "conf/ssl.key/server.key"
