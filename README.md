@@ -38,9 +38,9 @@ al front-end y [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrin
 
  5. En "JWT_PASSPHRASE" del archivo .env ponemos la clave del paso anterior
 
-    #### Dentro de la carpeta "Elrincondelaprogramacion"
-    7. `npm i` o `npm install`
-    8. `ng s -o` o `ng server -o`
+ #### Dentro de la carpeta "Elrincondelaprogramacion"
+ 7. `npm i` o `npm install`
+ 8. `ng s -o` o `ng server -o`
 
 ## Licencia
 No MIT
