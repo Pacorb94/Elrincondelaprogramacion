@@ -9,7 +9,7 @@ export class UserService {
     private user:BehaviorSubject<any>;
 
     constructor(private _http:HttpClient) {
-        this.url='https://elrincondelaprogramacion.com/api';
+        this.url='https://elrincondelaprogramacion.api';
         this.user=new BehaviorSubject(this.getUserLoggedIn());
     }
 
