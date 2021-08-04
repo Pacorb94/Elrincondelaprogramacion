@@ -1,4 +1,4 @@
-1. Crear una carpeta para los certificados, por ej apache/conf/certificate/Proyecto/front y apache/conf/certificate/Proyecto/back
+1. Crear una carpeta para los certificados, por ej apache/conf/certificates/Proyecto/front y apache/conf/certificates/Proyecto/back
 
 2. En httpd-vhost.conf crear un host virtual que redireccione http a https y otro que sea el de https, por ej el backend
 
@@ -55,7 +55,7 @@ subjectAltName = @alt_names
 DNS.1 = localhost 
 ```
 
-4. Creamos los archivos .key y .crt por ej en apache/conf/certificate/Proyecto/front y apache/conf/certificate/Proyecto/back
+4. Creamos los archivos .key y .crt por ej en apache/conf/certificates/Proyecto/front y apache/conf/certificates/Proyecto/back
 openssl req -new -x509 -newkey rsa:2048 -sha256 -nodes -keyout ./nombre.key -days 3560 -out ./nombre.crt -config ./certificate.cnf
 
-5. En cada carpeta (dentro de certificates) ejecutamos nombre.crt>siguiente>elegimos la segunda opción>examinar>entidades de certificación raíz de confianza>aceptar>siguiente>finalizar>instalamos el certificado
+5. En cada carpeta (por ej front y back) ejecutamos nombre.crt>siguiente>elegimos la segunda opción>examinar>entidades de certificación raíz de confianza>aceptar>siguiente>finalizar>instalamos el certificado
