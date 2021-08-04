@@ -197,8 +197,9 @@ class UserController extends AbstractController
      */
     public function logout()
     {
-        setcookie('token', '', time()-1, '/', '', true, true);
-        return $this->json(['message'=>'Logout successfully']);
+        $response=new JsonResponse(['message'=>'Logout successfully']);
+        $response->headers->clearCookie('token', '/', null, true, true, 'none');
+        return $response;
     }
 
     /**
