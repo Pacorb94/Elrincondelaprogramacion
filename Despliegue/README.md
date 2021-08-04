@@ -21,7 +21,8 @@
     </Directory> 
 </VirtualHost>
 ```
-2. Añade lo siguiente (puedes editar el dns) en etc/hosts 
+2. Añade lo siguiente (puedes usar tus dns) en etc/hosts, si lo haces debes cambiar la propiedad url
+que está en este [archivo](https://github.com/Pacorb94/ProyectoDAW/blob/master/Elrincondelaprogramacion/src/app/services/User.service.ts)
 
 ```
 127.0.0.1 elrincondelaprogramacion.com
