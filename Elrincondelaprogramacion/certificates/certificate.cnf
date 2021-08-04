@@ -12,7 +12,7 @@ L = Spain
 O = My Organisation
 OU = My Organisational Unit
 emailAddress = email@domain.com
-CN = localhost
+CN = 127.0.0.1
 
 [v3_req]
 subjectAltName = @alt_names
