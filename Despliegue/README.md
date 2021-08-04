@@ -30,6 +30,4 @@
 
 3. Si estás en Windows agrega el certificado SSL de la siguiente manera:
     
-    3.1 win+r escribir mmc, vamos a archivo>agregar o quitar complemento>certificados>agregar>mi cuenta de usuario>finalizar
-
-    3.2 Saldrá nuestros certificados, botón derecho en autoridades de certificación de confianza>todas las tareas>import>siguiente>buscar localhost.crt>siguiente>finalizar>si>ok
+    En la carpeta "certificates" ejecutamos localhost.crt>siguiente>elegimos la segunda opción>examinar>entidades de certificación raíz de confianza>aceptar>siguiente>finalizar>instalamos el certificado
