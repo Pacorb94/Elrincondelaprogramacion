@@ -43,4 +43,4 @@ al front-end y [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrin
  8. `ng s -o` o `ng server -o`
 
 ## Licencia
-No MIT
+MIT
