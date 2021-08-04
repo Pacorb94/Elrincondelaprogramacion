@@ -2,12 +2,12 @@
 1. Añade los siguientes hosts virtuales (puedes editarlos) en el archivo httpd-vhosts.conf
 
 ```
-<VirtualHost *:80>
+<VirtualHost elrincondelaprogramacion.api:80>
     ServerName elrincondelaprogramacion.api
     Redirect / https://elrincondelaprogramacion.api/
 </VirtualHost>
 
-<VirtualHost *:443>
+<VirtualHost elrincondelaprogramacion.api:443>
     DocumentRoot "C:/xampp/htdocs/Proyecto/Elrincondelaprogramacion-API/public"
     ServerName elrincondelaprogramacion.api
     SSLEngine on
