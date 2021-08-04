@@ -63,6 +63,6 @@ openssl req -new -x509 -newkey rsa:2048 -sha256 -nodes -keyout ./nombre.key -day
 7. Para no escribir tanto en ng s vamos a angular.json en la clave "configurations" de la clave "serve" añadir la ruta del certificado y la clave, por ej
 ```
 "ssl":true,
-"sslCert":"C://xamp/apache/conf/certificates/Proyecto/front/elrincondelaprogramacion.com.crt",
-"sslKey":"C://xamp/apache/conf/certificates/Proyecto/front/elrincondelaprogramacion.com.key"
+"sslCert":"C:/xampp/apache/conf/certificates/Proyecto/front/elrincondelaprogramacion.com.crt",
+"sslKey":"C:/xampp/apache/conf/certificates/Proyecto/front/elrincondelaprogramacion.com.key"
 ```
