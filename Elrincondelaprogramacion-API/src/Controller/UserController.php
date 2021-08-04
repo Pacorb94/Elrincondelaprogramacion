@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class UserController extends AbstractController
 {
@@ -196,7 +197,7 @@ class UserController extends AbstractController
      */
     public function logout()
     {
-        setcookie('token', '', time()-1, '/', '', false, true);
+        setcookie(new Cookie('token', '', time()-1, '/', null, true, true, false, 'none'));
         return $this->json(['message'=>'Logout successfully']);
     }
 
