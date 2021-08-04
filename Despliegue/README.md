@@ -1,4 +1,4 @@
-1. Crear una carpeta para los certificados, yo lo ha he creado en apache/conf
+1. Crear una carpeta para los certificados, por ej apache/conf/certificate/Proyecto/front y apache/conf/certificate/Proyecto/back
 
 2. En httpd-vhost.conf crear un host virtual que redireccione http a https y otro que sea el de https, por ej el backend
 
