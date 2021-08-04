@@ -1,15 +1,15 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/User';
 
+
 @Injectable()
 export class UserService {
-    private url:string;
     private user:BehaviorSubject<any>;
 
     constructor(private _http:HttpClient) {
-        this.url='https://elrincondelaprogramacion.api';
         this.user=new BehaviorSubject(this.getUserLoggedIn());
     }
 
@@ -40,7 +40,7 @@ export class UserService {
         let data=`json=${JSON.stringify(user)}`;
         //Establecemos el tipo de cabecera
         let headers=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return this._http.post(`${this.url}/register`, data, {headers:headers});
+        return this._http.post(`${environment.url}/register`, data, {headers:headers});
     }
 
     /**
@@ -52,7 +52,7 @@ export class UserService {
     login(email:string, password:string):Observable<any>{
         let data={"email":email, "password":password};
         let headers=new HttpHeaders().set('Content-Type', 'application/json');
-        return this._http.post(`${this.url}/login`, data, {headers:headers, withCredentials:true});
+        return this._http.post(`${environment.url}/login`, data, {headers:headers, withCredentials:true});
     }
 
     /**
@@ -74,7 +74,7 @@ export class UserService {
      */
     getProfileImage(image:string):Observable<any>{
         let header=new HttpHeaders().set('Content-Type', 'image/*');
-        return this._http.get(`${this.url}/profile-image/${image}`, {headers:header, responseType:'blob'});
+        return this._http.get(`${environment.url}/profile-image/${image}`, {headers:header, responseType:'blob'});
     }
 
     /**
@@ -82,6 +82,6 @@ export class UserService {
      * @return
      */
     logout():Observable<any>{
-        return this._http.delete(`${this.url}/logout`);
+        return this._http.delete(`${environment.url}/logout`);
     }
 }
