@@ -22,14 +22,14 @@
     </Directory> 
 </VirtualHost>
 ```
-2. Añade los siguientes dns (puedes usar tus dns) en etc/hosts, si lo haces debes cambiar la propiedad url que está en este [archivo](https://github.com/Pacorb94/ProyectoDAW/blob/master/Elrincondelaprogramacion/src/app/services/User.service.ts)
+3. Añade los siguientes dns (puedes usar tus dns) en etc/hosts, si lo haces debes cambiar la propiedad url que está en este [archivo](https://github.com/Pacorb94/ProyectoDAW/blob/master/Elrincondelaprogramacion/src/app/services/User.service.ts)
 
 ```
 127.0.0.1 elrincondelaprogramacion.com
 127.0.0.1 elrincondelaprogramacion.api
 ```
 
-3. Crear 2 archivos certificate.cnf uno para el frontend y otro para el backend y añadirle lo siguiente a cada uno
+4. Crear 2 archivos certificate.cnf uno para el frontend y otro para el backend y añadirle lo siguiente a cada uno
 
 ```
 [req]
@@ -55,7 +55,7 @@ subjectAltName = @alt_names
 DNS.1 = localhost 
 ```
 
-4. Creamos los archivos .key y .crt por ej en apache/conf/certificates/Proyecto/front y apache/conf/certificates/Proyecto/back
+5. Creamos los archivos .key y .crt por ej en apache/conf/certificates/Proyecto/front y apache/conf/certificates/Proyecto/back
 openssl req -new -x509 -newkey rsa:2048 -sha256 -nodes -keyout ./nombre.key -days 3560 -out ./nombre.crt -config ./certificate.cnf
 
-5. En cada carpeta (por ej front y back) ejecutamos nombre.crt>siguiente>elegimos la segunda opción>examinar>entidades de certificación raíz de confianza>aceptar>siguiente>finalizar>instalamos el certificado
+6. En cada carpeta (por ej front y back) ejecutamos nombre.crt>siguiente>elegimos la segunda opción>examinar>entidades de certificación raíz de confianza>aceptar>siguiente>finalizar>instalamos el certificado
