@@ -39,13 +39,19 @@ security:
         - { path: /register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #Para usuarios logueados
         - { path: /users/[0-9]+/update, roles: IS_AUTHENTICATED_FULLY }
+        - { path: /profile-image/[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+, roles: IS_AUTHENTICATED_FULLY }
+        - { path: /users/[0-9]+, roles: IS_AUTHENTICATED_FULLY }
         - { path: /profile-image/upload, roles: IS_AUTHENTICATED_FULLY }
         - { path: /users/[0-9]+/ban, roles: ROLE_ADMIN }
         - { path: /logout, roles: IS_AUTHENTICATED_FULLY }
         - { path: /[category|categories], roles: ROLE_ADMIN }
         - { path: /post/create, roles: [ROLE_ADMIN, ROLE_WRITER] }
         - { path: /posts/[0-9]+/update, roles: [ROLE_ADMIN, ROLE_WRITER] }
-        - { path: /post-image/upload, roles: [ROLE_ADMIN, ROLE_WRITER] }      
+        - { path: /post-image/upload, roles: [ROLE_ADMIN, ROLE_WRITER] } 
+        - { path: /posts-images/[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+, roles: IS_AUTHENTICATED_FULLY }     
+        - { path: /posts, roles: IS_AUTHENTICATED_FULLY }
+        - { path: /posts/categories/[0-9]+, roles: IS_AUTHENTICATED_FULLY }
+        - { path: /posts/[0-9]+, roles: IS_AUTHENTICATED_FULLY }
         - { path: /posts/[0-9]+/inadequate, roles: ROLE_ADMIN }
         - { path: /[0-9]+/comment/create, roles: IS_AUTHENTICATED_FULLY }
         - { path: /comments/[0-9]+/inadequate, roles: ROLE_ADMIN }
