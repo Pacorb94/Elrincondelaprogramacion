@@ -1,5 +1,5 @@
 
-1. Añade los siguientes hosts virtuales en el archivo httpd-vhosts.conf
+1. Añade los siguientes hosts virtuales (puedes editarlos) en el archivo httpd-vhosts.conf
 
 ```
 <VirtualHost *:80>
@@ -21,7 +21,7 @@
     </Directory> 
 </VirtualHost>
 ```
-2. Añade lo siguiente en etc/hosts 
+2. Añade lo siguiente (puedes editar el dns) en etc/hosts 
 
 ```
 127.0.0.1 elrincondelaprogramacion.com
