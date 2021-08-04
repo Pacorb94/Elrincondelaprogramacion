@@ -6,10 +6,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './modules/user/service/user.service';
+import { HttpRequestInterceptor } from './interceptor/HttpRequestIncerceptor';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MomentModule } from 'angular2-moment';
-
 
 @NgModule({
     declarations: [
@@ -26,7 +26,10 @@ import { MomentModule } from 'angular2-moment';
         MomentModule,
         FlashMessagesModule.forRoot()
     ],
-    providers: [UserService],
+    providers: [
+        UserService, 
+        [{provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true}]
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
