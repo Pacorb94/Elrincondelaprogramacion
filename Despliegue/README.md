@@ -29,6 +29,6 @@ que está en este [archivo](https://github.com/Pacorb94/ProyectoDAW/blob/master/
 127.0.0.1 elrincondelaprogramacion.api
 ```
 
-3. Si estás en Windows agrega el certificado SSL de la siguiente manera:
+3. Si estás en Windows agrega el certificado SSL de la siguiente manera (opcional):
     
     En la carpeta "certificates" ejecutamos localhost.crt>siguiente>elegimos la segunda opción>examinar>entidades de certificación raíz de confianza>aceptar>siguiente>finalizar>instalamos el certificado
