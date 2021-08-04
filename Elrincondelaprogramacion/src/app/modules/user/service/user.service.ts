@@ -52,7 +52,7 @@ export class UserService {
     login(email:string, password:string):Observable<any>{
         let data={"email":email, "password":password};
         let headers=new HttpHeaders().set('Content-Type', 'application/json');
-        return this._http.post(`${environment.url}/login`, data, {headers:headers, withCredentials:true});
+        return this._http.post(`${environment.url}/login`, data, {headers:headers});
     }
 
     /**
@@ -83,6 +83,6 @@ export class UserService {
      * @return
      */
     logout():Observable<any>{
-        return this._http.delete(`${environment.url}/logout`, {withCredentials:true});
+        return this._http.delete(`${environment.url}/logout`);
     }
 }
