@@ -59,3 +59,10 @@ DNS.1 = localhost
 openssl req -new -x509 -newkey rsa:2048 -sha256 -nodes -keyout ./nombre.key -days 3560 -out ./nombre.crt -config ./certificate.cnf
 
 6. En cada carpeta (por ej front y back) ejecutamos nombre.crt>siguiente>elegimos la segunda opción>examinar>entidades de certificación raíz de confianza>aceptar>siguiente>finalizar>instalamos el certificado
+
+7. Para no escribir tanto en ng s vamos a angular.json en la clave "configurations" de la clave "serve" añadir la ruta del certificado y la clave, por ej
+```
+"ssl":true,
+"sslCert":"C://xamp/apache/conf/certificates/Proyecto/front/elrincondelaprogramacion.com.crt",
+"sslKey":"C://xamp/apache/conf/certificates/Proyecto/front/elrincondelaprogramacion.com.key"
+```
