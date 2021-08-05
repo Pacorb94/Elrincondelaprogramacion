@@ -23,9 +23,6 @@ al front-end y [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrin
 * Angular 12 (puedes probar tu versión)
 
 ## Pasos a seguir
-0. Sigue [estos](https://github.com/Pacorb94/ProyectoDAW/tree/master/Despliegue) pasos para el despliegue
-
- #### Dentro de la carpeta "Elrincondelaprogramacion-API"
  1. En un sistema gestor de bbdd importar database.sql de la carpeta database
  2. `composer install`
  3. Generamos una clave para que se firme el token 
@@ -37,9 +34,8 @@ al front-end y [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrin
         `openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout`
 
  5. En "JWT_PASSPHRASE" del archivo .env ponemos la clave del paso anterior
-
- #### Dentro de la carpeta "Elrincondelaprogramacion"
- 7. `npm i` o `npm install`
+ 6. `npm i` o `npm install`
+ 7. Sigue [estos](https://github.com/Pacorb94/ProyectoDAW/tree/master/Despliegue) pasos para el despliegue
  8. `ng s -o` o `ng server -o`
 
 ## Licencia
