@@ -53,6 +53,9 @@ export class LoginComponent implements AfterViewInit {
                 if (response) {
                     this.user=response[0];
                     localStorage.setItem('user', JSON.stringify(this.user));
+                    //Actualizamos el valor
+                    if (localStorage.hasOwnProperty('rememberEmail')) 
+                        localStorage.setItem('rememberEmail', this.user.email);
                     //Le damos el usuario logueado al BehaviourSubject
                     this._userService.setUserLoggedIn$(this.user);
                     this._router.navigate(['/']);
