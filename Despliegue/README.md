@@ -1,7 +1,7 @@
 1. En httpd-vhost.conf de Apache crear un host virtual https cuyo DocumentRoot apunte al punto de entrada
 del backend y añadirle el certificado SSL (ruta hacia la carpeta "Despliegue/Certificates/Proyecto/Back")
 
-2. Añade un dns en etc/hosts y cambia la url que está en [este](https://github.com/Pacorb94/ProyectoDAW/blob/master/Elrincondelaprogramacion/src/app/env) archivo por tu dns
+2. Añade un dns en etc/hosts y cambia la url que está en [este](https://github.com/Pacorb94/ProyectoDAW/blob/master/Elrincondelaprogramacion/src/environments/environment.ts) archivo por tu dns
 
 3. Reiniciar Apache
 
