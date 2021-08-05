@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: "https://elrincondelaprogramacion.api"
+  url: "https://api.elrincondelaprogramacion.com"
 };
 
 /*
