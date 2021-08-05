@@ -5,18 +5,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserPanelRoutingModule } from './panel-routing.module';
 import { MainComponent } from './components/main/main.component';
-
+import { UpdateComponent } from './components/update/update.component';
+import { AngularFileUploaderModule } from 'angular-file-uploader';
 
 @NgModule({
     declarations: [
-        MainComponent
+        MainComponent,
+        UpdateComponent
     ],
     imports: [
         CommonModule,
         ReactiveFormsModule,
         HttpClientModule,
         FlashMessagesModule.forRoot(),
-        UserPanelRoutingModule
+        UserPanelRoutingModule,
+        AngularFileUploaderModule
     ]
 })
 export class UserPanelModule { }
