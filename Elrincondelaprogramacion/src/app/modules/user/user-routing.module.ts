@@ -1,4 +1,4 @@
-import { UserPanelModule } from './user-panel/user-panel.module';
+import { UserPanelModule } from './module/user-panel/user-panel.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
@@ -19,7 +19,7 @@ const routes: Routes = [
             },
             {
                 path:'user-panel', 
-                loadChildren: ()=>import('./user-panel/user-panel.module').then(m=>m.UserPanelModule), 
+                loadChildren: ()=>import('./module/user-panel/user-panel.module').then(m=>m.UserPanelModule), 
                 canActivate:[UserLoggedInGuard]
             },
             {
