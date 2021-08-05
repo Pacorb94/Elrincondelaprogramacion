@@ -82,8 +82,8 @@
             "development": {
               "browserTarget": "Elrincondelaprogramacion:build:development",
               "ssl":true,
-              "sslCert":"C:/xampp/apache/conf/certificates/Proyecto/front/elrincondelaprogramacion.com.crt",
-              "sslKey":"C:/xampp/apache/conf/certificates/Proyecto/front/elrincondelaprogramacion.com.key"
+              "sslCert":"C:/xampp/apache/conf/Certificates/Proyecto/Front/elrincondelaprogramacion.com.crt",
+              "sslKey":"C:/xampp/apache/conf/Certificates/Proyecto/Front/elrincondelaprogramacion.com.key"
             }
           },
           "defaultConfiguration": "development"
