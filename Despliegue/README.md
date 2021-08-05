@@ -8,9 +8,9 @@ del backend y añadirle el certificado SSL (ruta hacia la carpeta "Despliegue/Ce
 4. En la carpeta "Despliegue/Certificates/Proyecto" hay 2 carpetas por lo que instalar los archivos .crt de cada una de ellas
 
 5. Para no escribir tanto cuando despleguemos el servidor de Angular vamos a angular.json en la clave "configurations" de la clave "serve" añadir la ruta del certificado y la clave, por ej
-```
-"ssl":true,
-"sslCert":"Despliegue/Certificates/Proyecto/Front/elrincondelaprogramacion.com.crt",
-"sslKey":"Despliegue/Certificates/Proyecto/Front/elrincondelaprogramacion.com.key"
-```
+    ```
+    "ssl":true,
+    "sslCert":"Despliegue/Certificates/Proyecto/Front/elrincondelaprogramacion.com.crt",
+    "sslKey":"Despliegue/Certificates/Proyecto/Front/elrincondelaprogramacion.com.key"
+    ```
 6. `ng s -o` o `ng serve -o`
