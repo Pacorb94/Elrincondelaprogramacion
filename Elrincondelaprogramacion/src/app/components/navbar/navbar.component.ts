@@ -78,6 +78,7 @@ export class NavbarComponent implements OnInit {
                 localStorage.removeItem('user');
                 //Le damos null al BehaviourSubject
                 this._userService.setUserLoggedIn$(this.user);
+                this._router.navigate(['']);
             },
             error=>{}
         );
