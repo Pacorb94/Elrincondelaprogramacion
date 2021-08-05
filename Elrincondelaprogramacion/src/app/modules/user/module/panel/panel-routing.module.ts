@@ -1,14 +1,14 @@
+import { UpdateComponent } from './components/update/update.component';
 import { MainComponent } from './components/main/main.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserLoggedInGuard } from 'src/app/modules/user/guards/user-logged-in.guard';
 
 const routes: Routes = [
     {
-        path: '',
+        path: '', component:MainComponent,
         children:[
             {
-                path:'', component:MainComponent, canActivate:[UserLoggedInGuard]
+                path:'user-settings', component:UpdateComponent
             },
             {
                 path:'**', redirectTo:''
