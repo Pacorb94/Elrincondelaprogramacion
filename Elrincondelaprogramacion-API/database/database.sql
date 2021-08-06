@@ -51,4 +51,4 @@ create table if not exists Comments(
     constraint fk_comments_posts foreign key (post_id) references Posts(id)
 )ENGINE=InnoDB;
 
-alter table posts add constraint fk_posts_categories foreign key (category_id) references Categories(id);
+alter table Posts add constraint fk_posts_categories foreign key (category_id) references Categories(id);
