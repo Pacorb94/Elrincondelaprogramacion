@@ -9,7 +9,7 @@
     <img *ngIf="imagePreview" [src]="imagePreview" alt="Vista previa de la imagen" class="w-100 h-100">
 </div>
 <div class="row">
-    <button type="button" class="btn btn-info btn-s" (click)="uploader.uploadAll(); setProfileImageLocalStorage()"
+    <button type="button" class="btn btn-info btn-s" (click)="uploader.uploadAll()"
         [disabled]="!uploader.getNotUploadedItems().length">
         <span  class="glyphicon glyphicon-upload"></span> Subir imagen
     </button>
