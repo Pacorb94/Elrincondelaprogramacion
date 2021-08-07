@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { UserPanelRoutingModule } from './panel-routing.module';
 import { MainComponent } from './components/main/main.component';
 import { UpdateComponent } from './components/update/update.component';
-import { AngularFileUploaderModule } from 'angular-file-uploader';
 
 @NgModule({
     declarations: [
@@ -18,8 +17,7 @@ import { AngularFileUploaderModule } from 'angular-file-uploader';
         ReactiveFormsModule,
         HttpClientModule,
         FlashMessagesModule.forRoot(),
-        UserPanelRoutingModule,
-        AngularFileUploaderModule
+        UserPanelRoutingModule
     ]
 })
 export class UserPanelModule { }
