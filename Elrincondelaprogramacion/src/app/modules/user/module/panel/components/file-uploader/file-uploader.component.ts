@@ -23,6 +23,7 @@ export class FileUploaderComponent {
         );
         this.hasBaseDropZoneOver=false;
         this.previousView();
+        this.setProfileImageUser();
     }
 
     public fileOverBase(e:any) {
@@ -31,17 +32,24 @@ export class FileUploaderComponent {
 
     /**
      * Función que carga una vista previa de la imagen
+     * cuando se añade una imagen
      */
     previousView(){
-        this.uploader.onAfterAddingFile=(fileItem) => {
+        this.uploader.onAfterAddingFile=fileItem => {
             this.imagePreview=this._sanitizer
                                 .bypassSecurityTrustUrl((window.URL.createObjectURL(fileItem._file)));
         }
     }
 
-    setProfileImageLocalStorage(){
-        this.uploader.onAfterAddingFile=(fileItem) => {
-            console.log(fileItem._file.name);
-        }
+    /**
+     * Función que asigna la imagen al usuario cuando se ha enviado
+     */
+    setProfileImageUser(){
+        this.uploader.onCompleteItem=fileItem=>{
+            //Reemplazamos los espacios con guiones
+            let fileName=fileItem.file.name.replace(/\s+/g,'-');
+            this.user.profileImage=fileName;
+            localStorage.setItem('user', JSON.stringify(this.user));
+        }      
     }
 }
