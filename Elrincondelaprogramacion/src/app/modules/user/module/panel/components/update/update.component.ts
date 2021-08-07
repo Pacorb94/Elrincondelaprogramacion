@@ -14,7 +14,6 @@ export class UpdateComponent {
     pageTitle:string;
     user:any;
     form:FormGroup;
-    afuConfig:any;
 
     constructor(private _userService:UserService, private _router:Router,
     private _flashMessagesService:FlashMessagesService) { 
@@ -24,38 +23,57 @@ export class UpdateComponent {
             nick:new FormControl(this.user.nick),
             email:new FormControl(this.user.email, Validators.email)
         });
-        this.afuConfig={
-            //Sólo 1 archivo
-            multiple:false,
-            formatsAllowed:'.jpg, .jpeg, .png, .gif',
-            maxSize:'50',
-            uploadAPI:{
-                url:`${environment.url}/profile-image/upload`
-            },
-            //El archivo se subirá dando click a un botón
-            theme:'attachPin',
-            //Mostrar barra de progreso
-            hideProgressBar:false,
-            //Ocultar botón de reset
-            hideResetBtn:true,
-            hideSelectBtn:false,
-            replaceTexts:{
-                //Texto del campo
-                attachPinBtn:'Sube una imagen de perfil'
-            }
-        }
+       
     }
 
+    /**
+     * Función que actualiza el usuario
+     */
     updateUser(){
-
+        this.setUserFormValues();
+        this._userService.update(this.user).subscribe(
+            response=>{
+                if (response) {
+                    this.user=response;
+                    //Le damos al BehaviourSubject el nuevo usuario
+                    this._userService.setUserLoggedIn$(this.user);
+                    localStorage.setItem('user', JSON.stringify(this.user));
+                    //Volvemos a iniciar sesión para que se cree un nuevo token con los nuevos datos del usuario
+                    console.log(this.user.email);
+                    this._userService.login(this.user.email, this.user.password);
+                    this.showFlashMessage('Has modificado tu perfil',
+                        'alert alert-success col-md-4 mt-3 mx-auto', 1500);
+                }else{
+                    this.showFlashMessage('No has modificado tu perfil correctamente',
+                        'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
+                    this._userService.setUserLoggedIn$(null);
+                }
+            },
+            error=>{
+                this.showFlashMessage('No has modificado tu perfil correctamente',
+                    'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
+                this._userService.setUserLoggedIn$(null);
+                this._router.navigate(['']);
+            }
+        );
     }
 
+    /**
+     * Función que establece los campos del formulario al usuario
+     */
     setUserFormValues(){
-
+        if (this.form.get('nick')?.value) this.user.nick=this.form.get('nick')?.value;
+        if (this.form.get('email')?.value) this.user.email=this.form.get('email')?.value;
     }
-
+    
+    /**
+     * Función que sube una imagen de perfil
+     * @param event 
+     */
     profileImage(event:any){
-
+        let fileExtension=event.body.image.split('\.')[1];
+        let extensions=['jpg', 'jpeg', 'png', 'gif'];
+        if (extensions.indexOf(fileExtension)!=-1) this.user.profileImage=event.body.image;
     }
 
     /**
