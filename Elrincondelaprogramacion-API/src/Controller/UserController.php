@@ -70,7 +70,7 @@ class UserController extends AbstractController
                             $decodedRequest=json_decode($request, true);
                             /*array_map itera sobre los elementos de $decodedRequest ejecutando 
                             la función trim*/
-                            $decodedRequest=array_map('trim', $decodedRequest);
+                            //$decodedRequest=array_map('trim', $decodedRequest);                       
                             /*?: indica que $decodedRequest['nick'] si tiene valor será ese 
                             sino $user->getNick()*/
                             $decodedRequest['nick']=$decodedRequest['nick']?:$user->getNick();
@@ -104,7 +104,7 @@ class UserController extends AbstractController
      */
     public function uploadProfileImage(Request $request)
     {
-        $image=$request->files->get('file0', null);
+        $image=$request->files->get('file', null);
         if ($image) {
             if($this->validations('uploadProfileImage', null, $image)){
                 //Debemos configurar la fecha y tiempo
