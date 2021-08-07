@@ -46,10 +46,11 @@ export class FileUploaderComponent {
      */
     setProfileImageUser(){
         this.uploader.onCompleteItem=fileItem=>{
-            //Reemplazamos los espacios con guiones
-            let fileName=fileItem.file.name.replace(/\s+/g,'-');
+            let fileName=JSON.parse(fileItem._xhr.response).image;
             this.user.profileImage=fileName;
             localStorage.setItem('user', JSON.stringify(this.user));
+            //Le damos el usuario al BehaviourSubject
+            this._userService.setUserLoggedIn$(this.user);
         }      
     }
 }
