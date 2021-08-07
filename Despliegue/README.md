@@ -10,7 +10,7 @@ del backend, ponle un certificado SSL e instálalo en el navegador
 5. Para no escribir tanto cuando despleguemos el servidor de Angular vamos a angular.json en la clave "configurations" de la clave "serve" añadir la ruta del certificado y la clave, por ej
     ```
     "ssl":true,
-    "sslCert":"ruta del arcihvo .crt",
+    "sslCert":"ruta del archivo .crt",
     "sslKey":"ruta del archivo .key"
     ```
 6. `ng s -o` o `ng serve -o`
