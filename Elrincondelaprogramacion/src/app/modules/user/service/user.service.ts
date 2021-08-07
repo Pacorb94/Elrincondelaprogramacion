@@ -42,7 +42,7 @@ export class UserService {
      * Función que da valor al usuario
      * @param value 
      */
-     setUserLoggedIn$(value:any){
+    setUserLoggedIn$(value:any){
         this.user.next(value);
     }
 
@@ -82,7 +82,7 @@ export class UserService {
      */
     getProfileImage(image:string):Observable<any>{
         let header=new HttpHeaders().set('Content-Type', 'image/*');
-        return this._http.get(`${environment.url}/profile-image/${image}`, 
+        return this._http.get(`${environment.url}/profile-images/${image}`, 
                                 {headers:header, responseType:'blob'});
     }
 
