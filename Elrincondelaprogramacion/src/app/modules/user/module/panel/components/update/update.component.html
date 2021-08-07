@@ -17,8 +17,7 @@
         <span *ngIf="checkTouched(form.get('email'))" class="invalid-feedback d-block">
             {{wrongValidationMessage(form.get('email'), 'email')}}
         </span><br>
-        <angular-file-uploader [config]="afuConfig" (ApiResponse)="profileImage($event)">
-        </angular-file-uploader>
+        <input type="file" name="file" id="profileImage">          
         <br>
         <!--La propiedad disabled permite poner una condición, por lo que el botón se desactivará si el
         formulario no es válido-->
