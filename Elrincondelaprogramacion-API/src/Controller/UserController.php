@@ -130,7 +130,7 @@ class UserController extends AbstractController
     public function getProfileImage($imageName, Filesystem $filesystem)
     {
         $imageName=trim($imageName);
-        if ($imageName) {
+        if ($imageName) {           
             //Obtenemos la carpeta donde se guardará la imagen de perfil
             $profileImagesDirectory=$this->getParameter('profileImagesDirectory');
             if($filesystem->exists($profileImagesDirectory.'/'.$imageName)){
