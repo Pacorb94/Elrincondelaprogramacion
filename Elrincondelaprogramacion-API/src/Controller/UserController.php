@@ -107,9 +107,10 @@ class UserController extends AbstractController
         $image=$request->files->get('file', null);
         if ($image) {
             if($this->validations('uploadProfileImage', null, $image)){
+                $imageNameWithoutSpaces=preg_replace('/\s+/', '-', $image->getClientOriginalName());
                 //Debemos configurar la fecha y tiempo
                 date_default_timezone_set('Europe/Madrid');
-                $imageName=date('d-m-Y_H-i-s').'_'.$image->getClientOriginalName();
+                $imageName=date('d-m-Y_H-i-s').'_'.$imageNameWithoutSpaces;
                 //Obtenemos la carpeta donde se guardará la imagen de perfil
                 $profileImagesDirectory=$this->getParameter('profileImagesDirectory');
                 //Movemos la imagen de perfil a esa carpeta
