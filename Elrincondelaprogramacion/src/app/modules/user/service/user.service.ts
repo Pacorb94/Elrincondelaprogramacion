@@ -14,23 +14,6 @@ export class UserService {
     }
 
     /**
-     * Función que da valor al usuario
-     * @param value 
-     */
-    setUserLoggedIn$(value:any){
-        this.user.next(value);
-    }
-
-    /**
-     * Función que devuelve un observable para comprobar si el usuario inició
-     * sesión
-     * @returns 
-     */
-    getUserLoggedIn$():Observable<any>{
-        return this.user.asObservable(); 
-    }
-
-    /**
      * Función que registra a un usuario
      * @param user 
      * @returns 
@@ -56,26 +39,59 @@ export class UserService {
     }
 
     /**
+     * Función que da valor al usuario
+     * @param value 
+     */
+     setUserLoggedIn$(value:any){
+        this.user.next(value);
+    }
+
+    /**
+     * Función que devuelve un observable para comprobar si el usuario inició
+     * sesión
+     * @returns 
+     */
+    getUserLoggedIn$():Observable<any>{
+        return this.user.asObservable(); 
+    }
+
+    /**
      * Función que obtiene el usuario logueado
      * @return
      */
     getUserLoggedIn():any{
         let user=null;
-        if (localStorage.hasOwnProperty('user')) {
-            user=JSON.parse(localStorage.getItem('user')||'{}');
-        }
+        if (localStorage.hasOwnProperty('user')) user=JSON.parse(localStorage.getItem('user')||'{}');    
         return user;
+    }
+    
+    /**
+     * Función que sube una imagen de perfil
+     * @param image
+     * @return
+     */
+    uploadProfileImage(image:any):Observable<any>{
+        let header=new HttpHeaders().set('Content-Type', 'multipart/form-data');
+        return this._http.post(`${environment.url}/profile-image/upload`, image, {headers:header});
     }
 
     /**
      * Función que obtiene la imagen de perfil
-     * @param image 
+     * @param image
      * @return 
      */
     getProfileImage(image:string):Observable<any>{
         let header=new HttpHeaders().set('Content-Type', 'image/*');
         return this._http.get(`${environment.url}/profile-image/${image}`, 
                                 {headers:header, responseType:'blob'});
+    }
+
+    update(user:any):Observable<any>{
+        //Tenemos que convertir el usuario a json-string
+        let data=`json=${JSON.stringify(user)}`;
+        //Establecemos el tipo de cabecera
+        let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        return this._http.put(`${environment.url}/users/${user.id}/update`, data, {headers:header});
     }
 
     /**
