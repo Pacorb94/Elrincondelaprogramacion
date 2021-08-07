@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from './../../../../service/user.service';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
-import { environment } from './../../../../../../../environments/environment';
+
 
 @Component({
     selector: 'update',
@@ -23,7 +23,6 @@ export class UpdateComponent {
             nick:new FormControl(this.user.nick),
             email:new FormControl(this.user.email, Validators.email)
         });
-       
     }
 
     /**
@@ -64,16 +63,6 @@ export class UpdateComponent {
     setUserFormValues(){
         if (this.form.get('nick')?.value) this.user.nick=this.form.get('nick')?.value;
         if (this.form.get('email')?.value) this.user.email=this.form.get('email')?.value;
-    }
-    
-    /**
-     * Función que sube una imagen de perfil
-     * @param event 
-     */
-    profileImage(event:any){
-        let fileExtension=event.body.image.split('\.')[1];
-        let extensions=['jpg', 'jpeg', 'png', 'gif'];
-        if (extensions.indexOf(fileExtension)!=-1) this.user.profileImage=event.body.image;
     }
 
     /**
