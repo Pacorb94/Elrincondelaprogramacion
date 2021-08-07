@@ -7,21 +7,20 @@
     <form [formGroup]="form" class="col-md-3 ml-0 pl-0 mx-auto">
         <label for="nick">Nombre de usuario:</label>
         <!--El valor del atributo "formControlName" sirva para identificarlo Angular-->
-        <input type="text" name="nick" id="nick" formControlName="nick" class="form-control text-center" >
+        <input type="text" name="nick" id="nick" formControlName="nick" class="form-control text-center">
         <span *ngIf="checkTouched(form.get('nick'))" class="invalid-feedback d-block">
             {{wrongValidationMessage(form.get('nick'), 'nombre de usuario')}}
         </span>
         <label for="email">Email:</label>
-        <input type="email" name="email" id="email" formControlName="email"
-            class="form-control text-center" placeholder="ejemplo@ejemplo.ejemplo">
+        <input type="email" name="email" id="email" formControlName="email" class="form-control text-center"
+            placeholder="ejemplo@ejemplo.ejemplo">
         <span *ngIf="checkTouched(form.get('email'))" class="invalid-feedback d-block">
             {{wrongValidationMessage(form.get('email'), 'email')}}
-        </span><br>
-        <input type="file" name="file" id="profileImage">          
-        <br>
+        </span>
+        <file-uploader></file-uploader>
         <!--La propiedad disabled permite poner una condición, por lo que el botón se desactivará si el
         formulario no es válido-->
-        <input type="button" value="Modificar" (click)="updateUser()" [disabled]="!form.valid" 
-            class="btn btn-success">
+        <input type="button" value="Modificar los otros datos" (click)="updateUser()" [disabled]="!form.valid" 
+            class="btn btn-success mt-1">
     </form>
 </div>
