@@ -18,7 +18,7 @@ export class CheckRegisterLoginGuard implements CanActivate {
      */
     canActivate() {
         if (this.user) {
-            this._router.navigate(['/home']);
+            this._router.navigate(['']);
             return false;
         }
         return true;
