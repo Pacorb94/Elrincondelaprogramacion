@@ -11,6 +11,13 @@ use App\Entity\Category;
 
 class CategoryController extends AbstractController
 {
+    private $categoryRepo;
+    private $em;
+
+    public function __construct() {
+        $this->categoryRepo=$this->getDoctrine()->getRepository(Category::class);
+        $this->em=$this->getDoctrine()->getManager();
+    }
 
     /**
      * Función que crea una categoría
@@ -25,14 +32,12 @@ class CategoryController extends AbstractController
             $decodedRequest['name']=trim($decodedRequest['name']);
             if (count($this->nameValidation($decodedRequest['name']))==0) {
                 $decodedRequest['name']=trim($decodedRequest['name']);
-                $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
                 //Si la categoría con ese nombre no existe
-                if (!$categoryRepo->findOneBy(['name'=>$decodedRequest['name']])) {
+                if (!$this->categoryRepo->findOneBy(['name'=>$decodedRequest['name']])) {
                     $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
                     //Aunque espera el id del usuario tenemos que pasarle el usuario completo
                     $category=new Category($userLoggedIn, $decodedRequest['name'], new \DateTime('now'));
-                    $em=$this->getDoctrine()->getManager();
-                    $category->execute($em, $category, 'insert');
+                    $category->execute($this->em, $category, 'insert');
                     return $this->json($category, 201);
                 }
                 return $this->json(['message'=>'That name already exists'], 500);
@@ -57,14 +62,12 @@ class CategoryController extends AbstractController
                     $decodedRequest=json_decode($request, true);
                     $decodedRequest['name']=trim($decodedRequest['name']);
                     if ($this->nameValidation($decodedRequest['name'])) {
-                        $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
-                        $category=$categoryRepo->find($id);
+                        $category=$this->categoryRepo->find($id);
                         //Si existe
                         if ($category) {
                             $category->setName($decodedRequest['name']);
                             $category->setUpdatedAt(new \DateTime('now'));
-                            $em=$this->getDoctrine()->getManager();
-                            $category->execute($em, $category, 'update');
+                            $category->execute($this->em, $category, 'update');
                             return $this->json($category);                          
                         }
                         return $this->json(['message'=>'Category not found'], 404);
@@ -85,8 +88,7 @@ class CategoryController extends AbstractController
      */
     public function getCategories()
     {
-        $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
-        $categories=$categoryRepo->findAll();
+        $categories=$this->categoryRepo->findAll();
         return $this->json($categories);
     }
 
@@ -98,8 +100,7 @@ class CategoryController extends AbstractController
     public function getCategory($id)
     {
         if ($this->idValidation($id)) {
-            $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
-            $category=$categoryRepo->find($id);
+            $category=$this->categoryRepo->find($id);
             //Si existe
             if ($category) return $this->json($category);
             return $this->json(['message'=>'Category not found'], 404);
@@ -115,12 +116,10 @@ class CategoryController extends AbstractController
     public function delete($id)
     {
         if ($this->idValidation($id)) {
-            $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
-            $category=$categoryRepo->find($id);
+            $category=$this->categoryRepo->find($id);
             //Si existe
             if ($category) {
-                $em=$this->getDoctrine()->getManager();
-                $category->execute($em, $category, 'delete');
+                $category->execute($this->em, $category, 'delete');
                 return $this->json(['message'=>'Deleted category']);
             }
             return $this->json(['message'=>'Category not found'], 404);
