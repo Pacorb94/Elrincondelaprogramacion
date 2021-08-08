@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 class UserController extends AbstractController
@@ -16,9 +17,9 @@ class UserController extends AbstractController
     private $userRepo;
     private $em;
 
-    public function __construct() {
-        $this->userRepo=$this->getDoctrine()->getRepository(User::class);
-        $this->em=$this->getDoctrine()->getManager();
+    public function __construct(EntityManagerInterface $entityManager) {
+        $this->userRepo=$entityManager->getRepository(User::class);
+        $this->em=$entityManager;
     }
 
     /**
@@ -73,14 +74,16 @@ class UserController extends AbstractController
                             $decodedRequest=json_decode($request, true);
                             /*array_map itera sobre los elementos de $decodedRequest ejecutando 
                             la función trim*/
-                            $decodedRequest=array_map('trim', $decodedRequest);                       
+                           // $decodedRequest=array_map('trim', $decodedRequest);                       
                             /*?: indica que $decodedRequest['nick'] si tiene valor será ese 
                             sino $user->getNick()*/
                             $decodedRequest['nick']=$decodedRequest['nick']?:$user->getNick();
                             $decodedRequest['email']=$decodedRequest['email']?:$user->getEmail();
+                            $decodedRequest['profileImage']=$decodedRequest['profileImage']?:$user->getProfileImage();
                             if ($this->validations('update', $decodedRequest)) {
                                 $user->setNick($decodedRequest['nick']);
                                 $user->setEmail($decodedRequest['email']);
+                                $user->setProfileImage($decodedRequest['profileImage']);
                                 $user->setUpdatedAt(new \DateTime('now'));
                                 $user->execute($this->em, $user, 'update');                
                                 return $this->json($user);          
