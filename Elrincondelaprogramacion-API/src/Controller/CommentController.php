@@ -9,16 +9,16 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Comment;
 use App\Entity\Post;
-
+use Doctrine\ORM\EntityManagerInterface;
 
 class CommentController extends AbstractController
 {
     private $commentRepo;
     private $em;
 
-    public function __construct() {
-        $this->commentRepo=$this->getDoctrine()->getRepository(Comment::class);
-        $this->em=$this->getDoctrine()->getManager();
+    public function __construct(EntityManagerInterface $entityManager) {
+        $this->commentRepo=$entityManager->getRepository(Comment::class);
+        $this->em=$entityManager;
     }
 
     /**
