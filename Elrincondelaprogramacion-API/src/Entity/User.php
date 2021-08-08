@@ -128,7 +128,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
         return $this;
     }
 
-     /**
+    /**
      * @see PasswordAuthenticatedUserInterface
      */
     public function getPassword(): string
