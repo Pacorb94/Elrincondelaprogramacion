@@ -10,11 +10,17 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\Cookie;
 
 class UserController extends AbstractController
 {
- 
+    private $userRepo;
+    private $em;
+
+    public function __construct() {
+        $this->userRepo=$this->getDoctrine()->getRepository(User::class);
+        $this->em=$this->getDoctrine()->getManager();
+    }
+
     /**
      * Función que registra un usuario
      * @param $request
@@ -30,14 +36,12 @@ class UserController extends AbstractController
             la función trim*/
             $decodedRequest=array_map('trim', $decodedRequest);
             if ($this->validations('register', $decodedRequest)) {
-                $userRepo=$this->getDoctrine()->getRepository(User::class);
                 //Si no existe
-                if (!$userRepo->findOneBy(['email'=>$decodedRequest['email']])) {
+                if (!$this->userRepo->findOneBy(['email'=>$decodedRequest['email']])) {
                     $encryptedPassword=password_hash($decodedRequest['password'], PASSWORD_BCRYPT);
                     $user=new User($decodedRequest['nick'], $decodedRequest['email'], $encryptedPassword, 
                         null, false, [$decodedRequest['role']], new \DateTime('now'), new \DateTime('now'));
-                    $em=$this->getDoctrine()->getManager();
-                    $user->execute($em, $user, 'insert');
+                    $user->execute($this->em, $user, 'insert');
                     return $this->json($user, 201);
                 }
                 return $this->json(['message'=>'That user already exists'], 500);
@@ -62,15 +66,14 @@ class UserController extends AbstractController
                 if ($userLoggedIn->getId()==$id) {
                     $request=$request->get('json', null);
                     if ($request) {
-                        $userRepo=$this->getDoctrine()->getRepository(User::class);
-                        $user=$userRepo->find(['id'=>$id]);
+                        $user=$this->userRepo->find(['id'=>$id]);
                         //Si existe el usuario
                         if ($user) {
                             //Con true decodificamos la petición a un array
                             $decodedRequest=json_decode($request, true);
                             /*array_map itera sobre los elementos de $decodedRequest ejecutando 
                             la función trim*/
-                            //$decodedRequest=array_map('trim', $decodedRequest);                       
+                            $decodedRequest=array_map('trim', $decodedRequest);                       
                             /*?: indica que $decodedRequest['nick'] si tiene valor será ese 
                             sino $user->getNick()*/
                             $decodedRequest['nick']=$decodedRequest['nick']?:$user->getNick();
@@ -79,8 +82,7 @@ class UserController extends AbstractController
                                 $user->setNick($decodedRequest['nick']);
                                 $user->setEmail($decodedRequest['email']);
                                 $user->setUpdatedAt(new \DateTime('now'));
-                                $em=$this->getDoctrine()->getManager();
-                                $user->execute($em, $user, 'update');                
+                                $user->execute($this->em, $user, 'update');                
                                 return $this->json($user);          
                             }
                             return $this->json(['message'=>'Wrong validation'], 400);  
@@ -107,6 +109,7 @@ class UserController extends AbstractController
         $image=$request->files->get('file', null);
         if ($image) {
             if($this->validations('uploadProfileImage', null, $image)){
+                //Reemplazamos los espacios por guiones
                 $imageNameWithoutSpaces=preg_replace('/\s+/', '-', $image->getClientOriginalName());
                 //Debemos configurar la fecha y tiempo
                 date_default_timezone_set('Europe/Madrid');
@@ -152,8 +155,7 @@ class UserController extends AbstractController
     public function getUserDetail($id)
     {
         if ($this->idValidation($id)) {
-            $userRepo=$this->getDoctrine()->getRepository(User::class);
-            $user=$userRepo->find($id);
+            $user=$this->userRepo->find($id);
             if ($user) return $this->json($user);
             return $this->json(['message'=>'User not found'], 404);
         }
@@ -174,13 +176,11 @@ class UserController extends AbstractController
                 $decodedRequest=json_decode($request, true);
                 $decodedRequest['ban']=trim($decodedRequest['ban']);
                 if ($decodedRequest['ban']=='yes') {
-                    $userRepo=$this->getDoctrine()->getRepository(User::class);
-                    $user=$userRepo->find($id);
+                    $user=$this->userRepo->find($id);
                     //Si existe
                     if ($user) {
                         $user->setBanned(true);
-                        $em=$this->getDoctrine()->getManager();
-                        $user->execute($em, $user, 'update');
+                        $user->execute($this->em, $user, 'update');
                         return $this->json($user);
                     }
                     return $this->json(['message'=>'User not found'], 404);
