@@ -10,12 +10,14 @@ import { UserService } from './modules/user/service/user.service';
 import { HttpRequestInterceptor } from './interceptor/HttpRequestIncerceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MomentModule } from 'angular2-moment';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavbarComponent,
-        HomeComponent
+        HomeComponent,
+        FooterComponent
     ],
     imports: [
         BrowserModule,
