@@ -1,5 +1,24 @@
-footer{
-    position: absolute;
-    bottom: 0;
-    width: 99vw;
+@media screen and (max-width: 1500px){
+    #main{
+        position: relative !important;
+        top: 10vh !important;
+    } 
+}
+
+@media screen and (max-width: 1340px){
+    #main{
+        position: relative !important;
+        top: 15vh !important;
+    } 
+}
+
+@media screen and (max-width: 1135px){
+    #main{
+        position: relative !important;
+        top: 20vh !important;
+    } 
+}
+
+main {
+    margin-bottom:100vh;
 }
