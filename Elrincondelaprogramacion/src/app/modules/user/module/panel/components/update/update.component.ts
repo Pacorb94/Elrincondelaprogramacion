@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from './../../../../service/user.service';
-import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
-
 
 @Component({
     selector: 'update',
@@ -15,7 +13,7 @@ export class UpdateComponent{
     user:any;
     form:FormGroup;
 
-    constructor(private _userService:UserService, private _router:Router,
+    constructor(private _userService:UserService,
     private _flashMessagesService:FlashMessagesService) { 
         this.pageTitle='Ajustes del usuario';
         this.loadUser();
@@ -45,25 +43,29 @@ export class UpdateComponent{
             response=>{
                 if (response) {
                     this.user=response;
-                    //Le damos al BehaviourSubject el nuevo usuario
-                    this._userService.setUserLoggedIn$(this.user);
-                    localStorage.setItem('user', JSON.stringify(this.user));
-                    //Volvemos a iniciar sesión para que se cree un nuevo token con los nuevos datos del usuario
-                    console.log(this.user.email);
-                    this._userService.login(this.user.email, this.user.password);
+                    console.log(this.user.password);
+                    /*Volvemos a iniciar sesión para que se cree un nuevo token con los nuevos datos 
+                    del usuario*/
+                    this._userService.login(this.user.email, '').subscribe(
+                        response=>{
+                            if (response) {
+                                this.user=response[0];
+                                localStorage.setItem('user', JSON.stringify(this.user));
+                                //Le damos al BehaviourSubject el nuevo usuario
+                                this._userService.setUserLoggedIn$(this.user);
+                            }
+                        }
+                    );
                     this.showFlashMessage('Has modificado tu perfil',
                         'alert alert-success col-md-4 mt-3 mx-auto', 1500);
                 }else{
                     this.showFlashMessage('No has modificado tu perfil correctamente',
                         'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
-                    this._userService.setUserLoggedIn$(null);
                 }
             },
             error=>{
                 this.showFlashMessage('No has modificado tu perfil correctamente',
                     'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
-                this._userService.setUserLoggedIn$(null);
-                this._router.navigate(['']);
             }
         );
     }
