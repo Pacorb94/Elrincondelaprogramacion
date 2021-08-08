@@ -10,7 +10,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
     templateUrl: './update.component.html',
     styleUrls: ['./update.component.scss']
 })
-export class UpdateComponent {
+export class UpdateComponent{
     pageTitle:string;
     user:any;
     form:FormGroup;
@@ -18,11 +18,22 @@ export class UpdateComponent {
     constructor(private _userService:UserService, private _router:Router,
     private _flashMessagesService:FlashMessagesService) { 
         this.pageTitle='Ajustes del usuario';
-        this.user=this._userService.getUserLoggedIn();
+        this.loadUser();
         this.form=new FormGroup({
             nick:new FormControl(this.user.nick),
             email:new FormControl(this.user.email, Validators.email)
         });
+    }
+
+    /**
+     * Función que carga el usuario
+     */
+    loadUser(){
+        this._userService.getUserLoggedIn$().subscribe(
+            user=>{
+                if (user) this.user=user;
+            }
+        );
     }
 
     /**
