@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
 use App\Entity\Post;
 use App\Entity\Category;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -21,11 +22,11 @@ class PostController extends AbstractController
     private $categoryRepo;
     private $em;
 
-    public function __construct(PaginatorInterface $paginator) {
-        $this->postRepo=$this->getDoctrine()->getRepository(Post::class);
-        $this->categoryRepo=$this->getDoctrine()->getRepository(Category::class);
-        $this->em=$this->getDoctrine()->getManager();
-        $this->paginator = $paginator;
+    public function __construct(EntityManagerInterface  $entityManager, PaginatorInterface $paginator) {
+        $this->postRepo=$entityManager->getRepository(Post::class);
+        $this->categoryRepo=$entityManager->getRepository(Category::class);
+        $this->em=$entityManager;
+        $this->paginator=$paginator;
     }
 
     /**
@@ -46,11 +47,16 @@ class PostController extends AbstractController
                 //Si no existe
                 if (!$this->postRepo->findOneBy(['title'=>$decodedRequest['title']])) {
                     $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
-                    $category=$this->categoryRepo->findOneBy(['name'=>$decodedRequest['category']]);
-                    $post=new Post($decodedRequest['title'], $decodedRequest['content'], 
-                        $category, false, null, $userLoggedIn, new \DateTime('now'));
-                    $post->execute($this->em, $post, 'insert');
-                    return $this->json(['message'=>'Post created'], 201);
+                    $category=$this->categoryRepo->find($decodedRequest['categoryId']);
+                    //Si existe
+                    if ($category) {
+                        $decodedRequest['image']?:null;
+                        $post=new Post($decodedRequest['title'], $decodedRequest['content'], 
+                        $category, false, $decodedRequest['image'], $userLoggedIn, new \DateTime('now'));
+                        $post->execute($this->em, $post, 'insert');
+                        return $this->json(['message'=>'Post created'], 201);
+                    }
+                    return $this->json(['message'=>'That category dont\'t exists'], 404);
                 }
                 return $this->json(['message'=>'That post already exists'], 500);
             }
@@ -85,12 +91,14 @@ class PostController extends AbstractController
                             sino $post->getTitle()*/
                             $decodedRequest['title']=$decodedRequest['title']?:$post->getTitle();  
                             $decodedRequest['content']=$decodedRequest['content']?:$post->getContent();
-                            $category=$this->categoryRepo->findOneBy(['name'=>$decodedRequest['category']])
-                                ?:$post->getCategory();
+                            $decodedRequest['image']=$decodedRequest['image']?:$post->getImage();
+                            $category=$this->categoryRepo->find($decodedRequest['categoryId'])
+                                ?:$post->getCategory()->getId();
                             if ($this->validations($decodedRequest)) {                
                                 $post->setTitle($decodedRequest['title']);  
                                 $post->setContent($decodedRequest['content']);
                                 $post->setCategory($category);
+                                $post->setImage($decodedRequest['image']);
                                 $post->setUpdatedAt(new \DateTime('now'));
                                 $post->execute($this->em, $post, 'update');
                                 return $this->json($post);
