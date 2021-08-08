@@ -15,11 +15,16 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
-
 class PostController extends AbstractController
 {
+    private $postRepo;
+    private $categoryRepo;
+    private $em;
 
     public function __construct(PaginatorInterface $paginator) {
+        $this->postRepo=$this->getDoctrine()->getRepository(Post::class);
+        $this->categoryRepo=$this->getDoctrine()->getRepository(Category::class);
+        $this->em=$this->getDoctrine()->getManager();
         $this->paginator = $paginator;
     }
 
@@ -38,16 +43,13 @@ class PostController extends AbstractController
             la función trim*/
             $decodedRequest=array_map('trim', $decodedRequest);
             if ($this->validations($decodedRequest)) {
-                $postRepo=$this->getDoctrine()->getRepository(Post::class);
                 //Si no existe
-                if (!$postRepo->findOneBy(['title'=>$decodedRequest['title']])) {
+                if (!$this->postRepo->findOneBy(['title'=>$decodedRequest['title']])) {
                     $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
-                    $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
-                    $category=$categoryRepo->findOneBy(['name'=>$decodedRequest['category']]);
+                    $category=$this->categoryRepo->findOneBy(['name'=>$decodedRequest['category']]);
                     $post=new Post($decodedRequest['title'], $decodedRequest['content'], 
                         $category, false, null, $userLoggedIn, new \DateTime('now'));
-                    $em=$this->getDoctrine()->getManager();
-                    $post->execute($em, $post, 'insert');
+                    $post->execute($this->em, $post, 'insert');
                     return $this->json(['message'=>'Post created'], 201);
                 }
                 return $this->json(['message'=>'That post already exists'], 500);
@@ -73,8 +75,7 @@ class PostController extends AbstractController
                     /*array_map itera sobre los elementos de $decodedRequest ejecutando 
                     la función trim*/
                     $decodedRequest=array_map('trim', $decodedRequest);
-                    $postRepo=$this->getDoctrine()->getRepository(Post::class);
-                    $post=$postRepo->find($id);
+                    $post=$this->postRepo->find($id);
                     //Si existe 
                     if ($post) {
                         $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
@@ -84,16 +85,14 @@ class PostController extends AbstractController
                             sino $post->getTitle()*/
                             $decodedRequest['title']=$decodedRequest['title']?:$post->getTitle();  
                             $decodedRequest['content']=$decodedRequest['content']?:$post->getContent();
-                            $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
-                            $category=$categoryRepo->findOneBy(['name'=>$decodedRequest['category']])
+                            $category=$this->categoryRepo->findOneBy(['name'=>$decodedRequest['category']])
                                 ?:$post->getCategory();
                             if ($this->validations($decodedRequest)) {                
                                 $post->setTitle($decodedRequest['title']);  
                                 $post->setContent($decodedRequest['content']);
                                 $post->setCategory($category);
                                 $post->setUpdatedAt(new \DateTime('now'));
-                                $em=$this->getDoctrine()->getManager();
-                                $post->execute($em, $post, 'update');
+                                $post->execute($this->em, $post, 'update');
                                 return $this->json($post);
                             } 
                             return $this->json(['message'=>'Wrong validation'], 400);       
@@ -120,9 +119,11 @@ class PostController extends AbstractController
         $image=$request->files->get('file0');
         if ($image) {
             if ($this->validations(null, 'uploadImage', $image)) {
+                //Reemplazamos los espacios por guiones
+                $imageNameWithoutSpaces=preg_replace('/\s+/', '-', $image->getClientOriginalName());
                 //Debemos configurar la fecha y tiempo
                 date_default_timezone_set('Europe/Madrid');
-                $imageName=date('d-m-Y_H-i-s').'_'.$image->getClientOriginalName();
+                $imageName=date('d-m-Y_H-i-s').'_'.$imageNameWithoutSpaces;
                 //Obtenemos la carpeta donde se guardará la imagen
                 $postsImagesDirectory=$this->getParameter('postsImagesDirectory');
                 //Movemos la imagen de perfil a esa carpeta
@@ -162,8 +163,7 @@ class PostController extends AbstractController
      */
     public function getPosts()
     {
-        $postRepo=$this->getDoctrine()->getRepository(Post::class);
-        $posts=$postRepo->findAll();
+        $posts=$this->postRepo->findAll();
         return $this->json($posts);
     }
 
@@ -197,8 +197,7 @@ class PostController extends AbstractController
     public function getPostsByCategory($categoryId, Request $request)
     {
         if ($this->idValidation($categoryId)) {
-            $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
-            $category=$categoryRepo->find($categoryId);
+            $category=$this->categoryRepo->find($categoryId);
             //Si existe
             if ($category) {
                 $data=$this->paginate($request, 'category', $categoryId, 'Post');
@@ -224,7 +223,7 @@ class PostController extends AbstractController
         $page=$request->query->getInt('page', 1);
         //Paginator necesita sentencias en DQL
         $dql="select v from App\Entity\\".$modelName." v where v.$modelProperty = $id order by v.id desc";
-        $query=$this->getDoctrine()->getManager()->createQuery($dql);
+        $query=$this->em->createQuery($dql);
         //Los objetos por página que se verán
         define('OBJECTSPERPAGE', 5);
         $pagination=$this->paginator->paginate($query, $page, OBJECTSPERPAGE);
@@ -247,8 +246,7 @@ class PostController extends AbstractController
     public function getPostDetail($id)
     {
         if ($this->idValidation($id)) {
-            $postRepo=$this->getDoctrine()->getRepository(Post::class);
-            $post=$postRepo->find($id);
+            $post=$this->postRepo->find($id);
             //Si existe
             if ($post) {
                 /*Como los posts almacenan un array de comentarios por lo tanto no se puede serializar
@@ -276,14 +274,12 @@ class PostController extends AbstractController
                 $decodedRequest=json_decode($request, true);
                 $decodedRequest['inadequate']=trim($decodedRequest['inadequate']);
                 if ($decodedRequest['inadequate']||$decodedRequest['inadequate']=='no') {
-                    $postRepo=$this->getDoctrine()->getRepository(Post::class);
-                    $post=$postRepo->find($id);
+                    $post=$this->postRepo->find($id);
                     //Si existe
                     if ($post) {
                         $inadequate=($decodedRequest['inadequate']=='yes')?true:false;
                         $post->setInadequate($inadequate);
-                        $em=$this->getDoctrine()->getManager();
-                        $post->execute($em, $post, 'update');
+                        $post->execute($this->em, $post, 'update');
                         return $this->json($post);
                     }
                     return $this->json(['message'=>'Post not found'], 404);
