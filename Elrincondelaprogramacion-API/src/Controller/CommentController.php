@@ -13,6 +13,13 @@ use App\Entity\Post;
 
 class CommentController extends AbstractController
 {
+    private $commentRepo;
+    private $em;
+
+    public function __construct() {
+        $this->commentRepo=$this->getDoctrine()->getRepository(Comment::class);
+        $this->em=$this->getDoctrine()->getManager();
+    }
 
     /**
      * Función que crea un comentario
@@ -37,8 +44,7 @@ class CommentController extends AbstractController
                     if ($post) {
                         $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
                         $comment=new Comment($userLoggedIn, $post, $decodedRequest['content'], false);
-                        $em=$this->getDoctrine()->getManager();
-                        $comment->execute($em, $comment, 'insert');
+                        $comment->execute($this->em, $comment, 'insert');
                         return $this->json(['message'=>'Comment created'], 201);
                     }
                     return $this->json(['message'=>'Post not found'], 404);
@@ -63,14 +69,12 @@ class CommentController extends AbstractController
                 $decodedRequest=json_decode($request, true);
                 $decodedRequest['inadequate']=trim($decodedRequest['inadequate']);
                 if ($decodedRequest['inadequate']=='yes'||$decodedRequest['inadequate']=='no') {
-                    $commentRepo=$this->getDoctrine()->getRepository(Comment::class);
-                    $comment=$commentRepo->find($id);
+                    $comment=$this->commentRepo->find($id);
                     //Si existe
                     if ($comment) {
                         $inadequate=($decodedRequest['inadequate']=='yes')?true:false;
                         $comment->setInadequate($inadequate);
-                        $em=$this->getDoctrine()->getManager();
-                        $comment->execute($em, $comment, 'update');
+                        $comment->execute($this->em, $comment, 'update');
                         return $this->json($comment);
                     }
                     return $this->json(['message'=>'Comment not found'], 404);
