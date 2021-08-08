@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class UserController extends AbstractController
 {
@@ -43,7 +44,12 @@ class UserController extends AbstractController
                     $user=new User($decodedRequest['nick'], $decodedRequest['email'], $encryptedPassword, 
                         null, false, [$decodedRequest['role']], new \DateTime('now'), new \DateTime('now'));
                     $user->execute($this->em, $user, 'insert');
-                    return $this->json($user, 201);
+                    /*Establecemos una cookie con la contraseña sin encriptar ya la necesitamos en el
+                    frontend para iniciar sesión cuando modifiquemos el email del usuario para generar
+                    un nuevo token*/
+                    $response=new JsonResponse($user, 201);
+                    $response->headers->setcookie(new Cookie('password', $decodedRequest['password'], time()*3600, 'localhost:4200', null, true, false, false, 'none'));                    
+                    return $response;
                 }
                 return $this->json(['message'=>'That user already exists'], 500);
             }
@@ -62,7 +68,7 @@ class UserController extends AbstractController
     {
         try {
             if ($this->idValidation($id)) {
-                $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
+                $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();;              
                 //Si el usuario que modificamos es el que está logueado
                 if ($userLoggedIn->getId()==$id) {
                     $request=$request->get('json', null);
