@@ -21,7 +21,7 @@ import { FileUploaderComponent } from './components/file-uploader/file-uploader.
         HttpClientModule,
         FlashMessagesModule.forRoot(),
         UserPanelRoutingModule,
-        FileUploadModule
+        FileUploadModule   
     ]
 })
 export class UserPanelModule { }
