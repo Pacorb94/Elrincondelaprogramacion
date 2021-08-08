@@ -8,15 +8,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Category;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 class CategoryController extends AbstractController
 {
     private $categoryRepo;
     private $em;
 
-    public function __construct() {
-        $this->categoryRepo=$this->getDoctrine()->getRepository(Category::class);
-        $this->em=$this->getDoctrine()->getManager();
+    public function __construct(EntityManagerInterface $entityManager) {
+        $this->categoryRepo=$entityManager->getRepository(Category::class);
+        $this->em=$entityManager;
     }
 
     /**
