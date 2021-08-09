@@ -50,9 +50,8 @@ class PostController extends AbstractController
                     $category=$this->categoryRepo->find($decodedRequest['categoryId']);
                     //Si existe
                     if ($category) {
-                        $decodedRequest['image']?:null;
                         $post=new Post($decodedRequest['title'], $decodedRequest['content'], 
-                        $category, false, $decodedRequest['image'], $userLoggedIn, new \DateTime('now'));
+                                $category, false, null, $userLoggedIn, new \DateTime('now'));
                         $post->execute($this->em, $post, 'insert');
                         return $this->json(['message'=>'Post created'], 201);
                     }
