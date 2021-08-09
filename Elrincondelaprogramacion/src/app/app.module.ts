@@ -6,7 +6,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UserService } from './modules/user/service/user.service';
 import { HttpRequestInterceptor } from './interceptor/HttpRequestIncerceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MomentModule } from 'angular2-moment';
@@ -29,7 +28,6 @@ import { FooterComponent } from './components/footer/footer.component';
         FlashMessagesModule.forRoot(),
     ],
     providers: [
-        UserService, 
         [{provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true}]
     ],
     bootstrap: [AppComponent]
