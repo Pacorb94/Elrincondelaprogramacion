@@ -14,8 +14,8 @@ export class PostService {
      * Función que obtiene los posts
      * @returns 
      */
-    getPosts():Observable<any>{
+    getPosts(page:any):Observable<any>{
         let header=new HttpHeaders().set('Content-Type', 'application/json');
-        return this._http.get(`${environment.url}/posts`, {headers:header});
+        return this._http.get(`${environment.url}/posts?page=${page}`, {headers:header});
     }
 }
