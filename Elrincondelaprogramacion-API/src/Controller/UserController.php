@@ -43,13 +43,8 @@ class UserController extends AbstractController
                     $encryptedPassword=password_hash($decodedRequest['password'], PASSWORD_BCRYPT);
                     $user=new User($decodedRequest['nick'], $decodedRequest['email'], $encryptedPassword, 
                         null, false, [$decodedRequest['role']], new \DateTime('now'), new \DateTime('now'));
-                    $user->execute($this->em, $user, 'insert');
-                    /*Establecemos una cookie con la contraseña sin encriptar ya la necesitamos en el
-                    frontend para iniciar sesión cuando modifiquemos el email del usuario para generar
-                    un nuevo token*/
-                    $response=new JsonResponse($user, 201);
-                    $response->headers->setcookie(new Cookie('password', $decodedRequest['password'], time()*3600, 'localhost:4200', null, true, false, false, 'none'));                    
-                    return $response;
+                    $user->execute($this->em, $user, 'insert');                 
+                    return $this->json(['user'=>$user, 'password'=>$decodedRequest['password']], 201);
                 }
                 return $this->json(['message'=>'That user already exists'], 500);
             }
@@ -78,9 +73,12 @@ class UserController extends AbstractController
                         if ($user) {
                             //Con true decodificamos la petición a un array
                             $decodedRequest=json_decode($request, true);
+                            /*Eliminamos este propiedad ya que array_map itera sobre elementos
+                            simples de un array, no sobre otros elementos arrays*/
+                            unset($decodedRequest['roles']);
                             /*array_map itera sobre los elementos de $decodedRequest ejecutando 
                             la función trim*/
-                           // $decodedRequest=array_map('trim', $decodedRequest);                       
+                            $decodedRequest=array_map('trim', $decodedRequest);                      
                             /*?: indica que $decodedRequest['nick'] si tiene valor será ese 
                             sino $user->getNick()*/
                             $decodedRequest['nick']=$decodedRequest['nick']?:$user->getNick();
