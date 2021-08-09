@@ -6,9 +6,7 @@ import { environment } from './../../environments/environment';
 @Injectable()
 export class PostService {
 
-    constructor(private _http:HttpClient) {
-        
-    }
+    constructor(private _http:HttpClient) {}
 
     /**
      * Función que obtiene los posts
@@ -17,5 +15,15 @@ export class PostService {
     getPosts(page:any):Observable<any>{
         let header=new HttpHeaders().set('Content-Type', 'application/json');
         return this._http.get(`${environment.url}/posts?page=${page}`, {headers:header});
+    }
+    
+    /**
+     * Función que obtiene los posts de un usuario
+     * @param id 
+     * @returns 
+     */
+    getPostsByUser(id:number):Observable<any>{
+        let header=new HttpHeaders().set('Content-Type', 'application/json');
+        return this._http.get(`${environment.url}/posts/users/${id}`, {headers:header});
     }
 }
