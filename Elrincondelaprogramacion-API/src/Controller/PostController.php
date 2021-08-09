@@ -166,16 +166,6 @@ class PostController extends AbstractController
     }
 
     /**
-     * Función que obtiene todos los posts
-     * @return JsonResponse
-     */
-    public function getPosts()
-    {
-        $posts=$this->postRepo->findAll();
-        return $this->json($posts);
-    }
-
-    /**
      * Función que obtiene los posts del usuario
      * @param $userId
      * @param $request
