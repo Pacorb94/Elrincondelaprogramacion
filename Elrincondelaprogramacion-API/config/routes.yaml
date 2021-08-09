@@ -51,7 +51,7 @@ updateCategory:
 
 getCategories:
     path: /categories
-    controller: App\Controller\CategoryController::getCategories
+    controller: App\Controller\HomeController::getCategories
     methods: GET
 
 getCategory:
@@ -87,7 +87,7 @@ getImage:
 
 getPosts:
     path: /posts
-    controller: App\Controller\PostController::getPosts
+    controller: App\Controller\HomeController::getPosts
     methods: GET
 
 getUserPosts:
