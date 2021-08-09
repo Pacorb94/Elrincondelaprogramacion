@@ -8,6 +8,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { UserService } from './service/user.service';
+
 
 @NgModule({
     declarations: [
@@ -21,6 +23,10 @@ import { HttpClientModule } from '@angular/common/http';
         FlashMessagesModule.forRoot(),
         UserRoutingModule
     ],
-    providers:[CheckRegisterLoginGuard, UserLoggedInGuard]
+    providers:[
+        UserService, 
+        CheckRegisterLoginGuard, 
+        UserLoggedInGuard
+    ]
 })
 export class UserModule { }
