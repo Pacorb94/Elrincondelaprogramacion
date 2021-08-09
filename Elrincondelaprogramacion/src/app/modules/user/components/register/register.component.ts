@@ -40,8 +40,8 @@ export class RegisterComponent {
         this._userService.register(this.user).subscribe(
             response=>{
                 if (response) {
-                    console.log(response);
                     this.goodRegister=true;
+                    localStorage.setItem('password', response.password);
                 }else{
                     this.showFlashMessage('No te has registrado correctamente',
                         'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
