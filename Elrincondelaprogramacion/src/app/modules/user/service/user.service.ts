@@ -95,6 +95,15 @@ export class UserService {
     }
 
     /**
+     * Función que obtiene la contraseña del usuario para refrescar el token
+     * @returns 
+     */
+    getPasswordForRefreshToken():any{
+        if (localStorage.hasOwnProperty('password')) return localStorage.getItem('password');
+        return null;
+    }
+
+    /**
      * Función que cierra sesión
      * @return
      */
