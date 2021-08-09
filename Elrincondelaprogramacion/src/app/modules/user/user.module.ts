@@ -8,8 +8,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { UserService } from './service/user.service';
-
 
 @NgModule({
     declarations: [
@@ -24,7 +22,6 @@ import { UserService } from './service/user.service';
         UserRoutingModule
     ],
     providers:[
-        UserService, 
         CheckRegisterLoginGuard, 
         UserLoggedInGuard
     ]
