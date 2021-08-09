@@ -40,7 +40,7 @@ import { UserSettingsComponent } from './components/user-settings/user-settings.
         HttpClientModule,
         FlashMessagesModule.forRoot(),
         UserPanelRoutingModule,
-        FileUploadModule   
+        FileUploadModule
     ]
 })
 export class UserPanelModule { }
