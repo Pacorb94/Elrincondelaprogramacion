@@ -41,13 +41,11 @@ export class RegisterComponent {
             response=>{
                 if (response) {
                     this.goodRegister=true;
-                    localStorage.setItem('password', response.password);
                 }else{
                     this.showFlashMessage('No te has registrado correctamente',
                         'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
                     this.goodRegister=false;
-                }
-                this.form.reset();     
+                }    
             },
             error=>{
                 this.showFlashMessage('No te has registrado correctamente',
