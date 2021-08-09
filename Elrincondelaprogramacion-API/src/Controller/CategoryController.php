@@ -85,16 +85,6 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * Función que obtiene las categorías
-     * @return JsonResponse
-     */
-    public function getCategories()
-    {
-        $categories=$this->categoryRepo->findAll();
-        return $this->json($categories);
-    }
-
-    /**
      * Función que obtiene una categoría
      * @param $id
      * @return JsonResponse
