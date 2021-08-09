@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
     loadUser(){
         this._userService.getUserLoggedIn$().subscribe(
             user=>{
-                if (user) {
+                if (user) {               
                     this.user=user;
                     this.loadProfileImage();
                 }
@@ -76,6 +76,7 @@ export class NavbarComponent implements OnInit {
             response=>{
                 this.user=null;
                 localStorage.removeItem('user');
+                localStorage.removeItem('password');
                 //Le damos null al BehaviourSubject
                 this._userService.setUserLoggedIn$(this.user);
                 this._router.navigate(['']);
