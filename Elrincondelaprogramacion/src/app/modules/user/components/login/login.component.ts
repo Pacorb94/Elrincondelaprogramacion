@@ -53,23 +53,21 @@ export class LoginComponent implements AfterViewInit {
                 if (response) {
                     this.user=response[0];
                     localStorage.setItem('user', JSON.stringify(this.user));
+                    localStorage.setItem('password', password);
                     //Actualizamos el valor
                     if (localStorage.hasOwnProperty('rememberEmail')) 
                         localStorage.setItem('rememberEmail', this.user.email);
                     //Le damos el usuario logueado al BehaviourSubject
                     this._userService.setUserLoggedIn$(this.user);
-                    this._router.navigate(['/']);
+                    this._router.navigate(['']);
                 } else {
                     this.showFlashMessage('No has iniciado sesión correctamente',
                         'alert alert-danger col-md-4 mt-3 mx-auto', 1500);
-                    //Le damos null al BehaviourSubject
-                    this._userService.setUserLoggedIn$(null);
                 }
             },
             error=>{
                 this.showFlashMessage('No has iniciado sesión correctamente',
                     'alert alert-danger col-md-4 mt-3 mx-auto', 1500);
-                this._userService.setUserLoggedIn$(null);
                 //Limpiamos el campo de la contraseña
                 this.form.get('password')?.setValue(this.form.get('password')?.value);
             }
