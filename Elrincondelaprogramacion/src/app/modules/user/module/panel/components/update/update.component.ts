@@ -43,10 +43,10 @@ export class UpdateComponent{
             response=>{
                 if (response) {
                     this.user=response;
-                    console.log(this.user.password);
+                    this.user.password=this._userService.getPasswordForRefreshToken();
                     /*Volvemos a iniciar sesión para que se cree un nuevo token con los nuevos datos 
                     del usuario*/
-                    this._userService.login(this.user.email, '').subscribe(
+                    this._userService.login(this.user.email, this.user.password).subscribe(
                         response=>{
                             if (response) {
                                 this.user=response[0];
