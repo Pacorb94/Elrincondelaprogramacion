@@ -5,7 +5,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserPanelRoutingModule } from './panel-routing.module';
 import { MainComponent } from './components/main/main.component';
-import { UpdateComponent } from './components/update/update.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 import { EditPostComponent } from './components/edit-post/edit-post.component';
@@ -17,11 +16,12 @@ import { EditCategoryComponent } from './components/edit-category/edit-category.
 import { InadequatePostsComponent } from './components/inadequate-posts/inadequate-posts.component';
 import { InadequateCommentsComponent } from './components/inadequate-comments/inadequate-comments.component';
 import { InadequateUsersComponent } from './components/inadequate-users/inadequate-users.component';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
+
 
 @NgModule({
     declarations: [
         MainComponent,
-        UpdateComponent,
         FileUploaderComponent,
         EditPostComponent,
         MyCommentsComponent,
@@ -31,7 +31,8 @@ import { InadequateUsersComponent } from './components/inadequate-users/inadequa
         EditCategoryComponent,
         InadequatePostsComponent,
         InadequateCommentsComponent,
-        InadequateUsersComponent
+        InadequateUsersComponent,
+        UserSettingsComponent
     ],
     imports: [
         CommonModule,
