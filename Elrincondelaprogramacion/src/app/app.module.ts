@@ -4,6 +4,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
+import { UserService } from './modules/user/service/user.service';
+import { PostService } from './services/post.service';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpRequestInterceptor } from './interceptor/HttpRequestIncerceptor';
@@ -28,6 +30,8 @@ import { FooterComponent } from './components/footer/footer.component';
         FlashMessagesModule.forRoot(),
     ],
     providers: [
+        UserService,
+        PostService,
         [{provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true}]
     ],
     bootstrap: [AppComponent]
