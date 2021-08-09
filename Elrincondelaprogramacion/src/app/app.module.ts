@@ -11,14 +11,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpRequestInterceptor } from './interceptor/HttpRequestIncerceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MomentModule } from 'angular2-moment';
-import { FooterComponent } from './components/footer/footer.component';
+import { MyFooterComponent } from './components/my-footer/my-footer.component';
+import { MostActivePostsComponent } from './components/most-active-posts/most-active-posts.component';
+import { LastAddedCategoriesComponent } from './components/last-added-categories/last-added-categories.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavbarComponent,
         HomeComponent,
-        FooterComponent
+        MyFooterComponent,
+        MostActivePostsComponent,
+        LastAddedCategoriesComponent,
+        MyFooterComponent
     ],
     imports: [
         BrowserModule,
