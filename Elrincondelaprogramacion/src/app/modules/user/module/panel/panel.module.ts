@@ -14,7 +14,6 @@ import { MyPostsComponent } from './components/my-posts/my-posts.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
 import { CreateCategoryComponent } from './components/create-category/create-category.component';
 import { EditCategoryComponent } from './components/edit-category/edit-category.component';
-import { DeleteCategoryComponent } from './components/delete-category/delete-category.component';
 import { InadequatePostsComponent } from './components/inadequate-posts/inadequate-posts.component';
 import { InadequateCommentsComponent } from './components/inadequate-comments/inadequate-comments.component';
 import { InadequateUsersComponent } from './components/inadequate-users/inadequate-users.component';
@@ -30,7 +29,6 @@ import { InadequateUsersComponent } from './components/inadequate-users/inadequa
         CreatePostComponent,
         CreateCategoryComponent,
         EditCategoryComponent,
-        DeleteCategoryComponent,
         InadequatePostsComponent,
         InadequateCommentsComponent,
         InadequateUsersComponent
