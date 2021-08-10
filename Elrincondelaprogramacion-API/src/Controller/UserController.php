@@ -44,7 +44,7 @@ class UserController extends AbstractController
                     $user=new User($decodedRequest['nick'], $decodedRequest['email'], $encryptedPassword, 
                         null, false, [$decodedRequest['role']], new \DateTime('now'), new \DateTime('now'));
                     $user->execute($this->em, $user, 'insert');                 
-                    return $this->json(['user'=>$user, 'password'=>$decodedRequest['password']], 201);
+                    return $this->json([$user, 'password'=>$decodedRequest['password']], 201);
                 }
                 return $this->json(['message'=>'That user already exists'], 500);
             }
