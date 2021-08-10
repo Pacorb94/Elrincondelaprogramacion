@@ -107,6 +107,16 @@ class Comment
         return $this;
     }
 
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+    
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
     public function getUser()
     {
         return $this->user;

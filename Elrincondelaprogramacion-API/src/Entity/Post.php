@@ -69,14 +69,14 @@ class Post
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt='current_timestamp()';
+    private $createdAt;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
-    private $updatedAt='current_timestamp()';
+    private $updatedAt;
 
     /**
      * @var \User
@@ -95,7 +95,7 @@ class Post
      */
     private $comments;
 
-    public function __construct($title, $content, $category, $inadequate, $image, $user, $createdAt) {
+    public function __construct($title, $content, $category, $inadequate, $image, $user) {
         $this->id=null;
         $this->title=$title;
         $this->content=$content;
@@ -103,7 +103,8 @@ class Post
         $this->inadequate=$inadequate;
         $this->image=$image;
         $this->user=$user;
-        $this->createdAt=$createdAt;
+        $this->createdAt=new \DateTime('now');
+        $this->updatedAt=new \DateTime('now');
         $this->comments = new ArrayCollection();
     }
 
@@ -167,6 +168,22 @@ class Post
         return $this;
     }
 
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt=$updatedAt;
+        return $this;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
     public function getUser()
     {
         return $this->user;
@@ -175,12 +192,6 @@ class Post
     public function setUser(?User $user): self
     {
         $this->user = $user;
-        return $this;
-    }
-
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt=$updatedAt;
         return $this;
     }
 

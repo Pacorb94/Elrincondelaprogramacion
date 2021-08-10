@@ -54,11 +54,11 @@ class Category
      */
     private $user;
 
-    public function __construct($user, $name, $createdAt) {
+    public function __construct($user, $name) {
         $this->id=null;
         $this->user=$user;
         $this->name=$name;
-        $this->createdAt=$createdAt;
+        $this->createdAt=new \DateTime('now');
     }
 
     public function getId(): ?int
@@ -75,6 +75,16 @@ class Category
     {
         $this->name = $name;
         return $this;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+    
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 
     public function getUser()
