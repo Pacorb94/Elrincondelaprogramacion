@@ -20,7 +20,7 @@ export class RegisterComponent implements OnDestroy {
 
     constructor(private _userService:UserService, private _flashMessagesService:FlashMessagesService) { 
         this.pageTitle='Registro';
-        this.user=new User(null, '', '', '', null, '', false, new Date());
+        this.user=new User(null, '', '', '', null, '', false);
         this.goodRegister=false;
         this.form=new FormGroup({
             nick:new FormControl('', Validators.required),
