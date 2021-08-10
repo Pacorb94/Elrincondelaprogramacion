@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../../../service/user.service';
@@ -50,6 +50,7 @@ export class UserSettingsComponent implements OnDestroy{
      */
     updateUser(){
         this.setUserFormValues();
+        localStorage.setItem('urlForUploadImage', 'user');
         this.updateSubscription=this._userService.update(this.user).subscribe(
             response=>{
                 if (response) {
