@@ -1,17 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { UserService } from '../../../../service/user.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
+
 
 @Component({
     selector: 'user-settings',
     templateUrl: './user-settings.component.html',
     styleUrls: ['./user-settings.component.scss']
 })
-export class UserSettingsComponent {
+export class UserSettingsComponent implements OnDestroy{
     pageTitle:string;
     user:any;
     form:FormGroup;
+    loadUserSubscription:Subscription;
+    updateSubscription:Subscription;
 
     constructor(private _userService:UserService,
     private _flashMessagesService:FlashMessagesService) { 
@@ -21,17 +25,24 @@ export class UserSettingsComponent {
             nick:new FormControl(this.user.nick),
             email:new FormControl(this.user.email, Validators.email)
         });
+        this.loadUserSubscription=new Subscription();
+        this.updateSubscription=new Subscription();
     }
 
     /**
      * Función que carga el usuario
      */
     loadUser(){
-        this._userService.getUserLoggedIn$().subscribe(
+        this.loadUserSubscription=this._userService.getUserLoggedIn$().subscribe(
             user=>{
                 if (user) this.user=user;
             }
         );
+    }
+
+    ngOnDestroy(){
+        this.loadUserSubscription.unsubscribe();
+        this.updateSubscription.unsubscribe();
     }
 
     /**
@@ -39,7 +50,7 @@ export class UserSettingsComponent {
      */
     updateUser(){
         this.setUserFormValues();
-        this._userService.update(this.user).subscribe(
+        this.updateSubscription=this._userService.update(this.user).subscribe(
             response=>{
                 if (response) {
                     this.user=response;
