@@ -1,41 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../modules/user/service/user.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-
 
 @Component({
     selector: 'navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
     user:any;
     form:any;
     profileImage:any;
-    
+    loadUserSubscription:Subscription;
+    loadProfileImageSubscription:Subscription;
+    logoutSubscription:Subscription;
+
     constructor(private _userService:UserService, private _router:Router, 
     private _sanitizer:DomSanitizer) {
         this.form=new FormGroup({
             postsSearchText:new FormControl('', Validators.required)
         });
+        this.loadUserSubscription=new Subscription();
+        this.loadProfileImageSubscription=new Subscription();
+        this.logoutSubscription=new Subscription();
     }
 
-    ngOnInit(): void {
+    ngOnInit(){
         this.loadUser();
+        this.loadProfileImage();
+    }
+
+    ngOnDestroy(){
+        this.loadUserSubscription.unsubscribe();
+        this.loadProfileImageSubscription.unsubscribe();
+        this.logoutSubscription.unsubscribe();
     }
 
     /**
      * Función que carga el usuario
      */
     loadUser(){
-        this._userService.getUserLoggedIn$().subscribe(
+        this.loadUserSubscription=this._userService.getUserLoggedIn$().subscribe(
             user=>{
-                if (user) {               
-                    this.user=user;
-                    this.loadProfileImage();
-                }
+                if (user) this.user=user;
             }
         );
     }
@@ -45,18 +55,19 @@ export class NavbarComponent implements OnInit {
      * defecto
      */
     loadProfileImage(){
-        if (this.user.profileImage) {
-            this._userService.getProfileImage(this.user.profileImage).subscribe(
-                response=>{
-                    let imageURL=URL.createObjectURL(response);
-                    this.profileImage=this._sanitizer.bypassSecurityTrustUrl(imageURL);
-                },
-                error=>{
-                    this.profileImage='../assets/images/no-profile-image/sinFotoPerfil.png';
-                }
-            );
+        if (this.user.profileImage) {           
+            this.loadProfileImageSubscription=this._userService.getProfileImage(this.user.profileImage)
+                .subscribe(
+                    response=>{
+                        let imageURL=URL.createObjectURL(response);
+                        this.profileImage=this._sanitizer.bypassSecurityTrustUrl(imageURL);
+                    },
+                    error=>{
+                        this.profileImage='../assets/images/no-profile-image/no-profile-image.png';
+                    }
+                );
         }else{
-            this.profileImage='../assets/images/no-profile-image/sinFotoPerfil.png';
+            this.profileImage='../assets/images/no-profile-image/no-profile-image.png';
         }
     }
 
@@ -72,7 +83,7 @@ export class NavbarComponent implements OnInit {
      * Función que cierra sesión
      */
     logout(){
-        this._userService.logout().subscribe(
+        this.logoutSubscription=this._userService.logout().subscribe(
             response=>{
                 this.user=null;
                 localStorage.removeItem('user');
