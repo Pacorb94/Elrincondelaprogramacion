@@ -45,7 +45,7 @@ class CommentController extends AbstractController
                         $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
                         $comment=new Comment($userLoggedIn, $post, $decodedRequest['content'], false);
                         $comment->execute($this->em, $comment, 'insert');
-                        return $this->json(['message'=>'Comment created'], 201);
+                        return $this->json($comment, 201);
                     }
                     return $this->json(['message'=>'Post not found'], 404);
                 }
