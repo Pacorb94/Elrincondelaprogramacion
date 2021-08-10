@@ -31,13 +31,17 @@
               "src/assets"
             ],
             "styles": [
-                "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-                "src/styles.scss"
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.scss",
+              "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css"
             ],
             "scripts": [
-                "./node_modules/jquery/dist/jquery.min.js",
-                "./node_modules/popper.js/dist/umd/popper.min.js",
-                "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/popper.js/dist/umd/popper.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/datatables.net/js/jquery.dataTables.js",
+              "node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js"
             ]
           },
           "configurations": {
@@ -81,9 +85,9 @@
             },
             "development": {
               "browserTarget": "Elrincondelaprogramacion:build:development",
-              "ssl":true,
-              "sslCert":"C:/xampp/apache/conf/certificates/proyecto/front/elrincondelaprogramacion.com.crt",
-              "sslKey":"C:/xampp/apache/conf/certificates/proyecto/front/elrincondelaprogramacion.com.key"
+              "ssl": true,
+              "sslCert": "C:/xampp/apache/conf/certificates/proyecto/front/elrincondelaprogramacion.com.crt",
+              "sslKey": "C:/xampp/apache/conf/certificates/proyecto/front/elrincondelaprogramacion.com.key"
             }
           },
           "defaultConfiguration": "development"
@@ -107,13 +111,14 @@
               "src/assets"
             ],
             "styles": [
-                "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-                "src/styles.scss"
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.scss"
             ],
             "scripts": [
-                "./node_modules/jquery/dist/jquery.min.js",
-                "./node_modules/popper.js/dist/umd/popper.min.js",
-                "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/popper.js/dist/umd/popper.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "./node_modules/datatables.net/js/jquery.dataTables.js"
             ]
           }
         }
