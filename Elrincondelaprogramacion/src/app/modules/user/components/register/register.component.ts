@@ -1,20 +1,22 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../service/user.service';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
     pageTitle:string;
     user:User;
     goodRegister:boolean;
     form:FormGroup;
     roles:any[];
+    subscription:Subscription;
 
     constructor(private _userService:UserService, private _flashMessagesService:FlashMessagesService) { 
         this.pageTitle='Registro';
@@ -30,6 +32,11 @@ export class RegisterComponent {
             {backEndRol:"ROLE_READER", frontEndRol:"Lector"},
             {backEndRol:"ROLE_WRITER", frontEndRol:"Redactor"}
         ];
+        this.subscription=new Subscription();
+    }
+
+    ngOnDestroy(){
+        this.subscription.unsubscribe();
     }
 
     /**
@@ -37,7 +44,7 @@ export class RegisterComponent {
      */
     register(){
         this.setUserFormValues();
-        this._userService.register(this.user).subscribe(
+        this.subscription=this._userService.register(this.user).subscribe(
             response=>{
                 if (response) {
                     this.goodRegister=true;
