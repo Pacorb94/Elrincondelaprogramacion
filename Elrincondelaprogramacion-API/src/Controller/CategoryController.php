@@ -38,7 +38,7 @@ class CategoryController extends AbstractController
                 if (!$this->categoryRepo->findOneBy(['name'=>$decodedRequest['name']])) {
                     $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
                     //Aunque espera el id del usuario tenemos que pasarle el usuario completo
-                    $category=new Category($userLoggedIn, $decodedRequest['name'], new \DateTime('now'));
+                    $category=new Category($userLoggedIn, $decodedRequest['name']);
                     $category->execute($this->em, $category, 'insert');
                     return $this->json($category, 201);
                 }
