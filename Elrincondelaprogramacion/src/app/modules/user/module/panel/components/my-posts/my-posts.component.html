@@ -1,71 +1,32 @@
-<table class="display">
+<table *ngIf="posts; else noPosts" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" 
+    class="table-responsive mt-5 table table-hover text-center">
+    <div *ngIf="loading" class="vh-100">
+        <button class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Cargando...
+        </button>
+    </div>
     <thead>
-      <tr>
-        <th>ID</th>
-        <th>First name</th>
-        <th>Last name</th>
-      </tr>
+        <tr>
+            <th>Título</th>
+            <th>Categoría</th>
+            <th>Contenido</th>
+            <th>Imagen</th>
+            <th>Creado el</th>
+            <th>Modificado el</th>
+        </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>Foo</td>
-        <td>Bar</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Someone</td>
-        <td>Youknow</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>Iamout</td>
-        <td>Ofinspiration</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>Yoda</td>
-        <td>Skywalker</td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>Patrick</td>
-        <td>Dupont</td>
-      </tr>
-      <tr>
-        <td>6</td>
-        <td>Barack</td>
-        <td>Obama</td>
-      </tr>
-      <tr>
-        <td>7</td>
-        <td>François</td>
-        <td>Holland</td>
-      </tr>
-      <tr>
-        <td>8</td>
-        <td>Michel</td>
-        <td>Popo</td>
-      </tr>
-      <tr>
-        <td>9</td>
-        <td>Chuck</td>
-        <td>Norris</td>
-      </tr>
-      <tr>
-        <td>10</td>
-        <td>Simon</td>
-        <td>Robin</td>
-      </tr>
-      <tr>
-        <td>11</td>
-        <td>Louis</td>
-        <td>Lin</td>
-      </tr>
-      <tr>
-        <td>12</td>
-        <td>Zelda</td>
-        <td>Link</td>
-      </tr>
+        <tr *ngFor="let post of posts">
+            <td>{{post.title}}</td>
+            <td>{{post.category.name}}</td>
+            <td>{{post.content}}</td>
+            <td><img src="{{post.image}}" alt="Imagen del post"></td>
+            <td>{{post.created_at}}</td>
+            <td>{{post.updated_at}}</td>
+        </tr>
     </tbody>
-  </table>
+</table>
+<ng-template #noPosts>
+    <h3 class="text-center">No hay posts</h3>
+</ng-template>
