@@ -22,7 +22,7 @@ export class CreatePostComponent implements OnDestroy {
 
     constructor(private _userService:UserService, private _postService:PostService, 
     private _router:Router, private _flashMessagesService:FlashMessagesService) {
-        this.pageTitle='Crear post';
+        this.pageTitle='Crear post';      
         this.user=this._userService.getUserLoggedIn();
         this.post=new Post(null, 2, '', '', this.user.id, '', false, null);
         this.goodCreate=false;
@@ -43,7 +43,6 @@ export class CreatePostComponent implements OnDestroy {
      */
     create(){
         this.setPostFormValues();
-        localStorage.setItem('urlForUploadImage', 'post');
         this.subscription=this._postService.create(this.post).subscribe(
             response=>{
                 if (response) {
