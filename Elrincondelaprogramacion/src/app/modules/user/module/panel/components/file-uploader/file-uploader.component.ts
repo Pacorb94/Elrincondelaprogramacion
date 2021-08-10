@@ -18,31 +18,15 @@ export class FileUploaderComponent implements OnInit{
 
     constructor(private _userService:UserService, private _sanitizer:DomSanitizer) {
         this.user=this._userService.getUserLoggedIn();
-        this.uploader=new FileUploader(
-            {url:this.getUrl(), allowedFileType:['image']}
-        );
+        this.uploader=new FileUploader({
+            url: `${environment.url}/profile-image/upload`, allowedFileType:['image']
+        });  
         this.hasBaseDropZoneOver=false;
-    }
-
-    /**
-     * Función que en función del localStorage devolverá una ruta u otra. Esto
-     * es para reutilizar el componente
-     * @return
-     */
-    getUrl():string{
-        if (localStorage.hasOwnProperty('urlForUploadImage')) {
-            if (localStorage.getItem('urlForUploadImage')=='user'){
-                return `${environment.url}/profile-image/upload`;   
-            }else if(localStorage.getItem('urlForUploadImage')=='post'){
-                return `${environment.url}/post-image/upload`;
-            } 
-        }
-        return '';
     }
 
     ngOnInit(){
         this.previousView();
-        this.setImage();
+        this.setProfileImage();      
     }
 
     /**
@@ -57,18 +41,15 @@ export class FileUploaderComponent implements OnInit{
     }
 
     /**
-     * Función que asigna la imagen al modelo
+     * Función que asigna la imagen al usuario
      */
-    setImage(){
+    setProfileImage(){
         this.uploader.onCompleteItem=fileItem=>{
             let fileName=JSON.parse(fileItem._xhr.response).image;
-            if (localStorage.getItem('urlForUploadImage')=='user') {
-                this.user.profileImage=fileName;
-                localStorage.setItem('user', JSON.stringify(this.user));
-                //Le damos el usuario al BehaviourSubject
-                this._userService.setUserLoggedIn$(this.user);
-            }
-            localStorage.removeItem('urlForUploadImage'); 
+            this.user.profileImage=fileName;
+            localStorage.setItem('user', JSON.stringify(this.user));
+            //Le damos el usuario al BehaviourSubject
+            this._userService.setUserLoggedIn$(this.user);
         }      
     }
 
