@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { PostService } from './../../services/post.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -7,10 +8,11 @@ import { Router, ActivatedRoute } from '@angular/router';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
     pageTitle: string;
     posts: any;
     loading: boolean;
+    subscription:Subscription;
     //------Paginación-------
     page: any;
     prevPage: number;
@@ -21,6 +23,7 @@ export class HomeComponent implements OnInit {
     private _route: ActivatedRoute) { 
         this.pageTitle = 'Posts';
         this.loading = true;
+        this.subscription=new Subscription();
         this.prevPage = 0;
         this.nextPage = 0;
         this.totalPages = [];
@@ -28,6 +31,10 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         this.getRoutePage();
+    }
+
+    ngOnDestroy(){
+        this.subscription.unsubscribe();
     }
 
     /**
@@ -54,7 +61,7 @@ export class HomeComponent implements OnInit {
      * Función que obtiene los posts
      */
     getPosts() {
-        this._postService.getPosts(this.page).subscribe(
+        this.subscription=this._postService.getPosts(this.page).subscribe(
             response => {
                 //Si hay vídeos
                 if (response.Posts.length) {
