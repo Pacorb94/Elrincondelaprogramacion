@@ -24,12 +24,12 @@ export class CreatePostComponent implements OnDestroy {
     private _router:Router, private _flashMessagesService:FlashMessagesService) {
         this.pageTitle='Crear post';
         this.user=this._userService.getUserLoggedIn();
-        this.post=new Post(null, 2, '', '', this.user.id, '', false, null, Date.now());
+        this.post=new Post(null, 2, '', '', this.user.id, '', false, null);
         this.goodCreate=false;
         this.form=new FormGroup({
             title:new FormControl('', Validators.required),
             content:new FormControl('', Validators.required),
-            category:new FormControl('', Validators.required)
+            category:new FormControl('')
         });
         this.subscription=new Subscription();
     }
