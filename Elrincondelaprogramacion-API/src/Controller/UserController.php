@@ -42,7 +42,7 @@ class UserController extends AbstractController
                 if (!$this->userRepo->findOneBy(['email'=>$decodedRequest['email']])) {
                     $encryptedPassword=password_hash($decodedRequest['password'], PASSWORD_BCRYPT);
                     $user=new User($decodedRequest['nick'], $decodedRequest['email'], $encryptedPassword, 
-                        null, false, [$decodedRequest['role']], new \DateTime('now'), new \DateTime('now'));
+                        null, false, [$decodedRequest['role']]);
                     $user->execute($this->em, $user, 'insert');                 
                     return $this->json([$user, 'password'=>$decodedRequest['password']], 201);
                 }
