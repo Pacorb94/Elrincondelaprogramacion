@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from './../../../../service/user.service';
 import { FileUploader } from 'ng2-file-upload';
 import { NgClass, NgStyle} from '@angular/common';
@@ -10,7 +10,7 @@ import { environment } from './../../../../../../../environments/environment';
     templateUrl: './file-uploader.component.html',
     styleUrls: ['./file-uploader.component.scss']
 })
-export class FileUploaderComponent {
+export class FileUploaderComponent implements OnInit{
     user:any;
     uploader:FileUploader;
     hasBaseDropZoneOver:boolean;
@@ -22,12 +22,11 @@ export class FileUploaderComponent {
             {url:`${environment.url}/profile-image/upload`, allowedFileType:['image']}
         );
         this.hasBaseDropZoneOver=false;
-        this.previousView();
-        this.setProfileImageUser();
     }
 
-    public fileOverBase(e:any) {
-        this.hasBaseDropZoneOver=e;
+    ngOnInit(){
+        this.previousView();
+        this.setProfileImageUser();
     }
 
     /**
@@ -52,5 +51,9 @@ export class FileUploaderComponent {
             //Le damos el usuario al BehaviourSubject
             this._userService.setUserLoggedIn$(this.user);
         }      
+    }
+
+    public fileOverBase(e:any) {
+        this.hasBaseDropZoneOver=e;
     }
 }
