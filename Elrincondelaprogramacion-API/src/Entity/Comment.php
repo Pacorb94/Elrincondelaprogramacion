@@ -111,11 +111,6 @@ class Comment
     {
         return $this->createdAt;
     }
-    
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
 
     public function getUser()
     {
