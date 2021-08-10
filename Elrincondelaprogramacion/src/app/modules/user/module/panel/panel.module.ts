@@ -18,6 +18,7 @@ import { InadequateCommentsComponent } from './components/inadequate-comments/in
 import { InadequateUsersComponent } from './components/inadequate-users/inadequate-users.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { DataTablesModule } from "angular-datatables";
+import { MomentModule } from 'angular2-moment';
 
 @NgModule({
     declarations: [
@@ -41,7 +42,8 @@ import { DataTablesModule } from "angular-datatables";
         FlashMessagesModule.forRoot(),
         UserPanelRoutingModule,
         FileUploadModule,
-        DataTablesModule
+        DataTablesModule,
+        MomentModule
     ]
 })
 export class UserPanelModule { }
