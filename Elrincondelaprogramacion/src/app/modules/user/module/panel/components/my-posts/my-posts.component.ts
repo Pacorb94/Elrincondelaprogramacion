@@ -44,7 +44,7 @@ export class MyPostsComponent implements OnInit, OnDestroy{
      * Función que obtiene los posts del usuario
      */
     getUserPosts(){
-        this.subscription=this._postService.getPostsByUser(this.user.id).subscribe(
+        this.subscription=this._postService.getUserPosts(this.user.id).subscribe(
             response=>{
                 if (response.Posts.length) {
                     this.posts=response.Posts;
