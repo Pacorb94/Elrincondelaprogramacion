@@ -6,7 +6,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { UserService } from './modules/user/service/user.service';
 import { PostService } from './services/post.service';
-import { FlashMessagesModule } from 'angular2-flash-messages';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpRequestInterceptor } from './interceptor/HttpRequestIncerceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -31,8 +30,7 @@ import { LastAddedCategoriesComponent } from './components/last-added-categories
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
-        MomentModule,
-        FlashMessagesModule.forRoot(),
+        MomentModule
     ],
     providers: [
         UserService,
