@@ -1,5 +1,5 @@
 export class Post {
-    private id: number;
+    private id: any;
     private categoryId: number;
     private title: string;
     private content: string;
@@ -11,8 +11,8 @@ export class Post {
     private updatedAt: any;
 
 
-    constructor(id: number, categoryId:number, title:string, content: string, user: any, 
-    image:string, inadequate: boolean, comments:any[], createdAt: any, updatedAt: any) {
+    constructor(id:any, categoryId:number, title:string, content: string, user: any, 
+    image:string, inadequate: boolean, comments:any, createdAt: any) {
         this.id = id;
         this.categoryId=categoryId;
         this.title=title;
@@ -22,12 +22,10 @@ export class Post {
         this.comments=comments;
         this.inadequate = inadequate;
         this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
-    setValues(id: number, category:number, title:string, content: string, user: any, 
+    setValues(category:number, title:string, content: string, user: any, 
     image:string, inadequate: boolean, comments:any[], createdAt: any, updatedAt: any) {
-        this.setId(id);
         this.setCategoryId(category);
         this.setTitle(title);
         this.setContent(content);
@@ -37,10 +35,6 @@ export class Post {
         this.setComments(comments);
         this.setCreatedAt(createdAt);
         this.setUpdatedAt(updatedAt);
-    }
-
-    setId(id: number) {
-        this.id = id;
     }
 
     setCategoryId(categoryId: number) {

@@ -1,5 +1,5 @@
 export class Commentt {
-    private id:number;
+    private id:any;
     private content:string;
     private user:any;
     private post:any;
@@ -7,30 +7,24 @@ export class Commentt {
     private createdAt:any;
     private updatedAt:any;
      
-    constructor(id:number, content:string, user:any, post:any, inadequate:boolean, 
-    createdAt:any, updatedAt:any) {
+    constructor(id:any, content:string, user:any, post:any, inadequate:boolean, 
+    createdAt:any) {
         this.id=id;
         this.content=content;
         this.user=user;
         this.post=post;
         this.inadequate=inadequate;
         this.createdAt=createdAt;
-        this.updatedAt=updatedAt;
     }
 
-    setValues(id:number, content:string, user:any, post:any, inadequate:boolean, 
+    setValues(content:string, user:any, post:any, inadequate:boolean, 
     createdAt:any, updatedAt:any){
-        this.setId(id);
         this.setContent(content);
         this.setUser(user);
         this.setPost(post);
         this.setInadequate(inadequate);
         this.setCreatedAt(createdAt);
         this.setUpdatedAt(updatedAt);
-    }
-
-    setId(id:number){
-        this.id=id;
     }
 
     setContent(content:string){

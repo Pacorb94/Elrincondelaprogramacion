@@ -1,25 +1,19 @@
 export class Category {
-    private id:number;
+    private id:any;
     private name:string;
     private createdAt:any;
     private updatedAt:any;
      
-    constructor(id:number, name:string, createdAt:any, updatedAt:any) {
+    constructor(id:any, name:string, createdAt:any) {
         this.id=id;
         this.name=name;
         this.createdAt=createdAt;
-        this.updatedAt=updatedAt;
     }
 
-    setValues(id:number, name:string, createdAt:any, updatedAt:any){
-        this.setId(id);
+    setValues(name:string, createdAt:any, updatedAt:any){
         this.setName(name);
         this.setCreatedAt(createdAt);
         this.setUpdatedAt(updatedAt);
-    }
-
-    setId(id:number){
-        this.id=id;
     }
 
     setName(name:string){

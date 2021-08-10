@@ -21,9 +21,8 @@ export class User {
         this.createdAt = createdAt;
     }
 
-    setValues(id: any, nick:string, email:string, password: string, profileImage:any, 
+    setValues(nick:string, email:string, password: string, profileImage:any, 
     role:string, ban: boolean, createdAt: any, updatedAt: any) {
-        this.setId(id);
         this.setNick(nick);
         this.setEmail(email);
         this.setPassword(password);
@@ -32,10 +31,6 @@ export class User {
         this.setBan(ban);
         this.setCreatedAt(createdAt);
         this.setUpdatedAt(updatedAt);
-    }
-
-    setId(id: any) {
-        this.id = id;
     }
 
     setNick(nick:string) {
