@@ -2,18 +2,20 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
 import { UserService } from '../../service/user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewChild, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent implements AfterViewInit, OnDestroy {
     pageTitle:string;
     user:any;
     form:FormGroup;
     @ViewChild('check', {static:false}) checkbox:any;
+    subscription:Subscription;
 
     constructor(private _userService:UserService, private _router:Router, 
     private _flashMessagesService:FlashMessagesService, private _cdRef:ChangeDetectorRef) {
@@ -23,11 +25,16 @@ export class LoginComponent implements AfterViewInit {
             password:new FormControl('', Validators.required),
             check:new FormControl(false)
         });
+        this.subscription=new Subscription();
     }
 
     //Para que podamos seleccionar elementos HTML debemos esperar a que cargue la vista
     ngAfterViewInit(){
         this.fillEmailAndMarkCheckbox();
+    }
+
+    ngOnDestroy(){
+        this.subscription.unsubscribe();
     }
 
     /**
@@ -48,7 +55,7 @@ export class LoginComponent implements AfterViewInit {
     login(){
         let email=this.form.get('email')?.value;
         let password=this.form.get('password')?.value;
-        this._userService.login(email, password).subscribe(
+        this.subscription=this._userService.login(email, password).subscribe(
             response=>{
                 if (response) {
                     this.user=response[0];
