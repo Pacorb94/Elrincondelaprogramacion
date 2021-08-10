@@ -123,7 +123,7 @@ class PostController extends AbstractController
      */
     public function uploadImage(Request $request)
     {
-        $image=$request->files->get('file0');
+        $image=$request->files->get('file');
         if ($image) {
             if ($this->validations(null, 'uploadImage', $image)) {
                 //Reemplazamos los espacios por guiones
