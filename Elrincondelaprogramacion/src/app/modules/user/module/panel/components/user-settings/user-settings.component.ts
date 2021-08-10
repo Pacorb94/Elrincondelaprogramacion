@@ -20,7 +20,7 @@ export class UserSettingsComponent implements OnDestroy{
     constructor(private _userService:UserService,
     private _flashMessagesService:FlashMessagesService) { 
         this.pageTitle='Ajustes del usuario';
-        this.loadUser();
+        this.loadUser();      
         this.form=new FormGroup({
             nick:new FormControl(this.user.nick),
             email:new FormControl(this.user.email, Validators.email)
@@ -50,7 +50,6 @@ export class UserSettingsComponent implements OnDestroy{
      */
     updateUser(){
         this.setUserFormValues();
-        localStorage.setItem('urlForUploadImage', 'user');
         this.updateSubscription=this._userService.update(this.user).subscribe(
             response=>{
                 if (response) {
