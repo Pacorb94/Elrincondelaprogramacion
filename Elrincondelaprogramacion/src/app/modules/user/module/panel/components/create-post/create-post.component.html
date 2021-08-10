@@ -30,7 +30,7 @@
            <!-- <span *ngIf="checkTouched(form.get('role'))" class="invalid-feedback d-block">
                 {{wrongValidationMessage(form.get('role'), 'rol')}}
             </span>-->
-            <file-uploader></file-uploader>
+            <file-uploader-post></file-uploader-post>
             <!--La propiedad disabled permite poner una condición, por lo que el botón se 
             desactivará si el formulario no es válido-->
             <input type="button" value="Crear post" (click)="create()" [disabled]="!form.valid" 
