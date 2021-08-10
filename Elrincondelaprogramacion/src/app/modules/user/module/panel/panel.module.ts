@@ -19,6 +19,7 @@ import { InadequateUsersComponent } from './components/inadequate-users/inadequa
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { DataTablesModule } from "angular-datatables";
 import { MomentModule } from 'angular2-moment';
+import { FileUploaderPostComponent } from './components/file-uploader-post/file-uploader-post.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { MomentModule } from 'angular2-moment';
         InadequatePostsComponent,
         InadequateCommentsComponent,
         InadequateUsersComponent,
-        UserSettingsComponent
+        UserSettingsComponent,
+        FileUploaderPostComponent
     ],
     imports: [
         CommonModule,
