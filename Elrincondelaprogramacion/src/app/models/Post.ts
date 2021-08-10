@@ -12,7 +12,7 @@ export class Post {
 
 
     constructor(id:any, categoryId:number, title:string, content: string, user: any, 
-    image:string, inadequate: boolean, comments:any, createdAt: any) {
+    image:string, inadequate: boolean, comments:any) {
         this.id = id;
         this.categoryId=categoryId;
         this.title=title;
@@ -21,7 +21,7 @@ export class Post {
         this.image=image;
         this.comments=comments;
         this.inadequate = inadequate;
-        this.createdAt = createdAt;
+        this.createdAt = Date.now();
     }
 
     setValues(category:number, title:string, content: string, user: any, 

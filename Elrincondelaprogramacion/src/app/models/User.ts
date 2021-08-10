@@ -10,7 +10,7 @@ export class User {
     private updatedAt: any;
 
     constructor(id: any, nick:string, email:string, password: string, profileImage:any, 
-    role:string, ban: boolean, createdAt: any) {
+    role:string, ban: boolean) {
         this.id = id;
         this.nick=nick;
         this.email=email;
@@ -18,7 +18,7 @@ export class User {
         this.profileImage=profileImage;
         this.role=role;
         this.ban=ban;
-        this.createdAt = createdAt;
+        this.createdAt = Date.now();
     }
 
     setValues(nick:string, email:string, password: string, profileImage:any, 
