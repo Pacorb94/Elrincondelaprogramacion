@@ -51,9 +51,9 @@ class PostController extends AbstractController
                     //Si existe
                     if ($category) {
                         $post=new Post($decodedRequest['title'], $decodedRequest['content'], 
-                                $category, false, null, $userLoggedIn, new \DateTime('now'));
+                                $category, false, null, $userLoggedIn);
                         $post->execute($this->em, $post, 'insert');
-                        return $this->json(['message'=>'Post created'], 201);
+                        return $this->json($post, 201);
                     }
                     return $this->json(['message'=>'That category dont\'t exists'], 404);
                 }
