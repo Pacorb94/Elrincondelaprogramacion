@@ -82,8 +82,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
      */
     private $updatedAt;
 
-    public function __construct($nick, $email, $password, $profileImage, $banned, $role, $createdAt, 
-    $updatedAt) {
+    public function __construct($nick, $email, $password, $profileImage, $banned, $role) {
         $this->id=null;
         $this->nick=$nick;
         $this->email=$email;
@@ -91,8 +90,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
         $this->profileImage=$profileImage;
         $this->banned=$banned;
         $this->roles=$role;
-        $this->createdAt=$createdAt;
-        $this->updatedAt=$updatedAt;
+        $this->createdAt=new \DateTime('now');
+        $this->updatedAt=new \DateTime('now');
     }
 
     /**
