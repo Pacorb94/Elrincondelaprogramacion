@@ -14,6 +14,7 @@
             <th>Imagen</th>
             <th>Fecha de creación</th>
             <th>Fecha de modificación</th>
+            <th>Acción</th>
         </tr>
     </thead>
     <tbody>
@@ -23,13 +24,32 @@
             <td>{{post.content}}</td>
             <td>
                 <!--Si hay imagen-->
-                <img *ngIf="post.image" src="{{post.image}}" alt="Imagen del post">
+                <img *ngIf="post.image" src="{{imageUrl+post.image}}" alt="Imagen del post" class="w-25">
                 <img *ngIf="!post.image" 
                     src="../../../../../../../assets/images/no-post-image/no-post-image.jpg" 
                     alt="Imagen del post" class="w-25">
             </td>
             <td>{{post.createdAt|amLocale:'es'|amCalendar}}</td>
             <td>{{post.updatedAt|amLocale:'es'|amCalendar}}</td>
+            <td>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6">
+                        <!--Aunque hemos puesto antes rutas hijas, en el routerLink debemos poner la ruta padre
+                        junto a la hija-->
+                        <a [routerLink]="['/watch-post', post.id]" class="btn btn-success mr-2">          
+                            <img src="../../../../../../../assets/images/watch-icon.png" class="w-75" 
+                            alt="Imagen de ver post">Ver
+                        </a>       
+                    </div>
+                    <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6">
+                        <a [routerLink]="['/user-panel/edit-post', post.id]" class="btn btn-warning mr-2">
+                            <img src="../../../../../../../assets/images/edit-icon.png" class="w-50" 
+                            alt="Imagen de editar post">
+                            Editar
+                        </a>
+                    </div>
+                </div>          
+            </td>
         </tr>
     </tbody>
 </table>
