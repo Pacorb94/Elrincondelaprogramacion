@@ -174,7 +174,7 @@ class PostController extends AbstractController
             $user=$userRepo->find($userId);
             //Si existe
             if ($user) {
-                $posts=$this->postRepo->findBy(['user'=>$userId]);
+                $posts=$this->postRepo->findBy(['user'=>$userId], ['id'=>'DESC']);
                 return $this->json($posts);
             }
             return $this->json(['message'=>'User not found'], 404);
@@ -193,7 +193,7 @@ class PostController extends AbstractController
             $category=$this->categoryRepo->find($categoryId);
             //Si existe
             if ($category) {
-                $posts=$this->postRepo->findBy(['category'=>$categoryId]);
+                $posts=$this->postRepo->findBy(['category'=>$categoryId], ['id'=>'DESC']);
                 return $this->json($posts);
             }
             return $this->json(['message'=>'Category not found'], 404);
