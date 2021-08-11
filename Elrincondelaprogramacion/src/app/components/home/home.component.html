@@ -17,9 +17,8 @@
                         <!--Si hay imagen-->
                         <img *ngIf="post.image" (click)="watchPost(post.id)" src="{{post.image}}" 
                             alt="Imagen del post" class="card-img-top">
-                        <!--Si no hay imagen-->
                         <img *ngIf="!post.image" (click)="watchPost(post.id)" 
-                            src="../../../assets/images/no-post-image/no-post-image.jpg" 
+                            src="../../../assets/images/no-post-image.jpg" 
                             alt="Imagen del post" class="card-img-top">
                         <h5 class="card-title card-header text-center">{{post.title}}</h5>
                         <p class="text-center">{{post.content}}</p>
