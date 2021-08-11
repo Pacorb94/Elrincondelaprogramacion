@@ -46,8 +46,8 @@ export class MyPostsComponent implements OnInit, OnDestroy{
     getUserPosts(){
         this.subscription=this._postService.getUserPosts(this.user.id).subscribe(
             response=>{
-                if (response.Posts.length) {
-                    this.posts=response.Posts;
+                if (response.length>0) {
+                    this.posts=response;
                     this.loading=false;
                     this.dtTrigger.next();             
                 }
