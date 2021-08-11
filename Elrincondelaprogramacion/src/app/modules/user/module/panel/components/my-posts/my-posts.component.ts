@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { UserService } from 'src/app/modules/user/service/user.service';
+import { environment } from 'src/environments/environment';
 import { PostService } from './../../../../../../services/post.service';
 
 @Component({
@@ -11,8 +12,10 @@ import { PostService } from './../../../../../../services/post.service';
 export class MyPostsComponent implements OnInit, OnDestroy{
     user:any;
     posts:any[];
-    subscription:Subscription;
+    userPostsSubscription:Subscription;
+    deletePostSubscription:Subscription;
     loading:boolean;
+    imageUrl:string;
     //-----Tabla------
     dtOptions:DataTables.Settings;
     dtTrigger:Subject<any>;
@@ -20,8 +23,10 @@ export class MyPostsComponent implements OnInit, OnDestroy{
     constructor(private _userService:UserService, private _postService:PostService) {
         this.user=this._userService.getUserLoggedIn();
         this.posts=[];
-        this.subscription=new Subscription();
+        this.userPostsSubscription=new Subscription();
+        this.deletePostSubscription=new Subscription();
         this.loading=true;
+        this.imageUrl=`${environment.url}/posts-images/`;
         this.dtOptions={};
         this.dtTrigger=new Subject<any>();
     }
@@ -36,7 +41,8 @@ export class MyPostsComponent implements OnInit, OnDestroy{
     }
 
     ngOnDestroy(){
-        this.subscription.unsubscribe();
+        this.userPostsSubscription.unsubscribe();
+        this.deletePostSubscription.unsubscribe();
         this.dtTrigger.unsubscribe();
     }
 
@@ -44,7 +50,7 @@ export class MyPostsComponent implements OnInit, OnDestroy{
      * Función que obtiene los posts del usuario
      */
     getUserPosts(){
-        this.subscription=this._postService.getUserPosts(this.user.id).subscribe(
+        this.userPostsSubscription=this._postService.getUserPosts(this.user.id).subscribe(
             response=>{
                 if (response.length>0) {
                     this.posts=response;
