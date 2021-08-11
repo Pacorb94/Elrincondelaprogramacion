@@ -3,7 +3,7 @@
         <h3>{{pageTitle}}</h3>
         <hr>
         <h6 *ngIf="goodCreate" class="alert alert-success col-md-4 mt-3 mx-auto">
-            Has creado el post, puedes verlo <a [routerLink]="['my-posts']">aquí</a>
+            Has creado el post, puedes verlo <a [routerLink]="['/user-panel/my-posts']">aquí</a>
         </h6>
         <flash-messages></flash-messages>
         <!--La propiedad "formGroup" asocia este formulario con una propiedad del componente. 
