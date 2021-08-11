@@ -39,4 +39,13 @@ export class PostService {
         let header=new HttpHeaders().set('Content-Type', 'application/json');
         return this._http.get(`${environment.url}/posts/users/${id}`, {headers:header});
     }
+
+    /**
+     * Función que borra un post
+     * @param id 
+     * @returns 
+     */
+    delete(id:number):Observable<any>{
+        return this._http.delete(`${environment.url}/posts/${id}/delete`);
+    }
 }
