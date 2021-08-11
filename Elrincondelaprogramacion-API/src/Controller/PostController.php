@@ -12,7 +12,6 @@ use App\Entity\User;
 use App\Entity\Post;
 use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
@@ -22,11 +21,10 @@ class PostController extends AbstractController
     private $categoryRepo;
     private $em;
 
-    public function __construct(EntityManagerInterface  $entityManager, PaginatorInterface $paginator) {
+    public function __construct(EntityManagerInterface  $entityManager) {
         $this->postRepo=$entityManager->getRepository(Post::class);
         $this->categoryRepo=$entityManager->getRepository(Category::class);
         $this->em=$entityManager;
-        $this->paginator=$paginator;
     }
 
     /**
@@ -167,18 +165,17 @@ class PostController extends AbstractController
     /**
      * Función que obtiene los posts del usuario
      * @param $userId
-     * @param $request
      * @return JsonResponse
      */
-    public function getUserPosts($userId, Request $request)
+    public function getUserPosts($userId)
     {
         if ($this->idValidation($userId)) {
             $userRepo=$this->getDoctrine()->getRepository(User::class);
             $user=$userRepo->find($userId);
             //Si existe
             if ($user) {
-                $data=$this->paginate($request, 'user', $userId, 'Post');
-                return $this->json($data);
+                $posts=$this->postRepo->findBy(['user'=>$userId]);
+                return $this->json($posts);
             }
             return $this->json(['message'=>'User not found'], 404);
         }
@@ -188,51 +185,20 @@ class PostController extends AbstractController
     /**
      * Función que obtiene los posts por categoría
      * @param $categoryId
-     * @param $request
      * @return JsonResponse
      */
-    public function getPostsByCategory($categoryId, Request $request)
+    public function getPostsByCategory($categoryId)
     {
         if ($this->idValidation($categoryId)) {
             $category=$this->categoryRepo->find($categoryId);
             //Si existe
             if ($category) {
-                $data=$this->paginate($request, 'category', $categoryId, 'Post');
-                return $this->json($data);
+                $posts=$this->postRepo->findBy(['category'=>$categoryId]);
+                return $this->json($posts);
             }
             return $this->json(['message'=>'Category not found'], 404);
         }
         return $this->json(['message'=>'Wrong id'], 400);
-    }
-
-    /**
-     * Función que obtiene los objetos paginados
-     * @param $request
-     * @param $modelProperty
-     * @param $id
-     * @param $modelName
-     * @return
-    */
-    public function paginate($request, $modelProperty, $id, $modelName)
-    {
-        /*Como el parámetro página viene por GET usamos la propiedad "query" y por defecto si 
-        no viene nada tendrá el valor 1*/
-        $page=$request->query->getInt('page', 1);
-        //Paginator necesita sentencias en DQL
-        $dql="select v from App\Entity\\".$modelName." v where v.$modelProperty = $id order by v.id desc";
-        $query=$this->em->createQuery($dql);
-        //Los objetos por página que se verán
-        define('OBJECTSPERPAGE', 5);
-        $pagination=$this->paginator->paginate($query, $page, OBJECTSPERPAGE);
-        $totalObjects=$pagination->getTotalItemCount();
-        $data=[
-            'total'.$modelName.''.'s'=>$totalObjects,
-            'currentPage'=>$page,
-            'objectsPerPage'=>OBJECTSPERPAGE, 
-            'totalPages'=>ceil($totalObjects/OBJECTSPERPAGE),
-            $modelName.'s'=>$pagination
-        ];
-        return $data;
     }
 
     /**
