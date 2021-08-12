@@ -1,0 +1,9 @@
+{
+    "/":{
+        "target":"https://api.elrincondelaprogramacion.com",
+        "secure":false,
+        "strictSSL": true,          
+        "withCredentials": true,
+        "logLevel":"debug"
+    } 
+}
