@@ -87,7 +87,8 @@
               "browserTarget": "Elrincondelaprogramacion:build:development",
               "ssl": true,
               "sslCert": "C:/xampp/apache/conf/certificates/proyecto/front/elrincondelaprogramacion.com.crt",
-              "sslKey": "C:/xampp/apache/conf/certificates/proyecto/front/elrincondelaprogramacion.com.key"
+              "sslKey": "C:/xampp/apache/conf/certificates/proyecto/front/elrincondelaprogramacion.com.key",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
