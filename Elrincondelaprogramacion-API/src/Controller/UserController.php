@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\Cookie;
 
 class UserController extends AbstractController
 {
