@@ -19,7 +19,7 @@ al front-end y [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrin
 * SQL
 * PHP 8 (puedes probar tu versión)
 * Composer 2
-* Angular 12 (puedes probar tu versión)
+* Angular 12 (puedes probar tu versión a partir de la 9)
 
 ## Pasos a seguir
  1. En un sistema gestor de bbdd importar database.sql de la carpeta database
