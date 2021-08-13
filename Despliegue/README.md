@@ -1,16 +1,15 @@
-1. Crear un host virtual https cuyo DocumentRoot apunte al punto de entrada
-del backend, ponle un certificado SSL e instálalo en el navegador
+1. Ponle un certificado SSL al backend
 
-2. Añade un dns en etc/hosts y cambia la url que está en [este](https://github.com/Pacorb94/ProyectoDAW/blob/master/Elrincondelaprogramacion/src/environments/environment.ts) archivo por tu dns
+2. Reinicia tu servidor web
 
-3. Reiniciar Apache
+2. Cambia la url que está en [este](https://github.com/Pacorb94/ProyectoDAW/blob/master/Elrincondelaprogramacion/src/environments/environment.ts) archivo por tu ruta del backend
 
-4. Ponle un certificado SSL al frontend e instálalo en el navegador
+3. Ponle un certificado SSL al frontend
 
-5. Para no escribir tanto cuando despleguemos el servidor de Angular vamos a angular.json en la clave "configurations" de la clave "serve" añadir la ruta del certificado y la clave, por ej
+4. Para no escribir tanto cuando despleguemos el servidor de Angular vamos a angular.json en la clave "configurations" de la clave "serve" añadir la ruta del certificado y la clave, por ej
     ```
     "ssl":true,
-    "sslCert":"ruta del archivo .crt",
-    "sslKey":"ruta del archivo .key"
+    "sslCert":"ruta del archivo.crt",
+    "sslKey":"ruta del archivo.key"
     ```
-6. `ng s -o` o `ng serve -o`
+5. `ng s -o` o `ng serve -o`
