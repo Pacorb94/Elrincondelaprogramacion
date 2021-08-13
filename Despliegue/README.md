@@ -6,7 +6,7 @@
 
 3. Ponle un certificado SSL al frontend
 
-4. Para no escribir tanto cuando despleguemos el servidor de Angular vamos a angular.json en la clave "configurations" de la clave "serve" añadir la ruta del certificado y la clave, por ej
+4. Para no escribir tanto cuando despleguemos el servidor de Angular vamos a angular.json en la clave "configurations" de la clave "serve" añadir la ruta del certificado del frontend, por ej
     ```
     "ssl":true,
     "sslCert":"ruta del archivo.crt",
