@@ -17,7 +17,7 @@ al front-end y [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrin
 ## Requisitos
 * Composer 2
 * Apache
-* MySQL o MariaDB
+* SQL
 * PHP 8 (puedes probar tu versión)
 * Node.js
 * Angular 12 (puedes probar tu versión)
