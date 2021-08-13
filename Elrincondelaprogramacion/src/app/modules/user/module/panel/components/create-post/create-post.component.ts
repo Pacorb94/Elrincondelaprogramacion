@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
-import { UserService } from 'src/app/modules/user/service/user.service';
-import { PostService } from './../../../../../../services/post.service';
+import { UserService } from '../../../../service/user.service';
+import { PostService } from '../../../../../post/service/post.service';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Post } from './../../../../../../models/Post';
