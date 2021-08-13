@@ -15,11 +15,10 @@ Este proyecto el front-end y el back-end están separados, por lo que [aquí](ht
 al front-end y [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrincondelaprogramacion-API) al back-end
 
 ## Requisitos
-* Composer 2
 * Apache
 * SQL
 * PHP 8 (puedes probar tu versión)
-* Node.js
+* Composer 2
 * Angular 12 (puedes probar tu versión)
 
 ## Pasos a seguir
