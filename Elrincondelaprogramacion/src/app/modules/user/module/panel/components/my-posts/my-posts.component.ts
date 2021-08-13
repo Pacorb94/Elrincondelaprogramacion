@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { UserService } from 'src/app/modules/user/service/user.service';
 import { environment } from 'src/environments/environment';
-import { PostService } from './../../../../../../services/post.service';
+import { PostService } from './../../../../../post/service/post.service';
+
 
 @Component({
     selector: 'my-posts',
