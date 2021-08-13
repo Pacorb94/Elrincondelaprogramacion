@@ -5,7 +5,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../../../models/User';
 
 
-@Injectable()
+@Injectable({
+    providedIn:'root'
+})
 export class UserService {
     private user:BehaviorSubject<any>;
 
