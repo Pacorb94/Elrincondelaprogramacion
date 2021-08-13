@@ -82,8 +82,8 @@ export class UserService {
      */
     getProfileImage(image:string):Observable<any>{
         let header=new HttpHeaders().set('Content-Type', 'image/*');
-        return this._http.get(`${environment.url}/profile-images/${image}`, 
-                                {headers:header, responseType:'blob'});
+        return this._http.get(`${environment.url}/profile-images/${image}`,
+                            {headers:header, responseType:'blob'});
     }
 
     update(user:any):Observable<any>{
