@@ -28,6 +28,11 @@ getUser:
     controller: App\Controller\UserController::getUserDetail
     methods: GET
 
+getRoles:
+    path: /roles
+    controller: App\Controller\UserController:getRoles
+    methods: GET
+
 banUser:
     path: /users/{id}/ban
     controller: App\Controller\UserController::ban
