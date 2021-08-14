@@ -1,7 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../../../../service/user.service';
 import { PostService } from '../../../../../post/service/post.service';
-import { Router } from '@angular/router';
+import { CategoryService } from './../../../../../category/service/category.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Post } from './../../../../../../models/Post';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -12,30 +12,51 @@ import { Subscription } from 'rxjs';
     templateUrl: './create-post.component.html',
     styleUrls: ['./create-post.component.scss']
 })
-export class CreatePostComponent implements OnDestroy {
+export class CreatePostComponent implements OnInit, OnDestroy {
     pageTitle:string;
     user:any;
     post:Post;
     goodCreate:boolean;
+    categories:any[];
     form:FormGroup;
-    subscription:Subscription;
+    categoriesSubscription:Subscription;
+    createSubscription:Subscription;
 
     constructor(private _userService:UserService, private _postService:PostService, 
-    private _router:Router, private _flashMessagesService:FlashMessagesService) {
+    private _categoryService:CategoryService , private _flashMessagesService:FlashMessagesService) {
         this.pageTitle='Crear post';      
         this.user=this._userService.getUserLoggedIn();
         this.post=new Post(null, 2, '', '', this.user.id, '', false, null);
         this.goodCreate=false;
+        this.categories=[];
         this.form=new FormGroup({
             title:new FormControl('', Validators.required),
             content:new FormControl('', Validators.required),
-            category:new FormControl('')
+            category:new FormControl('', Validators.required)
         });
-        this.subscription=new Subscription();
+        this.categoriesSubscription=new Subscription();
+        this.createSubscription=new Subscription();
+    }
+
+    ngOnInit(){
+        this.getCategories();
     }
 
     ngOnDestroy(){
-        this.subscription.unsubscribe();
+        this.categoriesSubscription.unsubscribe();
+        this.createSubscription.unsubscribe();
+    }
+
+    /**
+     * Función que obtiene las categorías
+     */
+    getCategories(){
+        this.categoriesSubscription=this._categoryService.getCategories().subscribe(
+            response=>{
+                if (response) this.categories=response;            
+            },
+            error=>{}
+        );
     }
 
     /**
@@ -43,7 +64,7 @@ export class CreatePostComponent implements OnDestroy {
      */
     create(){
         this.setPostFormValues();
-        this.subscription=this._postService.create(this.post).subscribe(
+        this.createSubscription=this._postService.create(this.post).subscribe(
             response=>{
                 if (response) {
                     this.goodCreate=true;
@@ -68,6 +89,7 @@ export class CreatePostComponent implements OnDestroy {
         //Con ? evitamos que Angular muestra un mensaje de que el campo puede estar null
         this.post.setTitle(this.form.get('title')?.value);
         this.post.setContent(this.form.get('content')?.value);
+        this.post.setCategoryId(this.form.get('category')?.value);
     }
 
     /**
