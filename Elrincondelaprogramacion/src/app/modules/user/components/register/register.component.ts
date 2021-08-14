@@ -1,6 +1,6 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../service/user.service';
-import { Component, OnDestroy } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Subscription } from 'rxjs';
@@ -10,13 +10,14 @@ import { Subscription } from 'rxjs';
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnDestroy {
+export class RegisterComponent implements OnInit, OnDestroy {
     pageTitle:string;
     user:User;
     goodRegister:boolean;
     form:FormGroup;
     roles:any[];
-    subscription:Subscription;
+    rolesSubscription:Subscription;
+    registerSubscription:Subscription;
 
     constructor(private _userService:UserService, private _flashMessagesService:FlashMessagesService) { 
         this.pageTitle='Registro';
@@ -28,15 +29,30 @@ export class RegisterComponent implements OnDestroy {
             password:new FormControl('', Validators.required),
             role:new FormControl('', Validators.required)
         });
-        this.roles=[
-            {backEndRol:"ROLE_READER", frontEndRol:"Lector"},
-            {backEndRol:"ROLE_WRITER", frontEndRol:"Redactor"}
-        ];
-        this.subscription=new Subscription();
+        this.roles=[];
+        this.rolesSubscription=new Subscription();
+        this.registerSubscription=new Subscription();
+    }
+
+    ngOnInit(){
+        this.getRoles();
     }
 
     ngOnDestroy(){
-        this.subscription.unsubscribe();
+        this.rolesSubscription.unsubscribe();
+        this.registerSubscription.unsubscribe();
+    }
+
+    /**
+     * Función que obtiene los roles del usuario
+     */
+    getRoles(){
+        this.rolesSubscription=this._userService.getRoles().subscribe(
+            response=>{
+                if (response) this.roles=response;            
+            },
+            error=>{}
+        );
     }
 
     /**
@@ -44,7 +60,7 @@ export class RegisterComponent implements OnDestroy {
      */
     register(){
         this.setUserFormValues();
-        this.subscription=this._userService.register(this.user).subscribe(
+        this.registerSubscription=this._userService.register(this.user).subscribe(
             response=>{
                 if (response) {
                     this.goodRegister=true;
