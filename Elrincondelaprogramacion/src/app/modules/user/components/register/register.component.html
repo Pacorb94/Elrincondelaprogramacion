@@ -29,7 +29,9 @@
         <br>
         <select formControlName="role" name="role" id="role" class="form-control mb-4 w-50 mx-auto">
             <option hidden value="">Selecciona un rol</option>
-            <option *ngFor="let rol of roles" value="{{rol.backEndRol}}">{{rol.frontEndRol}}</option>
+            <option *ngFor="let rol of roles" [value]="rol">
+                {{rol=='ROLE_WRITER'?'Redactor':'Lector'}}
+            </option>
         </select>
         <span *ngIf="checkTouched(form.get('role'))" class="invalid-feedback d-block">
             {{wrongValidationMessage(form.get('role'), 'rol')}}
