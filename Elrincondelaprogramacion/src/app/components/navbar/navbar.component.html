@@ -43,7 +43,7 @@
         </ul>   
         <ul *ngIf="user" class="navbar-nav navbar-right ml-auto">
             <li class="nav-item">
-                <img [src]="profileImage" alt="Imagen de perfil" class="profileImage">
+                <img *ngIf="profileImage" [src]="profileImage" alt="Imagen de perfil" class="profileImage">
             </li>
             <!--Lista desplegable-->
             <li class="nav-item dropdown">
