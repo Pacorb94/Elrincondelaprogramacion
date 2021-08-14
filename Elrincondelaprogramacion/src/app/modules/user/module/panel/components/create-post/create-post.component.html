@@ -23,13 +23,16 @@
             <span *ngIf="checkTouched(form.get('content'))" class="invalid-feedback d-block">
                 {{wrongValidationMessage(form.get('content'), 'contenido')}}
             </span>
-            <select formControlName="category" name="category" id="category" class="form-control w-100 mt-3">
+            <select formControlName="category" name="category" id="category" 
+                class="form-control w-100 mt-3">
                 <option hidden value="">Selecciona una categoría</option>
-               <!-- <option *ngFor="let category of categories" value="{{category.backEnd}}">{{category.frontEnd}}</option>-->
+                <option *ngFor="let category of categories" [value]="category.id">
+                    {{category.name}}
+                </option>
             </select>
-           <!-- <span *ngIf="checkTouched(form.get('role'))" class="invalid-feedback d-block">
-                {{wrongValidationMessage(form.get('role'), 'rol')}}
-            </span>-->
+            <span *ngIf="checkTouched(form.get('category'))" class="invalid-feedback d-block">
+                {{wrongValidationMessage(form.get('category'), 'categoría')}}
+            </span>
             <file-uploader-post></file-uploader-post>
             <!--La propiedad disabled permite poner una condición, por lo que el botón se 
             desactivará si el formulario no es válido-->
