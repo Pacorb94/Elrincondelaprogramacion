@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use JsonSerializable;
 
 /**
  * Category
@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * indexes={@ORM\Index(name="fk_categories_users", columns={"user_id"})})
  * @ORM\Entity
  */
-class Category
+class Category implements JsonSerializable
 {
     /**
      * @var int
@@ -102,6 +102,21 @@ class Category
     {
         $this->updatedAt=$updatedAt;
         return $this;
+    }
+
+    /**
+     * Función que sobreescribe una función de la interfaz "jsonSerializable" en la cual le indicamos
+     * las propiedades que queremos serializar 
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id'=>$this->id,
+            'name'=>$this->name,
+            'createdAt'=>$this->createdAt,
+            'updatedAt'=>$this->updatedAt
+        ];
     }
 
     /**
