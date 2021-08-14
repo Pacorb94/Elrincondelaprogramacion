@@ -106,6 +106,14 @@ export class UserService {
     }
 
     /**
+     * Función que obtiene los roles
+     * @returns 
+     */
+    getRoles():Observable<any>{
+        return this._http.get(`${environment.url}/roles`);
+    }
+
+    /**
      * Función que cierra sesión
      * @return
      */
