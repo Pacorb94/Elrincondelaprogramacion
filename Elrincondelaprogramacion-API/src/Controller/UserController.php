@@ -168,6 +168,15 @@ class UserController extends AbstractController
     }
 
     /**
+     * Función que obtiene los roles
+     * @return JsonResponse
+     */
+    public function getRoles()
+    {
+        return $this->json(['ROLE_WRITER', 'ROLE_READER']);
+    }
+
+    /**
      * Función que banea a un usuario
      * @param $id
      * @param $request
