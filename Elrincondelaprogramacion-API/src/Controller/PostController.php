@@ -75,9 +75,6 @@ class PostController extends AbstractController
                 $request=$request->get('json', null);
                 if ($request) {
                     $decodedRequest=json_decode($request, true);
-                    /*array_map itera sobre los elementos de $decodedRequest ejecutando 
-                    la función trim*/
-                    $decodedRequest=array_map('trim', $decodedRequest);
                     $post=$this->postRepo->find($id);
                     //Si existe 
                     if ($post) {
@@ -86,10 +83,10 @@ class PostController extends AbstractController
                         if ($userLoggedIn->getId()==$post->getUser()->getId()) {
                             /*?: indica que $decodedRequest['title'] si tiene valor será ese 
                             sino $post->getTitle()*/
-                            $decodedRequest['title']=$decodedRequest['title']?:$post->getTitle();  
-                            $decodedRequest['content']=$decodedRequest['content']?:$post->getContent();
-                            $decodedRequest['image']=$decodedRequest['image']?:$post->getImage();
-                            $category=$this->categoryRepo->find($decodedRequest['categoryId'])
+                            $decodedRequest['title']=trim($decodedRequest['title'])?:$post->getTitle();  
+                            $decodedRequest['content']=trim($decodedRequest['content'])?:$post->getContent();
+                            $decodedRequest['image']=trim($decodedRequest['image'])?:$post->getImage();
+                            $category=$this->categoryRepo->find($decodedRequest['category']['id'])
                                 ?:$post->getCategory()->getId();
                             if ($this->validations($decodedRequest)) {                
                                 $post->setTitle($decodedRequest['title']);  
