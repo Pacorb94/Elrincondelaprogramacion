@@ -1,3 +1,4 @@
+import { EditPostComponent } from './components/edit-post/edit-post.component';
 import { MainComponent } from './components/main/main.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -10,13 +11,16 @@ const routes: Routes = [
         path: '', component:MainComponent,
         children:[
             {
-                path:'user-settings', component:UserSettingsComponent
-            },
-            {
                 path:'my-posts', component:MyPostsComponent
             },
             {
                 path:'create-post', component:CreatePostComponent
+            },
+            {
+                path:'edit-post/:id', component:EditPostComponent
+            },
+            {
+                path:'user-settings', component:UserSettingsComponent
             },
             {
                 path:'**', redirectTo:''
