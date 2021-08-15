@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Category;
+use App\Entity\Post;
 use Doctrine\ORM\EntityManagerInterface;
-
 
 class CategoryController extends AbstractController
 {
@@ -111,6 +111,13 @@ class CategoryController extends AbstractController
             $category=$this->categoryRepo->find($id);
             //Si existe
             if ($category) {
+                $postRepo=$this->getDoctrine()->getRepository(Post::class);
+                $posts=$postRepo->findBy(['category'=>$category->getId()]);
+                //Debemos modificar la categoría de los posts que vamos a borrar
+                foreach ($posts as $post) {
+                    $post->setCategory(null);
+                    $post->execute($this->em, $post, 'update');
+                }             
                 $category->execute($this->em, $category, 'delete');
                 return $this->json(['message'=>'Deleted category']);
             }
