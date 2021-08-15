@@ -110,6 +110,11 @@ getPostDetail:
     controller: App\Controller\PostController::getPostDetail
     methods: GET
 
+deletePost:
+    path: /posts/{id}/delete
+    controller: App\Controller\PostController::delete
+    methods: DELETE
+
 indequatePost:
     path: /posts/{id}/inadequate
     controller: App\Controller\PostController::inadequate
