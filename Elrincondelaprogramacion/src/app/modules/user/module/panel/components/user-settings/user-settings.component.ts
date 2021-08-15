@@ -71,12 +71,12 @@ export class UserSettingsComponent implements OnDestroy{
                         'alert alert-success col-md-4 mt-3 mx-auto', 1500);
                 }else{
                     this.showFlashMessage('No has modificado tu perfil correctamente',
-                        'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
+                        'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
                 }
             },
             error=>{
                 this.showFlashMessage('No has modificado tu perfil correctamente',
-                    'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
+                    'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
             }
         );
     }
