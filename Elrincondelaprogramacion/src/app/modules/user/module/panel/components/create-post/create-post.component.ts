@@ -26,7 +26,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     private _categoryService:CategoryService , private _flashMessagesService:FlashMessagesService) {
         this.pageTitle='Crear post';      
         this.user=this._userService.getUserLoggedIn();
-        this.post=new Post(null, 2, '', '', this.user.id, '', false, null);
+        this.post=new Post(null, 0, '', '', this.user.id, '', false, null);
         this.goodCreate=false;
         this.categories=[];
         this.form=new FormGroup({
