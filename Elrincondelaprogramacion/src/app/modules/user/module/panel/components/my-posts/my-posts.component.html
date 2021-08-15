@@ -25,7 +25,7 @@
             <td>{{post.content}}</td>
             <td>
                 <!--Si hay imagen-->
-                <img *ngIf="post.image" [src]="imageUrl+post.image" alt="Imagen del post" class="w-25">
+                <img *ngIf="post.image" [src]="imageUrl+post.image" alt="Imagen del post" class="w-50">
                 <img *ngIf="!post.image" 
                     src="../../../../../../../assets/images/no-post-image.jpg" 
                     alt="Imagen del post" class="w-50">
