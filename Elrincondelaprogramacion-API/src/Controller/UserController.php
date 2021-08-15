@@ -15,10 +15,12 @@ class UserController extends AbstractController
 {
     private $userRepo;
     private $em;
+    private $filesystem;
 
-    public function __construct(EntityManagerInterface $entityManager) {
+    public function __construct(EntityManagerInterface $entityManager, Filesystem $filesystem) {
         $this->userRepo=$entityManager->getRepository(User::class);
         $this->em=$entityManager;
+        $this->filesystem=$filesystem;
     }
 
     /**
@@ -85,6 +87,8 @@ class UserController extends AbstractController
                             if ($this->validations('update', $decodedRequest)) {
                                 $user->setNick($decodedRequest['nick']);
                                 $user->setEmail($decodedRequest['email']);
+                                $this->deleteDirectoryOldImage($user->getProfileImage(), 
+                                    'profileImagesDirectory');
                                 $user->setProfileImage($decodedRequest['profileImage']);
                                 $user->setUpdatedAt(new \DateTime('now'));
                                 $user->execute($this->em, $user, 'update');                
@@ -102,6 +106,20 @@ class UserController extends AbstractController
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
             return $this->json(['message'=>$e->getMessage()], 500);
         }          
+    }
+
+    /**
+     * Función que borra la antigua imagen del directorio
+     * @param $oldImageName
+     * @param $directoryName
+     */
+    public function deleteDirectoryOldImage($oldImageName, $directoryName)
+    {
+        //Obtenemos la carpeta donde se guardará la imagen
+        $imagesDirectory=$this->getParameter($directoryName);
+        if ($this->filesystem->exists($imagesDirectory.'/'.$oldImageName)) {
+            $this->filesystem->remove($imagesDirectory.'/'.$oldImageName);    
+        }   
     }
 
     /**
