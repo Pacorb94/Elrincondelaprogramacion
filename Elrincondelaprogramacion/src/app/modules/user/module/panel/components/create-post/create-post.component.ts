@@ -23,7 +23,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     createSubscription:Subscription;
 
     constructor(private _userService:UserService, private _postService:PostService, 
-    private _categoryService:CategoryService , private _flashMessagesService:FlashMessagesService) {
+    private _categoryService:CategoryService, private _flashMessagesService:FlashMessagesService) {
         this.pageTitle='Crear post';      
         this.user=this._userService.getUserLoggedIn();
         this.post=new Post(null, 0, '', '', this.user.id, '', false, null);
@@ -71,13 +71,13 @@ export class CreatePostComponent implements OnInit, OnDestroy {
                 }else{
                     this.goodCreate=false;
                     this.showFlashMessage('No has creado el post correctamente',
-                        'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
+                        'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
                 }
             },
             error=>{
                 this.goodCreate=false;
                 this.showFlashMessage('No has creado el post correctamente',
-                    'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
+                    'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
             }
         );
     }
