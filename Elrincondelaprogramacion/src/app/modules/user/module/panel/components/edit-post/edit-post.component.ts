@@ -129,10 +129,14 @@ export class EditPostComponent implements OnInit, OnDestroy {
      * Función que da los valores del formulario al post
      */
     setPostFormValues(){
-        //Con ? evitamos que Angular muestra un mensaje de que el campo puede estar null
+        //Con ? evitamos que Angular muestre un mensaje de que el campo puede estar null
         if (this.form.get('title')?.value) this.post.title=this.form.get('title')?.value;
         if (this.form.get('content')?.value) this.post.content=this.form.get('content')?.value;
         if (this.form.get('category')?.value) this.post.category.id=this.form.get('category')?.value;
+        if (localStorage.hasOwnProperty('postImage')) {
+            this.post.image=localStorage.getItem('postImage')??'';
+            localStorage.removeItem('postImage');
+        }
     }
 
     /**

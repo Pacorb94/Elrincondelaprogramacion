@@ -9,6 +9,7 @@ import { HttpRequestInterceptor } from './interceptor/HttpRequestIncerceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MomentModule } from 'angular2-moment';
 import { MyFooterComponent } from './components/my-footer/my-footer.component';
+import { PostsListComponent } from './components/posts-list/posts-list.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { MyFooterComponent } from './components/my-footer/my-footer.component';
         AppComponent,
         NavbarComponent,
         HomeComponent,
-        MyFooterComponent
+        MyFooterComponent,
+        PostsListComponent
     ],
     imports: [
         BrowserModule,

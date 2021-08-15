@@ -36,6 +36,16 @@ export class FileUploaderPostComponent implements OnInit {
         }
     }
 
+    /**
+     * Función que guarda la imagen en el localStorage
+     */
+    setImageLocalStorage(){
+        this.uploader.onCompleteItem=fileItem=>{
+            let fileName=JSON.parse(fileItem._xhr.response).image;
+            localStorage.setItem('postImage', fileName);
+        }      
+    }
+
     public fileOverBase(e:any) {
         this.hasBaseDropZoneOver=e;
     }

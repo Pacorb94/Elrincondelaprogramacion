@@ -10,7 +10,7 @@
 </div>
 <div class="row mt-2">
     <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6">
-        <button type="button" class="btn btn-info btn-s" (click)="uploader.uploadAll()"
+        <button type="button" class="btn btn-info btn-s" (click)="uploader.uploadAll(); setImageLocalStorage()"
             [disabled]="!uploader.getNotUploadedItems().length">
             <span class="glyphicon glyphicon-upload">Añadir imagen</span>
         </button>
