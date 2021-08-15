@@ -88,6 +88,11 @@ export class UserService {
                             {headers:header, responseType:'blob'});
     }
 
+    /**
+     * Función que modifica el usuario
+     * @param user 
+     * @returns 
+     */
     update(user:any):Observable<any>{
         //Tenemos que convertir el usuario a json-string
         let data=`json=${JSON.stringify(user)}`;
@@ -110,7 +115,8 @@ export class UserService {
      * @returns 
      */
     getRoles():Observable<any>{
-        return this._http.get(`${environment.url}/roles`);
+        let header=new HttpHeaders().set('Content-Type', 'application/json');
+        return this._http.get(`${environment.url}/roles`, {headers:header});
     }
 
     /**
