@@ -17,6 +17,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
     post:any;
     categories:any[];
     form:FormGroup;
+    goodEdit:boolean;
     postSubscription:Subscription;
     categoriesSubscription:Subscription;
     updateSubscription:Subscription;
@@ -31,6 +32,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
             content:new FormControl(''),
             category:new FormControl('')
         });
+        this.goodEdit=false;
         this.postSubscription=new Subscription();
         this.categoriesSubscription=new Subscription();
         this.updateSubscription=new Subscription();
@@ -109,8 +111,8 @@ export class EditPostComponent implements OnInit, OnDestroy {
         this.updateSubscription=this._postService.update(this.post).subscribe(
             response=>{
                 if (response) {
+                    this.goodEdit=true;
                     this.post=response;
-                    this._router.navigate(['/my-posts']);
                 }else{
                     this.showFlashMessage('No has editado el post correctamente',
                         'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
