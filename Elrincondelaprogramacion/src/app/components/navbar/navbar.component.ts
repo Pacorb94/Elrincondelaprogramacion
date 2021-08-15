@@ -30,7 +30,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     ngOnInit(){
         this.loadUser();
-        this.loadProfileImage();
     }
 
     ngOnDestroy(){
@@ -45,7 +44,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     loadUser(){
         this.loadUserSubscription=this._userService.getUserLoggedIn$().subscribe(
             user=>{
-                if (user) this.user=user;
+                if (user) {
+                    this.user=user;
+                    this.loadProfileImage();
+                }
             }
         );
     }
