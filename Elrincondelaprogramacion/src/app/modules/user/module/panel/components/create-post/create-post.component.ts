@@ -86,10 +86,14 @@ export class CreatePostComponent implements OnInit, OnDestroy {
      * Función que da los valores del formulario al post
      */
     setPostFormValues(){
-        //Con ? evitamos que Angular muestra un mensaje de que el campo puede estar null
+        //Con ? evitamos que Angular muestre un mensaje de que el campo puede estar null
         this.post.setTitle(this.form.get('title')?.value);
         this.post.setContent(this.form.get('content')?.value);
         this.post.setCategoryId(this.form.get('category')?.value);
+        if (localStorage.hasOwnProperty('postImage')) {
+            this.post.setImage(localStorage.getItem('postImage')??'');
+            localStorage.removeItem('postImage');
+        }
     }
 
     /**
