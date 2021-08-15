@@ -45,13 +45,13 @@ export class CreateCategoryComponent implements OnDestroy {
                 }else{
                     this.goodCreate=false;
                     this.showFlashMessage('No has creado la categoría correctamente',
-                        'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
+                        'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
                 }
             },
             error=>{
                 this.goodCreate=false;
                 this.showFlashMessage('No has creado la categoría correctamente',
-                    'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
+                    'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
             }
         );
     }
