@@ -4,10 +4,10 @@ export class Category {
     private createdAt:any;
     private updatedAt:any;
      
-    constructor(id:any, name:string, createdAt:any) {
+    constructor(id:any, name:string) {
         this.id=id;
         this.name=name;
-        this.createdAt=createdAt;
+        this.createdAt=Date.now();
     }
 
     setValues(name:string, createdAt:any, updatedAt:any){
