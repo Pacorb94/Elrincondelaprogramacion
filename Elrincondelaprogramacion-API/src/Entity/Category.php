@@ -35,14 +35,14 @@ class Category implements JsonSerializable
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt='current_timestamp()';
+    private $createdAt;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
-    private $updatedAt='current_timestamp()';
+    private $updatedAt;
 
     /**
      * @var \User
@@ -59,6 +59,7 @@ class Category implements JsonSerializable
         $this->user=$user;
         $this->name=$name;
         $this->createdAt=new \DateTime('now');
+        $this->updatedAt=new \DateTime('now');
     }
 
     public function getId(): ?int
