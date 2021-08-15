@@ -20,11 +20,13 @@ class PostController extends AbstractController
     private $postRepo;
     private $categoryRepo;
     private $em;
+    private $filesystem;
 
-    public function __construct(EntityManagerInterface  $entityManager) {
+    public function __construct(EntityManagerInterface  $entityManager, Filesystem $filesystem) {
         $this->postRepo=$entityManager->getRepository(Post::class);
         $this->categoryRepo=$entityManager->getRepository(Category::class);
         $this->em=$entityManager;
+        $this->filesystem=$filesystem;
     }
 
     /**
@@ -49,7 +51,7 @@ class PostController extends AbstractController
                     //Si existe
                     if ($category) {
                         $post=new Post($decodedRequest['title'], $decodedRequest['content'], 
-                                $category, false, null, $userLoggedIn);
+                                $category, false, $decodedRequest['image'], $userLoggedIn);
                         $post->execute($this->em, $post, 'insert');
                         return $this->json($post, 201);
                     }
@@ -92,6 +94,7 @@ class PostController extends AbstractController
                                 $post->setTitle($decodedRequest['title']);  
                                 $post->setContent($decodedRequest['content']);
                                 $post->setCategory($category);
+                                $this->deleteDirectoryOldImage($post->getImage(), 'postsImagesDirectory');
                                 $post->setImage($decodedRequest['image']);
                                 $post->setUpdatedAt(new \DateTime('now'));
                                 $post->execute($this->em, $post, 'update');
@@ -109,6 +112,20 @@ class PostController extends AbstractController
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
             return $this->json(['message'=>$e->getMessage()], 500);
         }
+    }
+
+    /**
+     * Función que borra la antigua imagen del directorio
+     * @param $oldImageName
+     * @param $directoryName
+     */
+    public function deleteDirectoryOldImage($oldImageName, $directoryName)
+    {
+        //Obtenemos la carpeta donde se guardará la imagen
+        $imagesDirectory=$this->getParameter($directoryName);
+        if ($this->filesystem->exists($imagesDirectory.'/'.$oldImageName)) {
+            $this->filesystem->remove($imagesDirectory.'/'.$oldImageName);    
+        }   
     }
 
     /**
@@ -140,16 +157,15 @@ class PostController extends AbstractController
     /**
      * Función que obtiene una imagen
      * @param $imageName
-     * @param $filesystem
      * @return JsonResponse|Response
      */
-    public function getImage($imageName, Filesystem $filesystem)
+    public function getImage($imageName)
     {
         $imageName=trim($imageName);
         if ($imageName) {
             //Obtenemos la carpeta donde se guardará la imagen
             $postsImagesDirectory=$this->getParameter('postsImagesDirectory');
-            if ($filesystem->exists($postsImagesDirectory.'/'.$imageName)) {
+            if ($this->filesystem->exists($postsImagesDirectory.'/'.$imageName)) {
                 //Obtenemos la imagen
                 $image=readfile($postsImagesDirectory.'/'.$imageName);
                 return new Response($image);
