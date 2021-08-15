@@ -252,6 +252,25 @@ class PostController extends AbstractController
     }
 
     /**
+     * Función que borra un post
+     * @param $id
+     * @return JsonResponse
+     */
+    public function delete($id)
+    {
+        if ($this->idValidation($id)) {
+            $post=$this->postRepo->find($id);
+            //Si existe
+            if ($post) {
+                $post->execute($this->em, $post, 'delete');
+                return $this->json(['message'=>'Deleted post']);
+            }
+            return $this->json(['message'=>'Post not found'], 404);
+        }
+        return $this->json(['message'=>'Wrong id'], 400);  
+    }
+
+    /**
      * Función que valida los datos
      * @param $action
      * @param $decodedRequest
