@@ -1,0 +1,58 @@
+<div id="col" class="col-xl-9">
+    <!--Si hay posts-->
+    <div *ngIf="posts; else noPosts">
+        <h1 class="text-center">{{pageTitle}}</h1>
+        <hr>
+        <div *ngIf="loading" class="w-25 text-center">
+            <button class="btn btn-primary" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Cargando...
+            </button>
+        </div>
+        <!--Cards-->
+        <div class="card-columns w-100">
+            <article *ngFor="let post of posts" class="card">
+                <div class="card-body">
+                    <!--Si hay imagen-->
+                    <img *ngIf="post.image" (click)="watchPost(post.id)" [src]="post.image" 
+                        alt="Imagen del post" class="card-img-top">
+                    <img *ngIf="!post.image" (click)="watchPost(post.id)" 
+                        src="../../../assets/images/no-post-image.jpg" 
+                        alt="Imagen del post" class="card-img-top">
+                    <h5 class="card-title card-header text-center">{{post.title}}</h5>
+                    <p class="text-center">{{post.content}}</p>
+                </div>
+            </article>
+        <!--Fin de los cards-->
+        </div><br>
+        <!--Paginación-->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <!--A la ruta le pasamos un segundo parámetro con la propiedad-->
+                    <a class="page-link" [routerLink]="['/page', prevPage]" routerLinkActive="btn-info" 
+                        aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <!--Hacemos tantos enlaces como páginas haya-->
+                <li *ngFor="let page of totalPages" class="page-item">
+                    <a class="page-link" [routerLink]="['/page', page]" routerLinkActive="btn-info">
+                        {{page}}
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" [routerLink]="['/page', nextPage]" routerLinkActive="btn-info" 
+                        aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        <!--Fin de la paginacíon-->
+        </nav>
+    </div>
+    <ng-template #noPosts>          
+        <h3 class="text-center">No hay posts</h3>
+        <hr>
+    </ng-template>
+</div>
