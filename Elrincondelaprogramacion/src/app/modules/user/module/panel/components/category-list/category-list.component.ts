@@ -62,10 +62,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
     /**
      * Función que borra una categoría
-     * @param id 
+     * @param name
      */
-    deleteCategory(id:number){
-        this.deleteSubscription=this._categoryService.delete(id).subscribe(
+    deleteCategory(name:string){
+        this.deleteSubscription=this._categoryService.delete(name).subscribe(
             response=>{
                 if (response) {
                     this.getCategories(true);               
