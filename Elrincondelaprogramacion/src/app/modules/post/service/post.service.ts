@@ -25,6 +25,7 @@ export class PostService {
 
     /**
      * Función que obtiene los posts
+     * @param page
      * @returns 
      */
     getPosts(page:any):Observable<any>{
