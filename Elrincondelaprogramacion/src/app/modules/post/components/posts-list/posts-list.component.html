@@ -14,9 +14,9 @@
             <article *ngFor="let post of posts" class="card">
                 <div class="card-body">
                     <!--Si hay imagen-->
-                    <img *ngIf="post.image" (click)="watchPost(post.id)" [src]="imageUrl+post.image" 
+                    <img *ngIf="post.image" (click)="watchPost(post.title)" [src]="imageUrl+post.image" 
                         alt="Imagen del post" class="card-img-top">
-                    <img *ngIf="!post.image" (click)="watchPost(post.id)" 
+                    <img *ngIf="!post.image" (click)="watchPost(post.title)" 
                         src="../../../assets/images/no-post-image.jpg" 
                         alt="Imagen del post" class="card-img-top">
                     <h5 class="card-title card-header text-center">{{post.title}}</h5>
