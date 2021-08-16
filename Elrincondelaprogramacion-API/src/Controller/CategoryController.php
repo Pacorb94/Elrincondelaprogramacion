@@ -51,20 +51,20 @@ class CategoryController extends AbstractController
 
     /**
      * Función que modifica una categoría
-     * @param $id
+     * @param $name
      * @param $request
      * @return JsonResponse
      */
-    public function update($id, Request $request)
+    public function update($name, Request $request)
     {
         try {
-            if ($this->idValidation($id)) {
+            if ($this->paramValidation($name, 'string')) {
                 $request=$request->get('json', null);
                 if ($request) {
                     $decodedRequest=json_decode($request, true);
                     $decodedRequest['name']=trim($decodedRequest['name']);
                     if ($this->nameValidation($decodedRequest['name'])) {
-                        $category=$this->categoryRepo->find($id);
+                        $category=$this->categoryRepo->findOneBy(['name'=>$name]);
                         //Si existe
                         if ($category) {
                             //Si la categoría con ese nombre no existe
@@ -82,7 +82,7 @@ class CategoryController extends AbstractController
                 }
                 return $this->json(['message'=>'Wrong json'], 400);
             }
-            return $this->json(['message'=>'Wrong id'], 400);
+            return $this->json(['message'=>'Wrong name'], 400);
         } catch (\Throwable $th) {
             return $this->json(['message'=>$th->getMessage()], 500);
         }           
@@ -90,29 +90,29 @@ class CategoryController extends AbstractController
 
     /**
      * Función que obtiene una categoría
-     * @param $id
+     * @param $name
      * @return JsonResponse
      */
-    public function getCategory($id)
+    public function getCategory($name)
     {
-        if ($this->idValidation($id)) {
-            $category=$this->categoryRepo->find($id);
+        if ($this->paramValidation($name, 'string')) {
+            $category=$this->categoryRepo->findOneBy(['name'=>$name]);
             //Si existe
             if ($category) return $this->json($category);
             return $this->json(['message'=>'Category not found'], 404);
         }
-        return $this->json(['message'=>'Wrong id'], 400); 
+        return $this->json(['message'=>'Wrong name'], 400); 
     }
 
     /**
      * Función que borra una categoría
-     * @param $id
+     * @param $name
      * @return JsonResponse
      */
-    public function delete($id)
+    public function delete($name)
     {
-        if ($this->idValidation($id)) {
-            $category=$this->categoryRepo->find($id);
+        if ($this->paramValidation($name, 'string')) {
+            $category=$this->categoryRepo->findOneBy(['name'=>$name]);
             //Si existe
             if ($category) {
                 $postRepo=$this->getDoctrine()->getRepository(Post::class);
@@ -127,18 +127,24 @@ class CategoryController extends AbstractController
             }
             return $this->json(['message'=>'Category not found'], 404);
         }
-        return $this->json(['message'=>'Wrong id'], 400);
+        return $this->json(['message'=>'Wrong name'], 400);
     }
 
     /**
-     * Función que valida el id de la ruta
-     * @param $id
+     * Función que valida un parámetro de la ruta
+     * @param $param
+     * @param $type
      * @return bool
      */
-    public function idValidation($id): Bool
+    public function paramValidation($param, $type): Bool
     {
-        if (is_numeric($id)) return true;
-        return false;
+        if ($type=='id') {
+            if (is_numeric($param)) return true;
+            return false;
+        }else if($type=='string'){
+            if ($param) return true;
+            return false;
+        }
     }
 
     /**
