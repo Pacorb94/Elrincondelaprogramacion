@@ -38,24 +38,54 @@ security:
         - { path: /register, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: /categories, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: /posts, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: /posts/[0-9]+, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: /posts/categories/[0-9]+, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { 
+            path: /posts/[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9!@#\$%\^\&*\)\(+=._- ]+, 
+            roles: IS_AUTHENTICATED_ANONYMOUSLY, 
+            requires_channel: https 
+          }
+        - { 
+            path: /posts/categories/[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9!@#\$%\^\&*\)\(+=._- ]+, 
+            roles: IS_AUTHENTICATED_ANONYMOUSLY, 
+            requires_channel: https 
+          }
         - { path: /roles, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         #Para usuarios logueados
         - { path: /users/[0-9]+/update, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
-        - { path: /profile-images/[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9._ ]+, roles: IS_AUTHENTICATED_FULLY, 
-            requires_channel: https }
+        - { 
+            path: /profile-images/[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9!@#\$%\^\&*\)\(+=._- ]+, 
+            roles: IS_AUTHENTICATED_FULLY, 
+            requires_channel: https 
+          }
         - { path: /users/[0-9]+, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
         - { path: /profile-image/upload, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
         - { path: /users/[0-9]+/ban, roles: ROLE_ADMIN, requires_channel: https }
         - { path: /logout, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
         - { path: /[category], roles: ROLE_ADMIN, requires_channel: https }
         - { path: /post/create, roles: [ROLE_ADMIN, ROLE_WRITER], requires_channel: https }
-        - { path: /posts/[0-9]+/update, roles: [ROLE_ADMIN, ROLE_WRITER], requires_channel: https }
+        - { 
+            path: /posts/[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9!@#\$%\^\&*\)\(+=._- ]+/update, 
+            roles: [ROLE_ADMIN, ROLE_WRITER], 
+            requires_channel: https 
+          }
         - { path: /post-image/upload, roles: [ROLE_ADMIN, ROLE_WRITER], requires_channel: https } 
-        - { path: /posts-images/[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+, roles: IS_AUTHENTICATED_FULLY, 
-            requires_channel: https }     
-        - { path: /posts/[0-9]+/inadequate, roles: ROLE_ADMIN, requires_channel: https }
-        - { path: /posts/[0-9]+/delete, roles: ROLE_ADMIN, requires_channel: https }
-        - { path: /[0-9]+/comment/create, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
+        - { 
+            path: /posts-images/[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9!@#\$%\^\&*\)\(+=._- ]+, 
+            roles: IS_AUTHENTICATED_FULLY, 
+            requires_channel: https 
+          }     
+        - { 
+            path: /posts/[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9!@#\$%\^\&*\)\(+=._- ]+/inadequate, 
+            roles: ROLE_ADMIN, 
+            requires_channel: https 
+          }
+        - { 
+            path: /posts/[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9!@#\$%\^\&*\)\(+=._- ]+/delete, 
+            roles: ROLE_ADMIN, 
+            requires_channel: https 
+          }
+        - { 
+            path: /[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9!@#\$%\^\&*\)\(+=._- ]+/comment/create, 
+            roles: IS_AUTHENTICATED_FULLY, 
+            requires_channel: https 
+          }
         - { path: /comments/[0-9]+/inadequate, roles: ROLE_ADMIN, requires_channel: https }
