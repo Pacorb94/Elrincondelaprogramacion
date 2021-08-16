@@ -108,9 +108,9 @@ export class PostsListComponent implements OnInit, OnDestroy {
 
     /**
      * Función que ve un post
-     * @param id 
+     * @param title
      */
-    watchPost(id:number){
-        this._router.navigate(['/watch-post', id]);
+    watchPost(title:string){
+        this._router.navigate(['/watch-post', title]);
     }
 }
