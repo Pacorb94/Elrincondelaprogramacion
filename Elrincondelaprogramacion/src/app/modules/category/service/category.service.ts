@@ -15,8 +15,7 @@ export class CategoryService {
      * @returns 
      */
     getCategories():Observable<any>{
-        let header=new HttpHeaders().set('Content-Type', 'application/json');
-        return this._http.get(`${environment.url}/categories`, {headers:header});
+        return this._http.get(`${environment.url}/categories`);
     }
 
     /**
