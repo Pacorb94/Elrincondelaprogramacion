@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PostService } from '../../modules/post/service/post.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'posts-list',
@@ -12,6 +14,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
     pageTitle: string;
     posts: any;
     loading: boolean;
+    imageUrl:string;
     subscription:Subscription;
     //------Paginación-------
     page: any;
@@ -23,6 +26,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute) { 
         this.pageTitle = 'Posts';
         this.loading = true;
+        this.imageUrl=`${environment.url}/posts-images/`;
         this.subscription=new Subscription();
         this.prevPage = 0;
         this.nextPage = 0;
@@ -63,7 +67,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
     getPosts() {
         this.subscription=this._postService.getPosts(this.page).subscribe(
             response => {
-                //Si hay vídeos
+                //Si hay posts
                 if (response.Posts.length) {
                     this.loading = false;
                     this.posts = response.Posts;
