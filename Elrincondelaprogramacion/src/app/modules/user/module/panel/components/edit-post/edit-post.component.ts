@@ -1,10 +1,10 @@
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../../../../service/user.service';
 import { PostService } from '../../../../../post/service/post.service';
 import { CategoryService } from './../../../../../category/service/category.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -28,8 +28,8 @@ export class EditPostComponent implements OnInit, OnDestroy {
         this.pageTitle='Editar post';      
         this.categories=[];
         this.form=new FormGroup({
-            title:new FormControl(''),
-            content:new FormControl(''),
+            title:new FormControl('', Validators.required),
+            content:new FormControl('', Validators.required),
             category:new FormControl('')
         });
         this.goodEdit=false;
