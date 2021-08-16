@@ -11,15 +11,6 @@ export class CategoryService {
     constructor(private _http:HttpClient) {}
 
     /**
-     * Función que obtiene las categorías
-     * @returns 
-     */
-    getCategories():Observable<any>{
-        let header=new HttpHeaders().set('Content-Type', 'application/json');
-        return this._http.get(`${environment.url}/categories`, {headers:header});
-    }
-
-    /**
      * Función que crea un categoría
      * @param category 
      * @returns 
@@ -28,6 +19,35 @@ export class CategoryService {
         let data=`json=${JSON.stringify(category)}`;
         let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
         return this._http.post(`${environment.url}/category/create`, data, {headers:header});
+    }
+
+    /**
+     * Función que modifica una categoría
+     * @param category 
+     * @returns 
+     */
+    update(category:any):Observable<any>{
+        let data=`json=${JSON.stringify(category)}`;
+        let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        return this._http.put(`${environment.url}/categories/${category.id}/update`, data, 
+                            {headers:header});
+    }
+
+    /**
+     * Función que obtiene una categoría
+     * @param id
+     * @returns 
+     */
+    getCategory(id:number):Observable<any>{
+        return this._http.get(`${environment.url}/categories/${id}`);
+    }
+
+    /**
+     * Función que obtiene las categorías
+     * @returns 
+     */
+    getCategories():Observable<any>{
+        return this._http.get(`${environment.url}/categories`);
     }
 
     /**

@@ -22,7 +22,7 @@ export class UserSettingsComponent implements OnDestroy{
         this.pageTitle='Ajustes del usuario';
         this.loadUser();      
         this.form=new FormGroup({
-            nick:new FormControl(this.user.nick),
+            nick:new FormControl(this.user.nick, Validators.required),
             email:new FormControl(this.user.email, Validators.email)
         });
         this.loadUserSubscription=new Subscription();
