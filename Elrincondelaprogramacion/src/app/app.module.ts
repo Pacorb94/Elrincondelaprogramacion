@@ -9,21 +9,20 @@ import { HttpRequestInterceptor } from './interceptor/HttpRequestIncerceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MomentModule } from 'angular2-moment';
 import { MyFooterComponent } from './components/my-footer/my-footer.component';
-import { PostsListComponent } from './components/posts-list/posts-list.component';
-
+import { PostModule } from './modules/post/post.module';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavbarComponent,
         HomeComponent,
-        MyFooterComponent,
-        PostsListComponent
+        MyFooterComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
-        BrowserModule,
+        //Para que funcionen los componentes de este módulo debemos importar el módulo
+        PostModule,
         ReactiveFormsModule,
         HttpClientModule,
         MomentModule
