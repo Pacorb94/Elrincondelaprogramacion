@@ -29,17 +29,17 @@ export class CategoryService {
     update(category:any):Observable<any>{
         let data=`json=${JSON.stringify(category)}`;
         let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return this._http.put(`${environment.url}/categories/${category.id}/update`, data, 
+        return this._http.put(`${environment.url}/categories/${category.name}/update`, data, 
                             {headers:header});
     }
 
     /**
      * Función que obtiene una categoría
-     * @param id
+     * @param name
      * @returns 
      */
-    getCategory(id:number):Observable<any>{
-        return this._http.get(`${environment.url}/categories/${id}`);
+    getCategory(name:string):Observable<any>{
+        return this._http.get(`${environment.url}/categories/${name}`);
     }
 
     /**
@@ -52,10 +52,10 @@ export class CategoryService {
 
     /**
      * Función que borra una categoría
-     * @param id 
+     * @param name
      * @returns 
      */
-    delete(id:number):Observable<any>{
-        return this._http.delete(`${environment.url}/categories/${id}/delete`);
+    delete(name:string):Observable<any>{
+        return this._http.delete(`${environment.url}/categories/${name}/delete`);
     }
 }
