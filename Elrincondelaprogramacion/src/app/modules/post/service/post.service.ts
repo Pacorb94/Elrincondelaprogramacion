@@ -28,8 +28,7 @@ export class PostService {
      * @returns 
      */
     getPosts(page:any):Observable<any>{
-        let header=new HttpHeaders().set('Content-Type', 'application/json');
-        return this._http.get(`${environment.url}/posts?page=${page}`, {headers:header});
+        return this._http.get(`${environment.url}/posts?page=${page}`);
     }
     
     /**
@@ -38,8 +37,7 @@ export class PostService {
      * @returns 
      */
     getUserPosts(id:number):Observable<any>{
-        let header=new HttpHeaders().set('Content-Type', 'application/json');
-        return this._http.get(`${environment.url}/posts/users/${id}`, {headers:header});
+        return this._http.get(`${environment.url}/posts/users/${id}`);
     }
 
     /**
@@ -48,8 +46,7 @@ export class PostService {
      * @returns 
      */
     getPost(id:any):Observable<any>{
-        let header=new HttpHeaders().set('Content-Type', 'application/json');
-        return this._http.get(`${environment.url}/posts/${id}`, {headers:header});
+        return this._http.get(`${environment.url}/posts/${id}`);
     }
 
     /**
@@ -59,8 +56,16 @@ export class PostService {
      */    
     update(post:any):Observable<any>{
         let data=`json=${JSON.stringify(post)}`;
-        console.log(post);
         let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
         return this._http.put(`${environment.url}/posts/${post.id}/update`, data, {headers:header});
+    }
+
+    /**
+     * Función que borra un post
+     * @param id 
+     * @returns 
+     */
+    delete(id:number):Observable<any>{
+        return this._http.delete(`${environment.url}/posts/${id}/delete`);
     }
 }
