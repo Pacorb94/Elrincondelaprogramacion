@@ -67,10 +67,14 @@ class CategoryController extends AbstractController
                         $category=$this->categoryRepo->find($id);
                         //Si existe
                         if ($category) {
-                            $category->setName($decodedRequest['name']);
-                            $category->setUpdatedAt(new \DateTime('now'));
-                            $category->execute($this->em, $category, 'update');
-                            return $this->json($category);                          
+                            //Si la categoría con ese nombre no existe
+                            if (!$this->categoryRepo->findOneBy(['name'=>$decodedRequest['name']])) {
+                                $category->setName($decodedRequest['name']);
+                                $category->setUpdatedAt(new \DateTime('now'));
+                                $category->execute($this->em, $category, 'update');
+                                return $this->json($category);        
+                            }
+                            return $this->json(['message'=>'That name already exists'], 500);                
                         }
                         return $this->json(['message'=>'Category not found'], 404);
                     }
