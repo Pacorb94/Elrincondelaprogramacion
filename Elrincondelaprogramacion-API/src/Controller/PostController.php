@@ -66,18 +66,18 @@ class PostController extends AbstractController
 
     /**
      * Función que modifica un post
-     * @param $id
+     * @param $title
      * @param $request
      * @return JsonResponse
      */
-    public function update($id, Request $request)
+    public function update($title, Request $request)
     {
         try {
-            if ($this->idValidation($id)) {
+            if ($this->paramValidation($title, 'string')) {
                 $request=$request->get('json', null);
                 if ($request) {
                     $decodedRequest=json_decode($request, true);
-                    $post=$this->postRepo->find($id);
+                    $post=$this->postRepo->findOneBy(['title'=>$title]);
                     //Si existe 
                     if ($post) {
                         $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
@@ -108,7 +108,7 @@ class PostController extends AbstractController
                 }
                 return $this->json(['message'=>'Wrong json'], 400); 
             }
-            return $this->json(['message'=>'Wrong id'], 400);             
+            return $this->json(['message'=>'Wrong title'], 400);             
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
             return $this->json(['message'=>$e->getMessage()], 500);
         }
@@ -197,32 +197,32 @@ class PostController extends AbstractController
 
     /**
      * Función que obtiene los posts por categoría
-     * @param $categoryId
+     * @param $categoryName
      * @return JsonResponse
      */
-    public function getPostsByCategory($categoryId)
+    public function getPostsByCategory($categoryName)
     {
-        if ($this->idValidation($categoryId)) {
-            $category=$this->categoryRepo->find($categoryId);
+        if ($this->paramValidation($categoryName, 'string')) {
+            $category=$this->categoryRepo->findOneBy(['name'=>$categoryName]);
             //Si existe
             if ($category) {
-                $posts=$this->postRepo->findBy(['category'=>$categoryId], ['id'=>'DESC']);
+                $posts=$this->postRepo->findBy(['category'=>$category->getId()], ['id'=>'DESC']);
                 return $this->json($posts);
             }
             return $this->json(['message'=>'Category not found'], 404);
         }
-        return $this->json(['message'=>'Wrong id'], 400);
+        return $this->json(['message'=>'Wrong category name'], 400);
     }
 
     /**
      * Función que obtiene un post
-     * @param $id
+     * @param $title
      * @return JsonResponse
      */
-    public function getPostDetail($id)
+    public function getPostDetail($title)
     {
-        if ($this->idValidation($id)) {
-            $post=$this->postRepo->find($id);
+        if ($this->paramValidation($title, 'string')) {
+            $post=$this->postRepo->findOneBy(['title'=>$title]);
             //Si existe
             if ($post) {
                 /*Como los posts almacenan un array de comentarios por lo tanto no se puede serializar
@@ -233,24 +233,24 @@ class PostController extends AbstractController
             }
             return $this->json(['message'=>'Post not found'], 404);
         }
-        return $this->json(['message'=>'Wrong id'], 400);  
+        return $this->json(['message'=>'Wrong title'], 400);  
     }
 
     /**
      * Función que marca un post como inadecuado o lo desmarca
-     * @param $id
+     * @param $title
      * @param $request
      * @return JsonResponse
      */
-    public function inadequate($id, Request $request)
+    public function inadequate($title, Request $request)
     {
-        if ($this->idValidation($id)) {
+        if ($this->paramValidation($title, 'string')) {
             $request=$request->get('json', null);
             if ($request) {
                 $decodedRequest=json_decode($request, true);
                 $decodedRequest['inadequate']=trim($decodedRequest['inadequate']);
                 if ($decodedRequest['inadequate']||$decodedRequest['inadequate']=='no') {
-                    $post=$this->postRepo->find($id);
+                    $post=$this->postRepo->findOneBy(['title'=>$title]);
                     //Si existe
                     if ($post) {
                         $inadequate=($decodedRequest['inadequate']=='yes')?true:false;
@@ -264,18 +264,18 @@ class PostController extends AbstractController
             }
             return $this->json(['message'=>'Wrong json'], 400);   
         }
-        return $this->json(['message'=>'Wrong id'], 400); 
+        return $this->json(['message'=>'Wrong title'], 400); 
     }
 
     /**
      * Función que borra un post
-     * @param $id
+     * @param $title
      * @return JsonResponse
      */
-    public function delete($id)
+    public function delete($title)
     {
-        if ($this->idValidation($id)) {
-            $post=$this->postRepo->find($id);
+        if ($this->paramValidation($title, 'string')) {
+            $post=$this->postRepo->findOneBy(['title'=>$title]);
             //Si existe
             if ($post) {
                 $post->execute($this->em, $post, 'delete');
@@ -283,7 +283,7 @@ class PostController extends AbstractController
             }
             return $this->json(['message'=>'Post not found'], 404);
         }
-        return $this->json(['message'=>'Wrong id'], 400);  
+        return $this->json(['message'=>'Wrong title'], 400);  
     }
 
     /**
@@ -373,6 +373,23 @@ class PostController extends AbstractController
     {
         $imageValidation=$validator->validate($image, new Assert\Image());
         return $imageValidation;
+    }
+
+    /**
+     * Función que valida un parámetro de la ruta
+     * @param $param
+     * @param $type
+     * @return bool
+     */
+    public function paramValidation($param, $type): Bool
+    {
+        if ($type=='id') {
+            if (is_numeric($param)) return true;
+            return false;
+        }else if($type=='string'){
+            if ($param) return true;
+            return false;
+        }
     }
 
     /**
