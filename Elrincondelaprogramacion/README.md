@@ -1,2 +1,0 @@
-## Descripción
-Front-end responsive.
