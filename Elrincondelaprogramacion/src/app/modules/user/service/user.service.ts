@@ -115,8 +115,7 @@ export class UserService {
      * @returns 
      */
     getRoles():Observable<any>{
-        let header=new HttpHeaders().set('Content-Type', 'application/json');
-        return this._http.get(`${environment.url}/roles`, {headers:header});
+        return this._http.get(`${environment.url}/roles`);
     }
 
     /**
