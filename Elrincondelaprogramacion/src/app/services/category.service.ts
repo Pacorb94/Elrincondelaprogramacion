@@ -1,14 +1,33 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn:'root'
 })
 export class CategoryService {
+    private lastAddedCategory:BehaviorSubject<any>;
 
-    constructor(private _http:HttpClient) {}
+    constructor(private _http:HttpClient) {
+        this.lastAddedCategory=new BehaviorSubject('');
+    }
+
+    /**
+     * Función que establece la categoría creada al BehaviorSubject
+     * @param value 
+     */
+    setLastAddedCategory$(value:any){
+        this.lastAddedCategory.next(value);
+    }
+
+    /**
+     * Función que obtiene la categoría creada del BehaviorSubject
+     * @returns 
+     */
+    getLastAddedCategory$():Observable<any>{
+        return this.lastAddedCategory.asObservable();
+    }
 
     /**
      * Función que crea un categoría
