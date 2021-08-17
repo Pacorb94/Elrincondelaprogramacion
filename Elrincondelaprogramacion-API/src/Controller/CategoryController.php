@@ -51,20 +51,20 @@ class CategoryController extends AbstractController
 
     /**
      * Función que modifica una categoría
-     * @param $name
+     * @param $id
      * @param $request
      * @return JsonResponse
      */
-    public function update($name, Request $request)
+    public function update($id, Request $request)
     {
         try {
-            if ($this->paramValidation($name, 'string')) {
+            if ($this->paramValidation($id, 'id')) {
                 $request=$request->get('json', null);
                 if ($request) {
                     $decodedRequest=json_decode($request, true);
                     $decodedRequest['name']=trim($decodedRequest['name']);
                     if ($this->nameValidation($decodedRequest['name'])) {
-                        $category=$this->categoryRepo->findOneBy(['name'=>$name]);
+                        $category=$this->categoryRepo->find($id);
                         //Si existe
                         if ($category) {
                             //Si la categoría con ese nombre no existe
@@ -82,7 +82,7 @@ class CategoryController extends AbstractController
                 }
                 return $this->json(['message'=>'Wrong json'], 400);
             }
-            return $this->json(['message'=>'Wrong name'], 400);
+            return $this->json(['message'=>'Wrong id'], 400);
         } catch (\Throwable $th) {
             return $this->json(['message'=>$th->getMessage()], 500);
         }           
@@ -106,13 +106,13 @@ class CategoryController extends AbstractController
 
     /**
      * Función que borra una categoría
-     * @param $name
+     * @param $id
      * @return JsonResponse
      */
-    public function delete($name)
+    public function delete($id)
     {
-        if ($this->paramValidation($name, 'string')) {
-            $category=$this->categoryRepo->findOneBy(['name'=>$name]);
+        if ($this->paramValidation($id, 'id')) {
+            $category=$this->categoryRepo->find($id);
             //Si existe
             if ($category) {
                 $postRepo=$this->getDoctrine()->getRepository(Post::class);
@@ -127,7 +127,7 @@ class CategoryController extends AbstractController
             }
             return $this->json(['message'=>'Category not found'], 404);
         }
-        return $this->json(['message'=>'Wrong name'], 400);
+        return $this->json(['message'=>'Wrong id'], 400);
     }
 
     /**
