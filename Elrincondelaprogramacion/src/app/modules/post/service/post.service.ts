@@ -25,6 +25,7 @@ export class PostService {
 
     /**
      * Función que obtiene los posts
+     * @param page
      * @returns 
      */
     getPosts(page:any):Observable<any>{
@@ -42,11 +43,21 @@ export class PostService {
 
     /**
      * Función que obtiene un post
-     * @param id 
+     * @param title
      * @returns 
      */
-    getPost(id:any):Observable<any>{
-        return this._http.get(`${environment.url}/posts/${id}`);
+    getPost(title:string):Observable<any>{
+        return this._http.get(`${environment.url}/posts/${title}`);
+    }
+    
+    /**
+     * Función que obtiene los posts por categoría
+     * @param page 
+     * @param categoryName 
+     * @returns 
+     */
+    getPostsByCategory(page:any, categoryName:string):Observable<any>{
+        return this._http.get(`${environment.url}/posts/categories/${categoryName}?page=${page}`);
     }
 
     /**
@@ -62,7 +73,7 @@ export class PostService {
 
     /**
      * Función que borra un post
-     * @param id 
+     * @param id
      * @returns 
      */
     delete(id:number):Observable<any>{

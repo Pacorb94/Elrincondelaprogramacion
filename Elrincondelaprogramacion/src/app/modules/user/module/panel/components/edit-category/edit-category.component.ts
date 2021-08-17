@@ -45,9 +45,9 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
     getRouteCategory(){
         this._route.params.subscribe(
             params=>{
-                if (params['id']) {
-                    let categoryId=params['id'];
-                    this.getCategory(categoryId);
+                if (params['name']) {
+                    let categoryName=params['name'];
+                    this.getCategory(categoryName);
                 }else{
                     this._router.navigate(['']);
                 }
@@ -57,10 +57,10 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
 
     /**
      * Función que obtiene una categoría
-     * @param id 
+     * @param name
      */
-    getCategory(id:any){
-        this.categorySubscription=this._categoryService.getCategory(id).subscribe(
+    getCategory(name:string){
+        this.categorySubscription=this._categoryService.getCategory(name).subscribe(
             response=>{
                 if (response) {
                     this.category=response;

@@ -29,7 +29,7 @@ class CommentController extends AbstractController
      */
     public function create($postId, Request $request)
     {
-        if ($postId) {
+        if (is_numeric($postId)) {
             $request=$request->get('json', null);
             if ($request) {
                 //Decodificamos a un array
@@ -52,7 +52,7 @@ class CommentController extends AbstractController
             }
             return $this->json(['message'=>'Wrong json'], 400);             
         }
-        return $this->json(['message'=>'Wrong id'], 400);
+        return $this->json(['message'=>'Wrong post id'], 400);
     }
 
     /**
