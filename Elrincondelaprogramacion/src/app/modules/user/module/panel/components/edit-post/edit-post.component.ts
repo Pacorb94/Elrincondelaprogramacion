@@ -55,9 +55,9 @@ export class EditPostComponent implements OnInit, OnDestroy {
     getRoutePost(){
         this._route.params.subscribe(
             params=>{
-                if (params['id']) {
-                    let postId=params['id'];
-                    this.getPost(postId);
+                if (params['title']) {
+                    let postTitle=params['title'];
+                    this.getPost(postTitle);
                 }else{
                     this._router.navigate(['']);
                 }
@@ -67,10 +67,10 @@ export class EditPostComponent implements OnInit, OnDestroy {
 
     /**
      * Función que obtiene un post
-     * @param id 
+     * @param title
      */
-    getPost(id:any){
-        this.postSubscription=this._postService.getPost(id).subscribe(
+    getPost(title:string){
+        this.postSubscription=this._postService.getPost(title).subscribe(
             response=>{
                 if (response) {
                     let user=this._userService.getUserLoggedIn();
