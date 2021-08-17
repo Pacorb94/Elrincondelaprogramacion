@@ -29,7 +29,7 @@ export class CategoryService {
     update(category:any):Observable<any>{
         let data=`json=${JSON.stringify(category)}`;
         let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return this._http.put(`${environment.url}/categories/${category.name}/update`, data, 
+        return this._http.put(`${environment.url}/categories/${category.id}/update`, data, 
                             {headers:header});
     }
 
@@ -52,10 +52,10 @@ export class CategoryService {
 
     /**
      * Función que borra una categoría
-     * @param name
+     * @param $id
      * @returns 
      */
-    delete(name:string):Observable<any>{
-        return this._http.delete(`${environment.url}/categories/${name}/delete`);
+    delete(id:number):Observable<any>{
+        return this._http.delete(`${environment.url}/categories/${id}/delete`);
     }
 }
