@@ -1,5 +1,5 @@
 <nav class="navbar fixed-top navbar-expand-lg col-xxl-12 col-xl-12 col-lg-12 col-md-12 navbar-light bg-light">
-    <a class="navbar-brand" routerLink="">El rincón de la programación</a>
+    <a class="navbar-brand" routerLink="/">El rincón de la programación</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" routerLink="">Inicio<span class="sr-only"></span></a>
+                <a class="nav-link" routerLink="/">Inicio<span class="sr-only"></span></a>
             </li>
             <!--Lista desplegable-->
             <li class="nav-item active dropdown">
@@ -15,9 +15,10 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Categorias
                 </a>
-                <div class="dropdown-menu pr-5 mr-5 w-25" aria-labelledby="navbarDropdown">
-
-                    <a class="dropdown-item" [routerLink]="['/posts/categories', category.name]"></a>        
+                <div class="dropdown-menu pr-5 mr-5 w-25" aria-labelledby="navbarDropdown">       
+                    <a *ngFor="let category of categories" class="dropdown-item" 
+                        [routerLink]="['/posts/categories', category.name]">{{category.name}}
+                    </a>        
                 </div>
             <!--Fin de lista desplegable-->
             </li>
