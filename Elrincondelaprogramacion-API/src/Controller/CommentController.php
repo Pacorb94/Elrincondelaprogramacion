@@ -23,13 +23,13 @@ class CommentController extends AbstractController
 
     /**
      * Función que crea un comentario
-     * @param $title
+     * @param $postId
      * @param $request
      * @return JsonResponse
      */
-    public function create($title, Request $request)
+    public function create($postId, Request $request)
     {
-        if ($title) {
+        if (is_numeric($postId)) {
             $request=$request->get('json', null);
             if ($request) {
                 //Decodificamos a un array
@@ -39,7 +39,7 @@ class CommentController extends AbstractController
                 $decodedRequest=array_map('trim', $decodedRequest);
                 if (count($this->contentValidation($decodedRequest['content']))==0) {
                     $postRepo=$this->getDoctrine()->getRepository(Post::class);
-                    $post=$postRepo->findOneBy(['title'=>$title]);
+                    $post=$postRepo->find($postId);
                     //Si existe
                     if ($post) {
                         $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
@@ -52,7 +52,7 @@ class CommentController extends AbstractController
             }
             return $this->json(['message'=>'Wrong json'], 400);             
         }
-        return $this->json(['message'=>'Wrong post title'], 400);
+        return $this->json(['message'=>'Wrong post id'], 400);
     }
 
     /**
