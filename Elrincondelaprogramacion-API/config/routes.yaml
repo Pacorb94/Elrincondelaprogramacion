@@ -50,7 +50,7 @@ createCategory:
     methods: POST
 
 updateCategory:
-    path: /categories/{name}/update
+    path: /categories/{id}/update
     controller: App\Controller\CategoryController::update
     methods: PUT
 
@@ -65,7 +65,7 @@ getCategory:
     methods: GET
 
 deleteCategory:
-    path: /categories/{name}/delete
+    path: /categories/{id}/delete
     controller: App\Controller\CategoryController::delete
     methods: DELETE
   
@@ -76,7 +76,7 @@ createPost:
     methods: POST
 
 updatePost:
-    path: /posts/{title}/update
+    path: /posts/{id}/update
     controller: App\Controller\PostController::update
     methods: PUT
 
@@ -101,8 +101,8 @@ getUserPosts:
     methods: GET
 
 getPostsByCategory:
-    path: /posts/categories/{name}
-    controller: App\Controller\PostController::getPostsByCategory
+    path: /posts/categories/{categoryName}
+    controller: App\Controller\HomeController::getPostsByCategory
     methods: GET
 
 getPostDetail:
@@ -111,7 +111,7 @@ getPostDetail:
     methods: GET
 
 deletePost:
-    path: /posts/{title}/delete
+    path: /posts/{id}/delete
     controller: App\Controller\PostController::delete
     methods: DELETE
 
@@ -122,7 +122,7 @@ indequatePost:
 
 #Comment
 createComment:
-    path: /{title}/comment/create
+    path: /{postId}/comment/create
     controller: App\Controller\CommentController::create
     methods: POST
 
