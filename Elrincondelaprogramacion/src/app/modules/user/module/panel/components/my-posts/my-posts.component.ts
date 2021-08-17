@@ -66,10 +66,10 @@ export class MyPostsComponent implements OnInit, OnDestroy{
 
     /**
      * Función que borra un post
-     * @param id 
+     * @param title
      */
-    deletePost(id:number){
-        this.deletePostSubscription=this._postService.delete(id).subscribe(
+    deletePost(title:string){
+        this.deletePostSubscription=this._postService.delete(title).subscribe(
             response=>{
                 if (response) {
                     this.getUserPosts(true);               
