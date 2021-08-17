@@ -5,8 +5,7 @@ import { PostsByCategoryComponent } from './components/posts-by-category/posts-b
 
 const routes: Routes = [
     { path: 'page/:page', component: PostsListComponent },
-    { path: 'posts/categories/:name', component: PostsByCategoryComponent},
-    { path: '**', redirectTo:''}
+    { path: 'posts/categories/:name', component: PostsByCategoryComponent}
 ];
 
 @NgModule({
