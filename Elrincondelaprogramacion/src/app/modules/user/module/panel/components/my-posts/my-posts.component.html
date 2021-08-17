@@ -37,14 +37,14 @@
                     <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6">
                         <!--Aunque hemos puesto antes rutas hijas, en el routerLink debemos poner la 
                         ruta padre junto a la hija-->
-                        <a [routerLink]="['/watch-post', post.id]" 
+                        <a [routerLink]="['/watch-post', post.title]" 
                             class="btn btn-success w-100 d-flex align-items-center">          
                             <img src="../../../../../../../assets/images/watch-icon.png" class="w-50" 
                             alt="Imagen de ver post">Ver
                         </a>       
                     </div>
                     <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6">
-                        <a [routerLink]="['/user-panel/edit-post', post.id]" 
+                        <a [routerLink]="['/user-panel/edit-post', post.title]" 
                             class="btn btn-warning w-100 d-flex align-items-center">
                             <img src="../../../../../../../assets/images/edit-icon.png" class="w-50" 
                             alt="Imagen de editar post">
@@ -56,13 +56,13 @@
                         llamar a un elemento HTML con ese id y además almacena un dato-->
                         <button type="button" 
                             class="btn btn-danger w-75 d-flex justify-content-center mx-auto" data-toggle="modal"
-                            [attr.data-target]="'#delete'+post.id">
+                            [attr.data-target]="'#delete'+post.title">
                             <img src="../../../../../../../assets/images/delete-icon.png" 
                                 class="w-25" alt="Imagen de borrar post">
                                 Borrar
                         </button>
                         <!-- Modal, el id irá sin # y con el id del vídeo -->
-                        <div id="{{'delete'+post.id}}" class="modal fade" role="dialog">
+                        <div id="{{'delete'+post.title}}" class="modal fade" role="dialog">
                             <div class="modal-dialog">
                                 <!-- Modal content-->
                                 <div class="modal-content">
@@ -78,7 +78,7 @@
                                     <div class="modal-footer">
                                         <!--Para cerrar el modal cuando pulsemos hay que ponerle 
                                         el atributo "data-dismiss"-->
-                                        <button (click)="deletePost(post.id)" data-dismiss="modal" 
+                                        <button (click)="deletePost(post.title)" data-dismiss="modal" 
                                             class="btn btn-danger">
                                             Borrar
                                         </button>
