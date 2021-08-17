@@ -22,7 +22,7 @@ class PostController extends AbstractController
     private $em;
     private $filesystem;
 
-    public function __construct(EntityManagerInterface  $entityManager, Filesystem $filesystem) {
+    public function __construct(EntityManagerInterface $entityManager, Filesystem $filesystem) {
         $this->postRepo=$entityManager->getRepository(Post::class);
         $this->categoryRepo=$entityManager->getRepository(Category::class);
         $this->em=$entityManager;
@@ -73,7 +73,7 @@ class PostController extends AbstractController
     public function update($id, Request $request)
     {
         try {
-            if ($this->idValidation($id)) {
+            if ($this->paramValidation($id, 'id')) {
                 $request=$request->get('json', null);
                 if ($request) {
                     $decodedRequest=json_decode($request, true);
@@ -94,7 +94,8 @@ class PostController extends AbstractController
                                 $post->setTitle($decodedRequest['title']);  
                                 $post->setContent($decodedRequest['content']);
                                 $post->setCategory($category);
-                                $this->deleteDirectoryOldImage($post->getImage(), 'postsImagesDirectory');
+                                $this->deleteDirectoryOldImage($post->getImage(), 
+                                    './../public/images-posts');
                                 $post->setImage($decodedRequest['image']);
                                 $post->setUpdatedAt(new \DateTime('now'));
                                 $post->execute($this->em, $post, 'update');
@@ -117,14 +118,12 @@ class PostController extends AbstractController
     /**
      * Función que borra la antigua imagen del directorio
      * @param $oldImageName
-     * @param $directoryName
+     * @param $folderPath
      */
-    public function deleteDirectoryOldImage($oldImageName, $directoryName)
+    public function deleteDirectoryOldImage($oldImageName, $folderPath)
     {
-        //Obtenemos la carpeta donde se guardará la imagen
-        $imagesDirectory=$this->getParameter($directoryName);
-        if ($this->filesystem->exists($imagesDirectory.'/'.$oldImageName)) {
-            $this->filesystem->remove($imagesDirectory.'/'.$oldImageName);    
+        if ($this->filesystem->exists($folderPath.'/'.$oldImageName)) {
+            $this->filesystem->remove($folderPath.'/'.$oldImageName);    
         }   
     }
 
@@ -196,33 +195,14 @@ class PostController extends AbstractController
     }
 
     /**
-     * Función que obtiene los posts por categoría
-     * @param $categoryId
-     * @return JsonResponse
-     */
-    public function getPostsByCategory($categoryId)
-    {
-        if ($this->idValidation($categoryId)) {
-            $category=$this->categoryRepo->find($categoryId);
-            //Si existe
-            if ($category) {
-                $posts=$this->postRepo->findBy(['category'=>$categoryId], ['id'=>'DESC']);
-                return $this->json($posts);
-            }
-            return $this->json(['message'=>'Category not found'], 404);
-        }
-        return $this->json(['message'=>'Wrong id'], 400);
-    }
-
-    /**
      * Función que obtiene un post
-     * @param $id
+     * @param $title
      * @return JsonResponse
      */
-    public function getPostDetail($id)
+    public function getPostDetail($title)
     {
-        if ($this->idValidation($id)) {
-            $post=$this->postRepo->find($id);
+        if ($this->paramValidation($title, 'string')) {
+            $post=$this->postRepo->findOneBy(['title'=>$title]);
             //Si existe
             if ($post) {
                 /*Como los posts almacenan un array de comentarios por lo tanto no se puede serializar
@@ -233,24 +213,24 @@ class PostController extends AbstractController
             }
             return $this->json(['message'=>'Post not found'], 404);
         }
-        return $this->json(['message'=>'Wrong id'], 400);  
+        return $this->json(['message'=>'Wrong title'], 400);  
     }
 
     /**
      * Función que marca un post como inadecuado o lo desmarca
-     * @param $id
+     * @param $title
      * @param $request
      * @return JsonResponse
      */
-    public function inadequate($id, Request $request)
+    public function inadequate($title, Request $request)
     {
-        if ($this->idValidation($id)) {
+        if ($this->paramValidation($title, 'string')) {
             $request=$request->get('json', null);
             if ($request) {
                 $decodedRequest=json_decode($request, true);
                 $decodedRequest['inadequate']=trim($decodedRequest['inadequate']);
                 if ($decodedRequest['inadequate']||$decodedRequest['inadequate']=='no') {
-                    $post=$this->postRepo->find($id);
+                    $post=$this->postRepo->findOneBy(['title'=>$title]);
                     //Si existe
                     if ($post) {
                         $inadequate=($decodedRequest['inadequate']=='yes')?true:false;
@@ -264,7 +244,7 @@ class PostController extends AbstractController
             }
             return $this->json(['message'=>'Wrong json'], 400);   
         }
-        return $this->json(['message'=>'Wrong id'], 400); 
+        return $this->json(['message'=>'Wrong title'], 400); 
     }
 
     /**
@@ -274,7 +254,7 @@ class PostController extends AbstractController
      */
     public function delete($id)
     {
-        if ($this->idValidation($id)) {
+        if ($this->paramValidation($id, 'id')) {
             $post=$this->postRepo->find($id);
             //Si existe
             if ($post) {
@@ -373,6 +353,23 @@ class PostController extends AbstractController
     {
         $imageValidation=$validator->validate($image, new Assert\Image());
         return $imageValidation;
+    }
+
+    /**
+     * Función que valida un parámetro de la ruta
+     * @param $param
+     * @param $type
+     * @return bool
+     */
+    public function paramValidation($param, $type): Bool
+    {
+        if ($type=='id') {
+            if (is_numeric($param)) return true;
+            return false;
+        }else if($type=='string'){
+            if ($param) return true;
+            return false;
+        }
     }
 
     /**

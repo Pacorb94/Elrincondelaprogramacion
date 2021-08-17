@@ -18,7 +18,7 @@ create table if not exists posts(
     id int(255) auto_increment not null,
     user_id int(255),
     category_id int (255),
-    title varchar(255) not null,
+    title varchar(255) unique not null,
     content longtext not null,
     inadequate tinyint not null,
     image varchar(200),

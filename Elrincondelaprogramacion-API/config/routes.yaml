@@ -60,7 +60,7 @@ getCategories:
     methods: GET
 
 getCategory:
-    path: /categories/{id}
+    path: /categories/{name}
     controller: App\Controller\CategoryController::getCategory
     methods: GET
 
@@ -101,12 +101,12 @@ getUserPosts:
     methods: GET
 
 getPostsByCategory:
-    path: /posts/categories/{categoryId}
-    controller: App\Controller\PostController::getPostsByCategory
+    path: /posts/categories/{categoryName}
+    controller: App\Controller\HomeController::getPostsByCategory
     methods: GET
 
 getPostDetail:
-    path: /posts/{id}
+    path: /posts/{title}
     controller: App\Controller\PostController::getPostDetail
     methods: GET
 
@@ -116,7 +116,7 @@ deletePost:
     methods: DELETE
 
 indequatePost:
-    path: /posts/{id}/inadequate
+    path: /posts/{title}/inadequate
     controller: App\Controller\PostController::inadequate
     methods: PUT
 
