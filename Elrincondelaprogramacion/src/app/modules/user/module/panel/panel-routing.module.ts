@@ -26,10 +26,10 @@ const routes: Routes = [
                 path:'create-category', component:CreateCategoryComponent
             },
             {
-                path:'edit-post/:id', component:EditPostComponent
+                path:'edit-post/:title', component:EditPostComponent
             },
             {
-                path:'edit-category/:id', component:EditCategoryComponent
+                path:'edit-category/:name', component:EditCategoryComponent
             },
             {
                 path:'user-settings', component:UserSettingsComponent

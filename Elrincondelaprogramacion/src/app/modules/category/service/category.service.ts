@@ -35,11 +35,11 @@ export class CategoryService {
 
     /**
      * Función que obtiene una categoría
-     * @param id
+     * @param name
      * @returns 
      */
-    getCategory(id:number):Observable<any>{
-        return this._http.get(`${environment.url}/categories/${id}`);
+    getCategory(name:string):Observable<any>{
+        return this._http.get(`${environment.url}/categories/${name}`);
     }
 
     /**
@@ -52,7 +52,7 @@ export class CategoryService {
 
     /**
      * Función que borra una categoría
-     * @param id 
+     * @param $id
      * @returns 
      */
     delete(id:number):Observable<any>{
