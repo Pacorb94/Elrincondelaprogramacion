@@ -123,6 +123,11 @@ class Comment
         return $this;
     }
 
+    public function getPost()
+    {
+        return $this->post;
+    }
+
     /**
      * Función que ejecuta una consulta
      * @param $em
