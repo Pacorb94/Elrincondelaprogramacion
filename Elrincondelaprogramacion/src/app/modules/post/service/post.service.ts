@@ -49,6 +49,16 @@ export class PostService {
     getPost(title:string):Observable<any>{
         return this._http.get(`${environment.url}/posts/${title}`);
     }
+    
+    /**
+     * Función que obtiene los posts por categoría
+     * @param page 
+     * @param categoryName 
+     * @returns 
+     */
+    getPostsByCategory(page:any, categoryName:string):Observable<any>{
+        return this._http.get(`${environment.url}/posts/categories/${categoryName}?page=${page}`);
+    }
 
     /**
      * Función que modifica un post
@@ -58,15 +68,15 @@ export class PostService {
     update(post:any):Observable<any>{
         let data=`json=${JSON.stringify(post)}`;
         let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return this._http.put(`${environment.url}/posts/${post.name}/update`, data, {headers:header});
+        return this._http.put(`${environment.url}/posts/${post.id}/update`, data, {headers:header});
     }
 
     /**
      * Función que borra un post
-     * @param title
+     * @param id
      * @returns 
      */
-    delete(title:string):Observable<any>{
-        return this._http.delete(`${environment.url}/posts/${title}/delete`);
+    delete(id:number):Observable<any>{
+        return this._http.delete(`${environment.url}/posts/${id}/delete`);
     }
 }
