@@ -56,13 +56,13 @@
                         llamar a un elemento HTML con ese id y además almacena un dato-->
                         <button type="button" 
                             class="btn btn-danger w-75 d-flex justify-content-center mx-auto" data-toggle="modal"
-                            [attr.data-target]="'#delete'+post.title">
+                            [attr.data-target]="'#delete'+post.id">
                             <img src="../../../../../../../assets/images/delete-icon.png" 
                                 class="w-25" alt="Imagen de borrar post">
                                 Borrar
                         </button>
                         <!-- Modal, el id irá sin # y con el id del vídeo -->
-                        <div id="{{'delete'+post.title}}" class="modal fade" role="dialog">
+                        <div id="{{'delete'+post.id}}" class="modal fade" role="dialog">
                             <div class="modal-dialog">
                                 <!-- Modal content-->
                                 <div class="modal-content">
@@ -78,7 +78,7 @@
                                     <div class="modal-footer">
                                         <!--Para cerrar el modal cuando pulsemos hay que ponerle 
                                         el atributo "data-dismiss"-->
-                                        <button (click)="deletePost(post.title)" data-dismiss="modal" 
+                                        <button (click)="deletePost(post.id)" data-dismiss="modal" 
                                             class="btn btn-danger">
                                             Borrar
                                         </button>
