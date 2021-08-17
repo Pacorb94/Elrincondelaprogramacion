@@ -49,7 +49,7 @@ export class PostsByCategoryComponent implements OnInit, OnDestroy {
         this._route.params.subscribe(
             params => {
                 this.page = params['page'];
-                this.category=params['category'];
+                this.category=params['name'];
                 console.log(this.category);
                 if (this.category) {
                     //Si tiene valor y es un número sino será el por defecto
@@ -60,7 +60,7 @@ export class PostsByCategoryComponent implements OnInit, OnDestroy {
                         this.prevPage = 1;
                         this.nextPage = 2;
                     }
-                   // this.getPostsByCategory();
+                    this.getPostsByCategory();
                 }else{
                     this._router.navigate(['']);
                 }              
@@ -71,7 +71,7 @@ export class PostsByCategoryComponent implements OnInit, OnDestroy {
     /**
      * Función que obtiene los posts por categoría
      */
-   /* getPostsByCategory() {
+    getPostsByCategory() {
         this.subscription=this._postService.getPostsByCategory(this.page, this.category).subscribe(
             response => {
                 //Si hay posts
@@ -88,7 +88,7 @@ export class PostsByCategoryComponent implements OnInit, OnDestroy {
                 this._router.navigate(['']);
             }
         );
-    }*/
+    }
 
     /**
      * Función que hace la paginación
