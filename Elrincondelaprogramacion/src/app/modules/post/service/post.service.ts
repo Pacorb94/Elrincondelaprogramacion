@@ -28,7 +28,7 @@ export class PostService {
      * @param page
      * @returns 
      */
-    getPosts(page:any):Observable<any>{
+    getPosts(page:any=1):Observable<any>{
         return this._http.get(`${environment.url}/posts?page=${page}`);
     }
     
