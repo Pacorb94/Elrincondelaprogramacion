@@ -1,7 +1,7 @@
 <div id="col" class="col-xl-9">
     <!--Si hay posts-->
-    <div *ngIf="posts; else noPosts">
-        <h1 class="text-center">{{pageTitle}}</h1>
+    <div *ngIf="posts.length; else noPosts">
+        <h2 class="text-center">{{pageTitle}}</h2>
         <hr>
         <div *ngIf="loading" class="w-25 text-center">
             <button class="btn btn-primary" type="button" disabled>
@@ -52,7 +52,8 @@
         </nav>
     </div>
     <ng-template #noPosts>          
-        <h3 class="text-center">No hay posts</h3>
+        <h3 *ngIf="!category" class="text-center">No hay posts</h3>
+        <h3 *ngIf="category" class="text-center">No hay posts de la categoría {{category}}</h3>
         <hr>
     </ng-template>
 </div>
