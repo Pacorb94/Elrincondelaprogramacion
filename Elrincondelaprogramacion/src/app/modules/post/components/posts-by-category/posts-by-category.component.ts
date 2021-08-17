@@ -50,7 +50,6 @@ export class PostsByCategoryComponent implements OnInit, OnDestroy {
             params => {
                 this.page = params['page'];
                 this.category=params['name'];
-                console.log(this.category);
                 if (this.category) {
                     //Si tiene valor y es un número sino será el por defecto
                     if (this.page && this.page.match(/[\d]+/)) {
@@ -78,7 +77,7 @@ export class PostsByCategoryComponent implements OnInit, OnDestroy {
                 if (response.Posts.length) {
                     this.loading = false;
                     this.posts = response.Posts;
-                    this.category=
+                    console.log(this.posts);
                     this.pagination(response.totalPages);
                 } else {
                     this.loading = true;
