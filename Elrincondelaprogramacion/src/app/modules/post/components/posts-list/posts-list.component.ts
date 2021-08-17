@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 export class PostsListComponent implements OnInit, OnDestroy {
     pageTitle: string;
     posts: any;
+    category: any;
     loading: boolean;
     imageUrl:string;
     subscription:Subscription;
@@ -56,7 +57,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
                     this.prevPage = 1;
                     this.nextPage = 2;
                 }
-                this.getPosts();
+                this.getPosts();               
             }
         );
     }
