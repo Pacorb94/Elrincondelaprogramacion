@@ -5,11 +5,11 @@ import { PostsByCategoryComponent } from './components/posts-by-category/posts-b
 
 const routes: Routes = [
     { path: 'page/:page', component: PostsListComponent },
-    { path: 'posts/categories/:name', component: PostsByCategoryComponent}
+    { path: 'posts/categories/:name', component: PostsByCategoryComponent}  
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
 export class PostRoutingModule { }
