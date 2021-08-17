@@ -3,14 +3,20 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Category;
 use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends AbstractController
 {
-    public function __construct(PaginatorInterface $paginator) {
+    private $categoryRepo;
+    private $em;
+
+    public function __construct(EntityManagerInterface $entityManager, PaginatorInterface $paginator) {    
+        $this->categoryRepo=$entityManager->getRepository(Category::class);
         $this->paginator=$paginator;
+        $this->em=$entityManager;
     }
 
     /**
@@ -24,19 +30,40 @@ class HomeController extends AbstractController
     }
 
     /**
+     * Función que obtiene los posts por categoría
+     * @param $categoryName
+     * @param $request
+     * @return JsonResponse
+     */
+    public function getPostsByCategory($categoryName, Request $request)
+    {
+        if ($categoryName) {
+            $category=$this->categoryRepo->findOneBy(['name'=>$categoryName]);
+            //Si existe
+            if ($category) {
+                $data=$this->paginate($request, 'Post', 'where m.category='.$category->getId());
+                return $this->json($data);
+            }
+            return $this->json(['message'=>'Category not found'], 404);
+        }
+        return $this->json(['message'=>'Wrong category name'], 400);
+    }
+
+    /**
      * Función que obtiene los objetos paginados
      * @param $request
      * @param $modelName
+     * @param $where
      * @return
     */
-    public function paginate($request, $modelName)
+    public function paginate($request, $modelName, $where='')
     {
         /*Como el parámetro página viene por GET usamos la propiedad "query" y por defecto si 
         no viene nada tendrá el valor 1*/
         $page=$request->query->getInt('page', 1);
         //Paginator necesita sentencias en DQL
-        $dql="select v from App\Entity\\".$modelName." v order by v.id desc";
-        $query=$this->getDoctrine()->getManager()->createQuery($dql);
+        $dql="select m from App\Entity\\".$modelName." m $where order by m.id desc";
+        $query=$this->em->createQuery($dql);
         //Los objetos por página que se verán
         define('OBJECTSPERPAGE', 5);
         $pagination=$this->paginator->paginate($query, $page, OBJECTSPERPAGE);
@@ -57,8 +84,7 @@ class HomeController extends AbstractController
      */
     public function getCategories()
     {
-        $categoryRepo=$this->getDoctrine()->getRepository(Category::class);
-        $categories=$categoryRepo->findAll();
+        $categories=$this->categoryRepo->findAll();
         return $this->json($categories);
     }
 }
