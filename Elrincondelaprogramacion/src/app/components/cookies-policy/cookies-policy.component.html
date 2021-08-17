@@ -16,19 +16,11 @@
             <th>Nombre</th>
             <th>Duración</th>
             <th>Descripción</th>
-            <tr>
-                <td>token</td>
-                <td>1 año</td>
-                <td>
-                    Permite al usuario identificarse y realizar<br>acciones sólo para 
-                    usuarios identificados
-                </td>
-            </tr>
-            <tr>
-                <td>cookieconsent_status</td>
-                <td>1 año</td>
-                <td>Permite saber si el usuario aceptó<br>el consentimiento de las cookies</td>
-            </tr>
+            <tr *ngFor="let cookiePolicy of cookiesPolicies">
+                <td>{{cookiePolicy.name}}</td>
+                <td>{{cookiePolicy.duration}}</td>
+                <td>{{cookiePolicy.description}}</td>
+            </tr>        
         </table>
     </div>
 </div>
