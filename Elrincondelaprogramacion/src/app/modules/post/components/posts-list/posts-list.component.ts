@@ -137,12 +137,4 @@ export class PostsListComponent implements OnInit, OnDestroy {
             this.nextPage = totalPages;
         }
     }
-
-    /**
-     * Función que ve un post
-     * @param title
-     */
-    watchPost(title:string){
-        this._router.navigate(['/watch-post', title]);
-    }
 }
