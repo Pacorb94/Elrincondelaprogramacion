@@ -33,13 +33,13 @@
                         <!-- Botón que abre el modal, la directiva "attr.data-target" es para
                         llamar a un elemento HTML con ese id y además almacena un dato -->
                         <button type="button" class="btn btn-danger w-50" data-toggle="modal"
-                            [attr.data-target]="'#delete'+category.name">
+                            [attr.data-target]="'#delete'+category.id">
                             <img src="../../../../../../../assets/images/delete-icon.png" 
                                 class="w-25" alt="Imagen de borrar categoría">
                                 Borrar
                         </button>
                         <!-- Modal, el id irá sin # y con el id del vídeo -->
-                        <div id="{{'delete'+category.name}}" class="modal fade" role="dialog">
+                        <div id="{{'delete'+category.id}}" class="modal fade" role="dialog">
                             <div class="modal-dialog">
                                 <!-- Modal content-->
                                 <div class="modal-content">
@@ -55,7 +55,7 @@
                                     <div class="modal-footer">
                                         <!--Para cerrar el modal cuando pulsemos hay que ponerle 
                                         el atributo "data-dismiss"-->
-                                        <button (click)="deleteCategory(category.name)" data-dismiss="modal" 
+                                        <button (click)="deleteCategory(category.id)" data-dismiss="modal" 
                                             class="btn btn-danger">
                                             Borrar
                                         </button>
