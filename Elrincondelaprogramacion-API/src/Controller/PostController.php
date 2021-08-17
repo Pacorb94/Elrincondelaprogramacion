@@ -22,7 +22,7 @@ class PostController extends AbstractController
     private $em;
     private $filesystem;
 
-    public function __construct(EntityManagerInterface  $entityManager, Filesystem $filesystem) {
+    public function __construct(EntityManagerInterface $entityManager, Filesystem $filesystem) {
         $this->postRepo=$entityManager->getRepository(Post::class);
         $this->categoryRepo=$entityManager->getRepository(Category::class);
         $this->em=$entityManager;
@@ -66,18 +66,18 @@ class PostController extends AbstractController
 
     /**
      * Función que modifica un post
-     * @param $title
+     * @param $id
      * @param $request
      * @return JsonResponse
      */
-    public function update($title, Request $request)
+    public function update($id, Request $request)
     {
         try {
-            if ($this->paramValidation($title, 'string')) {
+            if ($this->paramValidation($id, 'id')) {
                 $request=$request->get('json', null);
                 if ($request) {
                     $decodedRequest=json_decode($request, true);
-                    $post=$this->postRepo->findOneBy(['title'=>$title]);
+                    $post=$this->postRepo->find($id);
                     //Si existe 
                     if ($post) {
                         $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
@@ -94,7 +94,8 @@ class PostController extends AbstractController
                                 $post->setTitle($decodedRequest['title']);  
                                 $post->setContent($decodedRequest['content']);
                                 $post->setCategory($category);
-                                $this->deleteDirectoryOldImage($post->getImage(), 'postsImagesDirectory');
+                                $this->deleteDirectoryOldImage($post->getImage(), 
+                                    './../public/images-posts');
                                 $post->setImage($decodedRequest['image']);
                                 $post->setUpdatedAt(new \DateTime('now'));
                                 $post->execute($this->em, $post, 'update');
@@ -108,7 +109,7 @@ class PostController extends AbstractController
                 }
                 return $this->json(['message'=>'Wrong json'], 400); 
             }
-            return $this->json(['message'=>'Wrong title'], 400);             
+            return $this->json(['message'=>'Wrong id'], 400);             
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
             return $this->json(['message'=>$e->getMessage()], 500);
         }
@@ -117,14 +118,12 @@ class PostController extends AbstractController
     /**
      * Función que borra la antigua imagen del directorio
      * @param $oldImageName
-     * @param $directoryName
+     * @param $folderPath
      */
-    public function deleteDirectoryOldImage($oldImageName, $directoryName)
+    public function deleteDirectoryOldImage($oldImageName, $folderPath)
     {
-        //Obtenemos la carpeta donde se guardará la imagen
-        $imagesDirectory=$this->getParameter($directoryName);
-        if ($this->filesystem->exists($imagesDirectory.'/'.$oldImageName)) {
-            $this->filesystem->remove($imagesDirectory.'/'.$oldImageName);    
+        if ($this->filesystem->exists($folderPath.'/'.$oldImageName)) {
+            $this->filesystem->remove($folderPath.'/'.$oldImageName);    
         }   
     }
 
@@ -196,25 +195,6 @@ class PostController extends AbstractController
     }
 
     /**
-     * Función que obtiene los posts por categoría
-     * @param $categoryName
-     * @return JsonResponse
-     */
-    public function getPostsByCategory($categoryName)
-    {
-        if ($this->paramValidation($categoryName, 'string')) {
-            $category=$this->categoryRepo->findOneBy(['name'=>$categoryName]);
-            //Si existe
-            if ($category) {
-                $posts=$this->postRepo->findBy(['category'=>$category->getId()], ['id'=>'DESC']);
-                return $this->json($posts);
-            }
-            return $this->json(['message'=>'Category not found'], 404);
-        }
-        return $this->json(['message'=>'Wrong category name'], 400);
-    }
-
-    /**
      * Función que obtiene un post
      * @param $title
      * @return JsonResponse
@@ -269,13 +249,13 @@ class PostController extends AbstractController
 
     /**
      * Función que borra un post
-     * @param $title
+     * @param $id
      * @return JsonResponse
      */
-    public function delete($title)
+    public function delete($id)
     {
-        if ($this->paramValidation($title, 'string')) {
-            $post=$this->postRepo->findOneBy(['title'=>$title]);
+        if ($this->paramValidation($id, 'id')) {
+            $post=$this->postRepo->find($id);
             //Si existe
             if ($post) {
                 $post->execute($this->em, $post, 'delete');
@@ -283,7 +263,7 @@ class PostController extends AbstractController
             }
             return $this->json(['message'=>'Post not found'], 404);
         }
-        return $this->json(['message'=>'Wrong title'], 400);  
+        return $this->json(['message'=>'Wrong id'], 400);  
     }
 
     /**
