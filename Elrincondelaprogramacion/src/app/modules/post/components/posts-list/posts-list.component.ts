@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class PostsListComponent implements OnInit, OnDestroy {
     pageTitle: string;
-    posts: any;
+    posts: any[];
     category: any;
     loading: boolean;
     imageUrl:string;
@@ -26,6 +26,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
     constructor(private _postService: PostService, private _router: Router, 
     private _route: ActivatedRoute) { 
         this.pageTitle = 'Posts';
+        this.posts=[];
         this.loading = true;
         this.imageUrl=`${environment.url}/posts-images/`;
         this.subscription=new Subscription();
@@ -35,7 +36,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.getRoutePage();
+        this.getRouteParams();
     }
 
     ngOnDestroy(){
@@ -43,12 +44,13 @@ export class PostsListComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Función que obtiene la página de la ruta
+     * Función que obtiene los parámetros de la ruta
      */
-    getRoutePage() {
+    getRouteParams() {
         this._route.params.subscribe(
             params => {
                 this.page = params['page'];
+                this.category=params['name'];
                 //Si tiene valor y es un número sino será el por defecto
                 if (this.page && this.page.match(/[\d]+/)) {
                     this.page = Number.parseInt(this.page);
@@ -57,7 +59,36 @@ export class PostsListComponent implements OnInit, OnDestroy {
                     this.prevPage = 1;
                     this.nextPage = 2;
                 }
-                this.getPosts();               
+                //Reiniciamos la variable
+                this.posts=[];
+                //Si hemos seleccinado la categoría
+                if (this.category) {
+                    this.getPostsByCategory();
+                }else{
+                    this.getPosts();  
+                }                           
+            }
+        );
+    }
+
+    /**
+     * Función que obtiene los posts por categoría
+     */
+    getPostsByCategory() {
+        this.subscription=this._postService.getPostsByCategory(this.page, this.category).subscribe(
+            response => {
+                //Si hay posts
+                if (response.Posts.length) {
+                    this.pageTitle=`Posts de la categoría ${this.category}`;
+                    this.loading = false;
+                    this.posts = response.Posts;
+                    this.pagination(response.totalPages);
+                } else {
+                    this.loading = true;
+                }
+            },
+            error => {
+                this._router.navigate(['']);
             }
         );
     }
