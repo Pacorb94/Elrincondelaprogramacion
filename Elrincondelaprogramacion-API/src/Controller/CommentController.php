@@ -14,10 +14,12 @@ use Doctrine\ORM\EntityManagerInterface;
 class CommentController extends AbstractController
 {
     private $commentRepo;
+    private $postRepo;
     private $em;
 
     public function __construct(EntityManagerInterface $entityManager) {
         $this->commentRepo=$entityManager->getRepository(Comment::class);
+        $this->postRepo=$entityManager->getRepository(Post::class);
         $this->em=$entityManager;
     }
 
@@ -38,8 +40,7 @@ class CommentController extends AbstractController
                 la función trim*/
                 $decodedRequest=array_map('trim', $decodedRequest);
                 if (count($this->contentValidation($decodedRequest['content']))==0) {
-                    $postRepo=$this->getDoctrine()->getRepository(Post::class);
-                    $post=$postRepo->find($postId);
+                    $post=$this->postRepo->find($postId);
                     //Si existe
                     if ($post) {
                         $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
@@ -53,6 +54,11 @@ class CommentController extends AbstractController
             return $this->json(['message'=>'Wrong json'], 400);             
         }
         return $this->json(['message'=>'Wrong post id'], 400);
+    }
+
+    public function update($id, Request $request)
+    {
+        
     }
 
     /**
@@ -82,6 +88,37 @@ class CommentController extends AbstractController
                 return $this->json(['message'=>'You must send yes or no as values'], 400);
             }
             return $this->json(['message'=>'Wrong json'], 400);  
+        }
+        return $this->json(['message'=>'Wrong id'], 400);
+    }
+    
+    /**
+     * Función que borra un comentario
+     * @param $id
+     * @return JsonResponse
+     */
+    public function delete($id)
+    {
+        if ($this->idValidation($id)) {
+            $comment=$this->commentRepo->find($id);
+            if ($comment) {
+                $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
+                //Si es nuestro
+                if ($comment->getId==$userLoggedIn->getId()) {
+                    /*$posts=$this->postRepo->findAll();
+                    //Debemos modificar la categoría de los posts que vamos a borrar
+                    foreach ($posts->getComments() as $comment) {
+                        dump($comment);die();
+                        $post->setCategory(null);
+                        $post->execute($this->em, $post, 'update');
+                    }*/ 
+                    dump($comment->getPost());die();
+                    $comment->execute($this->em, $comment, 'delete');
+                    return $this->json(['message'=>'Deleted comment']);
+                }
+                return $this->json(['message'=>'You can\'t delete that comment'], 400);
+            }
+            return $this->json(['message'=>'Comment not found'], 404);
         }
         return $this->json(['message'=>'Wrong id'], 400);
     }
