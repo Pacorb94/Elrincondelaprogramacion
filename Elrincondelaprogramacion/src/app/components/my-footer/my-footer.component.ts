@@ -20,7 +20,7 @@ export class MyFooterComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.getPosts();
+        this.getLastThreePosts();
     }
 
     ngOnDestroy(){
@@ -28,28 +28,14 @@ export class MyFooterComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Función que obtiene los posts
+     * Función que obtiene los 3 últimos posts
      */
-    getPosts() {
+    getLastThreePosts() {
         this.subscription=this._postService.getPosts().subscribe(
             response => {
                 //Si hay posts
-                if (response.Posts.length) {
-                   /* let postsNumber=response.Posts.length;
-                    let getPostsNumber=0;
-                    switch (postsNumber) {
-                        case 1: getPostsNumber=1 break;
-                        case 2:break;
-                        case 3:break;             
-                    }*/
-                    let posts=response.Posts;
-                    posts.slice(0, 3).forEach((post:any)=>{
-                        this.posts.push(post);
-                    });
-                    console.log(this.posts);
-                }
-            },
-            error => {}
+                if (response.Posts.length) this.posts=response.Posts.slice(0, 3);               
+            }
         );
     }
 }
