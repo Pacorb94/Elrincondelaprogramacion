@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { PostService } from '../../modules/post/service/post.service';
+import { PostService } from '../../services/post.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgcCookieConsentService } from 'ngx-cookieconsent';
 import { environment } from 'src/environments/environment';
@@ -59,9 +59,10 @@ export class HomeComponent implements OnInit, OnDestroy{
                     this.prevPage = 1;
                     this.nextPage = 2;
                 }
-                //Reiniciamos la variable
+                /*Reiniciamos la variable ya que si una categoría no tiene posts se mezclará con las
+                que si tienen posts*/
                 this.posts=[];
-                //Si hemos seleccinado la categoría
+                //Si hemos seleccinado un categoría
                 if (this.category) {
                     this.getPostsByCategory();
                 }else{
