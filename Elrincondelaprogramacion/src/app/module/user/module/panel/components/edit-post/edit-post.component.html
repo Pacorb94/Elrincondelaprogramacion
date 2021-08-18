@@ -1,0 +1,43 @@
+<div id="edit" class="row text-center">
+    <div class="col-xs-9 col-sm-12 col-xl-12 col-md-12 col-lg-12 offset-md-2 offset-sm-2 offset-lg-2 col-12">
+        <h3>{{pageTitle}}</h3>
+        <hr>
+        <h6 *ngIf="goodEdit" class="alert alert-success col-md-5 mt-3 mx-auto">
+            Has modificado el post, puedes verlo <a routerLink="/user-panel/my-posts">aquí</a>
+        </h6>
+        <flash-messages></flash-messages>
+        <!--La propiedad "formGroup" asocia este formulario con una propiedad del componente. 
+        En el evento submit le pasamos los valores de los campos-->
+        <form [formGroup]="form" class="col-md-3 ml-0 pl-0 mx-auto">
+            <label for="title">Título:</label>
+            <!--El valor del atributo "formControlName" sirva para identificarlo Angular-->
+            <input type="text" name="title" id="title" formControlName="title" 
+                class="form-control text-center">
+            <span *ngIf="checkTouched(form.get('title'))" class="invalid-feedback d-block">
+                {{wrongValidationMessage(form.get('title'), 'título')}}
+            </span>
+            <label for="content">Contenido:</label>
+            <textarea name="content" id="content" formControlName="content"
+                class="form-control text-center">
+            </textarea>
+            <span *ngIf="checkTouched(form.get('content'))" class="invalid-feedback d-block">
+                {{wrongValidationMessage(form.get('content'), 'contenido')}}
+            </span>
+            <select formControlName="category" name="category" id="category" 
+                class="form-control w-100 mt-3">
+                <option hidden value="">Selecciona una categoría</option>
+                <option *ngFor="let category of categories" [value]="category.id">
+                    {{category.name}}
+                </option>
+            </select>
+            <span *ngIf="checkTouched(form.get('category'))" class="invalid-feedback d-block">
+                {{wrongValidationMessage(form.get('category'), 'categoría')}}
+            </span>
+            <file-uploader-post></file-uploader-post>
+            <!--La propiedad disabled permite poner una condición, por lo que el botón se 
+            desactivará si el formulario no es válido-->
+            <input type="button" value="Editar post" (click)="update()" [disabled]="!form.valid" 
+                class="btn btn-success mt-2">
+        </form>
+    </div>
+</div>
