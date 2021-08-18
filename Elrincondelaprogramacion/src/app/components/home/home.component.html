@@ -1,10 +1,11 @@
 <div class="row column">
+    <last-added-category></last-added-category>
     <div class="col-xl-9">
         <!--Si hay posts-->
         <div *ngIf="posts.length; else noPosts">
             <h2 class="text-center">{{pageTitle}}</h2>
             <hr>
-            <div *ngIf="loading" class="w-25 text-center">
+            <div *ngIf="loading" class="text-center">
                 <button class="btn btn-primary" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     Cargando...
