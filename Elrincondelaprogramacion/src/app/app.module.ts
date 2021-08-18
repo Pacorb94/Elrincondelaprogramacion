@@ -13,7 +13,7 @@ import { MyFooterComponent } from './components/my-footer/my-footer.component';
 import { NgcCookieConsentModule } from 'ngx-cookieconsent';
 import { cookieConfig } from './cookie.conf';
 import { CookiesPolicyComponent } from './components/cookies-policy/cookies-policy.component';
-
+import { LastAddedCategoryComponent } from './components/last-added-category/last-added-category.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +22,8 @@ import { CookiesPolicyComponent } from './components/cookies-policy/cookies-poli
         HomeComponent,
         MostActivePostsComponent,
         MyFooterComponent,
-        CookiesPolicyComponent
+        CookiesPolicyComponent,
+        LastAddedCategoryComponent
     ],
     //Para que funcionen los componentes de otros módulos debemos importar el módulo
     imports: [
