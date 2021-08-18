@@ -4,12 +4,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
+import { MostActivePostsComponent } from './components/most-active-posts/most-active-posts.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpRequestInterceptor } from './interceptor/HttpRequestIncerceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MomentModule } from 'angular2-moment';
 import { MyFooterComponent } from './components/my-footer/my-footer.component';
-import { PostModule } from './modules/post/post.module';
 import { NgcCookieConsentModule } from 'ngx-cookieconsent';
 import { cookieConfig } from './cookie.conf';
 import { CookiesPolicyComponent } from './components/cookies-policy/cookies-policy.component';
@@ -20,14 +20,14 @@ import { CookiesPolicyComponent } from './components/cookies-policy/cookies-poli
         AppComponent,
         NavbarComponent,
         HomeComponent,
+        MostActivePostsComponent,
         MyFooterComponent,
         CookiesPolicyComponent
     ],
+    //Para que funcionen los componentes de otros módulos debemos importar el módulo
     imports: [
         BrowserModule,
         AppRoutingModule,
-        //Para que funcionen los componentes de este módulo debemos importar el módulo
-        PostModule,
         ReactiveFormsModule,
         HttpClientModule,
         MomentModule,
