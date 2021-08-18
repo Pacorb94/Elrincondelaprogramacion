@@ -7,6 +7,8 @@ import { CookiesPolicyComponent } from './components/cookies-policy/cookies-poli
 
 const routes: Routes = [
     { path:'', component:HomeComponent },
+    { path: 'page/:page', component: HomeComponent },
+    { path: 'posts/categories/:name', component: HomeComponent },
     { path:'cookies-policy', component:CookiesPolicyComponent },
     //Cargamos una ruta padre que tendrá rutas hijas con lo cual usará el lazyLoading
     { path:'', loadChildren:()=>import('./modules/user/user.module').then(m=>m.UserModule) },

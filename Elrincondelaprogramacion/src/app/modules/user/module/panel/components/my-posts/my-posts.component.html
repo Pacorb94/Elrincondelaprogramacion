@@ -19,7 +19,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let post of posts">
-            <td><a [routerLink]="['watch-post', post.title]">{{post.title}}</a></td>
+            <td>{{post.title}}</td>
             <!--Si la categoría se borró-->
             <td>{{post.category===null?'Categoría borrada':post.category.name}}</td>
             <td>{{post.content}}</td>
