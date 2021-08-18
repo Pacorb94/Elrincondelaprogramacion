@@ -33,20 +33,37 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
-                        <!--A la ruta le pasamos un segundo parámetro con la propiedad-->
-                        <a class="page-link" [routerLink]="['/page', prevPage]" 
+                        <!--Si no recibe por la ruta la categoría-->
+                        <a *ngIf="!category" class="page-link" [routerLink]="['/page', prevPage]" 
+                            routerLinkActive="btn-info" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        <!--Si recibe por la ruta la categoría-->
+                        <a *ngIf="category" class="page-link" 
+                            [routerLink]="['/posts/categories', category, 'page', prevPage]" 
                             routerLinkActive="btn-info" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <!--Hacemos tantos enlaces como páginas haya-->
                     <li *ngFor="let page of totalPages" class="page-item">
-                        <a class="page-link" [routerLink]="['/page', page]" routerLinkActive="btn-info">
+                        <a *ngIf="!category" class="page-link" [routerLink]="['/page', page]"
+                            routerLinkActive="btn-info">
+                            {{page}}
+                        </a>
+                        <a *ngIf="category" class="page-link" 
+                            [routerLink]="['/posts/categories', category, 'page', page]" 
+                            routerLinkActive="btn-info">
                             {{page}}
                         </a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" [routerLink]="['/page', nextPage]" 
+                        <a *ngIf="!category" class="page-link" [routerLink]="['/page', nextPage]" 
+                            routerLinkActive="btn-info" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                        <a *ngIf="category" class="page-link" 
+                            [routerLink]="['/posts/categories', category, 'page', nextPage]" 
                             routerLinkActive="btn-info" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
