@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PostsListComponent } from './components/posts-list/posts-list.component';
 
-const routes: Routes = [
-    { path: 'page/:page', component: PostsListComponent },
-    { path: 'posts/categories/:name', component: PostsListComponent }  
-];
+const routes: Routes = [];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
