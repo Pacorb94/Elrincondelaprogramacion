@@ -1,5 +1,40 @@
+@font-face{
+	font-family: "WebSymbolsRegular";
+	src:url(../../../assets/fonts/websymbols-regular-webfont.eot);
+	src:url(../../../assets/fonts/websymbols-regular-webfont.eot?#iefix) format("embedded-opentype"),
+		url(../../../assets/fonts/websymbols-regular-webfont.woff?#iefix) format("woff"),
+		url(../../../assets/fonts/websymbols-regular-webfont.ttf?#iefix) format("truetype"),
+		url(../../../assets/fonts/websymbols-regular-webfont.svg?#iefix) format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+
 a{
     cursor: pointer;
+}
+
+nav{
+    background-color: #333 !important;
+    a, li a{
+        color:#0894d1 !important;
+    }
+}
+
+#navbarDropdown:hover{
+    color: white !important;
+    background-color: #0894d1 !important;
+}
+
+#categoriesDropdown{
+    height: 100px;
+    overflow: auto;
+    a{
+        width: 100px;
+    }
+    a:hover{
+        color: #0894d1;
+        background-color: #333;
+    }
 }
 
 .dropdown-item{
@@ -10,11 +45,13 @@ a{
     width: 145%;
 }
 
-.active:hover{
-    background-color: aqua;
+li.active:hover a{
+    background-color: #0894d1;
+    color: white !important;
 }
 
 #logout:hover{
+    font-weight: bold;
     color: black;
     background-color: red;
 }
@@ -24,4 +61,90 @@ a{
     width: 50px;
     height: 50px;
     border-radius: 50%;
+}
+
+#logo{
+	color: white;
+   	width: 30vw !important;
+	background-color: #37bbf9;		
+	/*Ponemos esto para esconder el engranaje cuando
+	este abajo en la animación*/
+	overflow: hidden;	
+	transition: all 300ms;	
+    a{
+        color: white !important;
+		font-size: 1.5vw;
+    }
+}
+
+#logo:hover{
+	border-radius: 2px;
+	color: black;
+	background-color: #ccc;
+}
+
+#logo:hover #gear{
+	animation: fromBelow 500ms linear;
+}
+
+@keyframes fromBelow{
+	0%{
+		transform: translateY(0%);
+	}
+	50%{
+		/*Baja el engranaje*/
+		transform: translateY(200%);
+	}
+	100%{
+		/*Vuelve a subir el engranaje*/
+		transform: translateY(0%);
+	}
+}
+
+#logo:hover a{
+	animation: fromRight 300ms linear;
+}
+
+@keyframes fromRight{
+	from{
+		/*Se desplaza el título horizontalmente*/
+		transform: translateX(200%);
+	}
+	to{
+		/*Vuelve*/
+		transform: translateX(0%);
+	}
+}
+
+#logo a{		
+	color: white;
+	letter-spacing: 2px;
+	line-height: 58px;	
+}
+
+#gear{	
+	float: left;
+	font-size: 35px;	
+	
+	font-family: "WebSymbolsRegular";
+	/*Le ponemos un nombre*/
+	animation-name: rotate-gear;
+	/*Le ponemos una duración*/
+	animation-duration: 2s;
+	/*Animación infinita*/
+	animation-iteration-count: infinite;
+	/*Le ponemos una velocidad fija*/
+	animation-timing-function: linear;
+}
+
+@keyframes rotate-gear{
+	/*Empieza la animación*/
+	from{
+		/*Le ponemos una rotación*/
+		transform: rotateZ(0deg);
+	}
+	/*Acaba la animación*/
+	to{
+		transform: rotateZ(360deg);
+	}
 }

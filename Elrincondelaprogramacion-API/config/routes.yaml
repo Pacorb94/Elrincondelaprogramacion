@@ -122,7 +122,7 @@ indequatePost:
 
 #Comment
 createComment:
-    path: /{postId}/comment/create
+    path: /{postTitle}/comment/create
     controller: App\Controller\CommentController::create
     methods: POST
 

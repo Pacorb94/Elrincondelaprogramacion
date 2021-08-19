@@ -1,5 +1,13 @@
 <nav class="navbar fixed-top navbar-expand-lg col-xxl-12 col-xl-12 col-lg-12 col-md-12 navbar-light bg-light">
-    <a class="navbar-brand" routerLink="/">El rincón de la programación</a>
+    <div id="logo" class="row mr-5">
+        <div class="col-xl-1 mr-2 mt-1">
+            <span id="gear">S</span>
+        </div>
+        <div class="col-xl-1 col-lg-">
+            <a class="navbar-brand" routerLink="/">El rincón de la programación</a>
+        </div>
+        
+    </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -15,7 +23,7 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Categorias
                 </a>
-                <div class="dropdown-menu pr-5 mr-5 w-25" aria-labelledby="navbarDropdown">       
+                <div id="categoriesDropdown" class="dropdown-menu pr-5 mr-5 w-25" aria-labelledby="navbarDropdown">       
                     <a *ngFor="let category of categories" class="dropdown-item" 
                         [routerLink]="['/posts/categories', category.name]">{{category.name}}
                     </a>        
@@ -25,7 +33,7 @@
             <li class="nav-item active">
                 <a class="nav-link active" routerLink="/community">Comunidad</a>
             </li>
-            <li *ngIf="user" class="nav-item">
+            <li *ngIf="user" class="nav-item active">
                 <a class="nav-link active" routerLink="user-panel">Panel de usuario</a>
             </li>
             <!--Buscador-->
