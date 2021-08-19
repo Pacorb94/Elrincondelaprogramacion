@@ -15,7 +15,7 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Categorias
                 </a>
-                <div class="dropdown-menu pr-5 mr-5 w-25" aria-labelledby="navbarDropdown">       
+                <div id="categoriesDropdown" class="dropdown-menu pr-5 mr-5 w-25" aria-labelledby="navbarDropdown">       
                     <a *ngFor="let category of categories" class="dropdown-item" 
                         [routerLink]="['/posts/categories', category.name]">{{category.name}}
                     </a>        
@@ -25,7 +25,7 @@
             <li class="nav-item active">
                 <a class="nav-link active" routerLink="/community">Comunidad</a>
             </li>
-            <li *ngIf="user" class="nav-item">
+            <li *ngIf="user" class="nav-item active">
                 <a class="nav-link active" routerLink="user-panel">Panel de usuario</a>
             </li>
             <!--Buscador-->
