@@ -2,6 +2,30 @@ a{
     cursor: pointer;
 }
 
+nav{
+    background-color: #333 !important;
+    a, li a{
+        color:#0894d1 !important;
+    }
+}
+
+#navbarDropdown:hover{
+    color: white !important;
+    background-color: #0894d1 !important;
+}
+
+#categoriesDropdown{
+    height: 100px;
+    overflow: auto;
+    a{
+        width: 100px;
+    }
+    a:hover{
+        color: #0894d1;
+        background-color: #333;
+    }
+}
+
 .dropdown-item{
     width: 100%;
 }
@@ -10,11 +34,13 @@ a{
     width: 145%;
 }
 
-.active:hover{
-    background-color: aqua;
+li.active:hover a{
+    background-color: #0894d1;
+    color: white !important;
 }
 
 #logout:hover{
+    font-weight: bold;
     color: black;
     background-color: red;
 }
