@@ -14,6 +14,8 @@ import { NgcCookieConsentModule } from 'ngx-cookieconsent';
 import { cookieConfig } from './cookie.conf';
 import { CookiesPolicyComponent } from './components/cookies-policy/cookies-policy.component';
 import { LastAddedCategoryComponent } from './components/last-added-category/last-added-category.component';
+import { FlashMessagesModule } from 'angular2-flash-messages';
+
 
 @NgModule({
     declarations: [
@@ -32,7 +34,8 @@ import { LastAddedCategoryComponent } from './components/last-added-category/las
         ReactiveFormsModule,
         HttpClientModule,
         MomentModule,
-        NgcCookieConsentModule.forRoot(cookieConfig)
+        NgcCookieConsentModule.forRoot(cookieConfig),
+        FlashMessagesModule.forRoot()
     ],
     providers: [
         [{ provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true }]
