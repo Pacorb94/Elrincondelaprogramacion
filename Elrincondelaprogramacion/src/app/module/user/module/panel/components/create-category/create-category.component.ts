@@ -42,6 +42,7 @@ export class CreateCategoryComponent implements OnDestroy {
             response=>{
                 if (response) {
                     this.goodCreate=true;
+                    this._categoryService.setLastAddedCategory$(this.category);
                 }else{
                     this.goodCreate=false;
                     this.showFlashMessage('No has creado la categoría correctamente',
