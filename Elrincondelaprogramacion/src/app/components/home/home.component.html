@@ -1,13 +1,13 @@
 <div class="row column">
     <div class="col-xl-9">
         <last-added-category></last-added-category>
-        <div *ngIf="loading; else postss">
+        <div *ngIf="loading; else data">
             <h3 *ngIf="!category" class="text-center">Puede que no haya posts</h3>
             <h3 *ngIf="category" class="text-center">
                 Puede que no haya posts de la categoría {{category}}
             </h3>
             <hr>
-            <div *ngIf="loading" class="text-center">
+            <div class="text-center">
                 <button class="btn btn-primary" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     Cargando...
@@ -15,7 +15,7 @@
             </div>
         </div>       
         <!--Si hay posts-->
-        <ng-template #postss>
+        <ng-template #data>
             <h2 class="text-center">{{pageTitle}}</h2>
             <hr>
             <!--Cards-->
