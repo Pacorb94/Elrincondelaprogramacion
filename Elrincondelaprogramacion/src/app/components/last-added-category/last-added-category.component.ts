@@ -44,8 +44,7 @@ export class LastAddedCategoryComponent implements OnInit, OnDestroy {
     }
     
     /**
-     * Función que muestra un mensaje si existe en el localStorage y sino la
-     * borra en función de la fecha
+     * Función que muestra un mensaje en función de la fecha
      */
     showCategoryOrDeleteIt(){
         if (localStorage.hasOwnProperty('lastAddedCategory')) {
