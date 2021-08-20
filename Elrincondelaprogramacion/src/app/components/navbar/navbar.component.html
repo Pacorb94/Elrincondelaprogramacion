@@ -1,5 +1,5 @@
 <nav class="navbar fixed-top navbar-expand-lg col-xxl-12 col-xl-12 col-lg-12 col-md-12 navbar-light bg-light">
-    <div id="logo">
+    <div id="logo" class="mr-2">
         <a class="navbar-brand" routerLink="/">El rincón de la programación</a> 
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -34,13 +34,9 @@
             <li class="nav-item ml-5">
                 <form [formGroup]="form" class="d-flex form-inline ml-sm-10 my-2 my-lg-0 ml-5">
                     <input type="search" formControlName="postsSearchText" class="form-control" 
-                        placeholder="Busca un post" aria-label="Search">
+                        placeholder="Busca post o usuario" aria-label="Search">
                     <input type="button" (click)="searchPosts(form.get('postsSearchText')?.value)" 
                         value="Buscar post" class="btn btn-outline-success my-2 my-sm-0">
-                    <span *ngIf="checkTouched(form.get('postsSearchText'))" 
-                        class="invalid-feedback d-block">
-                        {{wrongValidationMessage(form.get('postsSearchText'), 'búsqueda')}}
-                    </span>
                 </form>
             <!--Fin del buscador-->
             </li>
