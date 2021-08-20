@@ -15,7 +15,7 @@ import { cookieConfig } from './cookie.conf';
 import { CookiesPolicyComponent } from './components/cookies-policy/cookies-policy.component';
 import { LastAddedCategoryComponent } from './components/last-added-category/last-added-category.component';
 import { FlashMessagesModule } from 'angular2-flash-messages';
-
+import { WatchPostComponent } from './components/watch-post/watch-post.component';
 
 @NgModule({
     declarations: [
@@ -25,7 +25,8 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
         MostActivePostsComponent,
         MyFooterComponent,
         CookiesPolicyComponent,
-        LastAddedCategoryComponent
+        LastAddedCategoryComponent,
+        WatchPostComponent
     ],
     //Para que funcionen los componentes de otros módulos debemos importar el módulo
     imports: [
