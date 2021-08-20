@@ -8,28 +8,33 @@ import { UserSettingsComponent } from './components/user-settings/user-settings.
 import { MyPostsComponent } from './components/my-posts/my-posts.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
 import { CategoryListComponent } from './components/category-list/category-list.component';
+import { CheckAdminRoleGuard } from './../../guards/check-admin-role.guard';
+import { CheckNoReaderRoleGuard } from './../../guards/check-no-reader-role.guard';
 
 const routes: Routes = [
     {
         path: '', component:MainComponent,
         children:[
             {
-                path:'my-posts', component:MyPostsComponent
+                path:'my-posts', component:MyPostsComponent, canActivate:[CheckNoReaderRoleGuard]
             },
             {
-                path:'category-list', component:CategoryListComponent
+                path:'category-list', component:CategoryListComponent, canActivate:[CheckAdminRoleGuard]
             },
             {
-                path:'create-post', component:CreatePostComponent
+                path:'create-post', component:CreatePostComponent, canActivate:[CheckNoReaderRoleGuard]
             },
             {
-                path:'create-category', component:CreateCategoryComponent
+                path:'create-category', component:CreateCategoryComponent, 
+                canActivate:[CheckAdminRoleGuard]
             },
             {
-                path:'edit-post/:title', component:EditPostComponent
+                path:'edit-post/:title', component:EditPostComponent, 
+                canActivate:[CheckNoReaderRoleGuard]
             },
             {
-                path:'edit-category/:name', component:EditCategoryComponent
+                path:'edit-category/:name', component:EditCategoryComponent, 
+                canActivate:[CheckAdminRoleGuard]
             },
             {
                 path:'user-settings', component:UserSettingsComponent
