@@ -71,21 +71,36 @@ li.active:hover a{
 	}
 }
 
+@media screen and (max-width:832px){
+	#logo{
+		width: 86% !important;
+	}
+}
+
 @media screen and (max-width:732px){
 	#logo{
 		width: 90% !important;
 	}
 }
 
-@media screen and (max-width:592px){
+@media screen and (max-width:672px){
 	#logo{
-		width: 89% !important;
+		width: 84% !important;
 	}
 }
 
-@media screen and (max-width:541px){
+@media screen and (max-width:592px){
 	#logo{
-		width: 88% !important;
+		width: 82% !important;
+	}
+}
+
+@media screen and (max-width:542px){
+	#logo{
+		width: 80% !important;
+		a{
+			font-size: 25px;
+		}
 	}
 }
 
@@ -99,34 +114,35 @@ li.active:hover a{
 
 @media screen and (max-width:499px){
 	#logo{
-		width: 87% !important;
+		width: 78% !important;
+		a{
+			font-size: 20px;
+		}
 	}
 }
 
 @media screen and (max-width:463px){
 	#logo{
-		width: 86% !important;
+		width: 76% !important;
 	}
 }
 
 @media screen and (max-width:443px){
 	#logo{
-		a{
-			font-size: 22px;
-		}
+		width: 74% !important;
 	}
 }
 
-@media screen and (max-width:433px){
-	#logo{
-		width: 83% !important;
+@media screen and (max-width:436px){
+	#logo a{
+		font-size: 18px;
 	}
 }
 
 @media screen and (max-width:406px){
 	#logo{
 		a{
-			font-size: 20px;
+			font-size: 16px;
 		}
 	}
 }
@@ -134,16 +150,13 @@ li.active:hover a{
 @media screen and (max-width:380px){
 	#logo{
 		a{
-			font-size: 18px;
+			font-size: 14px;
 		}
 	}
 }
 
-@media screen and (max-width:362px){
+@media screen and (max-width:352px){
 	#logo{
-		width: 80% !important;
-		a{
-			font-size: 15px;
-		}
+		width: 72%!important;
 	}
 }
