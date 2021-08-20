@@ -116,23 +116,4 @@ export class NavbarComponent implements OnInit, OnDestroy {
             error=>{}
         );
     }
-
-    /**
-     * Función que comprueba si el foco está en el campo
-     * @param field
-     */
-    checkTouched(field:any):boolean{
-        if (field.touched) return true;
-        return false;
-    }
-
-    /**
-     * Función que muestra un mensaje de validación incorrecta
-     * @param field 
-     * @param fieldName 
-     */
-    wrongValidationMessage(field:any, fieldName:string):string{
-        if (field.errors?.required) return `El campo ${fieldName} es obligatorio`;
-        return '';
-    }
 }

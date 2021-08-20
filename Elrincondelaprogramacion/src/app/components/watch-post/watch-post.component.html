@@ -1,0 +1,83 @@
+<div class="row column">
+    <div *ngIf="loading; else data" class="mx-auto">
+        <div class="">
+            <button class="btn btn-primary" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Cargando...
+            </button>
+        </div>
+    </div>
+    <ng-template #data>
+        <div class="col-md-12 mt-3">
+            <h3>{{post.title}}</h3>
+            <a [routerLink]="['/user-profile', post.user.id]" class="badge badge-primary mr-2">
+                {{post.user.nick}}
+            </a>
+            <span class="badge rounded-pill mr-2 bg-warning">
+                {{post.category===null?'Categoría borrada':post.category.name}}
+            </span>
+            <span class="badge rounded-pill bg-light text-dark">
+                {{post.createdAt|amLocale:'es'|amCalendar}}
+            </span>
+            <p>{{post.content}}</p>
+            <div class="w-75">
+                <!--<ngx-highlight-js *ngIf="topic.code" lang="{{topic.lang}}" code="{{topic.code}}">
+                        </ngx-highlight-js>-->
+            </div>
+            <h6 *ngIf="!user" class="alert alert-info text-center col-4 mx-auto">
+                Para poner un comentario inicia sesión <a [routerLink]="['/login']">aquí</a>
+            </h6>
+            <div class="row">
+                <div class="col-sm-5 col-md-6 col-12 pb-4">
+                    <h3 class="text-center">Comentarios</h3>
+                    <!--Si hay comentarios-->
+                    <ng-container *ngIf="post.comments.length>0">
+                        <div *ngFor="let comment of post.comments" class="comment mt-4 text-justify">
+                            <div>
+                                <!--Si hay foto de perfil-->
+                                <img *ngIf="comment.user.profileImage"
+                                    src="{{'http://localhost:3000/api/user/images/'+comment.user_id.image}}"
+                                    alt="Imagen de perfil" class="profileImage mr-1">
+                                <img *ngIf="!comment.user_id.image" src="../../../assets/images/sinFotoPerfil.png"
+                                    alt="Imagen de perfil" class="profileImage mr-1">
+                                <!-- <a [routerLink]="['/user-profile', comment.user_id._id]" class="badge badge-primary mr-2">
+                                            {{comment.user_id.name}}
+                                        </a>-->
+                                <span class="badge rounded-pill bg-light text-dark">
+                                    {{comment.createdAt|amLocale:'es'|amCalendar}}
+                                </span>
+                                <!--Si el que ha iniciado sesión es el creador del comentario-->
+                                <input type="button" *ngIf="user&&user.id==comment.user.id"
+                                    (click)="deleteComment(comment.id)" 
+                                    class="btn btn-danger float-right"
+                                    value="Borrar">
+                            </div>
+                            <br>
+                            <p id="commentContent">{{comment.content}}</p>
+                            <hr>
+                        </div>
+                    </ng-container>
+                </div>
+                <!--Si el usuario está logueado-->
+                <div *ngIf="user" class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-1">
+                    <flash-messages></flash-messages>
+                    <!--La propiedad "formGroup" asocia este formulario con una propiedad del componente. 
+                    En el evento ubmit le pasamos los valores de los campos-->
+                    <form [formGroup]="form" class="text-center">
+                        <label for="mensaje"><h4>¿Qué quieres comentar?</h4></label>
+                        <textarea formControlName="content" id="mensaje" cols="30" rows="5" 
+                            class="form-control">
+                        </textarea>
+                        <span *ngIf="checkTouched(form.get('content'))" class="invalid-feedback d-block">
+                            {{wrongValidationMessage(form.get('content'), 'contenido')}}
+                        </span>
+                        <!--La propiedad disabled permite poner una condición, por lo que el botón 
+                                se desactivará si el formulario no es válido-->
+                        <input type="button" (click)="createComment()" [disabled]="!form.valid" 
+                            value="Comentar" class="btn btn-success mt-3">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
