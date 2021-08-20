@@ -22,7 +22,7 @@
             <div class="card-columns w-100">
                 <article *ngFor="let post of posts" class="card">
                     <div class="card-body">
-                        <a [routerLink]="['/watch-post', post.title]">
+                        <a [routerLink]="['/posts', post.title]">
                             <!--Si hay imagen-->
                             <img *ngIf="post.image" [src]="imageUrl+post.image" alt="Imagen del post" 
                                 class="card-img-top">
@@ -30,7 +30,7 @@
                                 alt="Imagen del post" class="card-img-top">
                         </a>
                         <h5 class="card-title card-header text-center">
-                            <a [routerLink]="['/watch-post', post.title]">{{post.title}}</a>
+                            <a [routerLink]="['/posts', post.title]">{{post.title}}</a>
                         </h5>
                         <p class="text-center">{{post.content}}</p>
                     </div>
