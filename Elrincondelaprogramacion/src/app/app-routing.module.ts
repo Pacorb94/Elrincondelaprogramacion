@@ -8,10 +8,15 @@ import { WatchPostComponent } from './components/watch-post/watch-post.component
 const routes: Routes = [
     { path:'', component:HomeComponent },
     { path:'page/:page', component:HomeComponent },
-    { path:'posts/categories/:name', component:HomeComponent },
-    { path:'posts/categories/:name/page/:page', component:HomeComponent },
+    { 
+        path:'posts', 
+        children:[
+            { path:':title', component:WatchPostComponent },
+            { path:'categories/:name', component:HomeComponent},
+            { path:'categories/:name/page/:page', component:HomeComponent },
+        ]
+    },
     { path:'cookies-policy', component:CookiesPolicyComponent },
-    { path:'posts/:title', component:WatchPostComponent},
     //Cargamos una ruta padre que tendrá rutas hijas con lo cual usará el lazyLoading
     { path:'', loadChildren:()=>import('./module/user/user.module').then(m=>m.UserModule) },
     { path:'**', redirectTo:''}
