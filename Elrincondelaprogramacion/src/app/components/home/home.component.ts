@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit, OnDestroy{
     category: any;
     loading: boolean;
     imageUrl:string;
+    noPosts:any;
     subscription:Subscription;
     //------Paginación-------
     page: any;
@@ -86,6 +87,7 @@ export class HomeComponent implements OnInit, OnDestroy{
                     this.pagination(response.totalPages);
                 } else {
                     this.loading = true;
+                    this.noPosts=true;
                 }
             },
             error => {
@@ -107,6 +109,7 @@ export class HomeComponent implements OnInit, OnDestroy{
                     this.pagination(response.totalPages);
                 } else {
                     this.loading = true;
+                    this.noPosts=true;
                 }
             },
             error => {

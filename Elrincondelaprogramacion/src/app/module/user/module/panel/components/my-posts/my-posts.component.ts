@@ -17,6 +17,7 @@ export class MyPostsComponent implements OnInit, OnDestroy{
     deletePostSubscription:Subscription;
     loading:boolean;
     imageUrl:string;
+    noPosts:any;
     //-----Tabla------
     dtOptions:DataTables.Settings;
     dtTrigger:Subject<any>;
@@ -34,11 +35,7 @@ export class MyPostsComponent implements OnInit, OnDestroy{
     }
 
     ngOnInit(){
-        this.dtOptions = {
-            pagingType:'full_numbers',
-            pageLength:5,
-            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'}
-        };
+        this.loadTableConfiguration();
         this.getUserPosts();
     }
 
@@ -46,6 +43,17 @@ export class MyPostsComponent implements OnInit, OnDestroy{
         this.userPostsSubscription.unsubscribe();
         this.deletePostSubscription.unsubscribe();
         this.dtTrigger.unsubscribe();
+    }
+
+    /**
+     * Función que carga la configuración de la tabla
+     */
+    loadTableConfiguration(){
+        this.dtOptions = {
+            pagingType:'full_numbers',
+            pageLength:5,
+            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'}
+        };
     }
 
     /**
@@ -59,7 +67,13 @@ export class MyPostsComponent implements OnInit, OnDestroy{
                     this.posts=response;
                     this.loading=false;
                     if (!refreshTable) this.dtTrigger.next();             
+                }else{
+                    this.loading=true;
+                    this.noPosts=true;
                 }
+            },
+            error => {
+                this._router.navigate(['']);
             }
         );
     }
