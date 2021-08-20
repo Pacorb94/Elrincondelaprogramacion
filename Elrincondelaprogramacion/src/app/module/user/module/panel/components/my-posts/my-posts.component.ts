@@ -35,7 +35,7 @@ export class MyPostsComponent implements OnInit, OnDestroy{
     }
 
     ngOnInit(){
-        this.loadTable();
+        this.loadTableConfiguration();
         this.getUserPosts();
     }
 
