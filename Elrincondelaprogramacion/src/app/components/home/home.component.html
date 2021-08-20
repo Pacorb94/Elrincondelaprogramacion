@@ -2,12 +2,13 @@
     <div class="col-xl-9">
         <last-added-category></last-added-category>
         <div *ngIf="loading; else data">
-            <h3 *ngIf="!category" class="text-center">Puede que no haya posts</h3>
-            <h3 *ngIf="category" class="text-center">
-                Puede que no haya posts de la categoría {{category}}
+            <!--Si terminó de cargar y no hay posts-->
+            <h3 *ngIf="!category&&noPosts" class="text-center">No hay posts</h3>
+            <h3 *ngIf="category&&noPosts" class="text-center">
+                No hay posts de la categoría {{category}}
             </h3>
-            <hr>
-            <div class="text-center">
+            <!--Si no hay posts-->
+            <div *ngIf="!noPosts" class="text-center">
                 <button class="btn btn-primary" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     Cargando...
