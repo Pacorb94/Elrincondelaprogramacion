@@ -19,7 +19,8 @@ import { ReactiveFormsModule } from '@angular/forms';
         FlashMessagesModule.forRoot(),
         MomentModule,
         RouterModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        RouterModule
     ],
     exports:[
         MostActivePostsComponent,
