@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/module/user/service/user.service';
 import { PostService } from './../../services/post.service';
+import { CommentService } from './../../services/comment.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
@@ -18,10 +19,11 @@ export class WatchPostComponent implements OnInit, OnDestroy {
     form:FormGroup;
     postSubscription:Subscription;
     addCommentSubscription:Subscription;
+    updateCommentSubscription:Subscription;
     deleteCommentSubscription:Subscription;
 
     constructor(private _postService:PostService, private _userService:UserService,
-    private _route:ActivatedRoute, private _router:Router, 
+    private _commentService:CommentService, private _route:ActivatedRoute, private _router:Router, 
     private _flashMessagesService:FlashMessagesService) {
         this.user=this._userService.getUserLoggedIn();
         this.loading=true;
@@ -30,6 +32,7 @@ export class WatchPostComponent implements OnInit, OnDestroy {
         });
         this.postSubscription=new Subscription();
         this.addCommentSubscription=new Subscription();
+        this.updateCommentSubscription=new Subscription();
         this.deleteCommentSubscription=new Subscription();
     }
 
@@ -40,6 +43,7 @@ export class WatchPostComponent implements OnInit, OnDestroy {
     ngOnDestroy(){
         this.postSubscription.unsubscribe();
         this.addCommentSubscription.unsubscribe();
+        this.updateCommentSubscription.unsubscribe();
         this.deleteCommentSubscription.unsubscribe();
     }
 
@@ -75,11 +79,26 @@ export class WatchPostComponent implements OnInit, OnDestroy {
             }
         );
     }
-
+    
+    /**
+     * Función que crea un comentario
+     */
     createComment(){
+       // this.createComment=this._commentService
+    }
+
+    /**
+     * Función que modifica un comentario
+     * @param id 
+     */
+    updateComment(id:number){
 
     }
 
+    /**
+     * Función que borra un comentario
+     * @param id 
+     */
     deleteComment(id:number){
 
     }
