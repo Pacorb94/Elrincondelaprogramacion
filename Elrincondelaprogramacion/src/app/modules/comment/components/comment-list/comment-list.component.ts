@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit,  } from '@angular/core';
+import { CommentService } from '../../service/comment.service';
 
 @Component({
     selector: 'comment-list',
@@ -6,10 +7,21 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./comment-list.component.scss']
 })
 export class CommentListComponent implements OnInit {
+    @Input()posts:any[];
 
-    constructor() { }
+    constructor(private _commentService:CommentService) { 
 
-    ngOnInit(): void {
     }
 
+    ngOnInit(): void {
+
+    }
+
+    updateComment(id:number){
+
+    }
+
+    deleteComment(id:number){
+
+    }
 }
