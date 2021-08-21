@@ -126,7 +126,17 @@ createComment:
     controller: App\Controller\CommentController::create
     methods: POST
 
+updateComment:
+    path: /comments/{id}/update
+    controller: App\Controller\CommentController::update
+    methods: PUT    
+
 indequateComment:
     path: /comments/{id}/inadequate
     controller: App\Controller\CommentController::inadequate
     methods: PUT
+
+deleteComment:
+    path: /comments/{id}/delete
+    controller: App\Controller\CommentController::delete
+    methods: DELETE
