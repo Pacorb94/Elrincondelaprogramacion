@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../module/user/service/user.service';
-import { CategoryService } from '../../services/category.service';
+import { UserService } from '../../modules/user/service/user.service';
+import { CategoryService } from '../../modules/category/service/category.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 

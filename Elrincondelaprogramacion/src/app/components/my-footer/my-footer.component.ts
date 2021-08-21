@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Subscription } from 'rxjs';
-import { PostService } from '../../services/post.service';
+import { PostService } from '../../modules/post/service/post.service';
 
 @Component({
     selector: 'my-footer',

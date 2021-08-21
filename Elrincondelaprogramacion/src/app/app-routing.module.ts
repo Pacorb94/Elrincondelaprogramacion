@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { CookiesPolicyComponent } from './components/cookies-policy/cookies-policy.component';
-import { WatchPostComponent } from './components/watch-post/watch-post.component';
+import { WatchPostComponent } from './modules/post/components/watch-post/watch-post.component';
 
 
 const routes: Routes = [
@@ -18,7 +18,7 @@ const routes: Routes = [
     },
     { path:'cookies-policy', component:CookiesPolicyComponent },
     //Cargamos una ruta padre que tendrá rutas hijas con lo cual usará el lazyLoading
-    { path:'', loadChildren:()=>import('./module/user/user.module').then(m=>m.UserModule) },
+    { path:'', loadChildren:()=>import('./modules/user/user.module').then(m=>m.UserModule) },
     { path:'**', redirectTo:''}
 ];
 
