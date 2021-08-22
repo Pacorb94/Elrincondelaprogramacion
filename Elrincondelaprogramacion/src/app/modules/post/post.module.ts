@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CommentModule } from './../comment/comment.module';
 import { WatchPostComponent } from './components/watch-post/watch-post.component';
 import { MostActivePostsComponent } from './components/most-active-posts/most-active-posts.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -15,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ],
     imports: [
         CommonModule,
+        CommentModule,
         HttpClientModule,
         FlashMessagesModule.forRoot(),
         MomentModule,

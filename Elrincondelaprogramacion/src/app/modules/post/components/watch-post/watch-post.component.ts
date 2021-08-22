@@ -18,7 +18,6 @@ export class WatchPostComponent implements OnInit, OnDestroy {
     loading:boolean;
     form:FormGroup;
     postSubscription:Subscription;
-    addCommentSubscription:Subscription;
     updateCommentSubscription:Subscription;
     deleteCommentSubscription:Subscription;
 
@@ -31,7 +30,6 @@ export class WatchPostComponent implements OnInit, OnDestroy {
             content:new FormControl('', Validators.required)
         });
         this.postSubscription=new Subscription();
-        this.addCommentSubscription=new Subscription();
         this.updateCommentSubscription=new Subscription();
         this.deleteCommentSubscription=new Subscription();
     }
@@ -42,7 +40,6 @@ export class WatchPostComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(){
         this.postSubscription.unsubscribe();
-        this.addCommentSubscription.unsubscribe();
         this.updateCommentSubscription.unsubscribe();
         this.deleteCommentSubscription.unsubscribe();
     }
