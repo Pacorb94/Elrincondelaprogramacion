@@ -49,6 +49,15 @@ export class PostService {
     getPost(title:string):Observable<any>{
         return this._http.get(`${environment.url}/posts/${title}`);
     }
+
+    /**
+     * Función que obtiene los comentarios de un post
+     * @param id 
+     * @returns 
+     */
+    getPostComments(id:number):Observable<any>{
+        return this._http.get(`${environment.url}/posts/${id}/comments`);
+    }
     
     /**
      * Función que obtiene los posts por categoría
