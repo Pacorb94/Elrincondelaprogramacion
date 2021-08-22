@@ -111,7 +111,7 @@ getPostDetails:
     methods: GET
 
 getPostComments:
-    path: /{postId}/comments
+    path: /posts/{id}/comments
     controller: App\Controller\PostController::getComments
     methods: GET
 
