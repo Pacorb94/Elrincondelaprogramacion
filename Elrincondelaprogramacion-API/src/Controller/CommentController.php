@@ -56,7 +56,13 @@ class CommentController extends AbstractController
         return $this->json(['message'=>'Wrong post id'], 400);
     }
 
-    public function update($id, Request $request)
+    /**
+     * Función que modifica un comentario
+     * @param $postId
+     * @param $request
+     * @return JsonResponse
+     */
+    public function update($postId, Request $request)
     {
         
     }
