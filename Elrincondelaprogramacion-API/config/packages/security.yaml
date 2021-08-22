@@ -43,6 +43,7 @@ security:
             roles: IS_AUTHENTICATED_ANONYMOUSLY, 
             requires_channel: https 
           }
+        - { path: /posts/[0-9]+/comments, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { 
             path: /posts/categories/[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+, 
             roles: IS_AUTHENTICATED_ANONYMOUSLY, 
