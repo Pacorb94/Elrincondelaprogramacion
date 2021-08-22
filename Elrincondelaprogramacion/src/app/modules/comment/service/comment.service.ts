@@ -1,26 +1,55 @@
 import { Injectable } from '@angular/core';
 import { Commentt } from '../../../models/Commentt';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+
 
 @Injectable({
     providedIn:'root'
 })
 export class CommentService {
-    
-    constructor(private _http:HttpClient) {}
+    private updatedCommentList:BehaviorSubject<boolean>;
+
+    constructor(private _http:HttpClient) {
+        this.updatedCommentList=new BehaviorSubject<boolean>(false);
+    }
+
+    /**
+     * Función que actualiza el valor del BehaviourSubject
+     * @param value 
+     */
+    setUpdatedCommentList$(value:boolean){
+        this.updatedCommentList.next(value);
+    }
+
+    /**
+     * Función que devuelve el observable
+     * @returns 
+     */
+    getUpdatedCommentList$():Observable<boolean>{
+        return this.updatedCommentList.asObservable();
+    }
 
     /**
      * Función que crea un comentario
-     * @param postTitle 
+     * @param postId
      * @param comment 
      * @returns 
      */
-    create(postTitle:string, comment:Commentt):Observable<any>{
-        let data=`json=${comment}`;
+    create(postId:number, comment:Commentt):Observable<any>{
+        let data=`json=${JSON.stringify(comment)}`;
         let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return this._http.post(`${environment.url}/${postTitle}/comment/create`, data, {headers:header});
+        return this._http.post(`${environment.url}/${postId}/comment/create`, data, {headers:header});
+    }
+    
+    /**
+     * Función que obtiene los comentarios de un post
+     * @param postId 
+     * @returns 
+     */
+    getPostComments(postId:number):Observable<any>{
+        return this._http.get(`${environment.url}/${postId}/comments`);
     }
     
     /**
@@ -29,21 +58,21 @@ export class CommentService {
      * @returns 
      */
     update(comment:any):Observable<any>{
-        let data=`json=${comment}`;
+        let data=`json=${JSON.stringify(comment)}`;
         let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
         return this._http.put(`${environment.url}/comments/${comment.id}/update`, data, {headers:header});
     }
     
     /**
      * Función que marca como inadecuado un comentario
-     * @param id 
-     * @param inadequate 
+     * @param comment
      * @returns 
      */
-    inadequate(id:number, inadequate:string):Observable<any>{
-        let data=`json=${inadequate}`;
+    inadequate(comment:any):Observable<any>{
+        let data=`json=${JSON.stringify(comment)}`;
         let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return this._http.put(`${environment.url}/comments/${id}/inadequate`, data, {headers:header});
+        return this._http.put(`${environment.url}/comments/${comment.id}/inadequate`, data, 
+                            {headers:header});
     }
     
     /**
