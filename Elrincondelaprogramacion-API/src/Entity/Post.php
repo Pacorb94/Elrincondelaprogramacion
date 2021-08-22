@@ -196,10 +196,10 @@ class Post
         return $this;
     }
 
-    public function getComments()
+   /* public function getComments()
     {
         return $this->comments;
-    }
+    }*/
 
     public function setComments(?Comment $comments): self
     {
