@@ -25,7 +25,7 @@ getProfileImage:
 
 getUser:
     path: /users/{id}
-    controller: App\Controller\UserController::getUserDetail
+    controller: App\Controller\UserController::getDetails
     methods: GET
 
 getRoles:
@@ -97,7 +97,7 @@ getPosts:
 
 getUserPosts:
     path: /posts/users/{userId}
-    controller: App\Controller\PostController::getUserPosts
+    controller: App\Controller\PostController::getByUser
     methods: GET
 
 getPostsByCategory:
@@ -105,9 +105,14 @@ getPostsByCategory:
     controller: App\Controller\HomeController::getPostsByCategory
     methods: GET
 
-getPostDetail:
+getPostDetails:
     path: /posts/{title}
-    controller: App\Controller\PostController::getPostDetail
+    controller: App\Controller\PostController::getDetails
+    methods: GET
+
+getPostComments:
+    path: /{postId}/comments
+    controller: App\Controller\PostController::getComments
     methods: GET
 
 deletePost:
@@ -125,11 +130,6 @@ createComment:
     path: /{postId}/comment/create
     controller: App\Controller\CommentController::create
     methods: POST
-
-getPostComments:
-    path: /{postId}/comments
-    controller: App\Controller\CommentController::getPostComments
-    methods: GET
 
 updateComment:
     path: /comments/{id}/update
