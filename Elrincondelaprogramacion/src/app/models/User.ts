@@ -9,14 +9,13 @@ export class User {
     private createdAt: any;
     private updatedAt: any;
 
-    constructor(id: any, nick:string, email:string, password: string, profileImage:any, 
-    role:string, ban: boolean) {
+    constructor(id: any, nick:string, email:string, password: string, profileImage:any, ban: boolean) {
         this.id = id;
         this.nick=nick;
         this.email=email;
         this.password=password;
         this.profileImage=profileImage;
-        this.role=role;
+        this.role='ROLE_READER';
         this.ban=ban;
         this.createdAt = Date.now();
     }
