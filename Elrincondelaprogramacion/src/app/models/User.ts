@@ -21,18 +21,6 @@ export class User {
         this.createdAt = Date.now();
     }
 
-    setValues(nick:string, email:string, password: string, profileImage:any, 
-    role:string, ban: boolean, createdAt: any, updatedAt: any) {
-        this.setNick(nick);
-        this.setEmail(email);
-        this.setPassword(password);
-        this.setProfileImage(profileImage);
-        this.setRole(role);
-        this.setBan(ban);
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(updatedAt);
-    }
-
     setNick(nick:string) {
         this.nick = nick;
     }
@@ -55,10 +43,6 @@ export class User {
 
     setBan(ban:boolean) {
         this.ban = ban;
-    }
-
-    setCreatedAt(createdAt: any) {
-        this.createdAt = createdAt;
     }
 
     setUpdatedAt(updatedAt: any) {
