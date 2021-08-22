@@ -44,15 +44,6 @@ export class CommentService {
     }
     
     /**
-     * Función que obtiene los comentarios de un post
-     * @param postId 
-     * @returns 
-     */
-    getPostComments(postId:number):Observable<any>{
-        return this._http.get(`${environment.url}/${postId}/comments`);
-    }
-    
-    /**
      * Función que modifica un comentario
      * @param comment 
      * @returns 
