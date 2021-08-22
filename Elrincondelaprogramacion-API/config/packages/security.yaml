@@ -61,41 +61,19 @@ security:
         - { path: /users/[0-9]+/ban, roles: ROLE_ADMIN, requires_channel: https }
         - { path: /logout, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
         - { path: /[category], roles: ROLE_ADMIN, requires_channel: https }
-        - { 
-            path: /categories/[0-9]+/update, 
-            roles: ROLE_ADMIN, 
-            requires_channel: https 
-          }
-        - { 
-            path: /categories/[0-9]+/delete, 
-            roles: ROLE_ADMIN, 
-            requires_channel: https 
-          }
+        - { path: /categories/[0-9]+/update, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: /categories/[0-9]+/delete, roles: ROLE_ADMIN, requires_channel: https }
         - { path: /post/create, roles: [ROLE_ADMIN, ROLE_WRITER], requires_channel: https }
-        - { 
-            path: /posts/[0-9]+/update, 
-            roles: [ROLE_ADMIN, ROLE_WRITER], 
-            requires_channel: https 
-          }
+        - { path: /posts/[0-9]+/update, roles: [ROLE_ADMIN, ROLE_WRITER], requires_channel: https }
         - { path: /post-image/upload, roles: [ROLE_ADMIN, ROLE_WRITER], requires_channel: https } 
         - { 
             path: /posts-images/[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+, 
             roles: IS_AUTHENTICATED_FULLY, 
             requires_channel: https 
           }     
-        - { 
-            path: /posts/[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+/inadequate, 
-            roles: ROLE_ADMIN, 
-            requires_channel: https 
-          }
-        - { 
-            path: /posts/[0-9]+/delete, 
-            roles: ROLE_ADMIN, 
-            requires_channel: https 
-          }
-        - { 
-            path: /[0-9]+/comment/create, 
-            roles: IS_AUTHENTICATED_FULLY, 
-            requires_channel: https 
-          }
+        - { path: /posts/[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+/inadequate, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: /posts/[0-9]+/delete, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: /[0-9]+/comment/create, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
+        - { path: /comments/[0-9]+/update, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
         - { path: /comments/[0-9]+/inadequate, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: /comments/[0-9]+/delete, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
