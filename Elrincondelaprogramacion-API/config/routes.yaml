@@ -13,6 +13,11 @@ updateUser:
     controller: App\Controller\UserController::update
     methods: PUT
 
+updateRole:
+    path: /users/{id}/update-role
+    controller: App\Controller\UserController::updateRole
+    methods: PUT
+
 uploadProfileImage:
     path: /profile-image/upload
     controller: App\Controller\UserController::uploadProfileImage
