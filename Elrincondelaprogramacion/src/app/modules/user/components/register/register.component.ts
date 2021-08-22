@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     constructor(private _userService:UserService, private _flashMessagesService:FlashMessagesService) { 
         this.pageTitle='Registro';
-        this.user=new User(null, '', '', '', null, '', false);
+        this.user=new User(null, '', '', '', null, false);
         this.goodRegister=false;
         this.form=new FormGroup({
             nick:new FormControl('', Validators.required),
@@ -86,7 +86,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.user.setNick(this.form.get('nick')?.value);
         this.user.setEmail(this.form.get('email')?.value);
         this.user.setPassword(this.form.get('password')?.value);
-        this.user.setRole(this.form.get('role')?.value);
     }
 
     /**

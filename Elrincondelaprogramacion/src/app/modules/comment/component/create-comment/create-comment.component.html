@@ -1,1 +1,15 @@
-<p>create-comment works!</p>
+<flash-messages></flash-messages>
+<!--La propiedad "formGroup" asocia este formulario con una propiedad del componente. 
+En el evento ubmit le pasamos los valores de los campos-->
+<form [formGroup]="form" class="text-center">
+    <label for="mensaje"><h4>¿Qué quieres comentar?</h4></label>
+    <textarea formControlName="content" id="mensaje" cols="30" rows="5" class="form-control">
+    </textarea>
+    <span *ngIf="checkTouched(form.get('content'))" class="invalid-feedback d-block">
+        {{wrongValidationMessage(form.get('content'), 'contenido')}}
+    </span>
+    <!--La propiedad disabled permite poner una condición, por lo que el botón 
+    se desactivará si el formulario no es válido-->
+    <input type="button" [disabled]="!form.valid" (click)="createComment()" value="Comentar" 
+        class="btn btn-success mt-3">
+</form>

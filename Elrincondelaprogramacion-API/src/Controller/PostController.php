@@ -179,7 +179,7 @@ class PostController extends AbstractController
      * @param $userId
      * @return JsonResponse
      */
-    public function getUserPosts($userId)
+    public function getByUser($userId)
     {
         if ($this->idValidation($userId)) {
             $userRepo=$this->getDoctrine()->getRepository(User::class);
@@ -199,7 +199,7 @@ class PostController extends AbstractController
      * @param $title
      * @return JsonResponse
      */
-    public function getPostDetail($title)
+    public function getDetails($title)
     {
         if ($this->paramValidation($title, 'string')) {
             $post=$this->postRepo->findOneBy(['title'=>$title]);
@@ -214,6 +214,22 @@ class PostController extends AbstractController
             return $this->json(['message'=>'Post not found'], 404);
         }
         return $this->json(['message'=>'Wrong title'], 400);  
+    }
+
+    /**
+     * Función que obtiene los comentarios de un post
+     * @param $id
+     * @return JsonResponse
+     */
+    public function getComments($id)
+    {
+        if ($this->idValidation($id)) {
+            $post=$this->postRepo->find($id);
+            //Si existe
+            if ($post) return $this->json($post->getComments());          
+            return $this->json(['message'=>'Post not found'], 404);
+        }
+        return $this->json(['message'=>'Wrong id'], 400);
     }
 
     /**

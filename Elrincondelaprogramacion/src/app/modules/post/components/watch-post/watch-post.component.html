@@ -16,8 +16,11 @@
             <span class="badge rounded-pill mr-2 bg-warning">
                 <h6>{{post.category===null?'Categoría borrada':post.category.name}}</h6>
             </span>
-            <span class="badge rounded-pill badge-secondary">
+            <span class="badge rounded-pill badge-secondary mr-2">
                 <h6>Publicado {{post.createdAt|amLocale:'es'|amCalendar}}</h6>
+            </span>
+            <span class="badge rounded-pill badge-secondary">
+                <h6>Modificado {{post.updatedAt|amLocale:'es'|amCalendar}}</h6>
             </span>
             <p>{{post.content}}</p>
             <!--Si el post no está marcado como inadecuado-->
@@ -28,51 +31,11 @@
             </h6>
             <div class="row">
                 <div class="col-sm-5 col-md-6 col-12 pb-4">
-                    <h3 class="text-center">Comentarios</h3>
-                    <!--Si hay comentarios-->
-                    <ng-container *ngIf="post.comments.length>0">
-                        <div *ngFor="let comment of post.comments" class="comment mt-4 text-justify">
-                            <div>
-                                <!--Si hay foto de perfil-->
-                                <img *ngIf="comment.user.profileImage" [src]="" alt="Imagen de perfil" 
-                                    class="profileImage mr-1">
-                                <a [routerLink]="['/user-details', comment.user.id]" 
-                                    class="badge badge-primary mr-2">
-                                    {{comment.user.nick}}
-                                </a>                   
-                                <span class="badge rounded-pill bg-light text-dark">
-                                    {{comment.createdAt|amLocale:'es'|amCalendar}}
-                                </span>
-                                <!--Si el que ha iniciado sesión es el creador del comentario-->
-                                <input type="button" *ngIf="user&&user.id==comment.user.id" 
-                                    (click)="deleteComment(comment.id)"
-                                    class="btn btn-danger float-right" value="Borrar">
-                            </div><br>
-                            <p id="commentContent">
-                                {{!comment.inadequate?comment.content:'Es comentario está marcado como inadecuado'}}
-                            </p>
-                            <hr>
-                        </div>
-                    </ng-container>
+                    <comment-list [post]="post"></comment-list>
                 </div>
                 <!--Si el usuario está logueado-->
                 <div *ngIf="user" class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-1">
-                    <flash-messages></flash-messages>
-                    <!--La propiedad "formGroup" asocia este formulario con una propiedad del componente. 
-                    En el evento ubmit le pasamos los valores de los campos-->
-                    <form [formGroup]="form" class="text-center">
-                        <label for="mensaje"><h4>¿Qué quieres comentar?</h4></label>
-                        <textarea formControlName="content" id="mensaje" cols="30" rows="5" 
-                            class="form-control">
-                        </textarea>
-                        <span *ngIf="checkTouched(form.get('content'))" class="invalid-feedback d-block">
-                            {{wrongValidationMessage(form.get('content'), 'contenido')}}
-                        </span>
-                        <!--La propiedad disabled permite poner una condición, por lo que el botón 
-                                se desactivará si el formulario no es válido-->
-                        <input type="button" [disabled]="!form.valid" 
-                            value="Comentar" class="btn btn-success mt-3">
-                    </form>
+                    <create-comment [post]="post"></create-comment>
                 </div>
             </div>
         </div>

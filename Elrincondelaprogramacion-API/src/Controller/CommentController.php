@@ -36,9 +36,7 @@ class CommentController extends AbstractController
             if ($request) {
                 //Decodificamos a un array
                 $decodedRequest=json_decode($request, true);
-                /*array_map itera sobre los elementos de $decodedRequest ejecutando 
-                la función trim*/
-                $decodedRequest=array_map('trim', $decodedRequest);
+                $decodedRequest['content']=trim($decodedRequest['content']);
                 if (count($this->contentValidation($decodedRequest['content']))==0) {
                     $post=$this->postRepo->find($postId);
                     //Si existe
@@ -50,15 +48,41 @@ class CommentController extends AbstractController
                     }
                     return $this->json(['message'=>'Post not found'], 404);
                 }
+                return $this->json(['message'=>'Wrong validation'], 400);
             }
             return $this->json(['message'=>'Wrong json'], 400);             
         }
         return $this->json(['message'=>'Wrong post id'], 400);
     }
-
+    
+    /**
+     * Función que modifica un comentario
+     * @param $id
+     * @param $request
+     * @return JsonResponse
+     */
     public function update($id, Request $request)
     {
-        
+        if ($this->idValidation($id)) {
+            $request=$request->get('json', null);
+            if ($request) {
+                $decodedRequest=json_decode($request, true);
+                if (count($this->contentValidation($decodedRequest['content']))==0) {
+                    $decodedRequest['content']=trim($decodedRequest['content']);
+                    $comment=$this->commentRepo->find($id);
+                    //Si existe
+                    if ($comment) {
+                        $comment->setContent($decodedRequest['content']);
+                        $comment->execute($this->em, $comment, 'update');
+                        return $this->json($comment);
+                    }
+                    return $this->json(['message'=>'Comment not found'], 404);
+                }
+                return $this->json(['message'=>'Wrong content'], 400);
+            }
+            return $this->json(['message'=>'Wrong json'], 400);
+        }
+        return $this->json(['message'=>'Wrong post id'], 400);
     }
 
     /**
@@ -112,7 +136,6 @@ class CommentController extends AbstractController
                         $post->setCategory(null);
                         $post->execute($this->em, $post, 'update');
                     }*/ 
-                    dump($comment->getPost());die();
                     $comment->execute($this->em, $comment, 'delete');
                     return $this->json(['message'=>'Deleted comment']);
                 }
