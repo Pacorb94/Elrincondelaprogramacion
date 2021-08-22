@@ -175,7 +175,7 @@ class UserController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function getUserDetail($id)
+    public function getDetails($id)
     {
         if ($this->idValidation($id)) {
             $user=$this->userRepo->find($id);
