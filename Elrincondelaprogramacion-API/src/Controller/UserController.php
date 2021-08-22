@@ -42,7 +42,7 @@ class UserController extends AbstractController
                 if (!$this->userRepo->findOneBy(['email'=>$decodedRequest['email']])) {
                     $encryptedPassword=password_hash($decodedRequest['password'], PASSWORD_BCRYPT);
                     $user=new User($decodedRequest['nick'], $decodedRequest['email'], $encryptedPassword, 
-                        null, false, [$decodedRequest['role']]);
+                        null, false);
                     $user->execute($this->em, $user, 'insert');                 
                     return $this->json([$user, 'password'=>$decodedRequest['password']], 201);
                 }
@@ -63,7 +63,7 @@ class UserController extends AbstractController
     {
         try {
             if ($this->idValidation($id)) {
-                $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();;              
+                $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();             
                 //Si el usuario que modificamos es el que está logueado
                 if ($userLoggedIn->getId()==$id) {
                     $request=$request->get('json', null);
@@ -120,6 +120,41 @@ class UserController extends AbstractController
         if ($this->filesystem->exists($imagesDirectory.'/'.$oldImageName)) {
             $this->filesystem->remove($imagesDirectory.'/'.$oldImageName);    
         }   
+    }
+    
+    /**
+     * Función que modifica el rol del usuario
+     * @param $id
+     * @param $request
+     * @return JsonResponse
+     */
+    public function updateRole($id, Request $request)
+    {
+        if ($this->idValidation($id)) {
+            $request=$request->get('json', null);
+            if ($request) {
+                $user=$this->userRepo->find(['id'=>$id]);
+                //Si existe el usuario
+                if ($user) {
+                    //Con true decodificamos la petición a un array
+                    $decodedRequest=json_decode($request, true);
+                    $decodedRequest['roles']=trim($decodedRequest['roles']);                      
+                    /*?: indica que $decodedRequest['roles'] si tiene valor será ese 
+                    sino $user->getRoles()*/
+                    $decodedRequest['roles']=$decodedRequest['roles']?:$user->getRoles();
+                    if ($decodedRequest['roles']) {
+                        $user->setRole([$decodedRequest['role']]);
+                        $user->setUpdatedAt(new \DateTime('now'));
+                        $user->execute($this->em, $user, 'update');                
+                        return $this->json($user);          
+                    }
+                    return $this->json(['message'=>'Wrong role'], 400);  
+                }
+                return $this->json(['message'=>'User not found'], 404);
+            }
+            return $this->json(['message'=>'Wrong json'], 400);         
+        }
+        return $this->json(['message'=>'Wrong id'], 400);
     }
 
     /**
