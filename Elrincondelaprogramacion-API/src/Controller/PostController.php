@@ -218,18 +218,18 @@ class PostController extends AbstractController
 
     /**
      * Función que obtiene los comentarios de un post
-     * @param $postId
+     * @param $id
      * @return JsonResponse
      */
-    public function getComments($postId)
+    public function getComments($id)
     {
-        if ($this->idValidation($postId)) {
-            $post=$this->postRepo->find($postId);
+        if ($this->idValidation($id)) {
+            $post=$this->postRepo->find($id);
             //Si existe
             if ($post) return $this->json($post->getComments());          
             return $this->json(['message'=>'Post not found'], 404);
         }
-        return $this->json(['message'=>'Wrong post id'], 400);
+        return $this->json(['message'=>'Wrong id'], 400);
     }
 
     /**
