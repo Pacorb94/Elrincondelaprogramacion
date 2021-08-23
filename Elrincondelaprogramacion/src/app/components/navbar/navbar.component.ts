@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../module/user/service/user.service';
-import { CategoryService } from '../../services/category.service';
+import { UserService } from '../../modules/user/service/user.service';
+import { CategoryService } from '../../modules/category/service/category.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -115,24 +115,5 @@ export class NavbarComponent implements OnInit, OnDestroy {
             },
             error=>{}
         );
-    }
-
-    /**
-     * Función que comprueba si el foco está en el campo
-     * @param field
-     */
-    checkTouched(field:any):boolean{
-        if (field.touched) return true;
-        return false;
-    }
-
-    /**
-     * Función que muestra un mensaje de validación incorrecta
-     * @param field 
-     * @param fieldName 
-     */
-    wrongValidationMessage(field:any, fieldName:string):string{
-        if (field.errors?.required) return `El campo ${fieldName} es obligatorio`;
-        return '';
     }
 }

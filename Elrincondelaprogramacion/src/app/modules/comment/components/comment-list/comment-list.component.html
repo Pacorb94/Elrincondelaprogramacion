@@ -1,0 +1,25 @@
+<h3 class="text-center">Comentarios</h3>
+<!--Si hay comentarios-->
+<div *ngIf="comments">
+    <div *ngFor="let comment of comments" class="comment mt-4 text-justify">
+        <div>
+            <!--Si hay foto de perfil-->
+            <img *ngIf="comment.user.profileImage" [src]="" alt="Imagen de perfil" class="profileImage mr-1">
+            <img *ngIf="!comment.user.profileImage" src="../../../assets/images/no-profile-image.png"
+                alt="Imagen de perfil" class="profileImage mr-1">
+            <a [routerLink]="['/user-details', comment.user.id]" class="badge badge-primary mr-2">
+                {{comment.user.nick}}
+            </a>
+            <span class="badge rounded-pill bg-light text-dark">
+                {{comment.createdAt|amLocale:'es'|amCalendar}}
+            </span>
+            <!--Si el que ha iniciado sesión es el creador del comentario-->
+            <input type="button" *ngIf="user&&user.id==comment.user.id" (click)="deleteComment(comment.id)"
+                class="btn btn-danger float-right" value="Borrar">
+        </div><br>
+        <p id="commentContent">
+            {{!comment.inadequate?comment.content:'Es comentario está marcado como inadecuado'}}
+        </p>
+        <hr>
+    </div>
+</div>

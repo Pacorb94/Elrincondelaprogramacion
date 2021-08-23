@@ -10,18 +10,8 @@ export class Category {
         this.createdAt=Date.now();
     }
 
-    setValues(name:string, createdAt:any, updatedAt:any){
-        this.setName(name);
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(updatedAt);
-    }
-
     setName(name:string){
         this.name=name;
-    }
-
-    setCreatedAt(createdAt:any){
-        this.createdAt=createdAt;
     }
 
     setUpdatedAt(updatedAt:any){

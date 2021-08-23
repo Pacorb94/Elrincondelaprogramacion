@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { PostService } from '../../services/post.service';
+import { PostService } from '../../modules/post/service/post.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgcCookieConsentService } from 'ngx-cookieconsent';
 import { environment } from 'src/environments/environment';
@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit, OnDestroy{
     category: any;
     loading: boolean;
     imageUrl:string;
+    noPosts:any;
     subscription:Subscription;
     //------Paginación-------
     page: any;
@@ -86,6 +87,7 @@ export class HomeComponent implements OnInit, OnDestroy{
                     this.pagination(response.totalPages);
                 } else {
                     this.loading = true;
+                    this.noPosts=true;
                 }
             },
             error => {
@@ -107,6 +109,7 @@ export class HomeComponent implements OnInit, OnDestroy{
                     this.pagination(response.totalPages);
                 } else {
                     this.loading = true;
+                    this.noPosts=true;
                 }
             },
             error => {

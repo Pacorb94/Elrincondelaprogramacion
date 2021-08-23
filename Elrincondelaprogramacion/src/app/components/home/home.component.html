@@ -2,12 +2,13 @@
     <div class="col-xl-9">
         <last-added-category></last-added-category>
         <div *ngIf="loading; else data">
-            <h3 *ngIf="!category" class="text-center">Puede que no haya posts</h3>
-            <h3 *ngIf="category" class="text-center">
-                Puede que no haya posts de la categoría {{category}}
+            <!--Si terminó de cargar y no hay posts-->
+            <h3 *ngIf="!category&&noPosts" class="text-center">No hay posts</h3>
+            <h3 *ngIf="category&&noPosts" class="text-center">
+                No hay posts de la categoría {{category}}
             </h3>
-            <hr>
-            <div class="text-center">
+            <!--Si no hay posts-->
+            <div *ngIf="!noPosts" class="text-center">
                 <button class="btn btn-primary" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     Cargando...
@@ -22,7 +23,7 @@
             <div class="card-columns w-100">
                 <article *ngFor="let post of posts" class="card">
                     <div class="card-body">
-                        <a [routerLink]="['/watch-post', post.title]">
+                        <a [routerLink]="['/posts', post.title]">
                             <!--Si hay imagen-->
                             <img *ngIf="post.image" [src]="imageUrl+post.image" alt="Imagen del post" 
                                 class="card-img-top">
@@ -30,7 +31,7 @@
                                 alt="Imagen del post" class="card-img-top">
                         </a>
                         <h5 class="card-title card-header text-center">
-                            <a [routerLink]="['/watch-post', post.title]">{{post.title}}</a>
+                            <a [routerLink]="['/posts', post.title]">{{post.title}}</a>
                         </h5>
                         <p class="text-center">{{post.content}}</p>
                     </div>

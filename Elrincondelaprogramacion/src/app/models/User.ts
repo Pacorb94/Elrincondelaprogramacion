@@ -9,28 +9,15 @@ export class User {
     private createdAt: any;
     private updatedAt: any;
 
-    constructor(id: any, nick:string, email:string, password: string, profileImage:any, 
-    role:string, ban: boolean) {
+    constructor(id: any, nick:string, email:string, password: string, profileImage:any, ban: boolean) {
         this.id = id;
         this.nick=nick;
         this.email=email;
         this.password=password;
         this.profileImage=profileImage;
-        this.role=role;
+        this.role='ROLE_READER';
         this.ban=ban;
         this.createdAt = Date.now();
-    }
-
-    setValues(nick:string, email:string, password: string, profileImage:any, 
-    role:string, ban: boolean, createdAt: any, updatedAt: any) {
-        this.setNick(nick);
-        this.setEmail(email);
-        this.setPassword(password);
-        this.setProfileImage(profileImage);
-        this.setRole(role);
-        this.setBan(ban);
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(updatedAt);
     }
 
     setNick(nick:string) {
@@ -55,10 +42,6 @@ export class User {
 
     setBan(ban:boolean) {
         this.ban = ban;
-    }
-
-    setCreatedAt(createdAt: any) {
-        this.createdAt = createdAt;
     }
 
     setUpdatedAt(updatedAt: any) {

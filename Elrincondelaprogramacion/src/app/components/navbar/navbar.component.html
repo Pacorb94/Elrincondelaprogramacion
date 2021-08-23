@@ -1,11 +1,6 @@
 <nav class="navbar fixed-top navbar-expand-lg col-xxl-12 col-xl-12 col-lg-12 col-md-12 navbar-light bg-light">
-    <div id="logo" class="row mr-5">
-        <div class="col-xl-1 mr-2 mt-1">
-            <span id="gear">S</span>
-        </div>
-        <div class="col-xl-1 col-lg-">
-            <a class="navbar-brand" routerLink="/">El rincón de la programación</a>
-        </div>      
+    <div id="logo" class="mr-2">
+        <a class="navbar-brand" routerLink="/">El rincón de la programación</a> 
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,9 +24,6 @@
                 </div>
             <!--Fin de lista desplegable-->
             </li>
-            <li class="nav-item active">
-                <a class="nav-link active" routerLink="/community">Comunidad</a>
-            </li>
             <li *ngIf="user" class="nav-item active">
                 <a class="nav-link active" routerLink="user-panel">Panel de usuario</a>
             </li>
@@ -39,13 +31,9 @@
             <li class="nav-item ml-5">
                 <form [formGroup]="form" class="d-flex form-inline ml-sm-10 my-2 my-lg-0 ml-5">
                     <input type="search" formControlName="postsSearchText" class="form-control" 
-                        placeholder="Busca un post" aria-label="Search">
+                        placeholder="Busca post o usuario" aria-label="Search">
                     <input type="button" (click)="searchPosts(form.get('postsSearchText')?.value)" 
                         value="Buscar post" class="btn btn-outline-success my-2 my-sm-0">
-                    <span *ngIf="checkTouched(form.get('postsSearchText'))" 
-                        class="invalid-feedback d-block">
-                        {{wrongValidationMessage(form.get('postsSearchText'), 'búsqueda')}}
-                    </span>
                 </form>
             <!--Fin del buscador-->
             </li>

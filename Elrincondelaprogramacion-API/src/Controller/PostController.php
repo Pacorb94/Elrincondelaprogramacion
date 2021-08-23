@@ -11,9 +11,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
 use App\Entity\Post;
 use App\Entity\Category;
+use App\Entity\Comment;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class PostController extends AbstractController
 {
@@ -179,7 +179,7 @@ class PostController extends AbstractController
      * @param $userId
      * @return JsonResponse
      */
-    public function getUserPosts($userId)
+    public function getByUser($userId)
     {
         if ($this->idValidation($userId)) {
             $userRepo=$this->getDoctrine()->getRepository(User::class);
@@ -199,21 +199,35 @@ class PostController extends AbstractController
      * @param $title
      * @return JsonResponse
      */
-    public function getPostDetail($title)
+    public function getDetails($title)
     {
         if ($this->paramValidation($title, 'string')) {
             $post=$this->postRepo->findOneBy(['title'=>$title]);
             //Si existe
-            if ($post) {
-                /*Como los posts almacenan un array de comentarios por lo tanto no se puede serializar
-                correctamente debemos devolver la respuesta así*/
-                return $this->json($post, 200, [], 
-                    [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}]
-                );
-            }
+            if ($post) return $this->json($post);           
             return $this->json(['message'=>'Post not found'], 404);
         }
         return $this->json(['message'=>'Wrong title'], 400);  
+    }
+
+    /**
+     * Función que obtiene los comentarios de un post
+     * @param $id
+     * @return JsonResponse
+     */
+    public function getComments($id)
+    {
+        if ($this->idValidation($id)) {
+            $post=$this->postRepo->find($id);
+            //Si existe
+            if ($post) {
+                $commentRepo=$this->getDoctrine()->getRepository(Comment::class);
+                $comments=$commentRepo->findBy(['post'=>$id]);
+                return $this->json($comments);
+            }        
+            return $this->json(['message'=>'Post not found'], 404);
+        }
+        return $this->json(['message'=>'Wrong id'], 400);
     }
 
     /**

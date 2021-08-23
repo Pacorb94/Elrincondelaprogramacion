@@ -1,0 +1,46 @@
+<div class="row column">
+    <div *ngIf="loading; else data" class="mx-auto">
+        <div>
+            <button class="btn btn-primary" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Cargando...
+            </button>
+        </div>
+    </div>
+    <ng-template #data>
+        <div *ngIf="!post.inadequate; else inadequate" class="col-md-12 mt-3">
+            <h3>{{post.title}}</h3>
+            <a [routerLink]="['/user-details', post.user.id]" class="badge rounded-pill badge-primary mr-2">
+                <h6>{{post.user.nick}}</h6>
+            </a>
+            <span class="badge rounded-pill mr-2 bg-warning">
+                <h6>{{post.category===null?'Categoría borrada':post.category.name}}</h6>
+            </span>
+            <span class="badge rounded-pill badge-secondary mr-2">
+                <h6>Publicado {{post.createdAt|amLocale:'es'|amCalendar}}</h6>
+            </span>
+            <span class="badge rounded-pill badge-secondary">
+                <h6>Modificado {{post.updatedAt|amLocale:'es'|amCalendar}}</h6>
+            </span>
+            <p>{{post.content}}</p>
+            <!--Si el post no está marcado como inadecuado-->
+            <input *ngIf="!post.inadequate" type="button" value="Marcar post como inadecuado" 
+                class="btn btn-info">       
+            <h6 *ngIf="!user" class="alert alert-info text-center col-4 mx-auto">
+                Para poner un comentario inicia sesión <a [routerLink]="['/login']">aquí</a>
+            </h6>
+            <div class="row">
+                <div class="col-sm-5 col-md-6 col-12 pb-4">
+                    <comment-list [post]="post"></comment-list>
+                </div>
+                <!--Si el usuario está logueado-->
+                <div *ngIf="user" class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-1">
+                    <create-comment [post]="post"></create-comment>
+                </div>
+            </div>
+        </div>
+        <ng-template #inadequate>
+            <h3>Este post ha sido marcado como inadecuado</h3>
+        </ng-template>
+    </ng-template>
+</div>
