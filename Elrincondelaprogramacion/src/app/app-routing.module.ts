@@ -19,7 +19,8 @@ const routes: Routes = [
         /*Cada vez que se pulse en un ancla nos llevará suavemente 
         hacia la parte superior de la pantalla*/
         RouterModule.forRoot(routes, {
-            scrollPositionRestoration: 'top'
+            scrollPositionRestoration: 'top',
+            anchorScrolling: 'enabled'        
         })
     ],
     exports: [RouterModule]
