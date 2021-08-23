@@ -4,8 +4,9 @@
     <div *ngFor="let comment of comments" class="comment mt-4 text-justify">
         <div>
             <!--Si hay foto de perfil-->
-            <img *ngIf="comment.user.profileImage" [src]="" alt="Imagen de perfil" class="profileImage mr-1">
-            <img *ngIf="!comment.user.profileImage" src="../../../assets/images/no-profile-image.png"
+            <img *ngIf="comment.user.profileImage" [src]="profileImageUrl+comment.user.profileImage" 
+                alt="Imagen de perfil" class="profileImage mr-1">
+            <img *ngIf="!comment.user.profileImage" src="../../../../../assets/images/no-profile-image.png"
                 alt="Imagen de perfil" class="profileImage mr-1">
             <a [routerLink]="['/user-details', comment.user.id]" class="badge badge-primary mr-2">
                 {{comment.user.nick}}
@@ -34,7 +35,8 @@
             </li>
             <!--Hacemos tantos enlaces como páginas haya-->
             <li *ngFor="let page of totalPages" class="page-item">
-                <a class="page-link" [routerLink]="['/posts', post.title, 'page', page]" routerLinkActive="btn-info">
+                <a class="page-link" [routerLink]="['/posts', post.title, 'page', page]" 
+                    routerLinkActive="btn-info">
                     {{page}}
                 </a>
             </li>
