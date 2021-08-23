@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
-import { UserPanelModule } from './module/panel/panel.module';
 import { CheckRegisterLoginGuard } from './guards/check-register-login.guard';
 import { UserLoggedInGuard } from './guards/user-logged-in.guard';
 
@@ -26,9 +25,7 @@ const routes: Routes = [
                 loadChildren: ()=>import('./module/panel/panel.module').then(m=>m.UserPanelModule), 
                 canActivate:[UserLoggedInGuard]
             },
-            {
-                path:'**', redirectTo:''
-            }
+            { path:'**', redirectTo:'' }
         ]
     }
 ];

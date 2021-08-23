@@ -68,6 +68,15 @@ export class UserService {
     }
     
     /**
+     * Función que obtiene un usuario
+     * @param id 
+     * @returns 
+     */
+    getUser(id:number):Observable<any>{
+        return this._http.get(`${environment.url}/users/${id}`);
+    }
+    
+    /**
      * Función que sube una imagen de perfil
      * @param image
      * @return

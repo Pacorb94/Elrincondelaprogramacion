@@ -55,8 +55,8 @@ export class PostService {
      * @param id 
      * @returns 
      */
-    getPostComments(id:number):Observable<any>{
-        return this._http.get(`${environment.url}/posts/${id}/comments`);
+    getPostComments(page:number, id:number):Observable<any>{
+        return this._http.get(`${environment.url}/posts/${id}/comments?page=${page}`);
     }
     
     /**

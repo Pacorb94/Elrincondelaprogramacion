@@ -1,9 +1,10 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { MyCommentsComponent } from './components/my-comments/my-comments.component';
 import { EditCategoryComponent } from './components/edit-category/edit-category.component';
 import { CreateCategoryComponent } from './components/create-category/create-category.component';
 import { EditPostComponent } from './components/edit-post/edit-post.component';
 import { MainComponent } from './components/main/main.component';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { MyPostsComponent } from './components/my-posts/my-posts.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
@@ -18,12 +19,9 @@ const routes: Routes = [
             {
                 path:'my-posts', component:MyPostsComponent, canActivate:[CheckNoReaderRoleGuard]
             },
-            {
-                path:'category-list', component:CategoryListComponent, canActivate:[CheckAdminRoleGuard]
-            },
-            {
-                path:'create-post', component:CreatePostComponent, canActivate:[CheckNoReaderRoleGuard]
-            },
+            { path:'my-comments', component:MyCommentsComponent },
+            { path:'category-list', component:CategoryListComponent, canActivate:[CheckAdminRoleGuard] },
+            { path:'create-post', component:CreatePostComponent, canActivate:[CheckNoReaderRoleGuard] },
             {
                 path:'create-category', component:CreateCategoryComponent, 
                 canActivate:[CheckAdminRoleGuard]
@@ -36,12 +34,8 @@ const routes: Routes = [
                 path:'edit-category/:name', component:EditCategoryComponent, 
                 canActivate:[CheckAdminRoleGuard]
             },
-            {
-                path:'user-settings', component:UserSettingsComponent
-            },
-            {
-                path:'**', redirectTo:''
-            }
+            {  path:'user-settings', component:UserSettingsComponent },
+            { path:'**', redirectTo:'' }
         ]
     }
 ];

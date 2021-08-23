@@ -22,4 +22,29 @@
         </p>
         <hr>
     </div>
+    <br>
+    <!--Paginación-->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" [routerLink]="['/posts', post.title, 'page', prevPage]" 
+                    routerLinkActive="btn-info" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <!--Hacemos tantos enlaces como páginas haya-->
+            <li *ngFor="let page of totalPages" class="page-item">
+                <a class="page-link" [routerLink]="['/posts', post.title, 'page', page]" routerLinkActive="btn-info">
+                    {{page}}
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" [routerLink]="['/posts', post.title, 'page', nextPage]" 
+                    routerLinkActive="btn-info" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    <!--Fin de la paginacíon-->
+    </nav>
 </div>

@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
 use App\Entity\Post;
 use App\Entity\Category;
-use App\Entity\Comment;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 class PostController extends AbstractController
@@ -20,12 +20,15 @@ class PostController extends AbstractController
     private $postRepo;
     private $categoryRepo;
     private $em;
+    private $paginator;
     private $filesystem;
 
-    public function __construct(EntityManagerInterface $entityManager, Filesystem $filesystem) {
+    public function __construct(EntityManagerInterface $entityManager, PaginatorInterface $paginator, 
+    Filesystem $filesystem) {
         $this->postRepo=$entityManager->getRepository(Post::class);
         $this->categoryRepo=$entityManager->getRepository(Category::class);
         $this->em=$entityManager;
+        $this->paginator=$paginator;
         $this->filesystem=$filesystem;
     }
 
@@ -213,21 +216,50 @@ class PostController extends AbstractController
     /**
      * Función que obtiene los comentarios de un post
      * @param $id
+     * @param $request
      * @return JsonResponse
      */
-    public function getComments($id)
+    public function getComments($id, Request $request)
     {
         if ($this->idValidation($id)) {
             $post=$this->postRepo->find($id);
             //Si existe
             if ($post) {
-                $commentRepo=$this->getDoctrine()->getRepository(Comment::class);
-                $comments=$commentRepo->findBy(['post'=>$id]);
-                return $this->json($comments);
+                $data=$this->paginate($request, 'Comment', 'where m.post='.$post->getId());
+                return $this->json($data);
             }        
             return $this->json(['message'=>'Post not found'], 404);
         }
         return $this->json(['message'=>'Wrong id'], 400);
+    }
+    
+    /**
+     * Función que obtiene los objetos paginados
+     * @param $request
+     * @param $modelName
+     * @param $where
+     * @return
+    */
+    public function paginate($request, $modelName, $where='')
+    {
+        /*Como el parámetro página viene por GET usamos la propiedad "query" y por defecto si 
+        no viene nada tendrá el valor 1*/
+        $page=$request->query->getInt('page', 1);
+        //Paginator necesita sentencias en DQL
+        $dql="select m from App\Entity\\".$modelName." m $where order by m.id desc";
+        $query=$this->em->createQuery($dql);
+        //Los objetos por página que se verán
+        define('OBJECTSPERPAGE', 5);
+        $pagination=$this->paginator->paginate($query, $page, OBJECTSPERPAGE);
+        $totalObjects=$pagination->getTotalItemCount();
+        $data=[
+            'total'.$modelName.''.'s'=>$totalObjects,
+            'currentPage'=>$page,
+            'objectsPerPage'=>OBJECTSPERPAGE, 
+            'totalPages'=>ceil($totalObjects/OBJECTSPERPAGE),
+            $modelName.'s'=>$pagination
+        ];
+        return $data;
     }
 
     /**
