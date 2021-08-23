@@ -12,7 +12,7 @@ const routes: Routes = [
         path:'posts', 
         children:[
             { path:':title', component:WatchPostComponent },
-            { path:'categories/:name', component:HomeComponent},
+            { path:'categories/:name', component:HomeComponent },
             { path:'categories/:name/page/:page', component:HomeComponent },
         ]
     },
