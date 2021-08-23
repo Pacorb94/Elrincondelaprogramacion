@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 class HomeController extends AbstractController
 {
     private $categoryRepo;
+    private $paginator;
     private $em;
 
     public function __construct(EntityManagerInterface $entityManager, PaginatorInterface $paginator) {    
