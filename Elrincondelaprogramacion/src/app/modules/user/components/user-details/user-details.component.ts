@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PostService } from '../../../post/service/post.service';
+import { PostService } from '../../../post/services/post.service';
 import { UserService } from 'src/app/modules/user/service/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
