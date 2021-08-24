@@ -2,8 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { UserService } from 'src/app/modules/user/service/user.service';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
-
 
 @Component({
     selector: 'my-comments',
