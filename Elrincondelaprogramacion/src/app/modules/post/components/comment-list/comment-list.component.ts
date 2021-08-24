@@ -1,10 +1,11 @@
-import { ActivatedRoute } from '@angular/router';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { environment } from '../../../../../environments/environment';
+import { Subscription } from 'rxjs';
 import { UserService } from '../../../user/service/user.service';
 import { PostService } from '../../services/post.service';
 import { CommentService } from '../../services/comment.service';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { FlashMessagesService } from 'angular2-flash-messages';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
     selector: 'comment-list',
@@ -26,7 +27,8 @@ export class CommentListComponent implements OnInit, OnDestroy {
     totalPages: number[];
 
     constructor(private _userService:UserService, private _postService:PostService,
-    private _commentService:CommentService, private _route: ActivatedRoute) {   
+    private _commentService:CommentService, private _route: ActivatedRoute,
+    private _flashMessagesService: FlashMessagesService) {   
         this.user=this._userService.getUserLoggedIn();
         this.profileImageUrl=`${environment.url}/profile-images/`;
         this.updateCommentListSubscription=new Subscription();
@@ -120,7 +122,41 @@ export class CommentListComponent implements OnInit, OnDestroy {
         }
     }
     
-    deleteComment(id:number){
+    /**
+     * Función que borra un comentario
+     * @param id 
+     */
+    delete(id:number){
+        this.deleteCommentSubscription=this._commentService.delete(id).subscribe(
+            response=>{
+                if (response) {
+                    this.getPostComments();
+                    this.showFlashMessage('Has borrado el comentario',
+                        'alert alert-success col-md-7 text-center mx-auto', 3000);
+                }else{
+                    this.showFlashMessage('No has borrado el comentario',
+                        'alert alert-danger col-md-7 text-center mx-auto', 3000);
+                }
+            },
+            error=>{
+                this.showFlashMessage('No has borrado el comentario',
+                    'alert alert-danger col-md-7 text-center mx-auto', 3000);
+            }
+        );
+    }
 
+    /**
+     * Función que muestra un mensaje flash
+     * @param message
+     * @param cssClass
+     * @param timeout
+     */
+    showFlashMessage(message: string, cssClass: string, timeout: number) {
+        this._flashMessagesService.show(message,
+            {
+                cssClass: cssClass,
+                timeout: timeout
+            }
+        );
     }
 }
