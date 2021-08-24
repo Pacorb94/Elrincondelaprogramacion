@@ -73,6 +73,7 @@ class CommentController extends AbstractController
                     //Si existe
                     if ($comment) {
                         $comment->setContent($decodedRequest['content']);
+                        $comment->setUpdatedAt(new \DateTime('now'));
                         $comment->execute($this->em, $comment, 'update');
                         return $this->json($comment);
                     }
