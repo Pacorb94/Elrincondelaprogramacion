@@ -10,7 +10,6 @@
     class="table-responsive mt-5 table table-hover text-center">
     <thead>
         <tr>
-            <th>Contenido</th>
             <th>Post en el que se publicó</th>
             <th>Fecha de creación</th>
             <th>Fecha de modificación</th>
@@ -19,14 +18,13 @@
     </thead>
     <tbody>
         <tr *ngFor="let comment of comments">
-            <td>{{comment.content}}</td>
             <td><a [routerLink]="['/posts', comment.post.title]">{{comment.post.title}}</a></td>
             <td>{{comment.createdAt|amLocale:'es'|amCalendar}}</td>
             <td>{{comment.updatedAt|amLocale:'es'|amCalendar}}</td>
             <td>
                 <div class="row">
                     <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6 mx-auto text-center">
-                        <a [routerLink]="['/posts', comment.post.title]" [fragment]="comment.id"
+                        <a [routerLink]="['/posts', comment.post.title]"
                             class="btn btn-success w-50 d-flex align-items-center mx-auto">
                             <img src="../../../../../../../assets/images/watch-icon.png" class="w-50"
                                 alt="Imagen de ver post">Ver
