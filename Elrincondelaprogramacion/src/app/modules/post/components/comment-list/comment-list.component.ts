@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, Input, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
 import { UserService } from '../../../user/service/user.service';
 import { PostService } from '../../services/post.service';
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
     templateUrl: './comment-list.component.html',
     styleUrls: ['./comment-list.component.scss']
 })
-export class CommentListComponent implements OnInit, AfterViewChecked, OnDestroy {
+export class CommentListComponent implements OnInit, OnDestroy {
     @Input()post:any;
     comments!:any[];
     user:any;
@@ -24,7 +24,6 @@ export class CommentListComponent implements OnInit, AfterViewChecked, OnDestroy
     prevPage: number;
     nextPage: number;
     totalPages: number[];
-    fragment:any;
 
     constructor(private _userService:UserService, private _postService:PostService,
     private _commentService:CommentService, private _route: ActivatedRoute) {   
@@ -40,16 +39,7 @@ export class CommentListComponent implements OnInit, AfterViewChecked, OnDestroy
 
     ngOnInit(): void {
         this.getRouteParams();
-        this._route.fragment.subscribe(fragment => { this.fragment = fragment; console.log(fragment) });
     }
-
-    ngAfterViewChecked(): void {
-        try {
-            if(this.fragment) {
-                document.querySelector('#' + this.fragment)?.scrollIntoView();
-            }
-        } catch (e) { }
-      }
 
     ngOnDestroy(){
         this.updateCommentListSubscription.unsubscribe();
