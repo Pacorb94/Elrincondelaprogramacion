@@ -16,11 +16,10 @@ const routes: Routes = [
 @NgModule({
     //Para que funcionen las rutas de otros módulos debemos importarlas
     imports: [
-        /*Cada vez que se pulse en un ancla nos llevará suavemente 
-        hacia la parte superior de la pantalla*/
         RouterModule.forRoot(routes, {
-            scrollPositionRestoration: 'top',
-            anchorScrolling: 'enabled'        
+            /*Cada vez que se pulse en un ancla nos llevará suavemente 
+            hacia la parte superior de la pantalla*/
+            scrollPositionRestoration: 'top'   
         })
     ],
     exports: [RouterModule]
