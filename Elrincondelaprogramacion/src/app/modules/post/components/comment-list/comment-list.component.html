@@ -11,7 +11,7 @@
             <a [routerLink]="['/user-details', comment.user.id]" class="badge badge-primary mr-2">
                 {{comment.user.nick}}
             </a>
-            <span id="fragment" class="badge rounded-pill bg-light text-dark">
+            <span class="badge rounded-pill bg-light text-dark">
                 {{comment.createdAt|amLocale:'es'|amCalendar}}
             </span>
             <!--Si el que ha iniciado sesión es el creador del comentario-->
