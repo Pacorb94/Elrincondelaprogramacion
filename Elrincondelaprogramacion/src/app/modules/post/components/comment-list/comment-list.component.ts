@@ -131,6 +131,8 @@ export class CommentListComponent implements OnInit, OnDestroy {
             response=>{
                 if (response) {
                     this.getPostComments();
+                    //Desplazamos la ventana
+                    window.scrollTo(0, 600);
                     this.showFlashMessage('Has borrado el comentario',
                         'alert alert-success col-md-7 text-center mx-auto', 3000);
                 }else{
