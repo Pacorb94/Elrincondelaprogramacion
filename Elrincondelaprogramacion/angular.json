@@ -83,7 +83,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Elrincondelaprogramacion:build:production"
+              "browserTarget": "Elrincondelaprogramacion:build:production",
+              "ssl": true,
+              "sslCert": "C:/xampp/apache/conf/certificates/proyecto/front/elrincondelaprogramacion.com.crt",
+              "sslKey": "C:/xampp/apache/conf/certificates/proyecto/front/elrincondelaprogramacion.com.key"
             },
             "development": {
               "browserTarget": "Elrincondelaprogramacion:build:development",
