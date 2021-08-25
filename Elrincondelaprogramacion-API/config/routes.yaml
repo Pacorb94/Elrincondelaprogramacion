@@ -33,6 +33,11 @@ getUser:
     controller: App\Controller\UserController::getDetails
     methods: GET
 
+getUserComments:
+    path: /users/{id}/comments
+    controller: App\Controller\UserController::getComments
+    methods: GET
+
 getRoles:
     path: /roles
     controller: App\Controller\UserController:getRoles

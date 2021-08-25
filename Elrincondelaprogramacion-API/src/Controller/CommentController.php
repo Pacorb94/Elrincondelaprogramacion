@@ -72,9 +72,15 @@ class CommentController extends AbstractController
                     $comment=$this->commentRepo->find($id);
                     //Si existe
                     if ($comment) {
-                        $comment->setContent($decodedRequest['content']);
-                        $comment->execute($this->em, $comment, 'update');
-                        return $this->json($comment);
+                        $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
+                        //Si es el comentario del usuario que lo creó
+                        if ($comment->getUser()->getId()==$userLoggedIn->getId()) {
+                            $comment->setContent($decodedRequest['content']);
+                            $comment->setUpdatedAt(new \DateTime('now'));
+                            $comment->execute($this->em, $comment, 'update');
+                            return $this->json($comment);
+                        }
+                        return $this->json(['message'=>'You can\'t update that comment'], 400);
                     }
                     return $this->json(['message'=>'Comment not found'], 404);
                 }
@@ -127,15 +133,8 @@ class CommentController extends AbstractController
             $comment=$this->commentRepo->find($id);
             if ($comment) {
                 $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
-                //Si es nuestro
-                if ($comment->getId==$userLoggedIn->getId()) {
-                    /*$posts=$this->postRepo->findAll();
-                    //Debemos modificar la categoría de los posts que vamos a borrar
-                    foreach ($posts->getComments() as $comment) {
-                        dump($comment);die();
-                        $post->setCategory(null);
-                        $post->execute($this->em, $post, 'update');
-                    }*/ 
+                //Si es el comentario del usuario que lo creó
+                if ($comment->getUser()->getId()==$userLoggedIn->getId()) {
                     $comment->execute($this->em, $comment, 'delete');
                     return $this->json(['message'=>'Deleted comment']);
                 }

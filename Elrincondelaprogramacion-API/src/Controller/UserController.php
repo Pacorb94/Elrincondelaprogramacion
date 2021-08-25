@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
+use App\Entity\Comment;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -215,6 +216,25 @@ class UserController extends AbstractController
         if ($this->idValidation($id)) {
             $user=$this->userRepo->find($id);
             if ($user) return $this->json($user);
+            return $this->json(['message'=>'User not found'], 404);
+        }
+        return $this->json(['message'=>'Wrong id'], 400);
+    }
+
+    /**
+     * Función que obtiene los comentarios del usuario
+     * @param $id
+     * @return JsonResponse
+     */
+    public function getComments($id)
+    {
+        if ($this->idValidation($id)) {
+            $user=$this->userRepo->find($id);
+            if ($user) {
+                $commentRepo=$this->em->getRepository(Comment::class);
+                $comments=$commentRepo->findBy(['user'=>$id]);
+                return $this->json($comments);
+            }
             return $this->json(['message'=>'User not found'], 404);
         }
         return $this->json(['message'=>'Wrong id'], 400);

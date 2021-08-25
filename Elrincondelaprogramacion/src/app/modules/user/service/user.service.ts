@@ -126,6 +126,15 @@ export class UserService {
     getRoles():Observable<any>{
         return this._http.get(`${environment.url}/roles`);
     }
+    
+    /**
+     * Función que obtiene los comentarios de un usuario
+     * @param id 
+     * @returns 
+     */
+    getComments(id:number):Observable<any>{
+        return this._http.get(`${environment.url}/users/${id}/comments`);
+    }
 
     /**
      * Función que cierra sesión

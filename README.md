@@ -11,9 +11,6 @@ Puedes ver el diagrama de clases [aquí](https://github.com/Pacorb94/ProyectoDAW
 
 Puedes ver lo que puede hacer cada tipo de usuario [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/master/Diagramas/Casos%20de%20uso.png).
 
-Este proyecto el front-end y el back-end están separados, por lo que [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrincondelaprogramacion) accedes 
-al front-end y [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrincondelaprogramacion-API) al back-end.
-
 ## Requisitos
 * Apache
 * SQL
@@ -24,7 +21,7 @@ al front-end y [aquí](https://github.com/Pacorb94/ProyectoDAW/tree/master/Elrin
 ## Pasos a seguir
  1. En un sistema gestor de bbdd importar database.sql de la carpeta database
  2. `composer install`
- 3. Generamos una clave para que se firme el token 
+ 3. En el backend generamos una clave para que se firme el token 
 
         `openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096`
 
