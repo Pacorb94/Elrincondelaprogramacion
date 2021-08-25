@@ -1,20 +1,22 @@
+<div class="row">
+    <img [src]="profileImage" alt="Imagen de perfil" class="profileImage mr-1">
+    <h3 class="mr-3">{{user?.nick}}</h3>
+    <span class="badge badge-primary mt-2 rounded-pill h-25">
+        <h6>Se unió el {{user?.createdAt|amLocale:'es'|amCalendar}}</h6>
+    </span>
+</div>
 <div *ngIf="loading" class="text-center mt-5">
     <!--Si terminó de cargar y no hay posts-->
-    <h5 *ngIf="noPosts">No hay posts</h5>
+    <h5 *ngIf="noPosts">No ha hecho posts</h5>
     <button *ngIf="!noPosts" class="btn btn-primary" type="button" disabled>
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         Cargando...
     </button>
 </div>
 <!--Si hay posts-->
-<div *ngIf="posts" class="row mx-auto">
-    <img [src]="profileImage" alt="Imagen de perfil" class="profileImage mr-1">
-    <h3 class="mr-3">{{posts[0]?.user.nick}}</h3>
-    <span class="badge badge-primary mt-2 rounded-pill h-25">
-        <h6>Se unió el {{posts[0]?.user.createdAt|amLocale:'es'|amCalendar}}</h6>
-    </span>
+<div *ngIf="posts.length" class="row mx-auto">
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-    class="table-responsive mt-5 table table-hover text-center">
+        class="table-responsive mt-5 table table-hover text-center">
         <thead>
             <tr>
                 <th>Título</th>
@@ -54,6 +56,5 @@
             </tr>
         </tbody>
     </table>
-
 </div>
     

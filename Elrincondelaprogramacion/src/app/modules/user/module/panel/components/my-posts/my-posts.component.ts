@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { UserService } from '../../../../service/user.service';
-import { PostService } from '../../../../../post/service/post.service';
+import { PostService } from '../../../../../post/services/post.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 

@@ -9,6 +9,7 @@
     </div>
     <ng-template #data>
         <div *ngIf="!post.inadequate; else inadequate" class="col-md-12 mt-3">
+            <img id="postImage" [src]="postImage" alt="Imagen del post">
             <h3>{{post.title}}</h3>
             <a [routerLink]="['/user-details', post.user.id]" class="badge rounded-pill badge-primary mr-2">
                 <h6>{{post.user.nick}}</h6>

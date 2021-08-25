@@ -12,7 +12,6 @@
         <tr>
             <th>Título</th>
             <th>Categoría</th>
-            <th>Contenido</th>
             <th>Imagen</th>
             <th>Fecha de creación</th>
             <th>Fecha de modificación</th>
@@ -24,7 +23,6 @@
             <td><a [routerLink]="['/posts', post.title]">{{post.title}}</a></td>
             <!--Si la categoría se borró-->
             <td>{{post.category===null?'Categoría borrada':post.category.name}}</td>
-            <td>{{post.content}}</td>
             <td>
                 <!--Si hay imagen-->
                 <img *ngIf="post.image" [src]="imageUrl+post.image" alt="Imagen del post" class="w-50">
@@ -36,7 +34,7 @@
             <td>
                 <div class="row">
                     <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6">
-                        <a [routerLink]="['/watch-post', post.title]"
+                        <a [routerLink]="['/post', post.title]"
                             class="btn btn-success w-100 d-flex align-items-center">
                             <img src="../../../../../../../assets/images/watch-icon.png" class="w-50"
                                 alt="Imagen de ver post">Ver

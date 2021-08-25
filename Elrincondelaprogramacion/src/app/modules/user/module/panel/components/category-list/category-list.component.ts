@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class CategoryListComponent implements OnInit, OnDestroy {
     categories:any[]; 
     loading:boolean;
+    noCategories:any;
     categoriesSubscription:Subscription;
     deleteSubscription:Subscription;
     //-----Tabla------
@@ -54,7 +55,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
                     /*Según el plugin de DataTable debemos elegir cuándo refrescar los datos
                     de la tabla*/
                     if (!refreshTable) this.dtTrigger.next();      
-                }           
+                } else{
+                    this.loading=true;
+                    this.noCategories=true;
+                }         
             },
             error=>{}
         );

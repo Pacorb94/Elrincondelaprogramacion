@@ -49,14 +49,25 @@ export class PostService {
     getPost(title:string):Observable<any>{
         return this._http.get(`${environment.url}/posts/${title}`);
     }
+    
+    /**
+     * Función que obtiene la imagen del post
+     * @param image 
+     * @returns 
+     */
+    getImage(image:string):Observable<any>{
+        let header=new HttpHeaders().set('Content-Type', 'image/*');
+        return this._http.get(`${environment.url}/posts-images/${image}`,
+                            {headers:header, responseType:'blob'});
+    }
 
     /**
      * Función que obtiene los comentarios de un post
      * @param id 
      * @returns 
      */
-    getPostComments(id:number):Observable<any>{
-        return this._http.get(`${environment.url}/posts/${id}/comments`);
+    getPostComments(page:number, id:number):Observable<any>{
+        return this._http.get(`${environment.url}/posts/${id}/comments?page=${page}`);
     }
     
     /**

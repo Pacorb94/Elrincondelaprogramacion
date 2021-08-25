@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PostService } from '../../../post/service/post.service';
+import { PostService } from '../../../post/services/post.service';
 import { UserService } from 'src/app/modules/user/service/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -12,11 +12,13 @@ import { Subscription, Subject } from 'rxjs';
     styleUrls: ['./user-details.component.scss']
 })
 export class UserDetailsComponent implements OnInit, OnDestroy {
+    user:any;
     posts:any[];
     profileImage:any;
     loading:boolean;
     imageUrl:string;
     noPosts:any;
+    userSubscription:Subscription;
     postsSubscription:Subscription; 
     loadProfileImageSubscription:Subscription;
     //-----Tabla------
@@ -29,6 +31,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
         this.posts=[];
         this.loading=true;
         this.imageUrl=`${environment.url}/posts-images/`;
+        this.userSubscription=new Subscription();
         this.postsSubscription=new Subscription();
         this.loadProfileImageSubscription=new Subscription();
         this.dtOptions={};
@@ -41,8 +44,9 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(){
-        this.postsSubscription.unsubscribe();
+        this.userSubscription.unsubscribe();
         this.loadProfileImageSubscription.unsubscribe();
+        this.postsSubscription.unsubscribe();
         this.dtTrigger.unsubscribe();
     }
 
@@ -64,36 +68,31 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
         this._route.params.subscribe(
             params => {
                 let userId = params['id'];
+                this.getUser(userId);
                 this.getUserPosts(userId);
+            }
+        );
+    } 
+    
+    /**
+     * Función que obtiene un usuario
+     * @param userId 
+     */
+    getUser(userId:number){
+        this.userSubscription=this._userService.getUser(userId).subscribe(
+            response=>{
+                if (response) {
+                    this.user=response;
+                    this.profileImage=this.user.profileImage;
+                    this.loadProfileImage();
+                }
+            },
+            error=>{
+
             }
         );
     }
 
-    /**
-     * Función que obtiene los posts del usuario
-     * @param id
-     */
-    getUserPosts(id:number) {
-        this.postsSubscription=this._postService.getUserPosts(id).subscribe(
-            response => {
-                //Si hay posts
-                if (response) {            
-                    this.loading = false;
-                    this.profileImage=response[0].user.profileImage;
-                    this.loadProfileImage();
-                    this.posts = response;
-                    this.dtTrigger.next();
-                } else {
-                    this.loading = true;
-                    this.noPosts=true;
-                }
-            },
-            error => {
-                this._router.navigate(['']);
-            }
-        );
-    }
-    
     /**
      * Función que carga la imagen de perfil del usuario, si no tiene o hay un error se asigna una por
      * defecto
@@ -113,5 +112,28 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
         }else{
             this.profileImage='../../../../../assets/images/no-profile-image.png';
         }
+    }
+
+    /**
+     * Función que obtiene los posts del usuario
+     * @param id
+     */
+    getUserPosts(id:number) {
+        this.postsSubscription=this._postService.getUserPosts(id).subscribe(
+            response => {
+                //Si hay posts
+                if (response.length) {            
+                    this.loading = false;
+                    this.posts = response;
+                    this.dtTrigger.next();
+                } else {
+                    this.loading = true;
+                    this.noPosts=true;
+                }
+            },
+            error => {
+                this._router.navigate(['']);
+            }
+        );
     }
 }

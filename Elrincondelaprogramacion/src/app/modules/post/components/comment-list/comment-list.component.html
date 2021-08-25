@@ -1,0 +1,91 @@
+<h3 class="text-center">Comentarios</h3>
+<!--Si hay comentarios-->
+<div *ngIf="comments">
+    <flash-messages></flash-messages> 
+    <div *ngFor="let comment of comments" class="comment mt-4 text-justify">
+        <div>  
+            <!--Si hay foto de perfil-->
+            <img *ngIf="comment.user.profileImage" [src]="profileImageUrl+comment.user.profileImage"
+                alt="Imagen de perfil" class="profileImage mr-1">
+            <img *ngIf="!comment.user.profileImage" 
+                src="../../../../../assets/images/no-profile-image.png"
+                alt="Imagen de perfil" class="profileImage mr-1">
+            <a [routerLink]="['/user-details', comment.user.id]" 
+                class="badge badge-primary rounded-pill mr-2">
+                <h6>{{comment.user.nick}}</h6>
+            </a>
+            <span class="badge rounded-pill badge-secondary mr-2">
+                Publicado {{comment.createdAt|amLocale:'es'|amCalendar}}
+            </span>
+            <span class="badge rounded-pill badge-secondary">
+                Modificado {{comment.updatedAt|amLocale:'es'|amCalendar}}
+            </span>
+            <!--Botón que abre el modal si eres el creador del comentario, 
+            la directiva "attr.data-target" es para llamar a un elemento HTML con ese id y 
+            además almacena un dato-->
+            <button type="button" *ngIf="user?.id==comment.user.id" class="btn btn-danger openModel float-right" 
+                data-toggle="modal" [attr.data-target]="'#delete'+comment.id">
+                <img src="../../../../../../../assets/images/delete-icon.png" class="w-25"
+                    alt="Imagen de borrar comentario">
+                Borrar
+            </button>
+            <!-- Modal, el id irá sin # y con el id del vídeo -->
+            <div id="{{'delete'+comment.id}}" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">¿Quieres borrar el comentario?</h4>
+                            <button type="button" class="close" data-dismiss="modal">
+                                &times;
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Vas a borrar definitivamente el comentario
+                        </div>
+                        <div class="modal-footer">
+                            <!--Para cerrar el modal cuando pulsemos hay que ponerle 
+                            el atributo "data-dismiss"-->
+                            <button (click)="delete(comment.id)" data-dismiss="modal" class="btn btn-danger">
+                                Borrar
+                            </button>
+                            <button type="button" class="btn btn-info" data-dismiss="modal">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            <!--Fin del modal-->
+            </div>
+        </div><br>
+        <p id="commentContent">
+            {{!comment.inadequate?comment.content:'Es comentario está marcado como inadecuado'}}
+        </p>
+        <hr>
+    </div>
+    <br>
+    <!--Paginación-->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" [routerLink]="['/posts', post.title, 'page', prevPage]" routerLinkActive="btn-info"
+                    aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <!--Hacemos tantos enlaces como páginas haya-->
+            <li *ngFor="let page of totalPages" class="page-item">
+                <a class="page-link" [routerLink]="['/posts', post.title, 'page', page]" routerLinkActive="btn-info">
+                    {{page}}
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" [routerLink]="['/posts', post.title, 'page', nextPage]" routerLinkActive="btn-info"
+                    aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+        <!--Fin de la paginacíon-->
+    </nav>
+</div>

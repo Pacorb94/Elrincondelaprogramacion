@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Commentt } from './../../../../models/Commentt';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { CommentService } from './../../service/comment.service';
+import { CommentService } from '../../../post/services/comment.service';
 import { UserService } from './../../../user/service/user.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
