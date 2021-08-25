@@ -19,6 +19,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
     profileImageUrl:string;
     updateCommentListSubscription:Subscription;
     getPostCommentsSubscription:Subscription;
+    updateCommentSubscription:Subscription;
     deleteCommentSubscription:Subscription;
     //------Paginación-------
     page: any;
@@ -33,6 +34,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
         this.profileImageUrl=`${environment.url}/profile-images/`;
         this.updateCommentListSubscription=new Subscription();
         this.getPostCommentsSubscription=new Subscription();
+        this.updateCommentSubscription=new Subscription();
         this.deleteCommentSubscription=new Subscription();
         this.prevPage = 0;
         this.nextPage = 0;
@@ -46,6 +48,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
     ngOnDestroy(){
         this.updateCommentListSubscription.unsubscribe();
         this.getPostCommentsSubscription.unsubscribe();
+        this.updateCommentSubscription.unsubscribe();
         this.deleteCommentSubscription.unsubscribe();
     }
 
@@ -120,6 +123,25 @@ export class CommentListComponent implements OnInit, OnDestroy {
         } else {
             this.nextPage = totalPages;
         }
+    }
+    
+    /**
+     * Función que modifica un comentario
+     * @param id 
+     */
+    update(id:number){
+        this.updateCommentSubscription=this._commentService.update(id).subscribe(
+            response=>{
+                if (response) {
+                    this.getPostComments();
+                }else{
+
+                }
+            },
+            error=>{
+
+            }
+        );
     }
     
     /**
