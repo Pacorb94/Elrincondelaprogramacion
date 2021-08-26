@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../../user/service/user.service';
 import { PostService } from '../../services/post.service';
@@ -17,6 +18,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
     comments!:any[];
     user:any;
     profileImageUrl:string;
+    form:FormGroup;
     updateCommentListSubscription:Subscription;
     getPostCommentsSubscription:Subscription;
     updateCommentSubscription:Subscription;
@@ -32,6 +34,9 @@ export class CommentListComponent implements OnInit, OnDestroy {
     private _flashMessagesService: FlashMessagesService) {   
         this.user=this._userService.getUserLoggedIn();
         this.profileImageUrl=`${environment.url}/profile-images/`;
+        this.form=new FormGroup({
+            content:new FormControl('', Validators.required)
+        });
         this.updateCommentListSubscription=new Subscription();
         this.getPostCommentsSubscription=new Subscription();
         this.updateCommentSubscription=new Subscription();
@@ -83,8 +88,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
                     if (response.Comments.length) {
                         this.comments=response.Comments;
                         this.pagination(response.totalPages);
-                    }
-                    
+                    }                   
                 },
                 error=>{}
             );              
@@ -126,6 +130,15 @@ export class CommentListComponent implements OnInit, OnDestroy {
     }
     
     /**
+     * Función que muestra el formulario para modificar un comentario
+     * @param commentContent 
+     */
+    showUpdateForm(commentContent:string){
+        this.form.get('content')?.setValue(commentContent);
+        console.log(this.form);
+    }
+    
+    /**
      * Función que modifica un comentario
      * @param id 
      */
@@ -142,6 +155,26 @@ export class CommentListComponent implements OnInit, OnDestroy {
 
             }
         );
+    }
+
+    /**
+     * Función que comprueba si el foco está en el campo
+     * @param field
+     */
+    checkTouched(field: any): boolean {
+        if (field.touched) return true;
+        return false;
+    }
+
+    /**
+     * Función que muestra un mensaje de validación incorrecta
+     * @param field 
+     * @param fieldName 
+     */
+    wrongValidationMessage(field: any, fieldName: string): string {
+        let message='';
+        if (field.errors?.required) message=`El campo ${fieldName} es obligatorio`;
+        return message;
     }
     
     /**
