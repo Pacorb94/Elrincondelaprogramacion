@@ -1,3 +1,31 @@
 <h5 class="text-center mt-5">Posts más activos</h5>
 <aside class="jumbotron text-center">
+    <div *ngIf="loading; else data">
+        <!--Si terminó de cargar y no hay posts-->
+        <h3 *ngIf="noPosts" class="text-center">No hay posts</h3>
+        <!--Si no hay posts-->
+        <div *ngIf="!noPosts" class="text-center">
+            <button class="btn btn-primary" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Cargando...
+            </button>
+        </div>
+    </div>
+    <!--Si hay posts-->
+    <ng-template #data>
+        <article *ngFor="let post of posts">
+            <div>
+                <h5 class="card-title card-header text-center">
+                    <a [routerLink]="['/posts', post.title]">{{post.title}}</a>
+                </h5>
+                <a [routerLink]="['/posts', post.title]">
+                    <!--Si hay imagen-->
+                    <img *ngIf="post.image" [src]="imageUrl+post.image" alt="Imagen del post" 
+                        class="card-img-top">
+                    <img *ngIf="!post.image" src="../../../assets/images/no-post-image.jpg" 
+                        alt="Imagen del post" class="card-img-top">
+                </a>
+            </div>
+        </article>
+    </ng-template>
 </aside>
