@@ -15,7 +15,7 @@
                 <h6>{{post.user.nick}}</h6>
             </a>
             <span class="badge rounded-pill mr-2 bg-warning">
-                <h6>{{post.category===null?'Categoría borrada':post.category.name}}</h6>
+                <h6>{{!post.category?'Categoría borrada':post.category.name}}</h6>
             </span>
             <span class="badge rounded-pill badge-secondary mr-2">
                 <h6>Publicado {{post.createdAt|amLocale:'es'|amCalendar}}</h6>

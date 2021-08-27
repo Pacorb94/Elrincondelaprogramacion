@@ -44,6 +44,10 @@
               "node_modules/datatables.net/js/jquery.dataTables.js",
               "node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js",
               "node_modules/cookieconsent/build/cookieconsent.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "angular2-flash-messages",
+              "angular2-moment"
             ]
           },
           "configurations": {

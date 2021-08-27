@@ -21,7 +21,6 @@
             <tr>
                 <th>Título</th>
                 <th>Categoría</th>
-                <th>Contenido</th>
                 <th>Imagen</th>
                 <th>Fecha de creación</th>
                 <th>Fecha de modificación</th>
@@ -32,8 +31,7 @@
             <tr *ngFor="let post of posts">
                 <td><a [routerLink]="['/posts', post.title]">{{post.title}}</a></td>
                 <!--Si la categoría se borró-->
-                <td>{{post.category===null?'Categoría borrada':post.category.name}}</td>
-                <td>{{post.content}}</td>
+                <td>{{!post.category?'Categoría borrada':post.category.name}}</td>
                 <td>
                     <!--Si hay imagen-->
                     <img *ngIf="post.image" [src]="imageUrl+post.image" alt="Imagen del post" class="w-25">

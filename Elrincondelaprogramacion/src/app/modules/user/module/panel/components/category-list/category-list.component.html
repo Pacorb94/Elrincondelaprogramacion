@@ -1,77 +1,76 @@
-<div *ngIf="loading; else data" class="text-center mt-5">
-    <h5>Puede que no haya categorías</h5>
+<div *ngIf="loading" class="text-center mt-5">
+    <!--Si terminó de cargar y no hay categorías-->
+    <h5 *ngIf="noCategories">No hay categorías</h5>
     <button class="btn btn-primary" type="button" disabled>
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         Cargando...
     </button>
 </div>
-<ng-template #data>
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-        class="table-responsive mt-5 table table-hover text-center">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Fecha de creación</th>
-                <th>Fecha de modificación</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let category of categories">
-                <td>{{category.name}}</td>
-                <td>{{category.createdAt|amLocale:'es'|amCalendar}}</td>
-                <td>{{category.updatedAt|amLocale:'es'|amCalendar}}</td>
-                <td>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6 col-xl-6">
-                            <a [routerLink]="['/user-panel/edit-category', category.name]" 
-                            class="btn btn-warning w-50">
-                                <img src="../../../../../../../assets/images/edit-icon.png" class="w-25"
-                                    alt="Imagen de editar categoría">
-                                Editar
-                            </a>
-                        </div>
-                        <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6 col-xl-6">
-                            <!-- Botón que abre el modal, la directiva "attr.data-target" es para
+<table *ngIf="categories" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+    class="table-responsive mt-5 table table-hover text-center">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Fecha de creación</th>
+            <th>Fecha de modificación</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let category of categories">
+            <td>{{category.name}}</td>
+            <td>{{category.createdAt|amLocale:'es'|amCalendar}}</td>
+            <td>{{category.updatedAt|amLocale:'es'|amCalendar}}</td>
+            <td>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6 col-xl-6">
+                        <a [routerLink]="['/user-panel/edit-category', category.name]" class="btn btn-warning w-50">
+                            <img src="../../../../../../../assets/images/edit-icon.png" class="w-25"
+                                alt="Imagen de editar categoría">
+                            Editar
+                        </a>
+                    </div>
+                    <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6 col-xl-6">
+                        <!-- Botón que abre el modal, la directiva "attr.data-target" es para
                             llamar a un elemento HTML con ese id y además almacena un dato -->
-                            <button type="button" class="btn btn-danger w-50" data-toggle="modal"
-                                [attr.data-target]="'#delete'+category.id">
-                                <img src="../../../../../../../assets/images/delete-icon.png" class="w-25"
-                                    alt="Imagen de borrar categoría">
-                                Borrar
-                            </button>
-                            <!-- Modal, el id irá sin # y con el id del vídeo -->
-                            <div id="{{'delete'+category.id}}" class="modal fade" role="dialog">
-                                <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">¿Quieres borrar la categoría?</h4>
-                                            <button type="button" class="close" data-dismiss="modal">
-                                                &times;
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Vas a borrar definitivamente la categoría: {{category.name}}
-                                        </div>
-                                        <div class="modal-footer">
-                                            <!--Para cerrar el modal cuando pulsemos hay que ponerle 
+                        <button type="button" class="btn btn-danger w-50" data-toggle="modal"
+                            [attr.data-target]="'#delete'+category.id">
+                            <img src="../../../../../../../assets/images/delete-icon.png" class="w-25"
+                                alt="Imagen de borrar categoría">
+                            Borrar
+                        </button>
+                        <!-- Modal, el id irá sin # y con el id del vídeo -->
+                        <div id="{{'delete'+category.id}}" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">¿Quieres borrar la categoría?</h4>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            &times;
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Vas a borrar definitivamente la categoría: {{category.name}}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <!--Para cerrar el modal cuando pulsemos hay que ponerle 
                                             el atributo "data-dismiss"-->
-                                            <button (click)="deleteCategory(category.id)" data-dismiss="modal"
-                                                class="btn btn-danger">
-                                                Borrar
-                                            </button>
-                                            <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar
-                                            </button>
-                                        </div>
+                                        <button (click)="deleteCategory(category.id)" data-dismiss="modal"
+                                            class="btn btn-danger">
+                                            Borrar
+                                        </button>
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">
+                                            Cerrar
+                                        </button>
                                     </div>
                                 </div>
-                                <!--Fin del modal-->
                             </div>
+                            <!--Fin del modal-->
                         </div>
                     </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</ng-template>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
