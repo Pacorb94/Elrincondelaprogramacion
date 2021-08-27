@@ -115,12 +115,12 @@ export class EditPostComponent implements OnInit, OnDestroy {
                     this.post=response;
                 }else{
                     this.showFlashMessage('No has editado el post correctamente',
-                        'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
+                        'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
                 }
             },
             error=>{
                 this.showFlashMessage('No has editado el post correctamente',
-                    'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
+                    'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
             }
         );
     }
@@ -132,7 +132,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
         //Con ? evitamos que Angular muestre un mensaje de que el campo puede estar null
         if (this.form.get('title')?.value) this.post.title=this.form.get('title')?.value;
         if (this.form.get('content')?.value) this.post.content=this.form.get('content')?.value;
-        if (this.form.get('category')?.value) this.post.category.id=this.form.get('category')?.value;
+        if (this.form.get('category')?.value) this.post.category=this.form.get('category')?.value;
         if (localStorage.hasOwnProperty('postImage')) {
             this.post.image=localStorage.getItem('postImage')??'';
             localStorage.removeItem('postImage');
