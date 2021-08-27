@@ -105,6 +105,11 @@ getPosts:
     controller: App\Controller\HomeController::getPosts
     methods: GET
 
+getMostActivePosts:
+    path: /posts/most-actives
+    controller: App\Controller\HomeController::getMostActivePosts
+    methods: GET
+
 getUserPosts:
     path: /posts/users/{userId}
     controller: App\Controller\PostController::getByUser
