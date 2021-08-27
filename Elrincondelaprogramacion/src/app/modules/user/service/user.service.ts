@@ -41,7 +41,7 @@ export class UserService {
     }
 
     /**
-     * Función que da valor al usuario
+     * Función que da valor al BehaviourSubject
      * @param value 
      */
     setUserLoggedIn$(value:any){
