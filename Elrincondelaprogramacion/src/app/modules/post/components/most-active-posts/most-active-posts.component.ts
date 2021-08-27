@@ -40,7 +40,8 @@ export class MostActivePostsComponent implements OnInit, OnDestroy {
                 //Si hay posts
                 if (response.length) {
                     this.loading = false;
-                    this.posts = response;
+                    this.posts = response.slice(0, 3);
+					console.log(this.posts);
                 } else {
                     this.loading = true;
                     this.noPosts=true;
