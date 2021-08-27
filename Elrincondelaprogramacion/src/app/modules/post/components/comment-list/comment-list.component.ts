@@ -131,10 +131,9 @@ export class CommentListComponent implements OnInit, OnDestroy {
     
     /**
      * Función que muestra el formulario para modificar un comentario
-     * @param commentContent 
      */
-    showUpdateForm(commentContent:string){
-        this.form.get('content')?.setValue(commentContent);
+    showUpdateForm(){
+
         console.log(this.form);
     }
     
