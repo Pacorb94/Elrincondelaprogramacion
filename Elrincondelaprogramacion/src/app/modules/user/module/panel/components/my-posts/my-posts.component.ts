@@ -63,9 +63,10 @@ export class MyPostsComponent implements OnInit, OnDestroy{
     getUserPosts(refreshTable:boolean=false){
         this.userPostsSubscription=this._postService.getUserPosts(this.user.id).subscribe(
             response=>{
-                if (response.length>0) {
+                if (response.length) {
                     this.posts=response;
                     this.loading=false;
+                    this.noPosts=false;
                     if (!refreshTable) this.dtTrigger.next();             
                 }else{
                     this.loading=true;
@@ -86,7 +87,8 @@ export class MyPostsComponent implements OnInit, OnDestroy{
         this.deletePostSubscription=this._postService.delete(id).subscribe(
             response=>{
                 if (response) {
-                    this.getUserPosts(true);               
+                    this.getUserPosts(true);     
+                    this.noPosts=true;          
                 }else{
                     this._router.navigate(['/user-panel/my-posts']);
                 }         
