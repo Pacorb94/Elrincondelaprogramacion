@@ -51,6 +51,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
             response=>{
                 if (response.length>0) {
                     this.categories=response;
+                    this.noCategories=false;
                     this.loading=false;
                     /*Según el plugin de DataTable debemos elegir cuándo refrescar los datos
                     de la tabla*/
@@ -72,7 +73,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         this.deleteSubscription=this._categoryService.delete(id).subscribe(
             response=>{
                 if (response) {
-                    this.getCategories(true);               
+                    this.getCategories(true);   
+                    this.noCategories=true;            
                 }else{
                     this._router.navigate(['/user-panel/category-list']);
                 }         
