@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Comment;
 use App\Entity\Post;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class CommentController extends AbstractController
 {
@@ -44,7 +45,12 @@ class CommentController extends AbstractController
                         $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
                         $comment=new Comment($userLoggedIn, $post, $decodedRequest['content'], false);
                         $comment->execute($this->em, $comment, 'insert');
-                        return $this->json($comment, 201);
+                        /*Debido a que dentro del comentario hay referencias a otros modelos
+                        dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+                        otros modelos*/
+                        return $this->json($comment, 201, [], [
+                            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+                        ]);
                     }
                     return $this->json(['message'=>'Post not found'], 404);
                 }
