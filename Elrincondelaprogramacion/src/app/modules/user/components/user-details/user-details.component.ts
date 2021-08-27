@@ -124,6 +124,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
                 //Si hay posts
                 if (response.length) {            
                     this.loading = false;
+                    this.noPosts=false;
                     this.posts = response;
                     this.dtTrigger.next();
                 } else {
