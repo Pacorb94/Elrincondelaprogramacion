@@ -52,3 +52,4 @@ create table if not exists comments(
 )ENGINE=InnoDB;
 
 alter table posts add constraint fk_posts_categories foreign key (category_id) references categories(id);
+INSERT INTO `users`(`id`, `nick`, `email`, `password`, `profile_image`, `roles`, `banned`, `created_at`, `updated_at`) VALUES (null, 'admin', 'admin@erp.com', '1', null, '["ROLE_ADMIN"]', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
