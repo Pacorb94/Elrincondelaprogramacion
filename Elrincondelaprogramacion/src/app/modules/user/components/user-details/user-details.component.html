@@ -14,7 +14,7 @@
     </button>
 </div>
 <!--Si hay posts-->
-<div *ngIf="posts.length" class="row mx-auto">
+<div *ngIf="!noPosts" class="row mx-auto">
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
         class="table-responsive mt-5 table table-hover text-center">
         <thead>
