@@ -101,7 +101,12 @@ class PostController extends AbstractController
                                 $post->setImage($decodedRequest['image']);
                                 $post->setUpdatedAt(new \DateTime('now'));
                                 $post->execute($this->em, $post, 'update');
-                                return $this->json($post);
+                                /*Debido a que dentro del post hay referencias a otros modelos
+                                dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+                                otros modelos*/
+                                return $this->json($post, 200, [], [
+                                    ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+                                ]);
                             } 
                             return $this->json(['message'=>'Wrong validation'], 400);       
                         }
@@ -115,18 +120,6 @@ class PostController extends AbstractController
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
             return $this->json(['message'=>$e->getMessage()], 500);
         }
-    }
-
-    /**
-     * Función que borra la antigua imagen del directorio
-     * @param $oldImageName
-     * @param $folderPath
-     */
-    public function deleteDirectoryOldImage($oldImageName, $folderPath)
-    {
-        if ($this->filesystem->exists($folderPath.'/'.$oldImageName)) {
-            $this->filesystem->remove($folderPath.'/'.$oldImageName);    
-        }   
     }
     
     /**
