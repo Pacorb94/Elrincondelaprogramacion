@@ -7,6 +7,9 @@ import { EditPostComponent } from './components/edit-post/edit-post.component';
 import { MainComponent } from './components/main/main.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { MyPostsComponent } from './components/my-posts/my-posts.component';
+import { InadequatePostsComponent } from './components/inadequate-posts/inadequate-posts.component';
+import { InadequateCommentsComponent } from './components/inadequate-comments/inadequate-comments.component';
+import { BannedUsersComponent } from './components/banned-users/banned-users.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
 import { CategoryListComponent } from './components/category-list/category-list.component';
 import { CheckAdminRoleGuard } from './../../guards/check-admin-role.guard';
@@ -34,7 +37,16 @@ const routes: Routes = [
                 path:'edit-category/:name', component:EditCategoryComponent, 
                 canActivate:[CheckAdminRoleGuard]
             },
-            {  path:'user-settings', component:UserSettingsComponent },
+            { 
+                path:'inadequated-', 
+                children:[
+                    { path:'posts', component:InadequatePostsComponent },
+                    { path:'comments', component:InadequateCommentsComponent }
+                ],
+                canActivate:[CheckAdminRoleGuard]
+            },
+            { path:'banned-users', component:BannedUsersComponent, canActivate:[CheckAdminRoleGuard] },
+            { path:'user-settings', component:UserSettingsComponent },
             { path:'**', redirectTo:'' }
         ]
     }
