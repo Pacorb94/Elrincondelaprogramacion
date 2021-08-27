@@ -77,7 +77,6 @@ export class EditPostComponent implements OnInit, OnDestroy {
                     //Si el post es del usuario
                     if (response.user.id==user.id) {
                         this.post=response;
-                        this.setFormValues(this.post);
                     }else{
                         this._router.navigate(['']);
                     }                   
@@ -137,15 +136,6 @@ export class EditPostComponent implements OnInit, OnDestroy {
             this.post.image=localStorage.getItem('postImage')??'';
             localStorage.removeItem('postImage');
         }
-    }
-
-    /**
-     * Función que establece los valores del formulario
-     * @param post 
-     */
-    setFormValues(post:any){
-        this.form.get('title')?.setValue(post.title);
-        this.form.get('content')?.setValue(post.content);
     }
 
     /**
