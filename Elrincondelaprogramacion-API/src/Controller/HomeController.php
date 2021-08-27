@@ -26,7 +26,7 @@ class HomeController extends AbstractController
      */
     public function getPosts(Request $request)
     {
-        $data=$this->paginate($request, 'Post');
+        $data=$this->paginate($request, 'Post', 'where m.inadequate=0');
         return $this->json($data);
     }
 
@@ -42,7 +42,8 @@ class HomeController extends AbstractController
             $category=$this->categoryRepo->findOneBy(['name'=>$categoryName]);
             //Si existe
             if ($category) {
-                $data=$this->paginate($request, 'Post', 'where m.category='.$category->getId());
+                $data=$this->paginate($request, 'Post', 
+                    'where m.category='.$category->getId().' and m.inadequate=0');
                 return $this->json($data);
             }
             return $this->json(['message'=>'Category not found'], 404);
