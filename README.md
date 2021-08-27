@@ -5,8 +5,6 @@ al proyecto.
 ## Descripción
 Es un blog de noticias referentes al sector de la programación.
 
-Puedes ver el modelo relacional [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/master/Diagramas/Modelo%20relacional.png).
-
 Puedes ver lo que puede hacer cada tipo de usuario [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/master/Diagramas/Casos%20de%20uso.png).
 
 ## Requisitos
