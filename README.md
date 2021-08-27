@@ -7,8 +7,6 @@ Es un blog de noticias referentes al sector de la programación.
 
 Puedes ver el modelo relacional [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/master/Diagramas/Modelo%20relacional.png).
 
-Puedes ver el diagrama de clases [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/master/Diagramas/Diagrama%20de%20clases.png).
-
 Puedes ver lo que puede hacer cada tipo de usuario [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/master/Diagramas/Casos%20de%20uso.png).
 
 ## Requisitos
@@ -21,7 +19,7 @@ Puedes ver lo que puede hacer cada tipo de usuario [aquí](https://github.com/Pa
 ## Pasos a seguir
  1. En un sistema gestor de bbdd importar database.sql de la carpeta database
  2. `composer install`
- 3. En el backend generamos una clave para que se firme el token 
+ 3. Generamos una clave para que se firme el token 
 
         `openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096`
 
