@@ -58,6 +58,7 @@ export class MyCommentsComponent implements OnInit, OnDestroy {
                 if (response.length>0) {
                     this.comments=response;
                     this.loading=false;   
+                    this.noComments=false;
                     this.dtTrigger.next();         
                 }else{
                     this.loading=true;
