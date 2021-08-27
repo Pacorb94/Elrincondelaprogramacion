@@ -101,7 +101,7 @@ class HomeController extends AbstractController
     public function getMostActivePosts()
     {
         $postRepo=$this->em->getRepository(Post::class);
-        $posts=$postRepo->findBy(['inadequate'=>false], ['id'=>'DESC']);
+        $posts=$postRepo->findBy(['inadequate'=>false]);
         $mostActivePosts=[];
         foreach ($posts as $post) {
             //Seleccionamos sólo si tienen más de 5 comentarios
