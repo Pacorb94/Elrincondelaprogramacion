@@ -21,7 +21,7 @@
                 Modificado {{comment.updatedAt|amLocale:'es'|amCalendar}}
             </span>
             <button type="button" *ngIf="user?.id==comment.user.id&&!comment.inadequate" 
-                (click)="showUpdateForm(comment.content)" 
+                (click)="showUpdateForm()" 
                 class="btn btn-success button editButton ml-5">
                 <img src="../../../../../../../assets/images/edit-icon.png" class="w-25"
                     alt="Imagen de modificar comentario">
@@ -72,7 +72,7 @@
         En el evento ubmit le pasamos los valores de los campos-->
         <form [formGroup]="form" class="text-center" hidden>
             <label for="content">Modifica tu comentario</label><br>
-            <textarea formControlName="content" name="content" id="content" class="w-50 form-control">
+            <textarea formControlName="content" name="content" id="content" class="w-50 form-control">{{comment.content}}
             </textarea>
             <span *ngIf="checkTouched(form.get('content'))" class="invalid-feedback d-block">
                 {{wrongValidationMessage(form.get('content'), 'contenido')}}
