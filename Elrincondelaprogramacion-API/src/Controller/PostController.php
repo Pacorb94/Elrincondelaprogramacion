@@ -91,14 +91,12 @@ class PostController extends AbstractController
                             $decodedRequest['title']=trim($decodedRequest['title'])?:$post->getTitle();  
                             $decodedRequest['content']=trim($decodedRequest['content'])?:$post->getContent();
                             $decodedRequest['image']=trim($decodedRequest['image'])?:$post->getImage();
-                            $category=$this->categoryRepo->find($decodedRequest['category']['id'])
+                            $category=$this->categoryRepo->find($decodedRequest['category'])
                                 ?:$post->getCategory()->getId();
                             if ($this->validations($decodedRequest)) {                
                                 $post->setTitle($decodedRequest['title']);  
                                 $post->setContent($decodedRequest['content']);
                                 $post->setCategory($category);
-                                $this->deleteDirectoryOldImage($post->getImage(), 
-                                    './../public/images-posts');
                                 $post->setImage($decodedRequest['image']);
                                 $post->setUpdatedAt(new \DateTime('now'));
                                 $post->execute($this->em, $post, 'update');
@@ -129,7 +127,7 @@ class PostController extends AbstractController
             $this->filesystem->remove($folderPath.'/'.$oldImageName);    
         }   
     }
-
+    
     /**
      * Función que sube una imagen
      * @param $request
