@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../service/user.service';
 import { User } from 'src/app/models/User';
@@ -10,13 +10,11 @@ import { Subscription } from 'rxjs';
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class RegisterComponent implements OnDestroy {
     pageTitle:string;
     user:User;
     goodRegister:boolean;
     form:FormGroup;
-    roles:any[];
-    rolesSubscription:Subscription;
     registerSubscription:Subscription;
 
     constructor(private _userService:UserService, private _flashMessagesService:FlashMessagesService) { 
@@ -26,33 +24,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.form=new FormGroup({
             nick:new FormControl('', Validators.required),
             email:new FormControl('', Validators.email),
-            password:new FormControl('', Validators.required),
-            role:new FormControl('', Validators.required)
+            password:new FormControl('', Validators.required)
         });
-        this.roles=[];
-        this.rolesSubscription=new Subscription();
         this.registerSubscription=new Subscription();
     }
 
-    ngOnInit(){
-        this.getRoles();
-    }
-
     ngOnDestroy(){
-        this.rolesSubscription.unsubscribe();
         this.registerSubscription.unsubscribe();
-    }
-
-    /**
-     * Función que obtiene los roles del usuario
-     */
-    getRoles(){
-        this.rolesSubscription=this._userService.getRoles().subscribe(
-            response=>{
-                if (response) this.roles=response;            
-            },
-            error=>{}
-        );
     }
 
     /**

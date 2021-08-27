@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
+import { MostActivePostsComponent } from './components/most-active-posts/most-active-posts.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpRequestInterceptor } from './interceptor/HttpRequestIncerceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -21,6 +22,7 @@ import { CategoryModule } from './modules/category/category.module';
         AppComponent,
         NavbarComponent,
         HomeComponent,
+        MostActivePostsComponent,
         MyFooterComponent,
         CookiesPolicyComponent
     ],

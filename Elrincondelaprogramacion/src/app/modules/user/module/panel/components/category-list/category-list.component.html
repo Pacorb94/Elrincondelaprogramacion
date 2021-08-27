@@ -1,12 +1,13 @@
 <div *ngIf="loading" class="text-center mt-5">
     <!--Si terminó de cargar y no hay categorías-->
     <h5 *ngIf="noCategories">No hay categorías</h5>
-    <button class="btn btn-primary" type="button" disabled>
+    <button *ngIf="!noCategories" class="btn btn-primary" type="button" disabled>
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         Cargando...
     </button>
 </div>
-<table *ngIf="categories" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+<!--Si hay categorías-->
+<table *ngIf="!noCategories" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
     class="table-responsive mt-5 table table-hover text-center">
     <thead>
         <tr>

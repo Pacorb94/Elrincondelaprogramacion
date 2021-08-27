@@ -11,13 +11,13 @@
         <form [formGroup]="form" class="col-md-3 ml-0 pl-0 mx-auto">
             <label for="title">Título:</label>
             <!--El valor del atributo "formControlName" sirva para identificarlo Angular-->
-            <input type="text" name="title" id="title" formControlName="title" 
+            <input type="text" [value]="post?.title" name="title" id="title" formControlName="title" 
                 class="form-control text-center">
             <span *ngIf="checkTouched(form.get('title'))" class="invalid-feedback d-block">
                 {{wrongValidationMessage(form.get('title'), 'título')}}
             </span>
             <label for="content">Contenido:</label>
-            <textarea name="content" id="content" formControlName="content"
+            <textarea name="content" [value]="post?.content" id="content" formControlName="content" 
                 class="form-control text-center">
             </textarea>
             <span *ngIf="checkTouched(form.get('content'))" class="invalid-feedback d-block">

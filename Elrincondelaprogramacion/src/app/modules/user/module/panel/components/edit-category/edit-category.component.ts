@@ -63,8 +63,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
         this.categorySubscription=this._categoryService.getCategory(name).subscribe(
             response=>{
                 if (response) {
-                    this.category=response;
-                    this.setFormValues(this.category);                             
+                    this.category=response;                         
                 }else{
                     this._router.navigate(['']);
                 }        
@@ -103,14 +102,6 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
     setCategoryFormValues(){
         //Con ? evitamos que Angular muestre un mensaje de que el campo puede estar null
         if (this.form.get('name')?.value) this.category.name=this.form.get('name')?.value;
-    }
-
-    /**
-     * Función que establece los valores del formulario
-     * @param category 
-     */
-    setFormValues(category:any){
-        this.form.get('name')?.setValue(category.name);
     }
 
     /**

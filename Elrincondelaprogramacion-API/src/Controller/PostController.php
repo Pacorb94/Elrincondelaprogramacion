@@ -14,6 +14,7 @@ use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class PostController extends AbstractController
 {
@@ -91,18 +92,21 @@ class PostController extends AbstractController
                             $decodedRequest['title']=trim($decodedRequest['title'])?:$post->getTitle();  
                             $decodedRequest['content']=trim($decodedRequest['content'])?:$post->getContent();
                             $decodedRequest['image']=trim($decodedRequest['image'])?:$post->getImage();
-                            $category=$this->categoryRepo->find($decodedRequest['category']['id'])
+                            $category=$this->categoryRepo->find($decodedRequest['category'])
                                 ?:$post->getCategory()->getId();
                             if ($this->validations($decodedRequest)) {                
                                 $post->setTitle($decodedRequest['title']);  
                                 $post->setContent($decodedRequest['content']);
                                 $post->setCategory($category);
-                                $this->deleteDirectoryOldImage($post->getImage(), 
-                                    './../public/images-posts');
                                 $post->setImage($decodedRequest['image']);
                                 $post->setUpdatedAt(new \DateTime('now'));
                                 $post->execute($this->em, $post, 'update');
-                                return $this->json($post);
+                                /*Debido a que dentro del post hay referencias a otros modelos
+                                dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+                                otros modelos*/
+                                return $this->json($post, 200, [], [
+                                    ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+                                ]);
                             } 
                             return $this->json(['message'=>'Wrong validation'], 400);       
                         }
@@ -117,19 +121,7 @@ class PostController extends AbstractController
             return $this->json(['message'=>$e->getMessage()], 500);
         }
     }
-
-    /**
-     * Función que borra la antigua imagen del directorio
-     * @param $oldImageName
-     * @param $folderPath
-     */
-    public function deleteDirectoryOldImage($oldImageName, $folderPath)
-    {
-        if ($this->filesystem->exists($folderPath.'/'.$oldImageName)) {
-            $this->filesystem->remove($folderPath.'/'.$oldImageName);    
-        }   
-    }
-
+    
     /**
      * Función que sube una imagen
      * @param $request
@@ -190,7 +182,12 @@ class PostController extends AbstractController
             //Si existe
             if ($user) {
                 $posts=$this->postRepo->findBy(['user'=>$userId], ['id'=>'DESC']);
-                return $this->json($posts);
+                /*Debido a que dentro de los posts hay referencias a otros modelos
+                dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+                otros modelos*/
+                return $this->json($posts, 200, [], [
+                    ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+                ]);
             }
             return $this->json(['message'=>'User not found'], 404);
         }
@@ -207,7 +204,14 @@ class PostController extends AbstractController
         if ($this->paramValidation($title, 'string')) {
             $post=$this->postRepo->findOneBy(['title'=>$title]);
             //Si existe
-            if ($post) return $this->json($post);           
+            if ($post) {
+                /*Debido a que dentro del post hay referencias a otros modelos
+                dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+                otros modelos*/
+                return $this->json($post, 200, [], [
+                    ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+                ]);  
+            }         
             return $this->json(['message'=>'Post not found'], 404);
         }
         return $this->json(['message'=>'Wrong title'], 400);  
@@ -225,8 +229,13 @@ class PostController extends AbstractController
             $post=$this->postRepo->find($id);
             //Si existe
             if ($post) {
-                $data=$this->paginate($request, 'Comment', 'where m.post='.$post->getId());
-                return $this->json($data);
+                $comments=$this->paginate($request, 'Comment', 'where m.post='.$post->getId());
+                /*Debido a que dentro de los comentarios hay referencias a otros modelos
+                dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+                otros modelos*/
+                return $this->json($comments, 200, [], [
+                    ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+                ]);
             }        
             return $this->json(['message'=>'Post not found'], 404);
         }

@@ -99,7 +99,8 @@ export class CreateCommentComponent implements OnInit, OnDestroy {
      * @param fieldName 
      */
     wrongValidationMessage(field: any, fieldName: string): string {
-        if (field.errors?.required)`El campo ${fieldName} es obligatorio`;
-        return '';
+        let message='';
+        if (field.errors?.required) message=`El campo ${fieldName} es obligatorio`;
+        return message;
     }
 }

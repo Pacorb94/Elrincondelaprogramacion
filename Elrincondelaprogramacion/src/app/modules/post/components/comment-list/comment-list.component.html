@@ -20,10 +20,17 @@
             <span class="badge rounded-pill badge-secondary">
                 Modificado {{comment.updatedAt|amLocale:'es'|amCalendar}}
             </span>
+            <button type="button" *ngIf="user?.id==comment.user.id&&!comment.inadequate" 
+                (click)="showUpdateForm()" 
+                class="btn btn-success button editButton ml-5">
+                <img src="../../../../../../../assets/images/edit-icon.png" class="w-25"
+                    alt="Imagen de modificar comentario">
+                    Editar
+            </button>
             <!--Botón que abre el modal si eres el creador del comentario, 
             la directiva "attr.data-target" es para llamar a un elemento HTML con ese id y 
             además almacena un dato-->
-            <button type="button" *ngIf="user?.id==comment.user.id" class="btn btn-danger openModel float-right" 
+            <button type="button" *ngIf="user?.id==comment.user.id&&!comment.inadequate" class="btn btn-danger button float-right" 
                 data-toggle="modal" [attr.data-target]="'#delete'+comment.id">
                 <img src="../../../../../../../assets/images/delete-icon.png" class="w-25"
                     alt="Imagen de borrar comentario">
@@ -59,8 +66,21 @@
             </div>
         </div><br>
         <p id="commentContent">
-            {{!comment.inadequate?comment.content:'Es comentario está marcado como inadecuado'}}
+            {{!comment.inadequate?comment.content:'El comentario está marcado como inadecuado'}}
         </p>
+        <!--La propiedad "formGroup" asocia este formulario con una propiedad del componente. 
+        En el evento ubmit le pasamos los valores de los campos-->
+        <form [formGroup]="form" class="text-center" hidden>
+            <label for="content">Modifica tu comentario</label><br>
+            <textarea formControlName="content" name="content" id="content" class="w-50 form-control">{{comment.content}}
+            </textarea>
+            <span *ngIf="checkTouched(form.get('content'))" class="invalid-feedback d-block">
+                {{wrongValidationMessage(form.get('content'), 'contenido')}}
+            </span>
+            <input type="button" value="Aceptar" class="btn btn-success"
+                [disabled]="!form.valid"
+                (click)="update(comment.id)">
+        </form>
         <hr>
     </div>
     <br>

@@ -79,6 +79,14 @@ export class PostService {
     getPostsByCategory(page:any, categoryName:string):Observable<any>{
         return this._http.get(`${environment.url}/posts/categories/${categoryName}?page=${page}`);
     }
+    
+    /**
+     * Función que obtiene los posts más activos
+     * @returns 
+     */
+    getMostActivePosts():Observable<any>{
+        return this._http.get(`${environment.url}/posts/most-actives`);
+    }
 
     /**
      * Función que modifica un post
