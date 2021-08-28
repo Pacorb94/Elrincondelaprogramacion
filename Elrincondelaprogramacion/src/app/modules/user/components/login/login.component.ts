@@ -70,6 +70,9 @@ export class LoginComponent implements AfterViewInit, OnDestroy {
                         this._userService.setUserLoggedIn$(this.user);
                         this._router.navigate(['']);
                     } else {
+                        this.user=null;
+                        localStorage.removeItem('user');
+                        localStorage.removeItem('password');
                         this.showFlashMessage('No puedes iniciar sesión porque has sido baneado',
                             'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
                     }                       
