@@ -58,15 +58,21 @@ export class LoginComponent implements AfterViewInit, OnDestroy {
         this.subscription=this._userService.login(email, password).subscribe(
             response=>{
                 if (response) {
-                    this.user=response[0];
-                    localStorage.setItem('user', JSON.stringify(this.user));
-                    localStorage.setItem('password', password);
-                    //Actualizamos el valor
-                    if (localStorage.hasOwnProperty('rememberEmail')) 
-                        localStorage.setItem('rememberEmail', this.user.email);
-                    //Le damos el usuario logueado al BehaviourSubject
-                    this._userService.setUserLoggedIn$(this.user);
-                    this._router.navigate(['']);
+                    //Si no está baneado
+                    if (!response[0].banned) {
+                        this.user=response[0];
+                        localStorage.setItem('user', JSON.stringify(this.user));
+                        localStorage.setItem('password', password);
+                        //Actualizamos el valor
+                        if (localStorage.hasOwnProperty('rememberEmail')) 
+                            localStorage.setItem('rememberEmail', this.user.email);
+                        //Le damos el usuario logueado al BehaviourSubject
+                        this._userService.setUserLoggedIn$(this.user);
+                        this._router.navigate(['']);
+                    } else {
+                        this.showFlashMessage('No puedes iniciar sesión porque has sido baneado',
+                            'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
+                    }                       
                 } else {
                     this.showFlashMessage('No has iniciado sesión correctamente',
                         'alert alert-danger col-md-4 mt-3 mx-auto', 1500);
