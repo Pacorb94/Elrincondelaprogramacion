@@ -57,7 +57,7 @@ class PostController extends AbstractController
                         $post=new Post($decodedRequest['title'], $decodedRequest['content'], 
                                 $category, false, $decodedRequest['image'], $userLoggedIn);
                         $post->execute($this->em, $post, 'insert');
-                        return $this->json($post, 201);
+                        return $this->json(['message'=>'Created post'], 201);
                     }
                     return $this->json(['message'=>'That category dont\'t exists'], 404);
                 }
