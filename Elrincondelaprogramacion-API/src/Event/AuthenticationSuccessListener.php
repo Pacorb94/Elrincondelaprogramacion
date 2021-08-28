@@ -20,4 +20,3 @@
             $event->setData([$user]);
         }
     }
-?>
