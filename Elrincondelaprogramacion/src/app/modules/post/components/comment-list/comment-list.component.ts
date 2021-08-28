@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../../user/service/user.service';
@@ -15,10 +15,12 @@ import { environment } from '../../../../../environments/environment';
 })
 export class CommentListComponent implements OnInit, OnDestroy {
     @Input()post:any;
-    comments!:any[];
+    @ViewChild('commentContent') private commentContent!:ElementRef;
+    comments:any[];
     user:any;
     profileImageUrl:string;
     form:FormGroup;
+    hiddenForm:boolean;
     updateCommentListSubscription:Subscription;
     getPostCommentsSubscription:Subscription;
     updateCommentSubscription:Subscription;
@@ -32,11 +34,13 @@ export class CommentListComponent implements OnInit, OnDestroy {
     constructor(private _userService:UserService, private _postService:PostService,
     private _commentService:CommentService, private _route: ActivatedRoute,
     private _flashMessagesService: FlashMessagesService) {   
+        this.comments=[];
         this.user=this._userService.getUserLoggedIn();
         this.profileImageUrl=`${environment.url}/profile-images/`;
         this.form=new FormGroup({
             content:new FormControl('', Validators.required)
         });
+        this.hiddenForm=true;
         this.updateCommentListSubscription=new Subscription();
         this.getPostCommentsSubscription=new Subscription();
         this.updateCommentSubscription=new Subscription();
@@ -131,18 +135,22 @@ export class CommentListComponent implements OnInit, OnDestroy {
     
     /**
      * Función que muestra el formulario para modificar un comentario
+     * @param
      */
-    showUpdateForm(){
-
-        console.log(this.form);
+    showUpdateForm(commentContent:string){
+       this.hiddenForm=false;
+       this.form.get('content')?.setValue(commentContent);
+       this.commentContent.nativeElement.remove();
     }
     
     /**
      * Función que modifica un comentario
-     * @param id 
      */
-    update(id:number){
-        this.updateCommentSubscription=this._commentService.update(id).subscribe(
+    update(){
+        let comment=null;
+        this.setCommentFormValues(comment);
+        console.log(comment);
+        this.updateCommentSubscription=this._commentService.update(comment).subscribe(
             response=>{
                 if (response) {
                     this.getPostComments();
@@ -154,6 +162,14 @@ export class CommentListComponent implements OnInit, OnDestroy {
 
             }
         );
+    }
+
+    /**
+     * Función que da los valores del formulario al comentario
+     */
+    setCommentFormValues(comment:any){
+        //Con ? evitamos que Angular muestre un mensaje de que el campo puede estar null
+        if (this.form.get('content')?.value) comment.content=this.form.get('content')?.value;
     }
 
     /**
@@ -186,7 +202,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
                 if (response) {
                     this.getPostComments();
                     //Desplazamos la ventana
-                    window.scrollTo(0, 600);
+                    window.scrollTo(0, 400);
                     this.showFlashMessage('Has borrado el comentario',
                         'alert alert-success col-md-7 text-center mx-auto', 3000);
                 }else{
