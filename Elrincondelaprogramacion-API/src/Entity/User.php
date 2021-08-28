@@ -244,6 +244,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
             'nick'=>$this->nick,
             'email'=>$this->email,
             'profileImage'=>$this->profileImage,
+            'banned'=>$this->banned,
             'roles'=>$this->roles,
             'createdAt'=>$this->createdAt,
             'updatedAt'=>$this->updatedAt
