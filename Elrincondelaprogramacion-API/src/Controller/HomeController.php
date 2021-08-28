@@ -6,11 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Category;
-use App\Entity\Comment;
 use App\Entity\Post;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Serializer\Exception\CircularReferenceException;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
 
 class HomeController extends AbstractController
 {
@@ -106,8 +105,8 @@ class HomeController extends AbstractController
         /*Debido a que dentro de los posts hay una referencia a otros modelos
         dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
         otros modelos*/
-        return $this->json($posts, 200, [], [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>
-            function(){}
+        return $this->json($posts, 200, [], [
+            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
         ]);
     }
 
