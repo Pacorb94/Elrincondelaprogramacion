@@ -6,11 +6,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Category;
+use App\Entity\Post;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
 
 class HomeController extends AbstractController
 {
     private $categoryRepo;
+    private $paginator;
     private $em;
 
     public function __construct(EntityManagerInterface $entityManager, PaginatorInterface $paginator) {    
@@ -21,12 +25,18 @@ class HomeController extends AbstractController
 
     /**
      * Función que obtiene todos los posts
+     * @param $request
      * @return JsonResponse
      */
     public function getPosts(Request $request)
     {
-        $data=$this->paginate($request, 'Post');
-        return $this->json($data);
+        $posts=$this->paginate($request, 'Post', 'where m.inadequate=0');
+        /*Debido a que dentro de los posts hay una referencia a otros modelos
+        dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+        otros modelos*/
+        return $this->json($posts, 200, [], [
+            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+        ]);
     }
 
     /**
@@ -41,8 +51,14 @@ class HomeController extends AbstractController
             $category=$this->categoryRepo->findOneBy(['name'=>$categoryName]);
             //Si existe
             if ($category) {
-                $data=$this->paginate($request, 'Post', 'where m.category='.$category->getId());
-                return $this->json($data);
+                $posts=$this->paginate($request, 'Post', 
+                    'where m.category='.$category->getId().' and m.inadequate=0');
+                /*Debido a que dentro de los posts hay referencias a otros modelos
+                dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+                otros modelos*/
+                return $this->json($posts, 200, [], [
+                    ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+                ]);
             }
             return $this->json(['message'=>'Category not found'], 404);
         }
@@ -77,6 +93,32 @@ class HomeController extends AbstractController
         ];
         return $data;
     }
+
+    /**
+     * Función que obtiene los posts más activos
+     * @return JsonResponse
+     */
+    public function getMostActivePosts()
+    {
+        $postRepo=$this->em->getRepository(Post::class);
+        $posts=$postRepo->findBy(['inadequate'=>false]);   
+        /*Debido a que dentro de los posts hay una referencia a otros modelos
+        dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+        otros modelos*/
+        return $this->json($posts, 200, [], [
+            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+        ]);
+    }
+
+    public function array_sort_by_column(&$arr, $col, $dir = SORT_DESC) {
+        $sort_col = array();
+        foreach ($arr as $key => $row) {
+            $sort_col[$key] = $row[$col];
+        }
+    
+        array_multisort($sort_col, $dir, $arr);
+    }
+    
 
     /**
      * Función que obtiene las categorías

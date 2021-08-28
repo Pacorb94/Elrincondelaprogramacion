@@ -13,9 +13,9 @@ import { MyFooterComponent } from './components/my-footer/my-footer.component';
 import { NgcCookieConsentModule } from 'ngx-cookieconsent';
 import { cookieConfig } from './cookie.conf';
 import { CookiesPolicyComponent } from './components/cookies-policy/cookies-policy.component';
-import { LastAddedCategoryComponent } from './components/last-added-category/last-added-category.component';
 import { FlashMessagesModule } from 'angular2-flash-messages';
-
+import { PostModule } from './modules/post/post.module';
+import { CategoryModule } from './modules/category/category.module';
 
 @NgModule({
     declarations: [
@@ -24,13 +24,14 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
         HomeComponent,
         MostActivePostsComponent,
         MyFooterComponent,
-        CookiesPolicyComponent,
-        LastAddedCategoryComponent
+        CookiesPolicyComponent
     ],
     //Para que funcionen los componentes de otros módulos debemos importar el módulo
     imports: [
         BrowserModule,
         AppRoutingModule,
+        PostModule,
+        CategoryModule,
         ReactiveFormsModule,
         HttpClientModule,
         MomentModule,

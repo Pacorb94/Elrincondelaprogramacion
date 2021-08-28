@@ -1,0 +1,58 @@
+<div class="row">
+    <img [src]="profileImage" alt="Imagen de perfil" class="profileImage mr-1">
+    <h3 class="mr-3">{{user?.nick}}</h3>
+    <span class="badge badge-primary mt-2 rounded-pill h-25">
+        <h6>Se unió el {{user?.createdAt|amLocale:'es'|amCalendar}}</h6>
+    </span>
+</div>
+<div *ngIf="loading" class="text-center mt-5">
+    <!--Si terminó de cargar y no hay posts-->
+    <h5 *ngIf="noPosts">No ha hecho posts</h5>
+    <button *ngIf="!noPosts" class="btn btn-primary" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Cargando...
+    </button>
+</div>
+<!--Si hay posts-->
+<div *ngIf="!noPosts" class="row mx-auto">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        class="table-responsive mt-5 table table-hover text-center">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Categoría</th>
+                <th>Imagen</th>
+                <th>Fecha de creación</th>
+                <th>Fecha de modificación</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let post of posts">
+                <td><a [routerLink]="['/posts', post.title]">{{post.title}}</a></td>
+                <!--Si la categoría se borró-->
+                <td>{{!post.category?'Categoría borrada':post.category.name}}</td>
+                <td>
+                    <!--Si hay imagen-->
+                    <img *ngIf="post.image" [src]="imageUrl+post.image" alt="Imagen del post" class="w-25">
+                    <img *ngIf="!post.image" src="../../../../../../../assets/images/no-post-image.jpg"
+                        alt="Imagen del post" class="w-25">
+                </td>
+                <td>{{post.createdAt|amLocale:'es'|amCalendar}}</td>
+                <td>{{post.updatedAt|amLocale:'es'|amCalendar}}</td>
+                <td>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 mx-auto">
+                            <a id="fila" [routerLink]="['/posts', post.title]"
+                                class="btn btn-success w-50 mx-auto">
+                                <img src="../../../../../../../assets/images/watch-icon.png" class="w-50"
+                                    alt="Imagen de ver post">Ver
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    

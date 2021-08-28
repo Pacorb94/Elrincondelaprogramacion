@@ -40,7 +40,7 @@ class CategoryController extends AbstractController
                     //Aunque espera el id del usuario tenemos que pasarle el usuario completo
                     $category=new Category($userLoggedIn, $decodedRequest['name']);
                     $category->execute($this->em, $category, 'insert');
-                    return $this->json($category, 201);
+                    return $this->json(['message'=>'Created category'], 201);
                 }
                 return $this->json(['message'=>'That name already exists'], 500);
             }

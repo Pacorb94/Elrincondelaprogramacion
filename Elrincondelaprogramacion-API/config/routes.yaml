@@ -13,6 +13,11 @@ updateUser:
     controller: App\Controller\UserController::update
     methods: PUT
 
+updateRole:
+    path: /users/{id}/update-role
+    controller: App\Controller\UserController::updateRole
+    methods: PUT
+
 uploadProfileImage:
     path: /profile-image/upload
     controller: App\Controller\UserController::uploadProfileImage
@@ -25,7 +30,12 @@ getProfileImage:
 
 getUser:
     path: /users/{id}
-    controller: App\Controller\UserController::getUserDetail
+    controller: App\Controller\UserController::getDetails
+    methods: GET
+
+getUserComments:
+    path: /users/{id}/comments
+    controller: App\Controller\UserController::getComments
     methods: GET
 
 getRoles:
@@ -95,9 +105,14 @@ getPosts:
     controller: App\Controller\HomeController::getPosts
     methods: GET
 
+getMostActivePosts:
+    path: /posts/most-actives
+    controller: App\Controller\HomeController::getMostActivePosts
+    methods: GET
+
 getUserPosts:
     path: /posts/users/{userId}
-    controller: App\Controller\PostController::getUserPosts
+    controller: App\Controller\PostController::getByUser
     methods: GET
 
 getPostsByCategory:
@@ -105,9 +120,14 @@ getPostsByCategory:
     controller: App\Controller\HomeController::getPostsByCategory
     methods: GET
 
-getPostDetail:
+getPostDetails:
     path: /posts/{title}
-    controller: App\Controller\PostController::getPostDetail
+    controller: App\Controller\PostController::getDetails
+    methods: GET
+
+getPostComments:
+    path: /posts/{id}/comments
+    controller: App\Controller\PostController::getComments
     methods: GET
 
 deletePost:
@@ -122,11 +142,21 @@ indequatePost:
 
 #Comment
 createComment:
-    path: /{postTitle}/comment/create
+    path: /{postId}/comment/create
     controller: App\Controller\CommentController::create
     methods: POST
+
+updateComment:
+    path: /comments/{id}/update
+    controller: App\Controller\CommentController::update
+    methods: PUT    
 
 indequateComment:
     path: /comments/{id}/inadequate
     controller: App\Controller\CommentController::inadequate
     methods: PUT
+
+deleteComment:
+    path: /comments/{id}/delete
+    controller: App\Controller\CommentController::delete
+    methods: DELETE
