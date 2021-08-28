@@ -10,11 +10,10 @@ const routes: Routes = [
     { path:'page/:page', component:HomeComponent },
     { path:'', loadChildren:()=>import('./modules/user/user.module').then(m=>m.UserModule) },
     { path:'cookies-policy', component:CookiesPolicyComponent },
-    { path:'**', redirectTo:''}
+    { path:'**', redirectTo:'' }
 ];
 
 @NgModule({
-    //Para que funcionen las rutas de otros módulos debemos importarlas
     imports: [
         RouterModule.forRoot(routes, {
             /*Cada vez que se pulse en un ancla nos llevará suavemente 
