@@ -21,6 +21,7 @@ import { DataTablesModule } from "angular-datatables";
 import { MomentModule } from 'angular2-moment';
 import { FileUploaderPostComponent } from './components/file-uploader-post/file-uploader-post.component';
 import { CategoryListComponent } from './components/category-list/category-list.component';
+import { UpdateRoleComponent } from './components/update-role/update-role.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { CategoryListComponent } from './components/category-list/category-list.
         UsersToBanComponent,
         UserSettingsComponent,
         FileUploaderPostComponent,
-        CategoryListComponent
+        CategoryListComponent,
+        UpdateRoleComponent
     ],
     imports: [
         CommonModule,
