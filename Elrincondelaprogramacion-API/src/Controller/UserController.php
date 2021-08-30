@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
 use App\Entity\Comment;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -229,40 +230,54 @@ class UserController extends AbstractController
     }
 
     /**
+     * Función que obtiene los usuarios
+     * @return JsonResponse
+     */
+    public function getUsers()
+    {
+        $users=$this->userRepo->findAll();
+        return $this->json($users);
+    }
+
+    /**
      * Función que obtiene los roles
      * @return JsonResponse
      */
     public function getRoles()
     {
-        return $this->json(['ROLE_WRITER', 'ROLE_READER']);
+        return $this->json(['ROLE_ADMIN', 'ROLE_WRITER', 'ROLE_READER']);
+    }
+
+    /**
+     * Función que obtiene los usuarios para banear
+     * @return JsonResponse
+     */
+    public function getUsersToBan()
+    {
+        $users=$this->userRepo->findAll();
+        $usersToBan=[];
+        foreach ($users as $user) {
+            
+        }
     }
 
     /**
      * Función que banea a un usuario
      * @param $id
-     * @param $request
      * @return JsonRespose
      */
-    public function ban($id, Request $request)
+    public function ban($id)
     {
         if ($this->idValidation($id)) {
-            $request=$request->get('json', true);
-            if ($request) {
-                $decodedRequest=json_decode($request, true);
-                $decodedRequest['ban']=trim($decodedRequest['ban']);
-                if ($decodedRequest['ban']=='yes') {
-                    $user=$this->userRepo->find($id);
-                    //Si existe
-                    if ($user) {
-                        $user->setBanned(true);
-                        $user->execute($this->em, $user, 'update');
-                        return $this->json($user);
-                    }
-                    return $this->json(['message'=>'User not found'], 404);
-                }
-                return $this->json(['message'=>'You must be send yes as value'], 400); 
+            $user=$this->userRepo->find($id);
+            //Si existe
+            if ($user) {
+                $user->setBanned(true);
+                $user->setUpdatedAt(new \DateTime('now'));
+                $user->execute($this->em, $user, 'update');
+                return $this->json($user);
             }
-            return $this->json(['message'=>'Wrong json'], 400);  
+            return $this->json(['message'=>'User not found'], 404);          
         }
         return $this->json(['message'=>'Wrong id'], 400);
     }
