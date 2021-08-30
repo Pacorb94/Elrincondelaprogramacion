@@ -32,7 +32,7 @@ class CommentController extends AbstractController
      */
     public function create($postId, Request $request)
     {
-        if (is_numeric($postId)) {
+        if ($this->idValidation($postId)) {
             $request=$request->get('json', null);
             if ($request) {
                 //Decodificamos a un array
@@ -98,33 +98,22 @@ class CommentController extends AbstractController
     }
 
     /**
-     * Función que marca como inadecuado un comentario o lo desmarca
+     * Función que marca como inadecuado un comentario
      * @param $id
-     * @param $request
      * @return JsonResponse
      */
-    public function inadequate($id, Request $request)
+    public function inadequate($id)
     {
         if ($this->idValidation($id)) {
-            $request=$request->get('json', null);
-            if ($request) {
-                $decodedRequest=json_decode($request, true);
-                $decodedRequest['inadequate']=trim($decodedRequest['inadequate']);
-                if ($decodedRequest['inadequate']=='yes'||$decodedRequest['inadequate']=='no') {
-                    $comment=$this->commentRepo->find($id);
-                    //Si existe
-                    if ($comment) {
-                        $inadequate=($decodedRequest['inadequate']=='yes')?true:false;
-                        $comment->setInadequate($inadequate);
-                        $comment->execute($this->em, $comment, 'update');
-                        return $this->json($comment);
-                    }
-                    return $this->json(['message'=>'Comment not found'], 404);
-                }
-                return $this->json(['message'=>'You must send yes or no as values'], 400);
+            $comment=$this->commentRepo->find($id);
+            //Si existe
+            if ($comment) {
+                $comment->setInadequate(true);
+                $comment->execute($this->em, $comment, 'update');
+                return $this->json(['message'=>'Comment marked as inadequate']);
             }
-            return $this->json(['message'=>'Wrong json'], 400);  
-        }
+            return $this->json(['message'=>'Comment not found'], 404);
+        }        
         return $this->json(['message'=>'Wrong id'], 400);
     }
     

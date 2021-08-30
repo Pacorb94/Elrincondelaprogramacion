@@ -77,7 +77,7 @@ class PostController extends AbstractController
     public function update($id, Request $request)
     {
         try {
-            if ($this->paramValidation($id, 'id')) {
+            if ($this->idValidation($id)) {
                 $request=$request->get('json', null);
                 if ($request) {
                     $decodedRequest=json_decode($request, true);
@@ -201,7 +201,7 @@ class PostController extends AbstractController
      */
     public function getDetails($title)
     {
-        if ($this->paramValidation($title, 'string')) {
+        if ($title) {
             $post=$this->postRepo->findOneBy(['title'=>$title]);
             //Si existe
             if ($post) {
@@ -272,32 +272,21 @@ class PostController extends AbstractController
     }
 
     /**
-     * Función que marca un post como inadecuado o lo desmarca
-     * @param $title
-     * @param $request
+     * Función que marca un post como inadecuado
+     * @param $id
      * @return JsonResponse
      */
-    public function inadequate($title, Request $request)
+    public function inadequate($id)
     {
-        if ($this->paramValidation($title, 'string')) {
-            $request=$request->get('json', null);
-            if ($request) {
-                $decodedRequest=json_decode($request, true);
-                $decodedRequest['inadequate']=trim($decodedRequest['inadequate']);
-                if ($decodedRequest['inadequate']||$decodedRequest['inadequate']=='no') {
-                    $post=$this->postRepo->findOneBy(['title'=>$title]);
-                    //Si existe
-                    if ($post) {
-                        $inadequate=($decodedRequest['inadequate']=='yes')?true:false;
-                        $post->setInadequate($inadequate);
-                        $post->execute($this->em, $post, 'update');
-                        return $this->json($post);
-                    }
-                    return $this->json(['message'=>'Post not found'], 404);
-                }
-                return $this->json(['message'=>'You must send yes or no as values'], 400);    
+        if ($this->idValidation($id)) {
+            $post=$this->postRepo->find($id);
+            //Si existe
+            if ($post) {
+                $post->setInadequate(true);
+                $post->execute($this->em, $post, 'update');
+                return $this->json(['message'=>'Post marked as inadequate']);
             }
-            return $this->json(['message'=>'Wrong json'], 400);   
+            return $this->json(['message'=>'Post not found'], 404);         
         }
         return $this->json(['message'=>'Wrong title'], 400); 
     }
@@ -309,7 +298,7 @@ class PostController extends AbstractController
      */
     public function delete($id)
     {
-        if ($this->paramValidation($id, 'id')) {
+        if ($this->idValidation($id)) {
             $post=$this->postRepo->find($id);
             //Si existe
             if ($post) {
