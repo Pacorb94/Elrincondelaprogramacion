@@ -11,6 +11,7 @@
             <a class="nav-link" routerLink="my-comments" routerLinkActive="active" id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">Mis comentarios</a>
             <a *ngIf="user.roles[0]=='ROLE_ADMIN'||user.roles[0]=='ROLE_WRITER'" class="nav-link" routerLink="create-post" routerLinkActive="active" id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false">Crear post</a>
             <a *ngIf="user.roles[0]=='ROLE_ADMIN'" class="nav-link" routerLink="create-category" routerLinkActive="active" id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false">Crear categoría</a>
+            <a *ngIf="user.roles[0]=='ROLE_ADMIN'" class="nav-link" routerLink="update-role" routerLinkActive="active" id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false">Modificar rol de un usuario</a>
             <div *ngIf="user.roles[0]=='ROLE_ADMIN'">
                 <a class="nav-link" routerLink="inadequate/posts" routerLinkActive="active" id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">Posts inadecuados</a>
                 <a class="nav-link" routerLink="inadequate/comments" routerLinkActive="active" id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">Comentarios inadecuados</a>
