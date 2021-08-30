@@ -61,7 +61,9 @@ security:
           }
         - { path: /users/[0-9]+, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
         - { path: /users/[0-9]+/comments, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
+        - { path: /users, roles: ROLE_ADMIN, requires_channel: https }
         - { path: /profile-image/upload, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
+        - { path: /users/to-ban, roles: ROLE_ADMIN, requires_channel: https }
         - { path: /users/[0-9]+/ban, roles: ROLE_ADMIN, requires_channel: https }
         - { path: /logout, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
         - { path: /[category], roles: ROLE_ADMIN, requires_channel: https }
@@ -76,7 +78,7 @@ security:
             requires_channel: https 
           }     
         - { path: /posts/[0-9]+/inadequate, roles: ROLE_ADMIN, requires_channel: https }
-        - { path: /posts/inadequates, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: /postss/inadequates, roles: ROLE_ADMIN, requires_channel: https }
         - { path: /posts/[0-9]+/delete, roles: ROLE_ADMIN, requires_channel: https } 
         - { path: /comments/[0-9]+/update, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
         - { path: /comments/[0-9]+/inadequate, roles: ROLE_ADMIN, requires_channel: https }

@@ -38,9 +38,19 @@ getUserComments:
     controller: App\Controller\UserController::getComments
     methods: GET
 
+getUsers:
+    path: /users
+    controller: App\Controller\UserController::getUsers
+    methods: GET
+
 getRoles:
     path: /roles
-    controller: App\Controller\UserController:getRoles
+    controller: App\Controller\UserController::getRoles
+    methods: GET
+
+getUsersToBan:
+    path: /users/to-ban
+    controller: App\Controller\UserController::getUsersToBan
     methods: GET
 
 banUser:
@@ -141,7 +151,7 @@ indequatePost:
     methods: PUT
 
 getInadequatePosts:
-    path: /posts/inadequates
+    path: /postss/inadequates
     controller: App\Controller\PostController::getInadequates
     methods: GET
 
