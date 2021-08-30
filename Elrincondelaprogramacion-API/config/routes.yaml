@@ -136,7 +136,7 @@ deletePost:
     methods: DELETE
 
 indequatePost:
-    path: /posts/{title}/inadequate
+    path: /posts/{id}/inadequate
     controller: App\Controller\PostController::inadequate
     methods: PUT
 
