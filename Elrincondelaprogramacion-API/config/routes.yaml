@@ -140,6 +140,11 @@ indequatePost:
     controller: App\Controller\PostController::inadequate
     methods: PUT
 
+getInadequatePosts:
+    path: /posts/inadequates
+    controller: App\Controller\PostController::getInadequates
+    methods: GET
+
 #Comment
 createComment:
     path: /{postId}/comment/create
@@ -155,6 +160,11 @@ indequateComment:
     path: /comments/{id}/inadequate
     controller: App\Controller\CommentController::inadequate
     methods: PUT
+
+getInadequateComments:
+    path: /comments/inadequates
+    controller: App\Controller\CommentController::getInadequates
+    methods: GET
 
 deleteComment:
     path: /comments/{id}/delete
