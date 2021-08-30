@@ -135,6 +135,14 @@ export class UserService {
     getComments(id:number):Observable<any>{
         return this._http.get(`${environment.url}/users/${id}/comments`);
     }
+    
+    /**
+     * Función que obtiene los usuarios
+     * @returns
+     */
+    getUsers():Observable<any>{
+        return this._http.get(`${environment.url}/users`);
+    }
 
     /**
      * Función que cierra sesión

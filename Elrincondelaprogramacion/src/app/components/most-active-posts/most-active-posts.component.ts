@@ -45,7 +45,6 @@ export class MostActivePostsComponent implements OnInit, OnDestroy {
 					this.posts=response.sort(
 						(a:any, b:any)=>parseInt(b.comments.length)-parseInt(a.comments.length)
 					).slice(0, 3);
-					console.log(this.posts);
                 } else {
                     this.loading = true;
                     this.noPosts=true;

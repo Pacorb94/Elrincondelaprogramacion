@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
 use App\Entity\Post;
 use App\Entity\Category;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -77,7 +78,7 @@ class PostController extends AbstractController
     public function update($id, Request $request)
     {
         try {
-            if ($this->paramValidation($id, 'id')) {
+            if ($this->idValidation($id)) {
                 $request=$request->get('json', null);
                 if ($request) {
                     $decodedRequest=json_decode($request, true);
@@ -201,7 +202,7 @@ class PostController extends AbstractController
      */
     public function getDetails($title)
     {
-        if ($this->paramValidation($title, 'string')) {
+        if ($title) {
             $post=$this->postRepo->findOneBy(['title'=>$title]);
             //Si existe
             if ($post) {
@@ -272,34 +273,39 @@ class PostController extends AbstractController
     }
 
     /**
-     * Función que marca un post como inadecuado o lo desmarca
-     * @param $title
-     * @param $request
+     * Función que marca un post como inadecuado
+     * @param $id
      * @return JsonResponse
      */
-    public function inadequate($title, Request $request)
+    public function inadequate($id)
     {
-        if ($this->paramValidation($title, 'string')) {
-            $request=$request->get('json', null);
-            if ($request) {
-                $decodedRequest=json_decode($request, true);
-                $decodedRequest['inadequate']=trim($decodedRequest['inadequate']);
-                if ($decodedRequest['inadequate']||$decodedRequest['inadequate']=='no') {
-                    $post=$this->postRepo->findOneBy(['title'=>$title]);
-                    //Si existe
-                    if ($post) {
-                        $inadequate=($decodedRequest['inadequate']=='yes')?true:false;
-                        $post->setInadequate($inadequate);
-                        $post->execute($this->em, $post, 'update');
-                        return $this->json($post);
-                    }
-                    return $this->json(['message'=>'Post not found'], 404);
-                }
-                return $this->json(['message'=>'You must send yes or no as values'], 400);    
+        if ($this->idValidation($id)) {
+            $post=$this->postRepo->find($id);
+            //Si existe
+            if ($post) {
+                $post->setInadequate(true);
+                $post->setUpdatedAt(new \DateTime('now'));
+                $post->execute($this->em, $post, 'update');
+                return $this->json(['message'=>'Post marked as inadequate']);
             }
-            return $this->json(['message'=>'Wrong json'], 400);   
+            return $this->json(['message'=>'Post not found'], 404);         
         }
         return $this->json(['message'=>'Wrong title'], 400); 
+    }
+
+    /**
+     * Función que obtiene los posts inadecuados
+     * @return JsonResponse
+     */
+    public function getInadequates()
+    {
+        $posts=$this->postRepo->findBy(['inadequate'=>true], ['id'=>'DESC']);
+        /*Debido a que dentro de los posts hay una referencia a otros modelos
+        dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+        otros modelos*/
+        return $this->json($posts, 200, [], [
+            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+        ]);
     }
 
     /**
@@ -309,7 +315,7 @@ class PostController extends AbstractController
      */
     public function delete($id)
     {
-        if ($this->paramValidation($id, 'id')) {
+        if ($this->idValidation($id)) {
             $post=$this->postRepo->find($id);
             //Si existe
             if ($post) {

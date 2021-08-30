@@ -102,13 +102,19 @@ export class PostService {
     /**
      * Función que marca como inadecuado un post
      * @param id 
-     * @param inadequate 
      * @returns 
      */
-    inadequate(id:number, inadequate:string):Observable<any>{
-        let data=`json=${inadequate}`;
+    inadequate(id:number):Observable<any>{
         let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return this._http.put(`${environment.url}/posts/${id}/inadequate`, data, {headers:header});
+        return this._http.put(`${environment.url}/posts/${id}/inadequate`, {headers:header});
+    }
+
+    /**
+     * Función que obtiene los posts inadecuados
+     * @returns 
+     */
+    getInadequates():Observable<any>{
+        return this._http.get(`${environment.url}/postss/inadequates`);
     }
 
     /**

@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Comment;
 use App\Entity\Post;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
@@ -32,7 +33,7 @@ class CommentController extends AbstractController
      */
     public function create($postId, Request $request)
     {
-        if (is_numeric($postId)) {
+        if ($this->idValidation($postId)) {
             $request=$request->get('json', null);
             if ($request) {
                 //Decodificamos a un array
@@ -79,7 +80,12 @@ class CommentController extends AbstractController
                             $comment->setContent($decodedRequest['content']);
                             $comment->setUpdatedAt(new \DateTime('now'));
                             $comment->execute($this->em, $comment, 'update');
-                            return $this->json($comment);
+                            /*Debido a que dentro del comentario hay una referencia a otros modelos
+                            dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+                            otros modelos*/
+                            return $this->json($comment, 200, [], [
+                                ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+                            ]);
                         }
                         return $this->json(['message'=>'You can\'t update that comment'], 400);
                     }
@@ -93,34 +99,39 @@ class CommentController extends AbstractController
     }
 
     /**
-     * Función que marca como inadecuado un comentario o lo desmarca
+     * Función que marca como inadecuado un comentario
      * @param $id
-     * @param $request
      * @return JsonResponse
      */
-    public function inadequate($id, Request $request)
+    public function inadequate($id)
     {
         if ($this->idValidation($id)) {
-            $request=$request->get('json', null);
-            if ($request) {
-                $decodedRequest=json_decode($request, true);
-                $decodedRequest['inadequate']=trim($decodedRequest['inadequate']);
-                if ($decodedRequest['inadequate']=='yes'||$decodedRequest['inadequate']=='no') {
-                    $comment=$this->commentRepo->find($id);
-                    //Si existe
-                    if ($comment) {
-                        $inadequate=($decodedRequest['inadequate']=='yes')?true:false;
-                        $comment->setInadequate($inadequate);
-                        $comment->execute($this->em, $comment, 'update');
-                        return $this->json($comment);
-                    }
-                    return $this->json(['message'=>'Comment not found'], 404);
-                }
-                return $this->json(['message'=>'You must send yes or no as values'], 400);
+            $comment=$this->commentRepo->find($id);
+            //Si existe
+            if ($comment) {
+                $comment->setInadequate(true);
+                $comment->setUpdatedAt(new \DateTime('now'));
+                $comment->execute($this->em, $comment, 'update');
+                return $this->json(['message'=>'Comment marked as inadequate']);
             }
-            return $this->json(['message'=>'Wrong json'], 400);  
-        }
+            return $this->json(['message'=>'Comment not found'], 404);
+        }        
         return $this->json(['message'=>'Wrong id'], 400);
+    }
+    
+    /**
+     * Función que obtiene los comentarios inadecuados
+     * @return JsonResponse
+     */
+    public function getInadequates()
+    {
+        $comments=$this->commentRepo->findBy(['inadequate'=>true], ['id'=>'DESC']);
+        /*Debido a que dentro de los comentarios hay una referencia a otros modelos
+        dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+        otros modelos*/
+        return $this->json($comments, 200, [], [
+            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+        ]);
     }
     
     /**

@@ -9,13 +9,15 @@ import { MomentModule } from 'angular2-moment';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PostRoutingModule } from './../post/post-routing.module';
+import { EditCommentComponent } from './components/edit-comment/edit-comment.component';
 
 
 @NgModule({
     declarations: [
         WatchPostComponent,
         CommentListComponent,
-        CreateCommentComponent
+        CreateCommentComponent,
+        EditCommentComponent
     ],
     imports: [
         CommonModule,
