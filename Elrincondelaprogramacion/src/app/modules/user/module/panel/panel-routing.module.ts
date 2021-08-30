@@ -9,7 +9,7 @@ import { UserSettingsComponent } from './components/user-settings/user-settings.
 import { MyPostsComponent } from './components/my-posts/my-posts.component';
 import { InadequatePostsComponent } from './components/inadequate-posts/inadequate-posts.component';
 import { InadequateCommentsComponent } from './components/inadequate-comments/inadequate-comments.component';
-import { BannedUsersComponent } from './components/banned-users/banned-users.component';
+import { UsersToBanComponent } from './components/users-to-ban/users-to-ban.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
 import { CategoryListComponent } from './components/category-list/category-list.component';
 import { CheckAdminRoleGuard } from './../../guards/check-admin-role.guard';
@@ -45,7 +45,7 @@ const routes: Routes = [
                 ],
                 canActivate:[CheckAdminRoleGuard]
             },
-            { path:'banned-users', component:BannedUsersComponent, canActivate:[CheckAdminRoleGuard] },
+            { path:'banned-users', component:UsersToBanComponent, canActivate:[CheckAdminRoleGuard] },
             { path:'user-settings', component:UserSettingsComponent },
             { path:'**', redirectTo:'' }
         ]
