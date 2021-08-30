@@ -1,1 +1,38 @@
-<p>my-comments works!</p>
+<div *ngIf="loading" class="text-center mt-5">
+    <!--Si terminó de cargar y no hay comentarios-->
+    <h5 *ngIf="noComments">No tienes comentarios</h5>
+    <button *ngIf="!noComments" class="btn btn-primary" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Cargando...
+    </button>
+</div>
+<!--Si hay comentarios-->
+<table *ngIf="!noComments" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+    class="table-responsive mt-5 table table-hover text-center">
+    <thead>
+        <tr>
+            <th>Post en el que se publicó</th>
+            <th>Fecha de creación</th>
+            <th>Fecha de modificación</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let comment of comments">
+            <td><a [routerLink]="['/posts', comment.post.title]">{{comment.post.title}}</a></td>
+            <td>{{comment.createdAt|amLocale:'es'|amCalendar}}</td>
+            <td>{{comment.updatedAt|amLocale:'es'|amCalendar}}</td>
+            <td>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6 mx-auto text-center">
+                        <a [routerLink]="['/posts', comment.post.title]"
+                            class="btn btn-success w-50 d-flex align-items-center mx-auto">
+                            <img src="../../../../../../../assets/images/watch-icon.png" class="w-50"
+                                alt="Imagen de ver post">Ver
+                        </a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

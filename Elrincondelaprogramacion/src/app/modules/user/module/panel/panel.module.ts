@@ -15,7 +15,7 @@ import { CreateCategoryComponent } from './components/create-category/create-cat
 import { EditCategoryComponent } from './components/edit-category/edit-category.component';
 import { InadequatePostsComponent } from './components/inadequate-posts/inadequate-posts.component';
 import { InadequateCommentsComponent } from './components/inadequate-comments/inadequate-comments.component';
-import { InadequateUsersComponent } from './components/inadequate-users/inadequate-users.component';
+import { BannedUsersComponent } from './components/banned-users/banned-users.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { DataTablesModule } from "angular-datatables";
 import { MomentModule } from 'angular2-moment';
@@ -34,10 +34,11 @@ import { CategoryListComponent } from './components/category-list/category-list.
         EditCategoryComponent,
         InadequatePostsComponent,
         InadequateCommentsComponent,
-        InadequateUsersComponent,
+        BannedUsersComponent,
         UserSettingsComponent,
         FileUploaderPostComponent,
-        CategoryListComponent
+        CategoryListComponent,
+        BannedUsersComponent
     ],
     imports: [
         CommonModule,

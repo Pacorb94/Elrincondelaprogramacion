@@ -11,7 +11,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="posts", 
  * indexes={
  *  @ORM\Index(name="fk_posts_categories", columns={"category_id"}),
- *  @ORM\Index(name="fk_posts_users", columns={"user_id"})
+ *  @ORM\Index(name="fk_posts_users", columns={"user_id"}),
+ *  @ORM\UniqueConstraint(name="title", columns={"title"})
  * })
  * @ORM\Entity
  */

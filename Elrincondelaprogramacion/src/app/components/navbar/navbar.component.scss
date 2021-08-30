@@ -2,6 +2,30 @@ a{
     cursor: pointer;
 }
 
+nav{
+    background-color: #333 !important;
+    a, li a{
+        color:#0894d1 !important;
+    }
+}
+
+#navbarDropdown:hover{
+    color: white !important;
+    background-color: #0894d1 !important;
+}
+
+#categoriesDropdown{
+    height: 100px;
+    overflow: auto;
+    a{
+        width: 100px;
+    }
+    a:hover{
+        color: #0894d1;
+        background-color: #333;
+    }
+}
+
 .dropdown-item{
     width: 100%;
 }
@@ -10,11 +34,13 @@ a{
     width: 145%;
 }
 
-.active:hover{
-    background-color: aqua;
+li.active:hover a{
+    background-color: #0894d1;
+    color: white !important;
 }
 
 #logout:hover{
+    font-weight: bold;
     color: black;
     background-color: red;
 }
@@ -24,4 +50,113 @@ a{
     width: 50px;
     height: 50px;
     border-radius: 50%;
+}
+
+#logo{
+	padding: 20px !important;
+	background-color: #37bbf9 !important;	
+	a{
+		color: white !important;
+		margin:0px auto !important;
+	}	
+}
+
+@media screen and (max-width:991px){
+	#logo{
+		width: 92% !important;
+		text-align: center;
+		a{
+			font-size: 30px;
+		}
+	}
+}
+
+@media screen and (max-width:832px){
+	#logo{
+		width: 86% !important;
+	}
+}
+
+@media screen and (max-width:732px){
+	#logo{
+		width: 90% !important;
+	}
+}
+
+@media screen and (max-width:672px){
+	#logo{
+		width: 84% !important;
+	}
+}
+
+@media screen and (max-width:592px){
+	#logo{
+		width: 82% !important;
+	}
+}
+
+@media screen and (max-width:542px){
+	#logo{
+		width: 80% !important;
+		a{
+			font-size: 25px;
+		}
+	}
+}
+
+@media screen and (max-width:506px){
+	#logo{
+		a{
+			font-size: 25px;
+		}
+	}
+}
+
+@media screen and (max-width:499px){
+	#logo{
+		width: 78% !important;
+		a{
+			font-size: 20px;
+		}
+	}
+}
+
+@media screen and (max-width:463px){
+	#logo{
+		width: 76% !important;
+	}
+}
+
+@media screen and (max-width:443px){
+	#logo{
+		width: 74% !important;
+	}
+}
+
+@media screen and (max-width:436px){
+	#logo a{
+		font-size: 18px;
+	}
+}
+
+@media screen and (max-width:406px){
+	#logo{
+		a{
+			font-size: 16px;
+		}
+	}
+}
+
+@media screen and (max-width:380px){
+	#logo{
+		a{
+			font-size: 14px;
+		}
+	}
+}
+
+@media screen and (max-width:352px){
+	#logo{
+		width: 72%!important;
+	}
 }

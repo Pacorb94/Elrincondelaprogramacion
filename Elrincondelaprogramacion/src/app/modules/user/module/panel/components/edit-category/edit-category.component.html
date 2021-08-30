@@ -11,7 +11,7 @@
         <form [formGroup]="form" class="col-md-3 ml-0 pl-0 mx-auto">
             <label for="name">Nombre:</label>
             <!--El valor del atributo "formControlName" sirva para identificarlo Angular-->
-            <input type="text" name="name" id="name" formControlName="name" 
+            <input type="text" [value]="category?.name" name="name" id="name" formControlName="name" 
                 class="form-control text-center">
             <span *ngIf="checkTouched(form.get('name'))" class="invalid-feedback d-block">
                 {{wrongValidationMessage(form.get('name'), 'nombre')}}

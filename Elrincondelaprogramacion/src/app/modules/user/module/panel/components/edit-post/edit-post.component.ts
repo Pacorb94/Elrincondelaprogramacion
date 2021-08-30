@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../../../../service/user.service';
-import { PostService } from '../../../../../post/service/post.service';
-import { CategoryService } from './../../../../../category/service/category.service';
+import { PostService } from '../../../../../post/services/post.service';
+import { CategoryService } from '../../../../../category/service/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -55,9 +55,9 @@ export class EditPostComponent implements OnInit, OnDestroy {
     getRoutePost(){
         this._route.params.subscribe(
             params=>{
-                if (params['id']) {
-                    let postId=params['id'];
-                    this.getPost(postId);
+                if (params['title']) {
+                    let postTitle=params['title'];
+                    this.getPost(postTitle);
                 }else{
                     this._router.navigate(['']);
                 }
@@ -67,17 +67,16 @@ export class EditPostComponent implements OnInit, OnDestroy {
 
     /**
      * Función que obtiene un post
-     * @param id 
+     * @param title
      */
-    getPost(id:any){
-        this.postSubscription=this._postService.getPost(id).subscribe(
+    getPost(title:string){
+        this.postSubscription=this._postService.getPost(title).subscribe(
             response=>{
                 if (response) {
                     let user=this._userService.getUserLoggedIn();
                     //Si el post es del usuario
                     if (response.user.id==user.id) {
                         this.post=response;
-                        this.setFormValues(this.post);
                     }else{
                         this._router.navigate(['']);
                     }                   
@@ -115,12 +114,12 @@ export class EditPostComponent implements OnInit, OnDestroy {
                     this.post=response;
                 }else{
                     this.showFlashMessage('No has editado el post correctamente',
-                        'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
+                        'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
                 }
             },
             error=>{
                 this.showFlashMessage('No has editado el post correctamente',
-                    'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
+                    'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
             }
         );
     }
@@ -132,20 +131,11 @@ export class EditPostComponent implements OnInit, OnDestroy {
         //Con ? evitamos que Angular muestre un mensaje de que el campo puede estar null
         if (this.form.get('title')?.value) this.post.title=this.form.get('title')?.value;
         if (this.form.get('content')?.value) this.post.content=this.form.get('content')?.value;
-        if (this.form.get('category')?.value) this.post.category.id=this.form.get('category')?.value;
+        if (this.form.get('category')?.value) this.post.category=this.form.get('category')?.value;
         if (localStorage.hasOwnProperty('postImage')) {
             this.post.image=localStorage.getItem('postImage')??'';
             localStorage.removeItem('postImage');
         }
-    }
-
-    /**
-     * Función que establece los valores del formulario
-     * @param post 
-     */
-    setFormValues(post:any){
-        this.form.get('title')?.setValue(post.title);
-        this.form.get('content')?.setValue(post.content);
     }
 
     /**

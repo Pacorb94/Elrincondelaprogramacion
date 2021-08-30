@@ -3,38 +3,24 @@ export class Post {
     private categoryId: number;
     private title: string;
     private content: string;
-    private user: any;
+    private userId: number;
     private image: string;
     private inadequate: boolean;
     private comments: any[];
     private createdAt: any;
     private updatedAt: any;
 
-
-    constructor(id:any, categoryId:number, title:string, content: string, user: any, 
+    constructor(id:any, categoryId:number, title:string, content: string, userId: number, 
     image:string, inadequate: boolean, comments:any) {
         this.id = id;
         this.categoryId=categoryId;
         this.title=title;
         this.content = content;
-        this.user = user;
+        this.userId = userId;
         this.image=image;
         this.comments=comments;
         this.inadequate = inadequate;
         this.createdAt = Date.now();
-    }
-
-    setValues(category:number, title:string, content: string, user: any, 
-    image:string, inadequate: boolean, comments:any[], createdAt: any, updatedAt: any) {
-        this.setCategoryId(category);
-        this.setTitle(title);
-        this.setContent(content);
-        this.setUser(user);
-        this.setImage(image);
-        this.setInadequate(inadequate);
-        this.setComments(comments);
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(updatedAt);
     }
 
     setCategoryId(categoryId: number) {
@@ -49,8 +35,8 @@ export class Post {
         this.content = content;
     }
 
-    setUser(user: any) {
-        this.user = user;
+    setUserId(userId: number) {
+        this.userId = userId;
     }
 
     setImage(image: string) {
@@ -63,10 +49,6 @@ export class Post {
 
     setComments(comments:any[]){
         this.comments=comments;
-    }
-
-    setCreatedAt(createdAt: any) {
-        this.createdAt = createdAt;
     }
 
     setUpdatedAt(updatedAt: any) {
@@ -89,8 +71,8 @@ export class Post {
         return this.content;
     }
 
-    getUser() {
-        return this.user;
+    getUserId() {
+        return this.userId;
     }
 
     getImage() {

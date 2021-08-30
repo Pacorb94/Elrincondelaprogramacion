@@ -40,7 +40,7 @@ class CategoryController extends AbstractController
                     //Aunque espera el id del usuario tenemos que pasarle el usuario completo
                     $category=new Category($userLoggedIn, $decodedRequest['name']);
                     $category->execute($this->em, $category, 'insert');
-                    return $this->json($category, 201);
+                    return $this->json(['message'=>'Created category'], 201);
                 }
                 return $this->json(['message'=>'That name already exists'], 500);
             }
@@ -58,7 +58,7 @@ class CategoryController extends AbstractController
     public function update($id, Request $request)
     {
         try {
-            if ($this->idValidation($id)) {
+            if ($this->paramValidation($id, 'id')) {
                 $request=$request->get('json', null);
                 if ($request) {
                     $decodedRequest=json_decode($request, true);
@@ -90,18 +90,18 @@ class CategoryController extends AbstractController
 
     /**
      * Función que obtiene una categoría
-     * @param $id
+     * @param $name
      * @return JsonResponse
      */
-    public function getCategory($id)
+    public function getCategory($name)
     {
-        if ($this->idValidation($id)) {
-            $category=$this->categoryRepo->find($id);
+        if ($this->paramValidation($name, 'string')) {
+            $category=$this->categoryRepo->findOneBy(['name'=>$name]);
             //Si existe
             if ($category) return $this->json($category);
             return $this->json(['message'=>'Category not found'], 404);
         }
-        return $this->json(['message'=>'Wrong id'], 400); 
+        return $this->json(['message'=>'Wrong name'], 400); 
     }
 
     /**
@@ -111,7 +111,7 @@ class CategoryController extends AbstractController
      */
     public function delete($id)
     {
-        if ($this->idValidation($id)) {
+        if ($this->paramValidation($id, 'id')) {
             $category=$this->categoryRepo->find($id);
             //Si existe
             if ($category) {
@@ -131,14 +131,20 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * Función que valida el id de la ruta
-     * @param $id
+     * Función que valida un parámetro de la ruta
+     * @param $param
+     * @param $type
      * @return bool
      */
-    public function idValidation($id): Bool
+    public function paramValidation($param, $type): Bool
     {
-        if (is_numeric($id)) return true;
-        return false;
+        if ($type=='id') {
+            if (is_numeric($param)) return true;
+            return false;
+        }else if($type=='string'){
+            if ($param) return true;
+            return false;
+        }
     }
 
     /**

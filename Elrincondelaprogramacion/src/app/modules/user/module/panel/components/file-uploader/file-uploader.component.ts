@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './../../../../service/user.service';
+import { UserService } from '../../../../service/user.service';
 import { FileUploader } from 'ng2-file-upload';
 import { NgClass, NgStyle} from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
-import { environment } from './../../../../../../../environments/environment';
+import { environment } from '../../../../../../../environments/environment';
 
 @Component({
     selector: 'file-uploader',

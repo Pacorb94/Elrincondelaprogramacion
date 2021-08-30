@@ -18,7 +18,7 @@ create table if not exists posts(
     id int(255) auto_increment not null,
     user_id int(255),
     category_id int (255),
-    title varchar(255) not null,
+    title varchar(255) unique not null,
     content longtext not null,
     inadequate tinyint not null,
     image varchar(200),
@@ -52,3 +52,4 @@ create table if not exists comments(
 )ENGINE=InnoDB;
 
 alter table posts add constraint fk_posts_categories foreign key (category_id) references categories(id);
+INSERT INTO `users`(`id`, `nick`, `email`, `password`, `profile_image`, `roles`, `banned`, `created_at`, `updated_at`) VALUES (null, 'admin', 'admin@erp.com', '$2y$10$Hu1EHKnzRf/ObTG/bjM14.bKz/abIP/3qMwgT0uMjdpYgVNDcE70.', null, '["ROLE_ADMIN"]', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

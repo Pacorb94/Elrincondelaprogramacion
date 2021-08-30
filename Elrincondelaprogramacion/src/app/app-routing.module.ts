@@ -1,22 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { PostsListComponent } from './components/posts-list/posts-list.component';
+import { CookiesPolicyComponent } from './components/cookies-policy/cookies-policy.component';
 
 const routes: Routes = [
     { path:'', component:HomeComponent },
-    { path:'page/:page', component:PostsListComponent },
-    //Cargamos una ruta padre que tendrá rutas hijas con lo cual usará el lazyLoading
+    //Cargamos las rutas hijas por lazyloading
+    { path:'posts', loadChildren:()=>import('./modules/post/post.module').then(m=>m.PostModule) },
+    { path:'page/:page', component:HomeComponent },
     { path:'', loadChildren:()=>import('./modules/user/user.module').then(m=>m.UserModule) },
-    { path:'**', redirectTo:''}
+    { path:'cookies-policy', component:CookiesPolicyComponent },
+    { path:'**', redirectTo:'' }
 ];
 
 @NgModule({
-    /*Cada vez que se pulse en un ancla nos llevará suavemente 
-    hacia la parte superior de la pantalla*/
-    imports: [RouterModule.forRoot(routes, {
-        scrollPositionRestoration: 'top'
-    })],
+    imports: [
+        RouterModule.forRoot(routes, {
+            /*Cada vez que se pulse en un ancla nos llevará suavemente 
+            hacia la parte superior de la pantalla*/
+            scrollPositionRestoration: 'top'   
+        })
+    ],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

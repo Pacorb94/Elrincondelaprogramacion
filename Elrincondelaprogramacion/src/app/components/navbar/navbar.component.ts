@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../modules/user/service/user.service';
+import { CategoryService } from '../../modules/category/service/category.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -14,27 +15,33 @@ export class NavbarComponent implements OnInit, OnDestroy {
     user:any;
     form:any;
     profileImage:any;
+    categories:any[];
     loadUserSubscription:Subscription;
     loadProfileImageSubscription:Subscription;
+    categoriesSubscription:Subscription;
     logoutSubscription:Subscription;
 
-    constructor(private _userService:UserService, private _router:Router, 
-    private _sanitizer:DomSanitizer) {
+    constructor(private _userService:UserService, private _categoryService:CategoryService, 
+    private _router:Router, private _sanitizer:DomSanitizer) {
         this.form=new FormGroup({
             postsSearchText:new FormControl('', Validators.required)
         });
+        this.categories=[];
         this.loadUserSubscription=new Subscription();
         this.loadProfileImageSubscription=new Subscription();
+        this.categoriesSubscription=new Subscription();
         this.logoutSubscription=new Subscription();
     }
 
     ngOnInit(){
         this.loadUser();
+        this.getCategories();
     }
 
     ngOnDestroy(){
         this.loadUserSubscription.unsubscribe();
         this.loadProfileImageSubscription.unsubscribe();
+        this.categoriesSubscription.unsubscribe();
         this.logoutSubscription.unsubscribe();
     }
 
@@ -74,6 +81,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * Función que obtiene las categorías
+     */
+    getCategories(){
+        this.categoriesSubscription=this._categoryService.getCategories().subscribe(
+            response=>{
+                if (response) this.categories=response;            
+            },
+            error=>{}
+        );
+    }
+
+    /**
      * Función que busca temas por una palabra
      * @param text 
      */
@@ -96,24 +115,5 @@ export class NavbarComponent implements OnInit, OnDestroy {
             },
             error=>{}
         );
-    }
-
-    /**
-     * Función que comprueba si el foco está en el campo
-     * @param field
-     */
-    checkTouched(field:any):boolean{
-        if (field.touched) return true;
-        return false;
-    }
-
-    /**
-     * Función que muestra un mensaje de validación incorrecta
-     * @param field 
-     * @param fieldName 
-     */
-    wrongValidationMessage(field:any, fieldName:string):string{
-        if (field.errors?.required) return `El campo ${fieldName} es obligatorio`;
-        return '';
     }
 }

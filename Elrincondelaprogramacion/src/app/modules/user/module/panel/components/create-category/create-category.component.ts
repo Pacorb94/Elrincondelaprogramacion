@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Category } from 'src/app/models/Category';
-import { CategoryService } from './../../../../../category/service/category.service';
+import { CategoryService } from '../../../../../category/service/category.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -42,6 +42,7 @@ export class CreateCategoryComponent implements OnDestroy {
             response=>{
                 if (response) {
                     this.goodCreate=true;
+                    this._categoryService.setLastAddedCategory$(this.category);
                 }else{
                     this.goodCreate=false;
                     this.showFlashMessage('No has creado la categoría correctamente',

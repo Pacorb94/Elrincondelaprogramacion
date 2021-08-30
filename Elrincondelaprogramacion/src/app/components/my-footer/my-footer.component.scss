@@ -63,6 +63,12 @@ footer .copyright span {
     color: #0894d1;
 }
 
-#repo{
+.cursorPointer{
     cursor: pointer;
+}
+
+.postImage{
+    width:100px;
+    height:100px;
+    object-fit: cover;
 }

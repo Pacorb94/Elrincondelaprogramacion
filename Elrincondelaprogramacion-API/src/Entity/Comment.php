@@ -112,6 +112,11 @@ class Comment
         return $this->createdAt;
     }
 
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
     public function getUser()
     {
         return $this->user;
@@ -121,6 +126,11 @@ class Comment
     {
         $this->user = $user;
         return $this;
+    }
+
+    public function getPost()
+    {
+        return $this->post;
     }
 
     /**

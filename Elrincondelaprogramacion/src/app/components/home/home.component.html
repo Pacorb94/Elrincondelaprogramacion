@@ -1,6 +1,88 @@
-<div class="row">
-    <posts-list></posts-list>
-    <div class="col-xl-3 mt-5">
-        <!--<most-active-posts></most-active-posts>-->
+<div class="row column">
+    <div class="col-xl-9">
+        <last-added-category></last-added-category>
+        <div *ngIf="loading; else data">
+            <!--Si terminó de cargar y no hay posts-->
+            <h3 *ngIf="!category&&noPosts" class="text-center">No hay posts</h3>
+            <h3 *ngIf="category&&noPosts" class="text-center">
+                No hay posts de la categoría {{category}}
+            </h3>
+            <!--Si no hay posts-->
+            <div *ngIf="!noPosts" class="text-center">
+                <button class="btn btn-primary" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Cargando...
+                </button>
+            </div>
+        </div>       
+        <!--Si hay posts-->
+        <ng-template #data>
+            <h2 class="text-center">{{pageTitle}}</h2>
+            <hr>
+            <!--Cards-->
+            <div class="card-columns w-100">
+                <article *ngFor="let post of posts" class="card">
+                    <div class="card-body">
+                        <a [routerLink]="['/posts', post.title]">
+                            <!--Si hay imagen-->
+                            <img *ngIf="post.image" [src]="imageUrl+post.image" alt="Imagen del post" 
+                                class="card-img-top">
+                            <img *ngIf="!post.image" src="../../../assets/images/no-post-image.jpg" 
+                                alt="Imagen del post" class="card-img-top">
+                        </a>
+                        <h5 class="card-title card-header text-center">
+                            <a [routerLink]="['/posts', post.title]">{{post.title}}</a>
+                        </h5>
+                        <p class="text-center">{{post.content}}</p>
+                    </div>
+                </article>
+            <!--Fin de los cards-->
+            </div><br>
+            <!--Paginación-->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <!--Si no recibe por la ruta la categoría-->
+                        <a *ngIf="!category" class="page-link" [routerLink]="['/page', prevPage]" 
+                            routerLinkActive="btn-info" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        <!--Si recibe por la ruta la categoría-->
+                        <a *ngIf="category" class="page-link" 
+                            [routerLink]="['/posts/categories', category, 'page', prevPage]" 
+                            routerLinkActive="btn-info" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <!--Hacemos tantos enlaces como páginas haya-->
+                    <li *ngFor="let page of totalPages" class="page-item">
+                        <a *ngIf="!category" class="page-link" [routerLink]="['/page', page]"
+                            routerLinkActive="btn-info">
+                            {{page}}
+                        </a>
+                        <a *ngIf="category" class="page-link" 
+                            [routerLink]="['/posts/categories', category, 'page', page]" 
+                            routerLinkActive="btn-info">
+                            {{page}}
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a *ngIf="!category" class="page-link" [routerLink]="['/page', nextPage]" 
+                            routerLinkActive="btn-info" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                        <a *ngIf="category" class="page-link" 
+                            [routerLink]="['/posts/categories', category, 'page', nextPage]" 
+                            routerLinkActive="btn-info" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            <!--Fin de la paginacíon-->
+            </nav>
+        </ng-template>
+    </div>
+    <div class="col-xl-3">
+        <most-active-posts></most-active-posts>
     </div>
 </div> 

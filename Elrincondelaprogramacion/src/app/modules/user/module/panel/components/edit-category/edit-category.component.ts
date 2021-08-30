@@ -1,6 +1,6 @@
-import { Category } from './../../../../../../models/Category';
+import { Category } from '../../../../../../models/Category';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CategoryService } from './../../../../../category/service/category.service';
+import { CategoryService } from '../../../../../category/service/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -45,9 +45,9 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
     getRouteCategory(){
         this._route.params.subscribe(
             params=>{
-                if (params['id']) {
-                    let categoryId=params['id'];
-                    this.getCategory(categoryId);
+                if (params['name']) {
+                    let categoryName=params['name'];
+                    this.getCategory(categoryName);
                 }else{
                     this._router.navigate(['']);
                 }
@@ -57,14 +57,13 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
 
     /**
      * Función que obtiene una categoría
-     * @param id 
+     * @param name
      */
-    getCategory(id:any){
-        this.categorySubscription=this._categoryService.getCategory(id).subscribe(
+    getCategory(name:string){
+        this.categorySubscription=this._categoryService.getCategory(name).subscribe(
             response=>{
                 if (response) {
-                    this.category=response;
-                    this.setFormValues(this.category);                             
+                    this.category=response;                         
                 }else{
                     this._router.navigate(['']);
                 }        
@@ -103,14 +102,6 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
     setCategoryFormValues(){
         //Con ? evitamos que Angular muestre un mensaje de que el campo puede estar null
         if (this.form.get('name')?.value) this.category.name=this.form.get('name')?.value;
-    }
-
-    /**
-     * Función que establece los valores del formulario
-     * @param category 
-     */
-    setFormValues(category:any){
-        this.form.get('name')?.setValue(category.name);
     }
 
     /**

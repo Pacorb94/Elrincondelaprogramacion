@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { CategoryService } from './../../../../../category/service/category.service';
+import { CategoryService } from '../../../../../category/service/category.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class CategoryListComponent implements OnInit, OnDestroy {
     categories:any[]; 
     loading:boolean;
+    noCategories:any;
     categoriesSubscription:Subscription;
     deleteSubscription:Subscription;
     //-----Tabla------
@@ -50,11 +51,15 @@ export class CategoryListComponent implements OnInit, OnDestroy {
             response=>{
                 if (response.length>0) {
                     this.categories=response;
+                    this.noCategories=false;
                     this.loading=false;
                     /*Según el plugin de DataTable debemos elegir cuándo refrescar los datos
                     de la tabla*/
                     if (!refreshTable) this.dtTrigger.next();      
-                }           
+                } else{
+                    this.loading=true;
+                    this.noCategories=true;
+                }         
             },
             error=>{}
         );
@@ -62,13 +67,14 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
     /**
      * Función que borra una categoría
-     * @param id 
+     * @param id
      */
     deleteCategory(id:number){
         this.deleteSubscription=this._categoryService.delete(id).subscribe(
             response=>{
                 if (response) {
-                    this.getCategories(true);               
+                    this.getCategories(true);   
+                    this.noCategories=true;            
                 }else{
                     this._router.navigate(['/user-panel/category-list']);
                 }         

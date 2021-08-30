@@ -8,18 +8,24 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { MomentModule } from 'angular2-moment';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
     declarations: [
         RegisterComponent,
-        LoginComponent
+        LoginComponent,
+        UserDetailsComponent
     ],
     imports: [
         CommonModule,
         ReactiveFormsModule,
         HttpClientModule,
         FlashMessagesModule.forRoot(),
-        UserRoutingModule
+        UserRoutingModule,
+        MomentModule,
+        DataTablesModule
     ],
     providers:[
         CheckRegisterLoginGuard, 

@@ -1,50 +1,35 @@
 export class Commentt {
     private id:any;
     private content:string;
-    private user:any;
-    private post:any;
+    private userId:number;
+    private postId:number;
     private inadequate:boolean;
     private createdAt:any;
     private updatedAt:any;
      
-    constructor(id:any, content:string, user:any, post:any, inadequate:boolean, 
-    createdAt:any) {
+    constructor(id:any, content:string, userId:number, postId:number, inadequate:boolean) {
         this.id=id;
         this.content=content;
-        this.user=user;
-        this.post=post;
+        this.userId=userId;
+        this.postId=postId;
         this.inadequate=inadequate;
-        this.createdAt=createdAt;
-    }
-
-    setValues(content:string, user:any, post:any, inadequate:boolean, 
-    createdAt:any, updatedAt:any){
-        this.setContent(content);
-        this.setUser(user);
-        this.setPost(post);
-        this.setInadequate(inadequate);
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(updatedAt);
+        this.createdAt = Date.now();
     }
 
     setContent(content:string){
         this.content=content;
     }
 
-    setUser(user:any){
-        this.user=user;
+    setUserId(userId:number){
+        this.userId=userId;
     }
 
-    setPost(post:any){
-        this.post=post;
+    setPostId(postId:number){
+        this.postId=postId;
     }
 
     setInadequate(inadequate:boolean){
         this.inadequate=inadequate;
-    }
-
-    setCreatedAt(createdAt:any){
-        this.createdAt=createdAt;
     }
 
     setUpdatedAt(updatedAt:any){
@@ -59,12 +44,12 @@ export class Commentt {
         return this.content;
     }
 
-    getUser(){
-        return this.user;
+    getUserId(){
+        return this.userId;
     }
 
-    getPost(){
-        return this.post;
+    getPostId(){
+        return this.postId;
     }
 
     getInadequate(){
