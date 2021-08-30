@@ -65,6 +65,14 @@ export class CommentService {
     }
     
     /**
+     * Función que obtiene los comentarios inadecuados
+     * @returns 
+     */
+    getInadequates():Observable<any>{
+        return this._http.get(`${environment.url}/comments/inadequates`);
+    }
+    
+    /**
      * Función que borra un comentario
      * @param id 
      * @returns 

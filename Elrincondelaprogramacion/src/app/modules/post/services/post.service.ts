@@ -110,6 +110,14 @@ export class PostService {
     }
 
     /**
+     * Función que obtiene los posts inadecuados
+     * @returns 
+     */
+    getInadequates():Observable<any>{
+        return this._http.get(`${environment.url}/posts/inadequates`);
+    }
+
+    /**
      * Función que borra un post
      * @param id
      * @returns 
