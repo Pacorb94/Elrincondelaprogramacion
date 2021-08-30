@@ -19,6 +19,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
     profileImageUrl:string;
     updateCommentListSubscription:Subscription;
     getPostCommentsSubscription:Subscription;
+    inadequateSubscription:Subscription;
     deleteCommentSubscription:Subscription;
     //------Paginación-------
     page: any;
@@ -34,6 +35,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
         this.profileImageUrl=`${environment.url}/profile-images/`;
         this.updateCommentListSubscription=new Subscription();
         this.getPostCommentsSubscription=new Subscription();
+        this.inadequateSubscription=new Subscription();
         this.deleteCommentSubscription=new Subscription();
         this.prevPage = 0;
         this.nextPage = 0;
@@ -47,6 +49,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
     ngOnDestroy(){
         this.updateCommentListSubscription.unsubscribe();
         this.getPostCommentsSubscription.unsubscribe();
+        this.inadequateSubscription.unsubscribe();
         this.deleteCommentSubscription.unsubscribe();
     }
 
@@ -75,8 +78,8 @@ export class CommentListComponent implements OnInit, OnDestroy {
      * Función que obtiene los comentarios de un post
      */
     getPostComments(){
-        this.getPostCommentsSubscription=this._postService
-            .getPostComments(this.page, this.post.id).subscribe(
+        this.getPostCommentsSubscription=this._postService.getPostComments(this.page, this.post.id)
+            .subscribe(
                 response=>{
                     if (response.Comments.length) {
                         this.comments=response.Comments;
@@ -85,6 +88,20 @@ export class CommentListComponent implements OnInit, OnDestroy {
                 },
                 error=>{}
             );              
+    }
+
+    /**
+     * Función que marca como inadecuado un comentario
+     * @param commentId 
+     */
+    markAsInadequate(commentId:number){
+        this.inadequateSubscription=this._commentService.inadequate(commentId).subscribe(
+            response=>{
+                //Actualizamos la vista sin recargarla
+                if (response) this.getRouteParams();         
+            },
+            error=>{}
+        );
     }
 
     /**
