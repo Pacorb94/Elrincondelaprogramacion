@@ -114,7 +114,7 @@ export class PostService {
      * @returns 
      */
     getInadequates():Observable<any>{
-        return this._http.get(`${environment.url}/posts/inadequates`);
+        return this._http.get(`${environment.url}/postss/inadequates`);
     }
 
     /**
