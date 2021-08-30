@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MyCommentsComponent } from './components/my-comments/my-comments.component';
 import { EditCategoryComponent } from './components/edit-category/edit-category.component';
+import { UpdateRoleComponent } from './components/update-role/update-role.component';
 import { CreateCategoryComponent } from './components/create-category/create-category.component';
 import { EditPostComponent } from './components/edit-post/edit-post.component';
 import { MainComponent } from './components/main/main.component';
@@ -37,6 +38,9 @@ const routes: Routes = [
                 path:'edit-category/:name', component:EditCategoryComponent, 
                 canActivate:[CheckAdminRoleGuard]
             },
+            {
+                path:'update-role', component:UpdateRoleComponent, canActivate:[CheckAdminRoleGuard]
+            },
             { 
                 path:'inadequate/posts', 
                 component:InadequatePostsComponent, 
@@ -46,7 +50,7 @@ const routes: Routes = [
                 path:'inadequate/comments', 
                 component:InadequateCommentsComponent, canActivate:[CheckAdminRoleGuard] 
             },         
-            { path:'banned-users', component:UsersToBanComponent, canActivate:[CheckAdminRoleGuard] },
+            { path:'users-to-ban', component:UsersToBanComponent, canActivate:[CheckAdminRoleGuard] },
             { path:'user-settings', component:UserSettingsComponent },
             { path:'**', redirectTo:'' }
         ]
