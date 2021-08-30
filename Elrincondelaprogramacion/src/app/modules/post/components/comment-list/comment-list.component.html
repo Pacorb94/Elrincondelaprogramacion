@@ -62,6 +62,8 @@
         <p #commentContent id="commentContent">
             {{!comment.inadequate?comment.content:'El comentario está marcado como inadecuado'}}
         </p>
+        <input type="button" value="Comentario inadecuado" class="btn btn-info" 
+            (click)="markAsInadequate(comment.id)">
         <hr>
     </div>
     <br>
