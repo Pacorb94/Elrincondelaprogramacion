@@ -79,7 +79,12 @@ class CommentController extends AbstractController
                             $comment->setContent($decodedRequest['content']);
                             $comment->setUpdatedAt(new \DateTime('now'));
                             $comment->execute($this->em, $comment, 'update');
-                            return $this->json($comment);
+                            /*Debido a que dentro del comentario hay una referencia a otros modelos
+                            dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+                            otros modelos*/
+                            return $this->json($comment, 200, [], [
+                                ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+                            ]);
                         }
                         return $this->json(['message'=>'You can\'t update that comment'], 400);
                     }
