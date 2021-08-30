@@ -117,6 +117,12 @@ class Comment
         return $this->updatedAt;
     }
 
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt=$updatedAt;
+        return $this;
+    }
+
     public function getUser()
     {
         return $this->user;
