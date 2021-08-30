@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
 use App\Entity\Post;
 use App\Entity\Category;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -283,12 +284,28 @@ class PostController extends AbstractController
             //Si existe
             if ($post) {
                 $post->setInadequate(true);
+                $post->setUpdatedAt(new \DateTime('now'));
                 $post->execute($this->em, $post, 'update');
                 return $this->json(['message'=>'Post marked as inadequate']);
             }
             return $this->json(['message'=>'Post not found'], 404);         
         }
         return $this->json(['message'=>'Wrong title'], 400); 
+    }
+
+    /**
+     * Función que obtiene los posts inadecuados
+     * @return JsonResponse
+     */
+    public function getInadequates()
+    {
+        $posts=$this->postRepo->findBy(['inadequate'=>true], ['id'=>'DESC']);
+        /*Debido a que dentro de los posts hay una referencia a otros modelos
+        dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+        otros modelos*/
+        return $this->json($posts, 200, [], [
+            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+        ]);
     }
 
     /**

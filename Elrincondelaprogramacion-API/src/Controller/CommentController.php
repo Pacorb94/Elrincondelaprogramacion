@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Comment;
 use App\Entity\Post;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
@@ -109,12 +110,28 @@ class CommentController extends AbstractController
             //Si existe
             if ($comment) {
                 $comment->setInadequate(true);
+                $comment->setUpdatedAt(new \DateTime('now'));
                 $comment->execute($this->em, $comment, 'update');
                 return $this->json(['message'=>'Comment marked as inadequate']);
             }
             return $this->json(['message'=>'Comment not found'], 404);
         }        
         return $this->json(['message'=>'Wrong id'], 400);
+    }
+    
+    /**
+     * Función que obtiene los comentarios inadecuados
+     * @return JsonResponse
+     */
+    public function getInadequates()
+    {
+        $comments=$this->commentRepo->findBy(['inadequate'=>true], ['id'=>'DESC']);
+        /*Debido a que dentro de los comentarios hay una referencia a otros modelos
+        dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+        otros modelos*/
+        return $this->json($comments, 200, [], [
+            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+        ]);
     }
     
     /**
