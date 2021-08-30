@@ -38,13 +38,14 @@ const routes: Routes = [
                 canActivate:[CheckAdminRoleGuard]
             },
             { 
-                path:'inadequated-', 
-                children:[
-                    { path:'posts', component:InadequatePostsComponent },
-                    { path:'comments', component:InadequateCommentsComponent }
-                ],
-                canActivate:[CheckAdminRoleGuard]
+                path:'inadequate/posts', 
+                component:InadequatePostsComponent, 
+                canActivate:[CheckAdminRoleGuard] 
             },
+            { 
+                path:'inadequate/comments', 
+                component:InadequateCommentsComponent, canActivate:[CheckAdminRoleGuard] 
+            },         
             { path:'banned-users', component:UsersToBanComponent, canActivate:[CheckAdminRoleGuard] },
             { path:'user-settings', component:UserSettingsComponent },
             { path:'**', redirectTo:'' }
