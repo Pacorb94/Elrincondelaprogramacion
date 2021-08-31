@@ -24,9 +24,10 @@
                 <h6>Modificado {{post.updatedAt|amLocale:'es'|amCalendar}}</h6>
             </span>
             <p>{{post.content}}</p>
-            <!--Si el post no está marcado como inadecuado-->
-            <input *ngIf="!post.inadequate" type="button" value="Marcar post como inadecuado" 
-                class="btn btn-info" (click)="markAsInadequate(post.id)">       
+            <!--Si es el usuario con rol admin-->
+            <input *ngIf="user.roles[0]=='ROLE_ADMIN'" type="button" 
+                value="Marcar post como inadecuado" class="btn btn-info" 
+                (click)="markAsInadequate(post.id)">       
             <h6 *ngIf="!user" class="alert alert-info text-center col-4 mx-auto">
                 Para poner un comentario inicia sesión <a [routerLink]="['/login']">aquí</a>
             </h6>
