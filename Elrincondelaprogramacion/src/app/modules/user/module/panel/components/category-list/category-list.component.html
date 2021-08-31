@@ -12,21 +12,23 @@
     <thead>
         <tr>
             <th>Nombre</th>
+            <th>Creador</th>
             <th>Fecha de creación</th>
             <th>Fecha de modificación</th>
-            <th>Acciones</th>
+            <th>Acción/es</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let category of categories">
             <td>{{category.name}}</td>
+            <td>{{category.user?.nick}}</td>
             <td>{{category.createdAt|amLocale:'es'|amCalendar}}</td>
             <td>{{category.updatedAt|amLocale:'es'|amCalendar}}</td>
             <td>
                 <div class="row">
                     <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6 col-xl-6">
-                        <!--Si es-->
-                        <a *ngIf="category.user.id==user.id" 
+                        <!--Si es el que creó la categoría-->
+                        <a *ngIf="category.user?.id==user?.id" 
                         [routerLink]="['/user-panel/edit-category', category.name]" class="btn btn-warning w-50">
                             <img src="../../../../../../../assets/images/edit-icon.png" class="w-25"
                                 alt="Imagen de editar categoría">
@@ -37,7 +39,7 @@
                         <!--Botón que abre el modal, la directiva "attr.data-target" es para
                         llamar a un elemento HTML con ese id y además almacena un dato.
                         Si es el usuario que creó la categoría o si es el usuario con el nick admin -->
-                        <button type="button" *ngIf="category.user.id==user.id||user.nick=='admin'" 
+                        <button type="button" *ngIf="category.user?.id==user?.id||user?.nick=='admin'" 
                         class="btn btn-danger w-50" data-toggle="modal"
                             [attr.data-target]="'#delete'+category.id">
                             <img src="../../../../../../../assets/images/delete-icon.png" class="w-25"
