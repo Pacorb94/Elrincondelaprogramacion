@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PostService } from '../../modules/post/services/post.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgcCookieConsentService } from 'ngx-cookieconsent';
 import { environment } from 'src/environments/environment';
 
@@ -24,8 +24,8 @@ export class HomeComponent implements OnInit, OnDestroy{
     nextPage: number;
     totalPages: number[];
 
-    constructor(private _postService: PostService, private _router: Router, 
-    private _route: ActivatedRoute, private ccService: NgcCookieConsentService) { 
+    constructor(private _postService: PostService, private _route: ActivatedRoute, 
+    private ccService: NgcCookieConsentService) { 
         this.pageTitle = 'Posts';
         this.posts=[];
         this.loading = true;
@@ -90,9 +90,7 @@ export class HomeComponent implements OnInit, OnDestroy{
                     this.noPosts=true;
                 }
             },
-            error => {
-                this._router.navigate(['']);
-            }
+            error => {}
         );
     }
 
@@ -112,9 +110,7 @@ export class HomeComponent implements OnInit, OnDestroy{
                     this.noPosts=true;
                 }
             },
-            error => {
-                this._router.navigate(['']);
-            }
+            error => {}
         );
     }
 

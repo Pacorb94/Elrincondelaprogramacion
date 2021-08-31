@@ -80,9 +80,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
                     }else{
                         this._router.navigate(['']);
                     }                   
-                }else{
-                    this._router.navigate(['']);
-                }        
+                }       
             },
             error=>{
                 this._router.navigate(['']);
