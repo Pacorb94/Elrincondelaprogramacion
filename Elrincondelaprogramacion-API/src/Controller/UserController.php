@@ -123,12 +123,12 @@ class UserController extends AbstractController
                 if ($user) {
                     //Con true decodificamos la petición a un array
                     $decodedRequest=json_decode($request, true);
-                    $decodedRequest['roles']=trim($decodedRequest['roles']);                      
+                    $decodedRequest['roles'][0]=trim($decodedRequest['roles'][0]);                      
                     /*?: indica que $decodedRequest['roles'] si tiene valor será ese 
                     sino $user->getRoles()*/
                     $decodedRequest['roles']=$decodedRequest['roles']?:$user->getRoles();
                     if ($decodedRequest['roles']) {
-                        $user->setRole([$decodedRequest['role']]);
+                        $user->setRoles($decodedRequest['roles']);
                         $user->setUpdatedAt(new \DateTime('now'));
                         $user->execute($this->em, $user, 'update');                
                         return $this->json($user);          

@@ -12,6 +12,7 @@
     <thead>
         <tr>
             <th>Nick</th>
+            <th>Rol</th>
             <th>Imagen</th>
             <th>Fecha de registro</th>
             <th>Fecha de modificación</th>
@@ -21,6 +22,11 @@
     <tbody>
         <tr *ngFor="let user of users">
             <td>{{user.nick}}</td>
+            <ng-container [ngSwitch]="user.roles[0]">
+                <td *ngSwitchCase="'ROLE_ADMIN'">Administrador</td>
+                <td *ngSwitchCase="'ROLE_WRITER'">Redactor</td>
+                <td *ngSwitchDefault>Lector</td>
+            </ng-container>
             <td>
                 <!--Si hay imagen-->
                 <img *ngIf="user.image" [src]="profileImageUrl+user.image" alt="Imagen del usuario" 
@@ -35,11 +41,11 @@
                     <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6 col-xl-12 mt-2">
                         <!-- Botón que abre el modal, la directiva "attr.data-target" es para
                         llamar a un elemento HTML con ese id y además almacena un dato-->
-                        <button type="button" (click)="getRoles()" class="btn btn-info w-75 d-flex justify-content-center mx-auto"
+                        <button type="button" (click)="getRoles()" class="btn btn-warning w-75 d-flex justify-content-center mx-auto"
                             data-toggle="modal" [attr.data-target]="'#update'+user.id">
                             <img src="../../../../../../../assets/images/edit-icon.png" class="w-25"
                                 alt="Imagen de modificar usuario">
-                            Modificar rol
+                            Editar rol
                         </button>
                         <!-- Modal, el id irá sin # y con el id del usuario-->
                         <div id="{{'update'+user.id}}" class="modal fade" role="dialog">
@@ -57,11 +63,8 @@
                                         con una propiedad del componente. En el evento ubmit le 
                                         pasamos los valores de los campos-->
                                         <form [formGroup]="form" class="text-center">
-                                            <select formControlName="roles" name="roles" class="form-control">
-                                                <option value="" hidden>Selecciona un rol</option>
-                                                <option *ngFor="let role of roles" value="role.backend">
-                                                    {{role.frontend}}
-                                                </option>
+                                            <select formControlName="roles" name="roles" 
+                                                class="form-control">                 
                                             </select>
                                             <span *ngIf="checkTouched(form.get('roles'))" 
                                                 class="invalid-feedback d-block">
@@ -73,7 +76,7 @@
                                         <!--Para cerrar el modal cuando pulsemos hay que ponerle 
                                         el atributo "data-dismiss" y el botón estará desactivado 
                                         si no es correcto el formulario-->
-                                        <button (click)="updateRole(user.id)" data-dismiss="modal" 
+                                        <button (click)="updateRole(user)" data-dismiss="modal" 
                                             class="btn btn-success" [disabled]="!form.valid">
                                             Modificar
                                         </button>
