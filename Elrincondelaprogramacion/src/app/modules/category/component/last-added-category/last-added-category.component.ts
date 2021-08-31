@@ -60,7 +60,7 @@ export class LastAddedCategoryComponent implements OnInit, OnDestroy {
                 localStorage.removeItem('lastAddedCategory');
             }else{
                 this.showFlashMessage(`¡Nueva categoría! ${this.category.name}`,
-                'alert alert-success col-md-4 mx-auto text-center', 3000);
+                    'alert alert-success col-md-4 mx-auto text-center', 3000);
             }
         }
     }
