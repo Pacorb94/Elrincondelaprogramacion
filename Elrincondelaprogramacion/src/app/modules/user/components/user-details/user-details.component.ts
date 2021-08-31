@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PostService } from '../../../post/services/post.service';
 import { UserService } from 'src/app/modules/user/service/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -25,7 +24,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     dtOptions:DataTables.Settings;
     dtTrigger:Subject<any>;
 
-    constructor(private _postService:PostService, private _route:ActivatedRoute,
+    constructor(private _route:ActivatedRoute, 
     private _userService:UserService, private _sanitizer:DomSanitizer) { 
         this.posts=[];
         this.loading=true;
@@ -56,7 +55,8 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
         this.dtOptions = {
             pagingType:'full_numbers',
             pageLength:5,
-            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'}
+            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'},
+            order:[]
         };
     }
 
@@ -116,7 +116,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
      * @param id
      */
     getUserPosts(id:number) {
-        this.postsSubscription=this._postService.getUserPosts(id).subscribe(
+        this.postsSubscription=this._userService.getUserPosts(id).subscribe(
             response => {
                 //Si hay posts
                 if (response.length) {            
