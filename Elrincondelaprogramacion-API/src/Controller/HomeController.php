@@ -126,7 +126,7 @@ class HomeController extends AbstractController
      */
     public function getCategories()
     {
-        $categories=$this->categoryRepo->findAll();
+        $categories=$this->categoryRepo->findBy([], ['id'=>'DESC']);
         return $this->json($categories);
     }
 }
