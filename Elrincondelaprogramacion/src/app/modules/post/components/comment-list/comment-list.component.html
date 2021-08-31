@@ -62,9 +62,9 @@
         <p #commentContent id="commentContent">
             {{!comment.inadequate?comment.content:'El comentario está marcado como inadecuado'}}
         </p>
-        <!--Si es el usuario con rol admin-->
-        <input type="button" *ngIf="user.roles[0]=='ROLE_ADMIN'" value="Comentario inadecuado" 
-            class="btn btn-info" (click)="markAsInadequate(comment.id)">
+        <!--Si es el usuario con rol admin y el comentario no es inadecuado-->
+        <input type="button" *ngIf="user.roles[0]=='ROLE_ADMIN'&&!comment.inadequate" 
+            value="Comentario inadecuado" class="btn btn-info" (click)="markAsInadequate(comment.id)">
         <hr>
     </div>
     <br>
