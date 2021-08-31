@@ -52,7 +52,8 @@ export class MyPostsComponent implements OnInit, OnDestroy{
         this.dtOptions = {
             pagingType:'full_numbers',
             pageLength:5,
-            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'}
+            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'},
+            order:[]
         };
     }
 
@@ -61,7 +62,7 @@ export class MyPostsComponent implements OnInit, OnDestroy{
      * @param refreshTable
      */
     getUserPosts(refreshTable:boolean=false){
-        this.userPostsSubscription=this._postService.getUserPosts(this.user.id).subscribe(
+        this.userPostsSubscription=this._userService.getUserPosts(this.user.id).subscribe(
             response=>{
                 if (response.length) {
                     this.posts=response;
@@ -73,9 +74,7 @@ export class MyPostsComponent implements OnInit, OnDestroy{
                     this.noPosts=true;
                 }
             },
-            error => {
-                this._router.navigate(['']);
-            }
+            error=>{}
         );
     }
 

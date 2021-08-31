@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { CategoryService } from '../../../../../category/service/category.service';
-import { Router } from '@angular/router';
+import { UserService } from 'src/app/modules/user/service/user.service';
 
 @Component({
     selector: 'category-list',
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
     categories:any[]; 
+    user:any;
     loading:boolean;
     noCategories:any;
     categoriesSubscription:Subscription;
@@ -18,8 +19,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     dtOptions:DataTables.Settings;
     dtTrigger:Subject<any>;
 
-    constructor(private _categoryService:CategoryService, private _router:Router) {
+    constructor(private _categoryService:CategoryService, private _userService:UserService) {
         this.categories=[];
+        this.user=this._userService.getUserLoggedIn();
         this.loading=true;
         this.categoriesSubscription=new Subscription();
         this.deleteSubscription=new Subscription();
@@ -31,7 +33,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         this.dtOptions = {
             pagingType:'full_numbers',
             pageLength:5,
-            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'}
+            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'},
+            order:[]
         };
         this.getCategories();
     }
@@ -75,13 +78,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
                 if (response) {
                     this.getCategories(true);   
                     this.noCategories=true;            
-                }else{
-                    this._router.navigate(['/user-panel/category-list']);
-                }         
+                }        
             },
-            error=>{
-                this._router.navigate(['/user-panel/category-list']);
-            }
+            error=>{}
         );
     }
 }

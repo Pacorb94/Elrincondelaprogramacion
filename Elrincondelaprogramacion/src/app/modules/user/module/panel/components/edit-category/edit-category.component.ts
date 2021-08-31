@@ -1,4 +1,3 @@
-import { Category } from '../../../../../../models/Category';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CategoryService } from '../../../../../category/service/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -64,9 +63,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
             response=>{
                 if (response) {
                     this.category=response;                         
-                }else{
-                    this._router.navigate(['']);
-                }        
+                }       
             },
             error=>{
                 this._router.navigate(['']);

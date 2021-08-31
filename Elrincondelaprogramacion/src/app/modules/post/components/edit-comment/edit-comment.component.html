@@ -1,3 +1,4 @@
+<!--Si es el creador del comentario y no es un comentario inadecuado-->
 <button type="button" *ngIf="user?.id==comment.user.id&&!comment.inadequate" 
     class="btn btn-success button editButton ml-5" data-toggle="modal" 
     [attr.data-target]="'#update'+comment.id">

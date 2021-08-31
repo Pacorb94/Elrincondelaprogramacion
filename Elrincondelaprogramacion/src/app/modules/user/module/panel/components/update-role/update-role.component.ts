@@ -56,24 +56,9 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
         this.dtOptions = {
             pagingType:'full_numbers',
             pageLength:5,
-            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'}
+            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'},
+            order:[]
         };
-    }
-
-    /**
-     * Función que obtiene los roles
-     */
-    getRoles(){
-        this.rolesSubscription=this._userService.getRoles().subscribe(
-            response=>{
-                if (response.length) {
-                    this.roles.frontend=['Administrador', 'Redactor', 'Lector'];
-                    this.roles.backend=response; 
-                } 
-                console.log(this.roles);            
-            },
-            error=>{}
-        );
     }
     
     /**
@@ -84,9 +69,11 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
         this.usersSubscription=this._userService.getUsers().subscribe(
             response=>{
                 if (response.length) {
+                    let userLoggedIn=this._userService.getUserLoggedIn();
                     response.forEach((user:any)=>{
-                        //Para no modificar el rol del usuario admin añadimos sólo a los demás
-                        if (user.nick!='admin') this.users.push(user);                       
+                        /*Para no modificar el rol del usuario admin ni el usuario logueado con rol 
+                        de administrador añadimos sólo a los demás*/                   
+                        if (user.nick!='admin'&&user.nick!=userLoggedIn.nick) this.users.push(user);                       
                     });                   
                     this.loading=false;
                     this.noUsers=false;
@@ -99,21 +86,53 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
             error=>{}
         );
     }
+
+    /**
+     * Función que obtiene los roles
+     */
+    getRoles(){
+        this.rolesSubscription=this._userService.getRoles().subscribe(
+            response=>{
+                if (response.length) {
+                    this.roles.frontend=['Administrador', 'Redactor', 'Lector'];
+                    this.roles.backend=response; 
+                    this.createRolesSelectOptions();
+                }            
+            },
+            error=>{}
+        );
+    }
+    
+    /**
+     * Función que crea los options del select de los roles
+     */
+    createRolesSelectOptions(){
+        //Con @ViewChild no podía usar la función insertAdjacentHTML por alguna razón
+        let rolesSelect=document.querySelector('select[name="roles"]') as HTMLElement;
+        rolesSelect.innerHTML='';
+        rolesSelect.insertAdjacentHTML('beforeend', `<option value="" hidden>Selecciona un rol</option>`);
+        for (let i = 0; i<this.roles.backend.length; i++) {
+            rolesSelect.insertAdjacentHTML('beforeend', 
+                `<option value="${this.roles.backend[i]}">${this.roles.frontend[i]}</option>`);     
+        }
+    }
     
     /**
      * Función que modifica el rol del usuario
-     * @param userId 
+     * @param user
      */
-    updateRole(userId:number){
-        
-        /*this.updateRoleSubscription=this._userService.updateRole(userId, rol).subscribe(
+    updateRole(user:any){
+        user.roles[0]=this.form.get('roles')?.value;
+        this.updateRoleSubscription=this._userService.updateRole(user).subscribe(
             response=>{
-                if (response.length) {
+                if (response) {
+                    //Para indicarle al usuario que le hemos cambiado el rol
+                    localStorage.setItem('updatedRole', user.nick);                 
                     this.getUsers(true);
                 }
             },
             error=>{}
-        );*/
+        );
     }
 
     /**
