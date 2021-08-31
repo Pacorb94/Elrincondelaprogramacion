@@ -8,10 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\User;
 use App\Entity\Post;
 use App\Entity\Category;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -171,31 +169,6 @@ class PostController extends AbstractController
     }
 
     /**
-     * Función que obtiene los posts del usuario
-     * @param $userId
-     * @return JsonResponse
-     */
-    public function getByUser($userId)
-    {
-        if ($this->idValidation($userId)) {
-            $userRepo=$this->getDoctrine()->getRepository(User::class);
-            $user=$userRepo->find($userId);
-            //Si existe
-            if ($user) {
-                $posts=$this->postRepo->findBy(['user'=>$userId], ['id'=>'DESC']);
-                /*Debido a que dentro de los posts hay referencias a otros modelos
-                dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
-                otros modelos*/
-                return $this->json($posts, 200, [], [
-                    ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
-                ]);
-            }
-            return $this->json(['message'=>'User not found'], 404);
-        }
-        return $this->json(['message'=>'Wrong id'], 400);
-    }
-
-    /**
      * Función que obtiene un post
      * @param $title
      * @return JsonResponse
@@ -299,7 +272,7 @@ class PostController extends AbstractController
      */
     public function getInadequates()
     {
-        $posts=$this->postRepo->findBy(['inadequate'=>true], ['id'=>'DESC']);
+        $posts=$this->postRepo->findBy(['inadequate'=>true], ['updatedAt'=>'DESC']);
         /*Debido a que dentro de los posts hay una referencia a otros modelos
         dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
         otros modelos*/
