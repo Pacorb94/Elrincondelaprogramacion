@@ -143,6 +143,17 @@ export class UserService {
     getUsers():Observable<any>{
         return this._http.get(`${environment.url}/users`);
     }
+    
+    /**
+     * Función que modifica el rol de un usuario
+     * @param user 
+     * @returns 
+     */
+    updateRole(user:any):Observable<any>{
+        let data=`json=${JSON.stringify(user)}`;
+        let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        return this._http.put(`${environment.url}/users/${user.id}/update-role`, data, {headers:header});
+    }
 
     /**
      * Función que cierra sesión
