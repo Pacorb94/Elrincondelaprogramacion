@@ -33,6 +33,11 @@ getUser:
     controller: App\Controller\UserController::getDetails
     methods: GET
 
+getUserPosts:
+    path: /users/{id}/posts
+    controller: App\Controller\UserController::getPosts
+    methods: GET
+
 getUserComments:
     path: /users/{id}/comments
     controller: App\Controller\UserController::getComments
@@ -118,11 +123,6 @@ getPosts:
 getMostActivePosts:
     path: /posts/most-actives
     controller: App\Controller\HomeController::getMostActivePosts
-    methods: GET
-
-getUserPosts:
-    path: /posts/users/{userId}
-    controller: App\Controller\PostController::getByUser
     methods: GET
 
 getPostsByCategory:
