@@ -86,6 +86,14 @@ export class UserListComponent implements OnInit, OnDestroy {
             response=>{
                 if (response) {
                     this.getUsers(true);
+                    let userLoggedIn=this._userService.getUserLoggedIn();
+                    /*Si el id del usuario baneado es igual al del usuario logueado 
+                    se cerrará la sesión*/
+                    if (userLoggedIn&&id==userLoggedIn.id) {
+                        localStorage.removeItem('user');
+                        localStorage.removeItem('password');
+                        this._userService.setUserLoggedIn$(null);
+                    }            
                 }
             },
             error=>{}
