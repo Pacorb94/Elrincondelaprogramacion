@@ -64,7 +64,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
         this.categorySubscription=this._categoryService.getCategory(name).subscribe(
             response=>{
                 let userLoggedIn=this._userService.getUserLoggedIn();
-                //Si la categoría que se va a modificar la modifica el usuario que la creó
+                //Si la categoría es del usuario que la va a modificar
                 if (response&&response.user.id==userLoggedIn.id) {
                     this.category=response;                         
                 }else{
