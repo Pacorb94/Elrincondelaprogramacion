@@ -72,8 +72,9 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
                     let userLoggedIn=this._userService.getUserLoggedIn();
                     response.forEach((user:any)=>{
                         /*Para no modificar el rol del usuario admin ni el usuario logueado con rol 
-                        de administrador añadimos sólo a los demás*/                   
-                        if (user.nick!='admin'&&user.nick!=userLoggedIn.nick) this.users.push(user);                       
+                        de administrador y si el usuario no está baneado añadimos sólo a los demás*/                   
+                        if (user.nick!='admin'&&user.nick!=userLoggedIn.nick&&!user.banned) 
+                            this.users.push(user);                       
                     });                   
                     this.loading=false;
                     this.noUsers=false;
