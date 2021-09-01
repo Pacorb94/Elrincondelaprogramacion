@@ -74,7 +74,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
             response=>{
                 if (response) {
                     let user=this._userService.getUserLoggedIn();
-                    //Si el post es del usuario
+                    //Si el post es del usuario que lo va a modificar
                     if (response.user.id==user.id) {
                         this.post=response;
                     }else{
@@ -110,9 +110,6 @@ export class EditPostComponent implements OnInit, OnDestroy {
                 if (response) {
                     this.goodEdit=true;
                     this.post=response;
-                }else{
-                    this.showFlashMessage('No has editado el post correctamente',
-                        'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
                 }
             },
             error=>{

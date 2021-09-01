@@ -49,9 +49,6 @@ export class CreateCommentComponent implements OnInit, OnDestroy {
                         this.showFlashMessage('Has creado el comentario correctamente',
                             'alert alert-success col-md-10 mt-3 mx-auto text-center', 1500);
                         this._commentService.setUpdatedCommentList$(true);
-                    }else{
-                        this.showFlashMessage('No has creado el comentario correctamente',
-                            'alert alert-danger col-md-10 mt-3 mx-auto text-center', 1500);
                     }
                 },
                 error=>{
