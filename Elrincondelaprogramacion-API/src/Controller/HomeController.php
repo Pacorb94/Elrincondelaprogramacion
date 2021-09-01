@@ -102,6 +102,10 @@ class HomeController extends AbstractController
     {
         $postRepo=$this->em->getRepository(Post::class);
         $posts=$postRepo->findBy(['inadequate'=>false]);   
+        //Ordenamos los posts de forma descendente por el número de comentarios
+        usort($posts, function ($post1, $post2) {
+            return sizeof($post2->getComments())<=>sizeof($post1->getComments());
+        });
         /*Debido a que dentro de los posts hay una referencia a otros modelos
         dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
         otros modelos*/
@@ -109,16 +113,6 @@ class HomeController extends AbstractController
             ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
         ]);
     }
-
-    public function array_sort_by_column(&$arr, $col, $dir = SORT_DESC) {
-        $sort_col = array();
-        foreach ($arr as $key => $row) {
-            $sort_col[$key] = $row[$col];
-        }
-    
-        array_multisort($sort_col, $dir, $arr);
-    }
-    
 
     /**
      * Función que obtiene las categorías
