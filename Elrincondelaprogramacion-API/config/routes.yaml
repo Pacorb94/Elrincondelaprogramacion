@@ -53,11 +53,6 @@ getRoles:
     controller: App\Controller\UserController::getRoles
     methods: GET
 
-getUsersToBan:
-    path: /users/to-ban
-    controller: App\Controller\UserController::getUsersToBan
-    methods: GET
-
 banUser:
     path: /users/{id}/ban
     controller: App\Controller\UserController::ban
