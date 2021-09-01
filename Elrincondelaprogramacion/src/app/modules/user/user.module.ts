@@ -26,10 +26,6 @@ import { DataTablesModule } from 'angular-datatables';
         UserRoutingModule,
         MomentModule,
         DataTablesModule
-    ],
-    providers:[
-        CheckRegisterLoginGuard, 
-        UserLoggedInGuard
     ]
 })
 export class UserModule { }

@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { UserListComponent } from './user-listcomponent';
 
-import { UsersToBanComponent } from './users-to-ban.component';
-
-describe('UsersToBanComponent', () => {
-  let component: UsersToBanComponent;
-  let fixture: ComponentFixture<UsersToBanComponent>;
+describe('UserListComponent', () => {
+  let component: UserListComponent;
+  let fixture: ComponentFixture<UserListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UsersToBanComponent ]
+      declarations: [ UserListComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UsersToBanComponent);
+    fixture = TestBed.createComponent(UserListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
