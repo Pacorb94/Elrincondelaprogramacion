@@ -1,1 +1,82 @@
-
+<div *ngIf="loading" class="text-center mt-5">
+    <!--Si terminó de cargar y no hay usuarios-->
+    <h5 *ngIf="noUsers">No hay usuarios</h5>
+    <button *ngIf="!noUsers" class="btn btn-primary" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Cargando...
+    </button>
+</div>
+<!--Si hay usuarios-->
+<table *ngIf="!noUsers" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+    class="table-responsive mt-5 table table-hover text-center">
+    <thead>
+        <tr>
+            <th>Nick</th>
+            <th>Baneado</th>
+            <th>Imagen</th>
+            <th>Fecha de registro</th>
+            <th>Fecha de modificación</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td><a [routerLink]="['/user-details', user.id]">{{user.nick}}</a></td>
+            <td>{{user.banned==true?'Si':'No'}}</td>
+            <td>
+                <!--Si hay imagen-->
+                <img *ngIf="user.image" [src]="profileImageUrl+user.image" alt="Imagen del usuario" 
+                    class="w-50">
+                <img *ngIf="!user.image" src="../../../../../../../assets/images/no-profile-image.png"
+                    alt="Imagen del usuario" class="w-50">
+            </td>
+            <td>{{user.createdAt|amLocale:'es'|amCalendar}}</td>
+            <td>{{user.updatedAt|amLocale:'es'|amCalendar}}</td>
+            <td>
+                <!--Si el usuario no está baneado-->
+                <div *ngIf="!user.banned" class="row">                  
+                    <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6 col-xl-12 mt-2">
+                        <!-- Botón que abre el modal, la directiva "attr.data-target" es para
+                        llamar a un elemento HTML con ese id y además almacena un dato-->
+                        <button type="button" class="btn btn-warning w-75 d-flex justify-content-center mx-auto"
+                            data-toggle="modal" [attr.data-target]="'#ban'+user.id">
+                            <img src="../../../../../../../assets/images/edit-icon.png" class="w-25"
+                                alt="Imagen de banear usuario">
+                            Banear
+                        </button>
+                        <!-- Modal, el id irá sin # y con el id del usuario-->
+                        <div id="{{'ban'+user.id}}" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">¿Quieres banear al usuario {{user.nick}}?</h4>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            &times;
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Vas a banear definitivamente al usuario/a {{user.nick}}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <!--Para cerrar el modal cuando pulsemos hay que ponerle 
+                                        el atributo "data-dismiss" y el botón estará desactivado 
+                                        si no es correcto el formulario-->
+                                        <button (click)="ban(user.id)" data-dismiss="modal" 
+                                            class="btn btn-success">
+                                            Banear
+                                        </button>
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">
+                                            Cerrar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        <!--Fin del modal-->
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
