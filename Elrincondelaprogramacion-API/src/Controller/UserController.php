@@ -275,19 +275,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * Función que obtiene los usuarios para banear
-     * @return JsonResponse
-     */
-    public function getUsersToBan()
-    {
-        $users=$this->userRepo->findBy([], ['id'=>'DESC']);
-        $usersToBan=[];
-        foreach ($users as $user) {
-            
-        }
-    }
-
-    /**
      * Función que banea a un usuario
      * @param $id
      * @return JsonRespose
