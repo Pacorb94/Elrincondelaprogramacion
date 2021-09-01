@@ -14,7 +14,7 @@
     </button>
 </div>
 <!--Si hay posts-->
-<div *ngIf="!noPosts" class="row mx-auto">
+<div *ngIf="!noPosts" class="row mx-auto mt-5">
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
         class="table-responsive mt-5 table table-hover text-center">
         <thead>
@@ -44,7 +44,7 @@
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 mx-auto">
                             <a id="fila" [routerLink]="['/posts', post.title]"
-                                class="btn btn-success w-50 mx-auto">
+                                class="btn btn-success w-25 mx-auto">
                                 <img src="../../../../../../../assets/images/watch-icon.png" class="w-50"
                                     alt="Imagen de ver post">Ver
                             </a>

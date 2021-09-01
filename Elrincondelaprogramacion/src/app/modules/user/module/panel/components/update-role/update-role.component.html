@@ -21,7 +21,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let user of users">
-            <td>{{user.nick}}</td>
+            <td><a [routerLink]="['/user-details', user.id]">{{user.nick}}</a></td>
             <ng-container [ngSwitch]="user.roles[0]">
                 <td *ngSwitchCase="'ROLE_ADMIN'">Administrador</td>
                 <td *ngSwitchCase="'ROLE_WRITER'">Redactor</td>
