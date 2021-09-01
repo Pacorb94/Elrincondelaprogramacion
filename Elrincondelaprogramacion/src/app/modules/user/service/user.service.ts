@@ -126,6 +126,15 @@ export class UserService {
     getRoles():Observable<any>{
         return this._http.get(`${environment.url}/roles`);
     }
+
+    /**
+     * Función que obtiene los posts de un usuario
+     * @param id 
+     * @returns 
+     */
+    getUserPosts(id:number):Observable<any>{
+        return this._http.get(`${environment.url}/users/${id}/posts`);
+    }
     
     /**
      * Función que obtiene los comentarios de un usuario

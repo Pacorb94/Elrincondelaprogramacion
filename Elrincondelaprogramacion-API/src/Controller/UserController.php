@@ -8,11 +8,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
+use App\Entity\Post;
 use App\Entity\Comment;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
 
 class UserController extends AbstractController
 {
@@ -206,6 +207,31 @@ class UserController extends AbstractController
     }
 
     /**
+     * Función que obtiene los posts del usuario
+     * @param $id
+     * @return JsonResponse
+     */
+    public function getPosts($id)
+    {
+        if ($this->idValidation($id)) {
+            $user=$this->userRepo->find($id);
+            //Si existe
+            if ($user) {
+                $postRepo=$this->getDoctrine()->getRepository(Post::class);
+                $posts=$postRepo->findBy(['user'=>$id], ['id'=>'DESC']);
+                /*Debido a que dentro de los posts hay referencias a otros modelos
+                dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+                otros modelos*/
+                return $this->json($posts, 200, [], [
+                    ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+                ]);
+            }
+            return $this->json(['message'=>'User not found'], 404);
+        }
+        return $this->json(['message'=>'Wrong id'], 400);
+    }
+
+    /**
      * Función que obtiene los comentarios del usuario
      * @param $id
      * @return JsonResponse
@@ -216,7 +242,7 @@ class UserController extends AbstractController
             $user=$this->userRepo->find($id);
             if ($user) {
                 $commentRepo=$this->em->getRepository(Comment::class);
-                $comments=$commentRepo->findBy(['user'=>$id]);
+                $comments=$commentRepo->findBy(['user'=>$id], ['id'=>'DESC']);
                 /*Debido a que dentro de los comentarios hay referencias a otros modelos
                 dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
                 otros modelos*/
@@ -235,7 +261,7 @@ class UserController extends AbstractController
      */
     public function getUsers()
     {
-        $users=$this->userRepo->findAll();
+        $users=$this->userRepo->findBy([], ['id'=>'DESC']);
         return $this->json($users);
     }
 
@@ -254,7 +280,7 @@ class UserController extends AbstractController
      */
     public function getUsersToBan()
     {
-        $users=$this->userRepo->findAll();
+        $users=$this->userRepo->findBy([], ['id'=>'DESC']);
         $usersToBan=[];
         foreach ($users as $user) {
             

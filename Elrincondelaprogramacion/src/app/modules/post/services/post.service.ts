@@ -31,15 +31,6 @@ export class PostService {
     getPosts(page:any=1):Observable<any>{
         return this._http.get(`${environment.url}/posts?page=${page}`);
     }
-    
-    /**
-     * Función que obtiene los posts de un usuario
-     * @param id 
-     * @returns 
-     */
-    getUserPosts(id:number):Observable<any>{
-        return this._http.get(`${environment.url}/posts/users/${id}`);
-    }
 
     /**
      * Función que obtiene un post

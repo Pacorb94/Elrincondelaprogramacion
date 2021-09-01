@@ -33,7 +33,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         this.dtOptions = {
             pagingType:'full_numbers',
             pageLength:5,
-            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'}
+            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'},
+            order:[]
         };
         this.getCategories();
     }

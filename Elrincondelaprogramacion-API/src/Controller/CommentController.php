@@ -125,7 +125,7 @@ class CommentController extends AbstractController
      */
     public function getInadequates()
     {
-        $comments=$this->commentRepo->findBy(['inadequate'=>true], ['id'=>'DESC']);
+        $comments=$this->commentRepo->findBy(['inadequate'=>true], ['updatedAt'=>'DESC']);
         /*Debido a que dentro de los comentarios hay una referencia a otros modelos
         dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
         otros modelos*/
