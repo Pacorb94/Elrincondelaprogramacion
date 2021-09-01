@@ -163,6 +163,16 @@ export class UserService {
         let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
         return this._http.put(`${environment.url}/users/${user.id}/update-role`, data, {headers:header});
     }
+    
+    /**
+     * Función que banea a un usuario
+     * @param id 
+     * @returns 
+     */
+    ban(id:number):Observable<any>{
+        let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        return this._http.put(`${environment.url}/users/${id}/ban`, {headers:header});
+    }
 
     /**
      * Función que cierra sesión
