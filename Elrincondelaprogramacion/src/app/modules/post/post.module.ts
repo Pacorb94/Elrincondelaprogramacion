@@ -11,7 +11,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PostRoutingModule } from './../post/post-routing.module';
 import { EditCommentComponent } from './components/edit-comment/edit-comment.component';
 
-
 @NgModule({
     declarations: [
         WatchPostComponent,

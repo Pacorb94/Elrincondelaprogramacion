@@ -30,7 +30,6 @@ import { CategoryModule } from './modules/category/category.module';
     imports: [
         BrowserModule,
         AppRoutingModule,
-        PostModule,
         CategoryModule,
         ReactiveFormsModule,
         HttpClientModule,
