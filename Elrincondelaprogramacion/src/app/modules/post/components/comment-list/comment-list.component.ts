@@ -98,9 +98,20 @@ export class CommentListComponent implements OnInit, OnDestroy {
         this.inadequateSubscription=this._commentService.inadequate(commentId).subscribe(
             response=>{
                 //Actualizamos la vista sin recargarla
-                if (response) this.getRouteParams();         
+                if (response) {
+                    this.getRouteParams();
+                    //Desplazamos la ventana
+                    window.scrollTo(0, 400);
+                    this.showFlashMessage('Has marcado como inadecuado el comentario',
+                        'alert alert-success col-md-7 text-center mx-auto', 3000);  
+                }       
             },
-            error=>{}
+            error=>{
+                //Desplazamos la ventana
+                window.scrollTo(0, 400);
+                this.showFlashMessage('No has marcado como inadecuado el comentario',
+                    'alert alert-danger col-md-7 text-center mx-auto', 3000);  
+            }
         );
     }
 
@@ -152,12 +163,11 @@ export class CommentListComponent implements OnInit, OnDestroy {
                     window.scrollTo(0, 400);
                     this.showFlashMessage('Has borrado el comentario',
                         'alert alert-success col-md-7 text-center mx-auto', 3000);
-                }else{
-                    this.showFlashMessage('No has borrado el comentario',
-                        'alert alert-danger col-md-7 text-center mx-auto', 3000);
                 }
             },
             error=>{
+                //Desplazamos la ventana
+                window.scrollTo(0, 400);
                 this.showFlashMessage('No has borrado el comentario',
                     'alert alert-danger col-md-7 text-center mx-auto', 3000);
             }
