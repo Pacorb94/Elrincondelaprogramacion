@@ -55,6 +55,8 @@ export class EditCommentComponent implements OnInit, OnDestroy {
                 }
             },
             error=>{
+                //Desplazamos la ventana
+                window.scrollTo(0, 400);
                 this.showFlashMessage('No has modificado el comentario',
                     'alert alert-danger col-md-7 text-center mx-auto', 3000);
             }
