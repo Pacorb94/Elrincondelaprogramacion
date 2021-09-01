@@ -52,12 +52,11 @@ export class EditCommentComponent implements OnInit, OnDestroy {
                     window.scrollTo(0, 400);
                     this.showFlashMessage('Has modificado el comentario',
                         'alert alert-success col-md-7 text-center mx-auto', 3000);
-                }else{
-                    this.showFlashMessage('No has modificado el comentario',
-                        'alert alert-danger col-md-7 text-center mx-auto', 3000);
                 }
             },
             error=>{
+                //Desplazamos la ventana
+                window.scrollTo(0, 400);
                 this.showFlashMessage('No has modificado el comentario',
                     'alert alert-danger col-md-7 text-center mx-auto', 3000);
             }
