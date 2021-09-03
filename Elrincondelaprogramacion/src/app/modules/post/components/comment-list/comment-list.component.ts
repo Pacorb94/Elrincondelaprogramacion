@@ -107,7 +107,6 @@ export class CommentListComponent implements OnInit, OnDestroy {
                 }       
             },
             error=>{
-                //Desplazamos la ventana
                 window.scrollTo(0, 400);
                 this.showFlashMessage('No has marcado como inadecuado el comentario',
                     'alert alert-danger col-md-7 text-center mx-auto', 3000);  
@@ -166,7 +165,6 @@ export class CommentListComponent implements OnInit, OnDestroy {
                 }
             },
             error=>{
-                //Desplazamos la ventana
                 window.scrollTo(0, 400);
                 this.showFlashMessage('No has borrado el comentario',
                     'alert alert-danger col-md-7 text-center mx-auto', 3000);
