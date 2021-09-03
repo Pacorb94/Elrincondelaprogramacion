@@ -87,6 +87,8 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
                 if (response) {
                     this.goodEdit=true;
                     this.category=response;
+                }else{
+                    this.goodEdit=false;
                 }
             },
             error=>{

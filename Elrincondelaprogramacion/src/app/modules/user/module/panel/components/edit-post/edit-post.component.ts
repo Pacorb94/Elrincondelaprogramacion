@@ -110,10 +110,12 @@ export class EditPostComponent implements OnInit, OnDestroy {
                 if (response) {
                     this.goodEdit=true;
                     this.post=response;
+                }else{
+                    this.goodEdit=false;
                 }
             },
             error=>{
-                this.showFlashMessage('No has editado el post correctamente',
+                this.showFlashMessage('No has editado el post',
                     'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
             }
         );
