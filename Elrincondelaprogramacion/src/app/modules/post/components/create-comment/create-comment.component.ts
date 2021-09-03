@@ -46,14 +46,17 @@ export class CreateCommentComponent implements OnInit, OnDestroy {
             .subscribe(
                 response=>{
                     if (response) {
-                        this.showFlashMessage('Has creado el comentario correctamente',
-                            'alert alert-success col-md-10 mt-3 mx-auto text-center', 1500);
+                        //Si el ancho de la pantalla es menor a 575
+                        if (window.outerWidth<=parseInt('575')) window.scroll(0, 350);                                       
+                        this.showFlashMessage('Has creado el comentario',
+                            'alert alert-success col-md-5 mt-3 mx-auto text-center', 1500);
                         this._commentService.setUpdatedCommentList$(true);
                     }
                 },
                 error=>{
-                    this.showFlashMessage('No has creado el comentario correctamente',
-                        'alert alert-danger col-md-10 mt-3 mx-auto text-center', 1500);
+                    if (window.outerWidth<=parseInt('575')) window.scroll(0, 350);
+                    this.showFlashMessage('No has creado el comentario',
+                        'alert alert-danger col-md-5 mt-3 mx-auto text-center', 1500);
                 }
             );
     }
