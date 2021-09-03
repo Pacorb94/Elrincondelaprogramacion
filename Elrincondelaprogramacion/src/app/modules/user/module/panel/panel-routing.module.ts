@@ -10,7 +10,7 @@ import { UserSettingsComponent } from './components/user-settings/user-settings.
 import { MyPostsComponent } from './components/my-posts/my-posts.component';
 import { InadequatePostsComponent } from './components/inadequate-posts/inadequate-posts.component';
 import { InadequateCommentsComponent } from './components/inadequate-comments/inadequate-comments.component';
-import { UserListComponent } from './components/user-list/user-listcomponent';
+import { UsersToBanComponent } from './components/users-to-ban/users-to-ban.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
 import { CategoryListComponent } from './components/category-list/category-list.component';
 import { CheckAdminRoleGuard } from './../../guards/check-admin-role.guard';
@@ -50,7 +50,7 @@ const routes: Routes = [
                 path:'inadequate/comments', 
                 component:InadequateCommentsComponent, canActivate:[CheckAdminRoleGuard] 
             },         
-            { path:'user-list', component:UserListComponent, canActivate:[CheckAdminRoleGuard] },
+            { path:'users-to-ban', component:UsersToBanComponent, canActivate:[CheckAdminRoleGuard] },
             { path:'user-settings', component:UserSettingsComponent },
             { path:'**', redirectTo:'' }
         ]

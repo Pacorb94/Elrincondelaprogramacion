@@ -1,3 +1,5 @@
+<h3 class="text-center">Modificar rol de un usuario</h3>
+<hr>
 <div *ngIf="loading" class="text-center mt-5">
     <!--Si terminó de cargar y no hay usuarios-->
     <h5 *ngIf="noUsers">No hay usuarios</h5>
@@ -6,9 +8,10 @@
         Cargando...
     </button>
 </div>
+<flash-messages></flash-messages>
 <!--Si hay usuarios-->
-<table *ngIf="!noUsers" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-    class="table-responsive mt-5 table table-hover text-center">
+<table #table *ngIf="!noUsers" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+    class="table-responsive mt-5 table table-hover text-center bg-light">
     <thead>
         <tr>
             <th>Nick</th>
@@ -51,7 +54,7 @@
                         <div id="{{'update'+user.id}}" class="modal fade" role="dialog">
                             <div class="modal-dialog">
                                 <!-- Modal content-->
-                                <div class="modal-content">
+                                <div class="modal-content modal-dark-mode">
                                     <div class="modal-header">
                                         <h4 class="modal-title">
                                             ¿Quieres modificar el rol a {{user.nick}}?

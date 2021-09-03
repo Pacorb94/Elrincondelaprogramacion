@@ -28,6 +28,8 @@ export class InadequatePostsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        //Si el tamaño de la ventana es menor o igual a 575
+        if (window.outerWidth<=parseInt('575')) window.scroll(0, 550);
         this.loadTableConfiguration();
         this.getInadequates();
     }

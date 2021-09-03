@@ -1,3 +1,5 @@
+<h3 class="text-center">Posts inadecuados</h3>
+<hr>
 <div *ngIf="loading" class="text-center mt-5">
     <!--Si terminó de cargar y no hay posts-->
     <h5 *ngIf="noPosts">No hay posts inadecuados</h5>
@@ -7,8 +9,8 @@
     </button>
 </div>
 <!--Si hay posts-->
-<table *ngIf="!noPosts" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-    class="table-responsive mt-5 table table-hover text-center">
+<table #table *ngIf="!noPosts" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+    class="table-responsive mt-5 table table-hover text-center bg-light">
     <thead>
         <tr>
             <th>Título</th>

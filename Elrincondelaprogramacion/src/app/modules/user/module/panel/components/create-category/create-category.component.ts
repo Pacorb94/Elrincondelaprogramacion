@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/Category';
 import { CategoryService } from '../../../../../category/service/category.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
@@ -10,16 +10,14 @@ import { Subscription } from 'rxjs';
     templateUrl: './create-category.component.html',
     styleUrls: ['./create-category.component.scss']
 })
-export class CreateCategoryComponent implements OnDestroy {
-    pageTitle:string;
+export class CreateCategoryComponent implements OnInit, OnDestroy {
     category:Category;
     goodCreate:boolean;
     form:FormGroup;
     createSubscription:Subscription;
 
     constructor(private _categoryService:CategoryService, 
-    private _flashMessagesService:FlashMessagesService) { 
-        this.pageTitle='Crear categoría';      
+    private _flashMessagesService:FlashMessagesService) {     
         this.category=new Category(null, '');
         this.goodCreate=false;
         this.goodCreate=false;
@@ -29,6 +27,11 @@ export class CreateCategoryComponent implements OnDestroy {
         this.createSubscription=new Subscription();
     }
 
+    ngOnInit(){
+        //Si el ancho de la pantalla es menor o igual a 575
+        if (window.outerWidth<=parseInt('575')) window.scroll(0, 550);
+    }
+
     ngOnDestroy(){
         this.createSubscription.unsubscribe();
     }
@@ -36,22 +39,23 @@ export class CreateCategoryComponent implements OnDestroy {
     /**
      * Función que crea la categoría
      */
-     create(){
+    create(){
         this.setCategoryFormValue();
         this.createSubscription=this._categoryService.create(this.category).subscribe(
             response=>{
                 if (response) {
                     this.goodCreate=true;
+                    //Si el ancho de la pantalla es menor o igual a 575
+                    if(window.outerWidth<=parseInt('575')) window.scroll(0, 600);                  
                     this._categoryService.setLastAddedCategory$(this.category);
                 }else{
                     this.goodCreate=false;
-                    this.showFlashMessage('No has creado la categoría correctamente',
-                        'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
                 }
             },
             error=>{
                 this.goodCreate=false;
-                this.showFlashMessage('No has creado la categoría correctamente',
+                if(window.outerWidth<=parseInt('575')) window.scroll(0, 600);
+                this.showFlashMessage('No has creado la categoría',
                     'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
             }
         );

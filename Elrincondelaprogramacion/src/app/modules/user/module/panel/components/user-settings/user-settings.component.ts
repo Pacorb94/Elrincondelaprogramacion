@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../../../service/user.service';
@@ -10,7 +10,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
     templateUrl: './user-settings.component.html',
     styleUrls: ['./user-settings.component.scss']
 })
-export class UserSettingsComponent implements OnDestroy{
+export class UserSettingsComponent implements OnInit, OnDestroy{
     pageTitle:string;
     user:any;
     form:FormGroup;
@@ -35,9 +35,14 @@ export class UserSettingsComponent implements OnDestroy{
     loadUser(){
         this.loadUserSubscription=this._userService.getUserLoggedIn$().subscribe(
             user=>{
-                if (user) this.user=user;
+                if(user) this.user=user;
             }
         );
+    }
+
+    ngOnInit(){
+        //Si el tamaño de la ventana es menor o igual a 575
+        if (window.outerWidth<=parseInt('575')) window.scroll(0, 550);
     }
 
     ngOnDestroy(){
@@ -67,16 +72,16 @@ export class UserSettingsComponent implements OnDestroy{
                             }
                         }
                     );
+                    //Si el tamaño de la ventana es menor o igual a 575
+                    window.outerWidth<=parseInt('575')?window.scroll(0, 550):window.scroll(0, 50); 
                     this.showFlashMessage('Has modificado tu perfil',
-                        'alert alert-success col-md-4 mt-3 mx-auto', 1500);
-                }else{
-                    this.showFlashMessage('No has modificado tu perfil correctamente',
-                        'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
+                        'alert alert-success col-md-4 mt-3 mx-auto', 3000);
                 }
             },
             error=>{
-                this.showFlashMessage('No has modificado tu perfil correctamente',
-                    'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
+                window.outerWidth<=parseInt('575')?window.scroll(0, 550):window.scroll(0, 50); 
+                this.showFlashMessage('No has modificado tu perfil',
+                    'alert alert-danger col-md-5 mt-3 mx-auto', 3000);
             }
         );
     }

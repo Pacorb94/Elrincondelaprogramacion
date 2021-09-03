@@ -1,3 +1,6 @@
+<h3 class="text-center">Lista de categorías</h3>
+<hr>
+<flash-messages></flash-messages>
 <div *ngIf="loading" class="text-center mt-5">
     <!--Si terminó de cargar y no hay categorías-->
     <h5 *ngIf="noCategories">No hay categorías</h5>
@@ -7,8 +10,8 @@
     </button>
 </div>
 <!--Si hay categorías-->
-<table *ngIf="!noCategories" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-    class="table-responsive mt-5 table table-hover text-center">
+<table #table *ngIf="!noCategories" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+    class="table-responsive mt-5 table table-hover text-center bg-light">
     <thead>
         <tr>
             <th>Nombre</th>
@@ -50,7 +53,7 @@
                         <div id="{{'delete'+category.id}}" class="modal fade" role="dialog">
                             <div class="modal-dialog">
                                 <!-- Modal content-->
-                                <div class="modal-content">
+                                <div class="modal-content modal-dark-mode">
                                     <div class="modal-header">
                                         <h4 class="modal-title">¿Quieres borrar la categoría?</h4>
                                         <button type="button" class="close" data-dismiss="modal">

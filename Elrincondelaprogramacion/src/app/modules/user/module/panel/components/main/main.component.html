@@ -2,7 +2,7 @@
 <div id="panel" class="row mt-5">
     <!--Menú lateral izquierdo-->
     <div class="col-sm-5 col-xl-3 col-md-4 col-12 pb-4">
-        <h3>{{pageTitle}}</h3>
+        <h3>Panel del usuario</h3>
         <hr>
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <!--routerLinkActive pone una clase al elemento cuando se ha visitado la ruta-->
@@ -15,7 +15,7 @@
             <div *ngIf="user.roles[0]=='ROLE_ADMIN'">
                 <a class="nav-link" routerLink="inadequate/posts" routerLinkActive="active" id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">Posts inadecuados</a>
                 <a class="nav-link" routerLink="inadequate/comments" routerLinkActive="active" id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">Comentarios inadecuados</a>
-                <a class="nav-link" routerLink="user-list" routerLinkActive="active" id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">Lista de usuarios</a>
+                <a class="nav-link" routerLink="users-to-ban" routerLinkActive="active" id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true">Usuarios para banear</a>
             </div>
             <a class="nav-link" routerLink="user-settings" routerLinkActive="active" id="v-pills-settings-tab" data-toggle="pill" role="tab" aria-controls="v-pills-settings" aria-selected="false">Ajustes del usuario</a>
         </div>

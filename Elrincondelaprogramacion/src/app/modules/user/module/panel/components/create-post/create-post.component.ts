@@ -13,7 +13,6 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./create-post.component.scss']
 })
 export class CreatePostComponent implements OnInit, OnDestroy {
-    pageTitle:string;
     user:any;
     post:Post;
     goodCreate:boolean;
@@ -23,8 +22,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     createSubscription:Subscription;
 
     constructor(private _userService:UserService, private _postService:PostService, 
-    private _categoryService:CategoryService, private _flashMessagesService:FlashMessagesService) {
-        this.pageTitle='Crear post';      
+    private _categoryService:CategoryService, private _flashMessagesService:FlashMessagesService) {    
         this.user=this._userService.getUserLoggedIn();
         this.post=new Post(null, 0, '', '', this.user.id, '', false, null);
         this.goodCreate=false;
@@ -39,6 +37,8 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(){
+        //Si el tamaño de la ventana es menor o igual a 575
+        if (window.outerWidth<=parseInt('575')) window.scroll(0, 550);
         this.getCategories();
     }
 
@@ -68,16 +68,17 @@ export class CreatePostComponent implements OnInit, OnDestroy {
             response=>{
                 if (response) {
                     this.goodCreate=true;
+                    //Si el tamaño de la ventana es menor o igual a 575
+                    window.outerWidth<=parseInt('575')?window.scroll(0, 550):window.scroll(0, 50);               
                 }else{
                     this.goodCreate=false;
-                    this.showFlashMessage('No has creado el post correctamente',
-                        'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
                 }
             },
             error=>{
                 this.goodCreate=false;
-                this.showFlashMessage('No has creado el post correctamente',
-                    'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
+                window.outerWidth<=parseInt('575')?window.scroll(0, 550):window.scroll(0, 50); 
+                this.showFlashMessage('No has creado el post',
+                    'alert alert-danger col-md-5 mt-3 mx-auto', 3000);
             }
         );
     }

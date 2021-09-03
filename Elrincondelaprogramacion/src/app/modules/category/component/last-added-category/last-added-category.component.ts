@@ -1,39 +1,31 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../service/category.service';
 import { UserService } from '../../../user/service/user.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
-
 
 @Component({
     selector: 'last-added-category',
     templateUrl: './last-added-category.component.html',
     styleUrls: ['./last-added-category.component.scss']
 })
-export class LastAddedCategoryComponent implements OnInit, OnDestroy {
+export class LastAddedCategoryComponent implements OnInit {
     category:any;
     user:any
-    subscription:Subscription;
 
     constructor(private _categoryService:CategoryService, private _userService:UserService,
     private _flashMessagesService:FlashMessagesService) { 
         this.user=this._userService.getUserLoggedIn();
-        this.subscription=new Subscription();
     }
 
     ngOnInit(): void {
         this.getLastAddedCategory();
-    }
-
-    ngOnDestroy(){
-        this.subscription.unsubscribe();
     }
     
     /**
      * Función que obtiene la última categoría añadida
      */
     getLastAddedCategory(){
-        this.subscription=this._categoryService.getLastAddedCategory$().subscribe(
+        this._categoryService.getLastAddedCategory$().subscribe(
             category=>{
                 if (category&&(this.user.roles[0]=='ROLE_ADMIN'||this.user.roles[0]=='ROLE_WRITER')){
                     localStorage.setItem('lastAddedCategory', JSON.stringify(category));      

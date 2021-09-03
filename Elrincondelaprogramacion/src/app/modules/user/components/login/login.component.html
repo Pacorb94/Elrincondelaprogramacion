@@ -1,7 +1,11 @@
 <div id="login" class="col-md-12 mt-5 text-center">
-    <h1>{{pageTitle}}</h1>
+    <h1>Iniciar sesión</h1>
     <hr>
     <flash-messages></flash-messages>
+    <!--Si no está logueado el usuario-->
+    <h6 *ngIf="!user" class="alert alert-info col-md-3 mx-auto text-center">
+        Si no tienes una cuenta regístrate <a routerLink="/register">aquí</a>
+    </h6>
     <!--La propiedad "formGroup" asocia este formulario con una propiedad del componente. En el evento
     submit le pasamos los valores de los campos-->
     <form [formGroup]="form" class="col-md-3 ml-0 pl-0 mx-auto">

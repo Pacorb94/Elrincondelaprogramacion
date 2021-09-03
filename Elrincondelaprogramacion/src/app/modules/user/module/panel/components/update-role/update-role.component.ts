@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, Subject } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from './../../../../service/user.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -23,7 +24,7 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
     dtOptions:DataTables.Settings;
     dtTrigger:Subject<any>;
 
-    constructor(private _userService:UserService) { 
+    constructor(private _userService:UserService, private _flashMessagesService:FlashMessagesService) { 
         this.users=[];
         this.roles=[];
         this.profileImageUrl=`${environment.url}/profile-images/`;
@@ -39,6 +40,8 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        //Si el tamaño de la ventana es menor o igual a 575
+        if (window.outerWidth<=parseInt('575')) window.scroll(0, 550);
         this.loadTableConfiguration();
         this.getUsers();
     }
@@ -94,10 +97,10 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
     getRoles(){
         this.rolesSubscription=this._userService.getRoles().subscribe(
             response=>{
-                if (response.length) {
+                if (response) {
                     this.roles.frontend=['Administrador', 'Redactor', 'Lector'];
                     this.roles.backend=response; 
-                    this.createRolesSelectOptions();
+                    this.createRolesSelectsOptions();
                 }            
             },
             error=>{}
@@ -105,16 +108,20 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
     }
     
     /**
-     * Función que crea los options del select de los roles
+     * Función que crea los options de los selects de los roles
      */
-    createRolesSelectOptions(){
-        //Con @ViewChild no podía usar la función insertAdjacentHTML por alguna razón
-        let rolesSelect=document.querySelector('select[name="roles"]') as HTMLElement;
-        rolesSelect.innerHTML='';
-        rolesSelect.insertAdjacentHTML('beforeend', `<option value="" hidden>Selecciona un rol</option>`);
-        for (let i = 0; i<this.roles.backend.length; i++) {
+    createRolesSelectsOptions(){
+        //Con @ViewChildren no podía usar la función insertAdjacentHTML por alguna razón
+        let rolesSelects=document.querySelectorAll('select[name="roles"]');
+        for (let rolesSelect of rolesSelects) {
+            rolesSelect.innerHTML='';
             rolesSelect.insertAdjacentHTML('beforeend', 
-                `<option value="${this.roles.backend[i]}">${this.roles.frontend[i]}</option>`);     
+                `<option value="" hidden>Selecciona un rol</option>`);
+            //Añadimos los valores a los options
+            for (let i = 0; i<this.roles.backend.length; i++) {
+                rolesSelect.insertAdjacentHTML('beforeend', 
+                    `<option value="${this.roles.backend[i]}">${this.roles.frontend[i]}</option>`);     
+            }
         }
     }
     
@@ -130,9 +137,32 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
                     //Para indicarle al usuario que le hemos cambiado el rol
                     localStorage.setItem('updatedRole', user.nick);                 
                     this.getUsers(true);
+                    //Si el tamaño de la ventana es menor o igual a 575
+                    window.outerWidth<=parseInt('575')?window.scroll(0, 550):window.scroll(0, 50); 
+                    this.showFlashMessage('Has modificado el rol del usuario',
+                        'alert alert-success col-md-5 mt-3 mx-auto text-center', 3000);
                 }
             },
-            error=>{}
+            error=>{
+                window.outerWidth<=parseInt('575')?window.scroll(0, 550):window.scroll(0, 50); 
+                this.showFlashMessage('No has modificado el rol del usuario',
+                    'alert alert-danger col-md-5 mt-3 mx-auto text-center', 3000);
+            }
+        );
+    }
+
+    /**
+     * Función que muestra un mensaje flash
+     * @param message
+     * @param cssClass
+     * @param timeout
+     */
+    showFlashMessage(message:string, cssClass:string, timeout:number){
+        this._flashMessagesService.show(message,
+            {
+                cssClass:cssClass,
+                timeout:timeout
+            }
         );
     }
 
