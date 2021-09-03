@@ -39,6 +39,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
             language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'},
             order:[]
         };
+        //Si el ancho de la pantalla es menor o igual a 575
+        if (window.outerWidth<=parseInt('575')) window.scroll(0, 550);
         this.getCategories();
     }
 
@@ -81,13 +83,16 @@ export class CategoryListComponent implements OnInit, OnDestroy {
                 if (response) {
                     this.getCategories(true);   
                     this.noCategories=true; 
+                    //Si el ancho de la pantalla es menor o igual a 575
+                    window.outerWidth<=parseInt('575')?window.scroll(0, 600):window.scroll(0, 50);                 
                     this.showFlashMessage('Has borrado la categoría',
-                        'alert alert-success col-md-5 mt-3 mx-auto', 3000);           
+                        'alert alert-success col-md-5 mt-3 mx-auto text-center', 3000);           
                 }        
             },
             error=>{
+                window.outerWidth<=parseInt('575')?window.scroll(0, 600):window.scroll(0, 50); 
                 this.showFlashMessage('No has borrado la categoría',
-                    'alert alert-danger col-md-5 mt-3 mx-auto', 3000);
+                    'alert alert-danger col-md-5 mt-3 mx-auto text-center', 3000);
             }
         );
     }
