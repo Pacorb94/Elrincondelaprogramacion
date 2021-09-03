@@ -46,7 +46,7 @@ export class CreateCommentComponent implements OnInit, OnDestroy {
             .subscribe(
                 response=>{
                     if (response) {
-                        //Si el ancho de la pantalla es menor a 575
+                        //Si el ancho de la pantalla es menor o igual a 575
                         if (window.outerWidth<=parseInt('575')) window.scroll(0, 350);                                       
                         this.showFlashMessage('Has creado el comentario',
                             'alert alert-success col-md-5 mt-3 mx-auto text-center', 1500);
