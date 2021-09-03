@@ -100,7 +100,7 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
                 if (response) {
                     this.roles.frontend=['Administrador', 'Redactor', 'Lector'];
                     this.roles.backend=response; 
-                    this.createRolesSelectOptions();
+                    this.createRolesSelectsOptions();
                 }            
             },
             error=>{}
