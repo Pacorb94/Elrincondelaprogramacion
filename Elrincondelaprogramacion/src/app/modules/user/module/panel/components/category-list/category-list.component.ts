@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { CategoryService } from '../../../../../category/service/category.service';
 import { UserService } from 'src/app/modules/user/service/user.service';
@@ -8,7 +8,7 @@ import { UserService } from 'src/app/modules/user/service/user.service';
     templateUrl: './category-list.component.html',
     styleUrls: ['./category-list.component.scss']
 })
-export class CategoryListComponent implements OnInit, OnDestroy {
+export class CategoryListComponent implements OnInit, AfterViewInit, OnDestroy {
     categories:any[]; 
     user:any;
     loading:boolean;
@@ -16,6 +16,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     categoriesSubscription:Subscription;
     deleteSubscription:Subscription;
     //-----Tabla------
+    @ViewChild('table') table!:ElementRef;
     dtOptions:DataTables.Settings;
     dtTrigger:Subject<any>;
 
@@ -37,6 +38,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
             order:[]
         };
         this.getCategories();
+    }
+
+    ngAfterViewInit(){
+        console.log(this.table.nativeElement);
     }
 
     ngOnDestroy(){
