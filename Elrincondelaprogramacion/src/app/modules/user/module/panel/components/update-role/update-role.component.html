@@ -1,3 +1,5 @@
+<h3 class="text-center">Modificar rol de un usuario</h3>
+<hr>
 <div *ngIf="loading" class="text-center mt-5">
     <!--Si terminó de cargar y no hay usuarios-->
     <h5 *ngIf="noUsers">No hay usuarios</h5>
@@ -6,6 +8,7 @@
         Cargando...
     </button>
 </div>
+<flash-messages></flash-messages>
 <!--Si hay usuarios-->
 <table #table *ngIf="!noUsers" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
     class="table-responsive mt-5 table table-hover text-center bg-light">

@@ -1,6 +1,6 @@
 <h3 class="text-center">Comentarios</h3>
 <!--Si hay comentarios-->
-<div *ngIf="comments">
+<div *ngIf="comments.length">
     <flash-messages></flash-messages> 
     <div *ngFor="let comment of comments" class="comment mt-4 text-justify">
         <div class="row">  

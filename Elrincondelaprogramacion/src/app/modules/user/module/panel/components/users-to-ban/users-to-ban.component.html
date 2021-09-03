@@ -1,3 +1,5 @@
+<h3 class="text-center">Usuarios para banear</h3>
+<hr>
 <div *ngIf="loading" class="text-center mt-5">
     <!--Si terminó de cargar y no hay usuarios-->
     <h5 *ngIf="noUsers">No hay usuarios</h5>
@@ -48,7 +50,7 @@
                         <div id="{{'ban'+user.id}}" class="modal fade" role="dialog">
                             <div class="modal-dialog">
                                 <!-- Modal content-->
-                                <div class="modal-content">
+                                <div #modal class="modal-content">
                                     <div class="modal-header">
                                         <h4 class="modal-title">
                                             ¿Quieres banear al usuario {{user.nick}}?
