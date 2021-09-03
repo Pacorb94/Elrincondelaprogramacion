@@ -26,7 +26,7 @@ export class MyFooterComponent implements OnInit {
     getLastThreePosts() {
         this._postService.getPosts().subscribe(
             response => {
-                //Si hay posts
+                //Si hay posts nos quedamos con los 3 primeros
                 if (response.Posts.length) this.posts=response.Posts.slice(0, 3);               
             }
         );
