@@ -33,14 +33,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType:'full_numbers',
-            pageLength:5,
-            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'},
-            order:[]
-        };
         //Si el ancho de la pantalla es menor o igual a 575
         if (window.outerWidth<=parseInt('575')) window.scroll(0, 550);
+        this.loadTableConfiguration();
         this.getCategories();
     }
 
@@ -48,6 +43,18 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         this.categoriesSubscription.unsubscribe();
         this.deleteSubscription.unsubscribe();
         this.dtTrigger.unsubscribe();
+    }
+    
+    /**
+     * Función que carga la configuración de la tabla
+     */
+    loadTableConfiguration(){
+        this.dtOptions = {
+            pagingType:'full_numbers',
+            pageLength:5,
+            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'},
+            order:[]
+        };
     }
 
     /**
