@@ -108,16 +108,20 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
     }
     
     /**
-     * Función que crea los options del select de los roles
+     * Función que crea los options de los selects de los roles
      */
-    createRolesSelectOptions(){
-        //Con @ViewChild no podía usar la función insertAdjacentHTML por alguna razón
-        let rolesSelect=document.querySelector('select[name="roles"]') as HTMLElement;
-        rolesSelect.innerHTML='';
-        rolesSelect.insertAdjacentHTML('beforeend', `<option value="" hidden>Selecciona un rol</option>`);
-        for (let i = 0; i<this.roles.backend.length; i++) {
+    createRolesSelectsOptions(){
+        //Con @ViewChildren no podía usar la función insertAdjacentHTML por alguna razón
+        let rolesSelects=document.querySelectorAll('select[name="roles"]');
+        for (let rolesSelect of rolesSelects) {
+            rolesSelect.innerHTML='';
             rolesSelect.insertAdjacentHTML('beforeend', 
-                `<option value="${this.roles.backend[i]}">${this.roles.frontend[i]}</option>`);     
+                `<option value="" hidden>Selecciona un rol</option>`);
+            //Añadimos los valores a los options
+            for (let i = 0; i<this.roles.backend.length; i++) {
+                rolesSelect.insertAdjacentHTML('beforeend', 
+                    `<option value="${this.roles.backend[i]}">${this.roles.frontend[i]}</option>`);     
+            }
         }
     }
     
