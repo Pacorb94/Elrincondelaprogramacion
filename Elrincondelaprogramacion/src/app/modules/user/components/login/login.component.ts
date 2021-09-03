@@ -11,7 +11,6 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements AfterViewInit, OnDestroy {
-    pageTitle:string;
     user:any;
     form:FormGroup;
     @ViewChild('check', {static:false}) checkbox:any;
@@ -19,7 +18,6 @@ export class LoginComponent implements AfterViewInit, OnDestroy {
 
     constructor(private _userService:UserService, private _router:Router, 
     private _flashMessagesService:FlashMessagesService, private _cdRef:ChangeDetectorRef) {
-        this.pageTitle='Login';
         this.form=new FormGroup({
             email:new FormControl('', [Validators.required, Validators.email]),
             password:new FormControl('', Validators.required),
@@ -71,17 +69,16 @@ export class LoginComponent implements AfterViewInit, OnDestroy {
                         this._router.navigate(['']);
                     } else {
                         localStorage.clear();
+                        window.scroll(0, 60);
                         this.showFlashMessage('No puedes iniciar sesión porque has sido baneado/a',
                             'alert alert-danger col-md-4 mt-3 mx-auto', 3000);
                     }                       
-                } else {
-                    this.showFlashMessage('No has iniciado sesión correctamente',
-                        'alert alert-danger col-md-4 mt-3 mx-auto', 1500);
                 }
             },
             error=>{
+                window.scroll(0, 60);
                 this.showFlashMessage('No has iniciado sesión correctamente',
-                    'alert alert-danger col-md-4 mt-3 mx-auto', 1500);
+                    'alert alert-danger col-md-4 mt-3 mx-auto', 3000);
                 //Limpiamos el campo de la contraseña
                 this.form.get('password')?.setValue(this.form.get('password')?.value);
             }
