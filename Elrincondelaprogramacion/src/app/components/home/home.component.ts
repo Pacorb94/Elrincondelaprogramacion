@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 })
 export class HomeComponent implements OnInit, OnDestroy{
     pageTitle: string;
+    userLoggedIn:any;
     posts: any[];
     category: any;
     loading: boolean;
@@ -30,6 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy{
     private _route: ActivatedRoute, private ccService: NgcCookieConsentService) { 
         this.pageTitle = 'Posts';
         this.posts=[];
+        this.userLoggedIn=this._userService.getUserLoggedIn();
         this.loading = true;
         this.imageUrl=`${environment.url}/posts-images/`;
         this.roleChanged=false;
