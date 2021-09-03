@@ -1,4 +1,4 @@
-import { Component, OnDestroy, Input, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, OnDestroy, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CommentService } from './../../services/comment.service';
@@ -10,10 +10,9 @@ import { FlashMessagesService } from 'angular2-flash-messages';
     templateUrl: './edit-comment.component.html',
     styleUrls: ['./edit-comment.component.scss']
 })
-export class EditCommentComponent implements OnInit, AfterViewChecked, OnDestroy {
+export class EditCommentComponent implements OnInit, OnDestroy {
     @Input() comment:any;
     @Input() user:any;
-    @ViewChild('modal') modal!:ElementRef;
     form:FormGroup;
     updateCommentSubscription:Subscription;
 
@@ -29,24 +28,8 @@ export class EditCommentComponent implements OnInit, AfterViewChecked, OnDestroy
         this.setFormValue();
     }
 
-    ngAfterViewChecked(){
-        this.darkModeModal();
-    }
-
     ngOnDestroy(){
         this.updateCommentSubscription.unsubscribe();
-    }
-    
-    /**
-     * Función que activa el modo oscuro en el modal si está seleccionado
-     */
-    darkModeModal(){
-        let darkModeLocalStorage=JSON.parse(localStorage.getItem('dark-mode')??'');
-        if (darkModeLocalStorage.darkMode) {
-            this.modal.nativeElement.classList.add('bg-dark');
-        }else{
-            this.modal.nativeElement.classList.remove('bg-dark');
-        }
     }
     
     /**
