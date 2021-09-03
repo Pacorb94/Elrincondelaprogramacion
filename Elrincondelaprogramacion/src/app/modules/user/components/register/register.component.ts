@@ -11,14 +11,12 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnDestroy {
-    pageTitle:string;
     user:User;
     goodRegister:boolean;
     form:FormGroup;
     registerSubscription:Subscription;
 
     constructor(private _userService:UserService, private _flashMessagesService:FlashMessagesService) { 
-        this.pageTitle='Registro';
         this.user=new User(null, '', '', '', null, false);
         this.goodRegister=false;
         this.form=new FormGroup({
@@ -43,12 +41,11 @@ export class RegisterComponent implements OnDestroy {
                 if (response) {
                     this.goodRegister=true;
                 }else{
-                    this.showFlashMessage('No te has registrado correctamente',
-                        'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
                     this.goodRegister=false;
                 }    
             },
             error=>{
+                window.scroll(0, 50);
                 this.showFlashMessage('No te has registrado correctamente',
                     'alert alert-danger col-md-3 mt-3 mx-auto', 1500);
                 this.goodRegister=false;
