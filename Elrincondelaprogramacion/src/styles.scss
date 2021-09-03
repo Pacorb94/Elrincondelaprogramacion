@@ -20,6 +20,9 @@ body.dark-mode {
     color: #dfe6e9;
     .modal-dark-mode{
         background-color: #2d3436;
+        .modal-header, .modal-body{
+            color:white;
+        }
     }
 }
   
