@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, Subject } from 'rxjs';
 import { UserService } from '../../../../service/user.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { environment } from 'src/environments/environment';
+
 
 @Component({
     selector: 'users-to-ban',
@@ -19,7 +21,7 @@ export class UsersToBanComponent implements OnInit, OnDestroy {
     dtOptions:DataTables.Settings;
     dtTrigger:Subject<any>;
 
-    constructor(private _userService:UserService) { 
+    constructor(private _userService:UserService, private _flashMessagesService:FlashMessagesService) { 
         this.users=[];
         this.profileImageUrl=`${environment.url}/profile-images/`;
         this.usersSubscription=new Subscription();
@@ -30,6 +32,8 @@ export class UsersToBanComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        //Si el tamaño de la ventana es menor o igual a 575
+        if (window.outerWidth<=parseInt('575')) window.scroll(0, 550);
         this.loadTableConfiguration();
         this.getUsers();
     }
@@ -86,6 +90,10 @@ export class UsersToBanComponent implements OnInit, OnDestroy {
             response=>{
                 if (response) {
                     this.getUsers(true);
+                    //Si el tamaño de la ventana es menor o igual a 575
+                    window.outerWidth<=parseInt('575')?window.scroll(0, 550):window.scroll(0, 50);
+                    this.showFlashMessage('Has baneado al usuario', 
+                        'alert alert-success col-md-5 mt-3 mx-auto text-center', 3000);
                     let userLoggedIn=this._userService.getUserLoggedIn();
                     /*Si el id del usuario baneado es igual al del usuario logueado 
                     se cerrará la sesión*/
@@ -95,7 +103,26 @@ export class UsersToBanComponent implements OnInit, OnDestroy {
                     }            
                 }
             },
-            error=>{}
+            error=>{
+                window.outerWidth<=parseInt('575')?window.scroll(0, 550):window.scroll(0, 50);
+                this.showFlashMessage('No has baneado al usuario', 
+                    'alert alert-danger col-md-5 mt-3 mx-auto text-center', 3000);
+            }
+        );
+    }
+
+    /**
+     * Función que muestra un mensaje flash
+     * @param message
+     * @param cssClass
+     * @param timeout
+     */
+    showFlashMessage(message:string, cssClass:string, timeout:number){
+        this._flashMessagesService.show(message,
+            {
+                cssClass:cssClass,
+                timeout:timeout
+            }
         );
     }
 }
