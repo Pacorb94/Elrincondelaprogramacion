@@ -90,8 +90,8 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
                 }
             },
             error=>{
-                this.showFlashMessage('No has editado la categoría correctamente',
-                    'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
+                this.showFlashMessage('No has editado la categoría',
+                    'alert alert-danger col-md-5 mt-3 mx-auto', 3000);
             }
         );
     }
