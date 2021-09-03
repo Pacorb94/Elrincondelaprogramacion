@@ -7,7 +7,7 @@
     </button>
 </div>
 <!--Si hay posts-->
-<table *ngIf="!noPosts" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+<table #table *ngIf="!noPosts" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
     class="table-responsive mt-5 table table-hover text-center">
     <thead>
         <tr>

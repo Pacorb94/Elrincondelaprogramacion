@@ -7,7 +7,7 @@
     </button>
 </div>
 <!--Si hay comentarios-->
-<table *ngIf="!noComments" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+<table #table *ngIf="!noComments" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
     class="table-responsive mt-5 table table-hover text-center">
     <thead>
         <tr>
