@@ -70,13 +70,11 @@ export class CreatePostComponent implements OnInit, OnDestroy {
                     this.goodCreate=true;
                 }else{
                     this.goodCreate=false;
-                    this.showFlashMessage('No has creado el post correctamente',
-                        'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
                 }
             },
             error=>{
                 this.goodCreate=false;
-                this.showFlashMessage('No has creado el post correctamente',
+                this.showFlashMessage('No has creado el post',
                     'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
             }
         );

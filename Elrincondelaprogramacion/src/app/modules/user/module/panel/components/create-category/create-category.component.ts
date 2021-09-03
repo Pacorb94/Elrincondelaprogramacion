@@ -45,13 +45,11 @@ export class CreateCategoryComponent implements OnDestroy {
                     this._categoryService.setLastAddedCategory$(this.category);
                 }else{
                     this.goodCreate=false;
-                    this.showFlashMessage('No has creado la categoría correctamente',
-                        'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
                 }
             },
             error=>{
                 this.goodCreate=false;
-                this.showFlashMessage('No has creado la categoría correctamente',
+                this.showFlashMessage('No has creado la categoría',
                     'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
             }
         );
