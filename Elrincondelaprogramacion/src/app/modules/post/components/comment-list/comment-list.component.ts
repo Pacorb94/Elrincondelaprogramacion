@@ -81,7 +81,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
         this.getPostCommentsSubscription=this._postService.getPostComments(this.page, this.post.id)
             .subscribe(
                 response=>{
-                    if (response.Comments.length) {
+                    if (response.Comments) {
                         this.comments=response.Comments;
                         this.pagination(response.totalPages);
                     }                   
@@ -157,7 +157,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
         this.deleteCommentSubscription=this._commentService.delete(id).subscribe(
             response=>{
                 if (response) {
-                    this._commentService.setUpdatedCommentList$(true);
+                    this.getPostComments();
                     //Desplazamos la ventana
                     window.scrollTo(0, 400);
                     this.showFlashMessage('Has borrado el comentario',
