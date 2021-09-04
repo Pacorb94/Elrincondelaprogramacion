@@ -90,6 +90,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
                 if (response) {
                     this.getCategories(true);   
                     this.noCategories=true; 
+                    this._categoryService.setUpdateNavbarCategoryList$(true);
                     //Si el ancho de la pantalla es menor o igual a 575
                     window.outerWidth<=parseInt('575')?window.scroll(0, 600):window.scroll(0, 50);                 
                     this.showFlashMessage('Has borrado la categoría',
