@@ -20,6 +20,8 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     form:FormGroup;
     categoriesSubscription:Subscription;
     createSubscription:Subscription;
+    //---Editor-----
+    quillOptions:{};
 
     constructor(private _userService:UserService, private _postService:PostService, 
     private _categoryService:CategoryService, private _flashMessagesService:FlashMessagesService) {    
@@ -34,6 +36,19 @@ export class CreatePostComponent implements OnInit, OnDestroy {
         });
         this.categoriesSubscription=new Subscription();
         this.createSubscription=new Subscription();
+        this.quillOptions={
+            toolbar: [
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ font: [] }],
+                [{ color: [] }, { background: [] }],
+                [{ size: ['small', false, 'large', 'huge'] }],
+                [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                [{ align: [] }],
+                ['blockquote', 'code-block'],
+                [{ list: 'ordered'}, { list: 'bullet' }],
+                ['clean'],
+            ]
+        };
     }
 
     ngOnInit(){
