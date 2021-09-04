@@ -157,7 +157,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
         this.deleteCommentSubscription=this._commentService.delete(id).subscribe(
             response=>{
                 if (response) {
-                    this.getPostComments();
+                    this._commentService.setUpdatedCommentList$(true);
                     //Desplazamos la ventana
                     window.scrollTo(0, 400);
                     this.showFlashMessage('Has borrado el comentario',
