@@ -16,7 +16,8 @@ export class CommentService {
     }
 
     /**
-     * Función que actualiza el valor del BehaviourSubject
+     * Función que actualiza la lista de comentarios cuando
+     * se crea, modifica o borra un comentario
      * @param value 
      */
     setUpdatedCommentList$(value:boolean){
