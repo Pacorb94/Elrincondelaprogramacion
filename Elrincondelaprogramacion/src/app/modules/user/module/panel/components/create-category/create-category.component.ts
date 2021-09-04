@@ -45,6 +45,7 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
             response=>{
                 if (response) {
                     this.goodCreate=true;
+                    this._categoryService.setUpdateNavbarCategoryList$(true);
                     //Si el ancho de la pantalla es menor o igual a 575
                     if(window.outerWidth<=parseInt('575')) window.scroll(0, 600);                  
                     this._categoryService.setLastAddedCategory$(this.category);
