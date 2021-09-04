@@ -94,6 +94,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
             response=>{
                 if (response) {
                     this.goodEdit=true;
+                    this._categoryService.setUpdateNavbarCategoryList$(true);
                     this.category=response;
                     //Si el tamaño de la ventana es menor o igual a 575
                     if (window.outerWidth<=parseInt('575')) window.scroll(0, 550);
