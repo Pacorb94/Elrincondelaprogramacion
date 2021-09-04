@@ -17,9 +17,8 @@
                 {{wrongValidationMessage(form.get('title'), 'título')}}
             </span>
             <label for="content">Contenido:</label>
-            <textarea name="content" id="content" formControlName="content"
-                class="form-control text-center">
-            </textarea>
+            <quill-editor formControlName="content" [modules]="quillOptions" [sanitize]="true">
+            </quill-editor>
             <span *ngIf="checkTouched(form.get('content'))" class="invalid-feedback d-block">
                 {{wrongValidationMessage(form.get('content'), 'contenido')}}
             </span>
