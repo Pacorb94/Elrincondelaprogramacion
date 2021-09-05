@@ -14,7 +14,7 @@
             <a [routerLink]="['/user-details', post.user.id]" class="badge rounded-pill badge-primary mr-2">
                 <h6>{{post.user.nick}}</h6>
             </a>
-            <span class="badge rounded-pill mr-2 bg-warning">
+            <span id="categoryPill" class="badge rounded-pill mr-2 bg-warning">
                 <h6>{{!post.category?'Categoría borrada':post.category.name}}</h6>
             </span>
             <span class="badge rounded-pill badge-secondary mr-2">
@@ -23,7 +23,8 @@
             <span class="badge rounded-pill badge-secondary">
                 <h6>Modificado {{post.updatedAt|amLocale:'es'|amCalendar}}</h6>
             </span>
-            <p class="mt-3 mb-3" [innerHTML]="post.content"></p>
+            <div id="postContent" class="mt-3 mb-3" [innerHTML]="post.content" hljsContent=".highlight">              
+            </div>
             <!--Si es el usuario con rol admin-->
             <input *ngIf="user.roles[0]=='ROLE_ADMIN'" type="button" 
                 value="Marcar post como inadecuado" class="btn btn-info" 
