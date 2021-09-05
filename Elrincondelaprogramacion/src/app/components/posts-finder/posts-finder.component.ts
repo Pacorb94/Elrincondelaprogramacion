@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class PostsFinderComponent implements OnInit, OnDestroy {
     pageTitle: string;
+    title:string;
     posts:any[];
     loading: boolean;
     imageUrl:string;
@@ -25,6 +26,7 @@ export class PostsFinderComponent implements OnInit, OnDestroy {
 
     constructor(private _postService:PostService, private _route:ActivatedRoute) {
         this.pageTitle = 'Posts';
+        this.title='';
         this.posts=[];
         this.loading = true;
         this.imageUrl=`${environment.url}/posts-images/`;
@@ -46,14 +48,38 @@ export class PostsFinderComponent implements OnInit, OnDestroy {
      * Función que obtiene los parámetros de la ruta
      */
     getRouteParams(){
-        
+        this._route.params.subscribe(
+            params=>{
+                this.page = params['page'];
+                this.title=params['title'];
+                //Si tiene valor y es un número sino será el por defecto
+                if (this.page && this.page.match(/[\d]+/)) {
+                    this.page = Number.parseInt(this.page);
+                } else {
+                    this.page = 1;
+                    this.prevPage = 1;
+                    this.nextPage = 2;
+                }
+                this.getPostsByTitle();
+            }
+        );
     }
     
     /**
-     * 
+     * Función que obtiene posts por el título
      */
-    getPosts(){
-        
+    getPostsByTitle(){
+        this.subscription=this._postService.getPostsByTitle(this.title, this.page).subscribe(
+            response=>{
+                if (response.Posts.length) {
+                    this.posts=response.Posts;
+                    this.pagination(response.totalPages);
+                } else {
+                    this.noPosts=true;
+                }                 
+            },
+            error=>{}
+        );
     }
     
     /**
