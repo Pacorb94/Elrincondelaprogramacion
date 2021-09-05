@@ -23,7 +23,7 @@
             <span class="badge rounded-pill badge-secondary">
                 <h6>Modificado {{post.updatedAt|amLocale:'es'|amCalendar}}</h6>
             </span>
-            <div id="postContent" class="mt-3 mb-3" [innerHTML]="post.content" hljsContent=".highlight">              
+            <div id="postContent" class="mt-3 mb-3" [innerHTML]="post.content">              
             </div>
             <!--Si es el usuario con rol admin-->
             <input *ngIf="user.roles[0]=='ROLE_ADMIN'" type="button" 
