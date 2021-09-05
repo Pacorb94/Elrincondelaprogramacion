@@ -80,13 +80,13 @@ export class PostService {
     }
     
     /**
-     * Función que obtiene posts por un texto
-     * @param text
+     * Función que obtiene posts por el título
+     * @param title
      * @param page
      * @returns 
      */
-    getPostsByText(text:string, page:number):Observable<any>{
-        return this._http.get(`${environment.url}/search-posts/${text}?page=${page}`);
+    getPostsByTitle(title:string, page:number):Observable<any>{
+        return this._http.get(`${environment.url}/search-posts/${title}?page=${page}`);
     }
 
     /**
