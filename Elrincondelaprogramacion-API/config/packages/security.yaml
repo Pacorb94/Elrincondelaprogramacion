@@ -48,11 +48,6 @@ security:
             path: /posts/categories/[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+, 
             roles: IS_AUTHENTICATED_ANONYMOUSLY, 
             requires_channel: https 
-          },
-        - { 
-            path: /search-posts/[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+, 
-            roles: IS_AUTHENTICATED_ANONYMOUSLY, 
-            requires_channel: https 
           }
         - { path: /roles, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         #Para usuarios logueados
