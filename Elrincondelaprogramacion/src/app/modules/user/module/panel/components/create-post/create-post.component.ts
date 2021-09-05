@@ -18,10 +18,9 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     goodCreate:boolean;
     categories:any[];
     form:FormGroup;
+    postTitleCreated:string;
     categoriesSubscription:Subscription;
     createSubscription:Subscription;
-    //---Editor-----
-    quillOptions:{};
 
     constructor(private _userService:UserService, private _postService:PostService, 
     private _categoryService:CategoryService, private _flashMessagesService:FlashMessagesService) {    
@@ -34,21 +33,9 @@ export class CreatePostComponent implements OnInit, OnDestroy {
             content:new FormControl('', Validators.required),
             category:new FormControl('', Validators.required)
         });
+        this.postTitleCreated='';
         this.categoriesSubscription=new Subscription();
         this.createSubscription=new Subscription();
-        this.quillOptions={
-            toolbar: [
-                ['bold', 'italic', 'underline', 'strike'],
-                [{ font: [] }],
-                [{ color: [] }, { background: [] }],
-                [{ size: ['small', false, 'large', 'huge'] }],
-                [{ header: [1, 2, 3, 4, 5, 6, false] }],
-                [{ align: [] }],
-                ['blockquote', 'code-block'],
-                [{ list: 'ordered'}, { list: 'bullet' }],
-                ['clean'],
-            ]
-        };
     }
 
     ngOnInit(){
@@ -83,6 +70,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
             response=>{
                 if (response) {
                     this.goodCreate=true;
+                    this.postTitleCreated=this.post.getTitle();
                     //Si el tamaño de la ventana es menor o igual a 575
                     window.outerWidth<=parseInt('575')?window.scroll(0, 550):window.scroll(0, 50);               
                 }else{
