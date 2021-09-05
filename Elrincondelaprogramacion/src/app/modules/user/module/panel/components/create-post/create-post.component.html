@@ -17,7 +17,7 @@
                 {{wrongValidationMessage(form.get('title'), 'título')}}
             </span>
             <label for="content">Contenido:</label>
-            <quill-editor formControlName="content" [sanitize]="true">
+            <quill-editor formControlName="content" [styles]="{height:'300px'}" [sanitize]="true">
             </quill-editor>
             <span *ngIf="checkTouched(form.get('content'))" class="invalid-feedback d-block">
                 {{wrongValidationMessage(form.get('content'), 'contenido')}}
