@@ -78,6 +78,16 @@ export class PostService {
     getMostActivePosts():Observable<any>{
         return this._http.get(`${environment.url}/posts/most-actives`);
     }
+    
+    /**
+     * Función que obtiene posts por un texto
+     * @param text
+     * @param page
+     * @returns 
+     */
+    getPostsByText(text:string, page:number):Observable<any>{
+        return this._http.get(`${environment.url}/posts/${text}?page=${page}`);
+    }
 
     /**
      * Función que modifica un post
