@@ -12,8 +12,5 @@ export const quillConfig: {} = {
             [{ list: 'ordered' }, { list: 'bullet' }],
             ['clean']
         ]
-    },
-    styles: {
-        
     }
 };
