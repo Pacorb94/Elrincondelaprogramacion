@@ -1,4 +1,4 @@
-export const cookieConfig: any = {
+export const cookieConfig:{}={
     "cookie": {
         "domain": "localhost"
     },

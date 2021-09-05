@@ -1,8 +1,8 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { UserPanelRoutingModule } from './panel-routing.module';
 import { MainComponent } from './components/main/main.component';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -23,7 +23,7 @@ import { FileUploaderPostComponent } from './components/file-uploader-post/file-
 import { CategoryListComponent } from './components/category-list/category-list.component';
 import { UpdateRoleComponent } from './components/update-role/update-role.component';
 import { QuillModule } from 'ngx-quill';
-
+import { quillConfig } from './quill.conf';
 
 @NgModule({
     declarations: [
@@ -52,7 +52,7 @@ import { QuillModule } from 'ngx-quill';
         FileUploadModule,
         DataTablesModule,
         MomentModule,
-        QuillModule.forRoot()
+        QuillModule.forRoot(quillConfig)
     ]
 })
 export class UserPanelModule { }
