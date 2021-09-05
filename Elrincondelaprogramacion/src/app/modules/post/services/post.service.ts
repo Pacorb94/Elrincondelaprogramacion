@@ -86,7 +86,7 @@ export class PostService {
      * @returns 
      */
     getPostsByText(text:string, page:number):Observable<any>{
-        return this._http.get(`${environment.url}/posts/${text}?page=${page}`);
+        return this._http.get(`${environment.url}/search-posts/${text}?page=${page}`);
     }
 
     /**
