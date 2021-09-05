@@ -7,8 +7,8 @@ import { CookiesPolicyComponent } from './components/cookies-policy/cookies-poli
 
 const routes: Routes = [
     { path:'', component:HomeComponent },
-    { path:'search-posts/:text', component:PostsFinderComponent },
-    { path:'search-posts/:text/page/:page', component:PostsFinderComponent },
+    { path:'search-posts/:title', component:PostsFinderComponent },
+    { path:'search-posts/:title/page/:page', component:PostsFinderComponent },
     //Cargamos las rutas hijas por lazyloading
     { path:'posts', loadChildren:()=>import('./modules/post/post.module').then(m=>m.PostModule) },
     { path:'page/:page', component:HomeComponent },
