@@ -48,9 +48,12 @@ export class PostsFinderComponent implements OnInit, OnDestroy {
     getRouteParams(){
         
     }
-
+    
+    /**
+     * 
+     */
     getPosts(){
-
+        
     }
     
     /**
