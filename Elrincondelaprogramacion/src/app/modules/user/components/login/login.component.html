@@ -2,8 +2,7 @@
     <h1>Iniciar sesión</h1>
     <hr>
     <flash-messages></flash-messages>
-    <!--Si no está logueado el usuario-->
-    <h6 *ngIf="!user" class="alert alert-info col-md-3 mx-auto text-center">
+    <h6 class="alert alert-info col-md-3 mx-auto text-center">
         Si no tienes una cuenta regístrate <a routerLink="/register">aquí</a>
     </h6>
     <!--La propiedad "formGroup" asocia este formulario con una propiedad del componente. En el evento

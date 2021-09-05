@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit(){
         this.loadUser();
-        this.getCategories();
+        this.updateNavbarCategoryList();
     }
 
     /**
@@ -61,6 +61,18 @@ export class NavbarComponent implements OnInit {
         }else{
             this.profileImage='../assets/images/no-profile-image.png';
         }
+    }
+    
+    /**
+     * Función que actualiza la lista de categoría si se crea, modificar o borra
+     * una categoría
+     */
+    updateNavbarCategoryList(){
+        this._categoryService.getUpdateNavbarCategoryList$().subscribe(
+            update=>{
+                this.getCategories();
+            }
+        );
     }
 
     /**

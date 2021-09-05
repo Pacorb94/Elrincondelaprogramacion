@@ -3,7 +3,7 @@
         <h3>Crear post</h3>
         <hr>
         <h6 *ngIf="goodCreate" class="alert alert-success col-md-5 mt-3 mx-auto">
-            Has creado el post, puedes verlo <a routerLink="/user-panel/my-posts">aquí</a>
+            Has creado el post, puedes verlo <a [routerLink]="['/posts', postTitleCreated]">aquí</a>
         </h6>
         <flash-messages></flash-messages>
         <!--La propiedad "formGroup" asocia este formulario con una propiedad del componente. 
@@ -17,9 +17,8 @@
                 {{wrongValidationMessage(form.get('title'), 'título')}}
             </span>
             <label for="content">Contenido:</label>
-            <textarea name="content" id="content" formControlName="content"
-                class="form-control text-center">
-            </textarea>
+            <quill-editor formControlName="content" [styles]="{height:'300px'}" [sanitize]="true">
+            </quill-editor>
             <span *ngIf="checkTouched(form.get('content'))" class="invalid-feedback d-block">
                 {{wrongValidationMessage(form.get('content'), 'contenido')}}
             </span>

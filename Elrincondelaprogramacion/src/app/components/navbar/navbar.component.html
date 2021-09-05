@@ -17,7 +17,7 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Categorias
                 </a>
-                <div id="categoriesDropdown" class="dropdown-menu pr-5 mr-5 w-25" aria-labelledby="navbarDropdown">       
+                <div id="categoriesDropdown" class="dropdown-menu pr-5 mr-5" aria-labelledby="navbarDropdown">       
                     <a *ngFor="let category of categories" class="dropdown-item" 
                         [routerLink]="['/posts/categories', category.name]">{{category.name}}
                     </a>        

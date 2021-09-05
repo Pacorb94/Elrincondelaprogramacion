@@ -81,7 +81,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
         this.getPostCommentsSubscription=this._postService.getPostComments(this.page, this.post.id)
             .subscribe(
                 response=>{
-                    if (response.Comments.length) {
+                    if (response.Comments) {
                         this.comments=response.Comments;
                         this.pagination(response.totalPages);
                     }                   

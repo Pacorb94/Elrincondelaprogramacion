@@ -3,12 +3,12 @@
         <h3>Editar post</h3>
         <hr>
         <h6 *ngIf="goodEdit" class="alert alert-success col-md-5 mt-3 mx-auto">
-            Has modificado el post, puedes verlo <a routerLink="/user-panel/my-posts">aquí</a>
+            Has modificado el post, puedes verlo <a [routerLink]="['/posts', post.title]">aquí</a>
         </h6>
         <flash-messages></flash-messages>
         <!--La propiedad "formGroup" asocia este formulario con una propiedad del componente. 
         En el evento submit le pasamos los valores de los campos-->
-        <form [formGroup]="form" class="col-md-3 ml-0 pl-0 mx-auto">
+        <form [formGroup]="form" class="col-md-5 ml-0 pl-0 mx-auto">
             <label for="title">Título:</label>
             <!--El valor del atributo "formControlName" sirva para identificarlo Angular-->
             <input type="text" name="title" id="title" formControlName="title" 
@@ -17,12 +17,12 @@
                 {{wrongValidationMessage(form.get('title'), 'título')}}
             </span>
             <label for="content">Contenido:</label>
-            <textarea name="content" id="content" formControlName="content" 
-                class="form-control text-center">
-            </textarea>
+            <quill-editor formControlName="content" [styles]="{height:'300px'}" [sanitize]="true">
+            </quill-editor>
             <span *ngIf="checkTouched(form.get('content'))" class="invalid-feedback d-block">
                 {{wrongValidationMessage(form.get('content'), 'contenido')}}
             </span>
+            <span>Categoría:<br>{{post?.category.name}}</span>
             <select formControlName="category" name="category" id="category" 
                 class="form-control w-100 mt-3">
                 <option hidden value="">Selecciona una categoría</option>

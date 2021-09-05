@@ -49,14 +49,14 @@ export class CreateCommentComponent implements OnInit, OnDestroy {
                         //Si el ancho de la pantalla es menor o igual a 575
                         if (window.outerWidth<=parseInt('575')) window.scroll(0, 350);                                       
                         this.showFlashMessage('Has creado el comentario',
-                            'alert alert-success col-md-5 mt-3 mx-auto text-center', 1500);
+                            'alert alert-success col-md-6 mt-3 mx-auto text-center', 1500);
                         this._commentService.setUpdatedCommentList$(true);
                     }
                 },
                 error=>{
                     if (window.outerWidth<=parseInt('575')) window.scroll(0, 350);
                     this.showFlashMessage('No has creado el comentario',
-                        'alert alert-danger col-md-5 mt-3 mx-auto text-center', 1500);
+                        'alert alert-danger col-md-6 mt-3 mx-auto text-center', 1500);
                 }
             );
     }

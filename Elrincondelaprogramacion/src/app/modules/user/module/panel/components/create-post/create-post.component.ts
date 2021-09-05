@@ -18,6 +18,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     goodCreate:boolean;
     categories:any[];
     form:FormGroup;
+    postTitleCreated:string;
     categoriesSubscription:Subscription;
     createSubscription:Subscription;
 
@@ -32,6 +33,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
             content:new FormControl('', Validators.required),
             category:new FormControl('', Validators.required)
         });
+        this.postTitleCreated='';
         this.categoriesSubscription=new Subscription();
         this.createSubscription=new Subscription();
     }
@@ -68,6 +70,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
             response=>{
                 if (response) {
                     this.goodCreate=true;
+                    this.postTitleCreated=this.post.getTitle();
                     //Si el tamaño de la ventana es menor o igual a 575
                     window.outerWidth<=parseInt('575')?window.scroll(0, 550):window.scroll(0, 50);               
                 }else{

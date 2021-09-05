@@ -8,17 +8,20 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class CategoryService {
     private lastAddedCategory:BehaviorSubject<any>;
+    private updateNavbarCategoryList:BehaviorSubject<any>;
 
     constructor(private _http:HttpClient) {
         this.lastAddedCategory=new BehaviorSubject('');
+        this.updateNavbarCategoryList=new BehaviorSubject<boolean>(false);
     }
 
     /**
-     * Función que establece la categoría creada al BehaviorSubject
-     * @param value 
+     * Función que le dice al BehaviorSubject cuando se creó
+     * una categoría
+     * @param category
      */
-    setLastAddedCategory$(value:any){
-        this.lastAddedCategory.next(value);
+    setLastAddedCategory$(category:any){
+        this.lastAddedCategory.next(category);
     }
 
     /**
@@ -27,6 +30,23 @@ export class CategoryService {
      */
     getLastAddedCategory$():Observable<any>{
         return this.lastAddedCategory.asObservable();
+    }
+
+    /**
+     * Función que actualiza la lista de categorías del navbar cuando se
+     * crea, modifica o borra una categoría
+     * @param value 
+     */
+    setUpdateNavbarCategoryList$(value:boolean){
+        this.updateNavbarCategoryList.next(value);
+    }
+
+    /**
+     * Función que obtiene el valor del BehaviorSubject
+     * @returns 
+     */
+    getUpdateNavbarCategoryList$():Observable<boolean>{
+        return this.updateNavbarCategoryList.asObservable();
     }
 
     /**
