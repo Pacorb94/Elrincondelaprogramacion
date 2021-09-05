@@ -25,7 +25,7 @@ export class PostsFinderComponent implements OnInit, OnDestroy {
     totalPages: number[];
 
     constructor(private _postService:PostService, private _route:ActivatedRoute) {
-        this.pageTitle = 'Posts';
+        this.pageTitle='';
         this.title='';
         this.posts=[];
         this.loading = true;
@@ -72,9 +72,14 @@ export class PostsFinderComponent implements OnInit, OnDestroy {
         this.subscription=this._postService.getPostsByTitle(this.title, this.page).subscribe(
             response=>{
                 if (response.Posts.length) {
+                    this.pageTitle=`Posts con el título ${this.title}`;
                     this.posts=response.Posts;
+                    this.loading=false;
+                    this.noPosts=false;
                     this.pagination(response.totalPages);
                 } else {
+                    this.pageTitle=`No hay posts con el título ${this.title}`;
+                    this.loading=true;
                     this.noPosts=true;
                 }                 
             },
