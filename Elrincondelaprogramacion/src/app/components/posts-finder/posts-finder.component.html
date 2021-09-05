@@ -2,7 +2,7 @@
     <div class="col-xl-9">
         <div *ngIf="loading; else data">
             <!--Si terminó de cargar y no hay posts-->
-            <h3 *ngIf="noPosts" class="text-center">No hay posts</h3>
+            <h3 *ngIf="noPosts" class="text-center">{{pageTitle}}</h3>
             <!--Si no hay posts-->
             <div *ngIf="!noPosts" class="text-center">
                 <button class="btn btn-primary" type="button" disabled>
