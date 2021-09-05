@@ -1,16 +1,19 @@
-export const quillConfig:{}={
+export const quillConfig: {} = {
     modules: {
-      syntax: true,
-      toolbar: [
-        ['bold', 'italic', 'underline', 'strike'],
-        [{ font: [] }],
-        [{ color: [] }, { background: [] }],
-        [{ size: ['small', false, 'large', 'huge'] }],
-        [{ header: [1, 2, 3, 4, 5, 6, false] }],
-        [{ align: [] }],
-        ['blockquote', 'code-block'],
-        [{ list: 'ordered'}, { list: 'bullet' }],
-        ['clean']
-      ]
+        syntax: true,
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ font: [] }],
+            [{ color: [] }, { background: [] }],
+            [{ size: ['small', false, 'large', 'huge'] }],
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            [{ align: [] }],
+            ['blockquote', 'code-block'],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            ['clean']
+        ]
+    },
+    styles: {
+        
     }
 };
