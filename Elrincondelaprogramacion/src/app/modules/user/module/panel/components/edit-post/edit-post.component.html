@@ -3,7 +3,7 @@
         <h3>Editar post</h3>
         <hr>
         <h6 *ngIf="goodEdit" class="alert alert-success col-md-5 mt-3 mx-auto">
-            Has modificado el post, puedes verlo <a routerLink="/user-panel/my-posts">aquí</a>
+            Has modificado el post, puedes verlo <a [routerLink]="['/posts', post.title]">aquí</a>
         </h6>
         <flash-messages></flash-messages>
         <!--La propiedad "formGroup" asocia este formulario con una propiedad del componente. 
