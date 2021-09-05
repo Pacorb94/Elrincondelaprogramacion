@@ -41,20 +41,20 @@
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
                         <!--Si no recibe por la ruta la categoría-->
-                        <a class="page-link" [routerLink]="['/search-posts', text, 'page', prevPage]" 
+                        <a class="page-link" [routerLink]="['/search-posts', title, 'page', prevPage]" 
                             routerLinkActive="btn-info" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <!--Hacemos tantos enlaces como páginas haya-->
                     <li *ngFor="let page of totalPages" class="page-item">
-                        <a class="page-link" [routerLink]="['/search-posts', text, 'page', page]"
+                        <a class="page-link" [routerLink]="['/search-posts', title, 'page', page]"
                             routerLinkActive="btn-info">
                             {{page}}
                         </a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" [routerLink]="['/search-posts', text, 'page', nextPage]" 
+                        <a class="page-link" [routerLink]="['/search-posts', title, 'page', nextPage]" 
                             routerLinkActive="btn-info" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>                      
