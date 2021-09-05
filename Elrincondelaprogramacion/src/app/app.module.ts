@@ -16,6 +16,7 @@ import { cookieConfig } from './cookie.conf';
 import { CookiesPolicyComponent } from './components/cookies-policy/cookies-policy.component';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { CategoryModule } from './modules/category/category.module';
+import { FinderComponent } from './components/finder/finder.component';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import { CategoryModule } from './modules/category/category.module';
         MostActivePostsComponent,
         MyFooterComponent,
         DarkModeComponent,
-        CookiesPolicyComponent
+        CookiesPolicyComponent,
+        FinderComponent
     ],
     //Para que funcionen los componentes de otros módulos debemos importar el módulo
     imports: [
