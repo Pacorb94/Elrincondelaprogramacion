@@ -125,6 +125,11 @@ getPostsByCategory:
     controller: App\Controller\HomeController::getPostsByCategory
     methods: GET
 
+getPostsByTitle:
+    path: /search-posts/{title}
+    controller: App\Controller\HomeController::getPostsByTitle
+    methods: GET
+
 getPostDetails:
     path: /posts/{title}
     controller: App\Controller\PostController::getDetails

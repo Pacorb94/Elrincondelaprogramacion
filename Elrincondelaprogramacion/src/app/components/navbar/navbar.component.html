@@ -32,9 +32,10 @@
             <li class="nav-item ml-5">
                 <form [formGroup]="form" class="d-flex form-inline ml-sm-10 my-2 my-lg-0 ml-5">
                     <input type="search" formControlName="postsSearchText" class="form-control" 
-                        placeholder="Busca post o usuario" aria-label="Search">
+                        placeholder="Busca un post" aria-label="Search">
                     <input type="button" (click)="searchPosts(form.get('postsSearchText')?.value)" 
-                        value="Buscar post" class="btn btn-outline-success my-2 my-sm-0">
+                        value="Buscar post" class="btn btn-success my-2 my-sm-0" 
+                        [disabled]="!form.valid">
                 </form>
             <!--Fin del buscador-->
             </li>

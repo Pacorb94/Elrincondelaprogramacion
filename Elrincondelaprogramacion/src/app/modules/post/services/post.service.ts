@@ -78,6 +78,16 @@ export class PostService {
     getMostActivePosts():Observable<any>{
         return this._http.get(`${environment.url}/posts/most-actives`);
     }
+    
+    /**
+     * Función que obtiene posts por el título
+     * @param title
+     * @param page
+     * @returns 
+     */
+    getPostsByTitle(title:string, page:number):Observable<any>{
+        return this._http.get(`${environment.url}/search-posts/${title}?page=${page}`);
+    }
 
     /**
      * Función que modifica un post

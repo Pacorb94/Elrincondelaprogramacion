@@ -88,11 +88,11 @@ export class NavbarComponent implements OnInit {
     }
 
     /**
-     * Función que busca temas por una palabra
-     * @param text 
+     * Función que busca posts por el título
+     * @param title
      */
-    searchPosts(text:string){
-        return this._router.navigate([]);
+    searchPosts(title:string){
+        return this._router.navigate(['search-posts', title]);
     }
 
     /**
