@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { UserService } from '../../modules/user/service/user.service';
 import { CategoryService } from '../../modules/category/service/category.service';
 import { Router } from '@angular/router';
@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
     constructor(private _userService:UserService, private _categoryService:CategoryService, 
     private _router:Router, private _sanitizer:DomSanitizer) {
         this.form=new FormGroup({
-            postsSearchText:new FormControl('', Validators.required)
+            postsSearchText:new FormControl('')
         });
         this.categories=[];
     }
@@ -88,11 +88,11 @@ export class NavbarComponent implements OnInit {
     }
 
     /**
-     * Función que busca temas por una palabra
+     * Función que busca posts por un texto
      * @param text 
      */
     searchPosts(text:string){
-        return this._router.navigate([]);
+        return this._router.navigate(['search-posts', text]);
     }
 
     /**
