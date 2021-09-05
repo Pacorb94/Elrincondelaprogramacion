@@ -74,6 +74,7 @@ class HomeController extends AbstractController
      */
     public function getPostsByTitle($title, Request $request)
     {
+        $title=trim($title);
         $posts=$this->paginate($request, 'Post', "where m.title like '%$title%' and m.inadequate=0");
         /*Debido a que dentro de los posts hay una referencia a otros modelos
         dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
