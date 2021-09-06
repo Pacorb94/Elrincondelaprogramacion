@@ -12,8 +12,8 @@ const routes: Routes = [
     //Cargamos las rutas hijas por lazyloading
     { path:'posts', loadChildren:()=>import('./modules/post/post.module').then(m=>m.PostModule) },
     { path:'page/:page', component:HomeComponent },
-    { path:'', loadChildren:()=>import('./modules/user/user.module').then(m=>m.UserModule) },
     { path:'cookies-policy', component:CookiesPolicyComponent },
+    { path:'', loadChildren:()=>import('./modules/user/user.module').then(m=>m.UserModule) },
     { path:'**', redirectTo:'' }
 ];
 
