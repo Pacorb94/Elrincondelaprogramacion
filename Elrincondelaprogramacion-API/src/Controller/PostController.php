@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Post;
 use App\Entity\Category;
+use App\Entity\Comment;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -292,6 +293,10 @@ class PostController extends AbstractController
             $post=$this->postRepo->find($id);
             //Si existe
             if ($post) {
+                $commentRepo=$this->getDoctrine()->getRepository(Comment::class);
+                $comments=$commentRepo->findBy(['post'=>$post->getId()]);
+                //Borramos los comentarios de ese post
+                foreach ($comments as $comment) $comment->execute($this->em, $comment, 'delete');            
                 $post->execute($this->em, $post, 'delete');
                 return $this->json(['message'=>'Deleted post']);
             }
