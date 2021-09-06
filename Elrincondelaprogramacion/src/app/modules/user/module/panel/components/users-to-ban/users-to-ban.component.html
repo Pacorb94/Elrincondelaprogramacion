@@ -29,7 +29,7 @@
                 <!--Si hay imagen-->
                 <img *ngIf="user.image" [src]="profileImageUrl+user.image" alt="Imagen del usuario" 
                     class="w-50">
-                <img *ngIf="!user.image" src="../../../../../../../assets/images/no-profile-image.png"
+                <img *ngIf="!user.image" src="assets/images/no-profile-image.png"
                     alt="Imagen del usuario" class="w-50">
             </td>
             <td>{{user.createdAt|amLocale:'es'|amCalendar}}</td>
@@ -43,7 +43,7 @@
                         llamar a un elemento HTML con ese id y además almacena un dato-->
                         <button type="button" *ngIf="!user.banned" class="btn btn-warning  d-flex justify-content-center mx-auto"
                             data-toggle="modal" [attr.data-target]="'#ban'+user.id">
-                            <img src="../../../../../../../assets/images/edit-icon.png" class="w-25"
+                            <img src="assets/images/edit-icon.png" class="w-25"
                                 alt="Imagen de banear usuario">
                             Banear
                         </button>

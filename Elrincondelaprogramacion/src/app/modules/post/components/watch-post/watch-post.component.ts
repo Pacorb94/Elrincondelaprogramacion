@@ -86,11 +86,11 @@ export class WatchPostComponent implements OnInit, OnDestroy {
                         this.postImage=this._sanitizer.bypassSecurityTrustUrl(imageURL);
                     },
                     error=>{
-                        this.postImage='../../../../../assets/images/no-post-image.jpg';
+                        this.postImage='assets/images/no-post-image.jpg';
                     }
                 );
         }else{
-            this.postImage='../../../../../assets/images/no-post-image.jpg';
+            this.postImage='assets/images/no-post-image.jpg';
         }
     }
     

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { PostService } from '../../modules/post/services/post.service';
+import { UserService } from 'src/app/modules/user/service/user.service';
 import { environment } from 'src/environments/environment';
+
 
 @Component({
     selector: 'my-footer',
@@ -10,14 +13,33 @@ import { environment } from 'src/environments/environment';
 export class MyFooterComponent implements OnInit {
     posts:any[];
     imageUrl:string;
-    
-    constructor(private _postService:PostService) {
+    userLoggedIn:any;
+    subscription:Subscription;
+
+    constructor(private _postService:PostService, private _userService:UserService) {
         this.posts=[];
         this.imageUrl=`${environment.url}/posts-images/`;
+       this.subscription=new Subscription();
     }
 
     ngOnInit(): void {
+        this.checkUserLoggedIn();
         this.getLastThreePosts();
+    }
+
+    /**
+     * Función que comprueba si el usuario ha iniciado sesión
+     */
+    checkUserLoggedIn(){
+        this._userService.getUserLoggedIn$().subscribe(
+            user=>{
+                if (user) {
+                    this.userLoggedIn=user;
+                }else{
+                    this.userLoggedIn=null;
+                }
+            }
+        );
     }
 
     /**

@@ -5,7 +5,8 @@
                 <h3>Mapa del sitio</h3>
                 <ul class="list-unstyled three-column">
                     <li><a routerLink=" ">Inicio</a></li>
-                    <li class="ml-3"><a routerLink="user-panel">Panel de usuario</a></li>
+                    <!--Si el usuario está logueado-->
+                    <li *ngIf="userLoggedIn" class="ml-3"><a routerLink="user-panel">Panel del usuario</a></li>
                     <li><a routerLink="cookies-policy">Política de cookies</a></li>
                 </ul>
             </div>
@@ -14,24 +15,24 @@
                 <h3>{{posts?'Últimos posts':'No hay posts'}}</h3>
                 <div *ngFor="let post of posts" class="row mb-3">
                     <div class="col">
-                        <a [routerLink]="['/watch/post', post.title]" class="">
+                        <a [routerLink]="['/posts', post.title]" class="">
                             <!--Si hay imagen-->
                             <img *ngIf="post.image" [src]="imageUrl+post.image" alt="Imagen del post" 
                                 class="postImage"/>
                             <img *ngIf="!post.image" 
-                                src="../../../assets/images/no-post-image.jpg" 
-                                alt="Imagen del post" class="postImage">
+                                src="assets/images/no-post-image.jpg" alt="Imagen del post"
+                                class="postImage">
                         </a>
                     </div>                     
                     <div class="col">
-                        <h6><a [routerLink]="['/watch-post', post.title]">{{post.title}}</a></h6>
+                        <h6><a [routerLink]="['/posts', post.title]">{{post.title}}</a></h6>
                         <p>{{post.content}}</p>
                     </div>                
                 </div>
             </div>
             <div class="col-lg-4">
                 <h3>Mis proyectos</h3>
-                <a class="ml-2 cursorPointer">
+                <a href="https://github.com/Pacorb94" class="ml-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                         class="bi bi-github cursorPointer" viewBox="0 0 16 16">
                         <path

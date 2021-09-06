@@ -8,6 +8,7 @@
         Cargando...
     </button>
 </div>
+<flash-messages></flash-messages>
 <!--Si hay posts-->
 <table #table *ngIf="!noPosts" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
     class="table-responsive mt-5 table table-hover text-center bg-light">
@@ -29,7 +30,7 @@
             <td>
                 <!--Si hay imagen-->
                 <img *ngIf="post.image" [src]="imageUrl+post.image" alt="Imagen del post" class="w-50">
-                <img *ngIf="!post.image" src="../../../../../../../assets/images/no-post-image.jpg"
+                <img *ngIf="!post.image" src="assets/images/no-post-image.jpg"
                     alt="Imagen del post" class="w-50">
             </td>
             <td>{{post.createdAt|amLocale:'es'|amCalendar}}</td>
@@ -38,7 +39,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6">
                         <a [routerLink]="['/posts', post.title]" class="btn btn-success w-100 d-flex align-items-center">
-                            <img src="../../../../../../../assets/images/watch-icon.png" class="w-50"
+                            <img src="assets/images/watch-icon.png" class="w-50"
                                 alt="Imagen de ver post">Ver
                         </a>
                     </div>
@@ -47,7 +48,7 @@
                             ruta padre junto a la hija-->
                         <a [routerLink]="['/user-panel/edit-post', post.title]"
                             class="btn btn-warning w-100 d-flex align-items-center">
-                            <img src="../../../../../../../assets/images/edit-icon.png" class="w-50"
+                            <img src="assets/images/edit-icon.png" class="w-50"
                                 alt="Imagen de editar post">
                             Editar
                         </a>
@@ -57,7 +58,7 @@
                         llamar a un elemento HTML con ese id y además almacena un dato-->
                         <button type="button" class="btn btn-danger w-75 d-flex justify-content-center mx-auto"
                             data-toggle="modal" [attr.data-target]="'#delete'+post.id">
-                            <img src="../../../../../../../assets/images/delete-icon.png" class="w-25"
+                            <img src="assets/images/delete-icon.png" class="w-25"
                                 alt="Imagen de borrar post">
                             Borrar
                         </button>

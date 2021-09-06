@@ -9,7 +9,7 @@
                 <img *ngIf="comment.user.profileImage" [src]="profileImageUrl+comment.user.profileImage"
                     alt="Imagen de perfil" class="profileImage mr-1">
                 <img *ngIf="!comment.user.profileImage" 
-                    src="../../../../../assets/images/no-profile-image.png"
+                    src="assets/images/no-profile-image.png"
                     alt="Imagen de perfil" class="profileImage mr-1">
                 <a [routerLink]="['/user-details', comment.user.id]" 
                     class="badge badge-primary rounded-pill mr-2">
@@ -25,7 +25,7 @@
                 <button type="button" *ngIf="user?.id==comment.user.id&&!comment.inadequate" 
                     class="btn btn-danger button float-right" 
                     data-toggle="modal" [attr.data-target]="'#delete'+comment.id">
-                    <img src="../../../../../../../assets/images/delete-icon.png" class="w-25"
+                    <img src="assets/images/delete-icon.png" class="w-25"
                         alt="Imagen de borrar comentario">
                     Borrar
                 </button>
@@ -63,7 +63,7 @@
             {{!comment.inadequate?comment.content:'El comentario está marcado como inadecuado'}}
         </p>
         <!--Si es el usuario con rol admin y el comentario no es inadecuado-->
-        <input type="button" *ngIf="user.roles[0]=='ROLE_ADMIN'&&!comment.inadequate" 
+        <input type="button" *ngIf="user?.roles[0]=='ROLE_ADMIN'&&!comment.inadequate" 
             value="Comentario inadecuado" class="btn btn-info" (click)="markAsInadequate(comment.id)">
         <hr>
     </div>

@@ -2,7 +2,10 @@
     margin-top: 8%;
 }
 
-table tr td{
-    //Añade un salto de línea en html cuando haya un salto de línea en ts
-    white-space: pre-line;
+table{
+    background-color: #E5E7E9;
+    tr td{
+        //Añade un salto de línea en html cuando haya un salto de línea en ts
+        white-space: pre-line;
+    }
 }

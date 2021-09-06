@@ -89,9 +89,11 @@ export class MyPostsComponent implements OnInit, OnDestroy{
             response=>{
                 if (response) {
                     this.getUserPosts(true);                    
-                    this.noPosts=true;   
+                    this.noPosts=false;   
                     //Si el ancho de la pantalla es menor o igual a 575
-                    window.outerWidth<=parseInt('575')?window.scroll(0, 600):window.scroll(0, 50);                   
+                    window.outerWidth<=parseInt('575')?window.scroll(0, 600):window.scroll(0, 50);   
+                    this.showFlashMessage('Has borrado el post', 
+                        'alert alert-success col-md-5 mt-3 mx-auto text-center', 3000);                
                 }        
             },
             error=>{

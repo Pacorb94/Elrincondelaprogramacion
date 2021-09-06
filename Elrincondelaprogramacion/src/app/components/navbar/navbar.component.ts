@@ -55,11 +55,11 @@ export class NavbarComponent implements OnInit {
                     this.profileImage=this._sanitizer.bypassSecurityTrustUrl(imageURL);
                 },
                 error=>{
-                    this.profileImage='../assets/images/no-profile-image.png';
+                    this.profileImage='assets/images/no-profile-image.png';
                 }
             );
         }else{
-            this.profileImage='../assets/images/no-profile-image.png';
+            this.profileImage='assets/images/no-profile-image.png';
         }
     }
     

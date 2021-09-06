@@ -33,7 +33,7 @@
                         <!--Si es el que creó la categoría-->
                         <a *ngIf="category.user?.id==user?.id" 
                         [routerLink]="['/user-panel/edit-category', category.name]" class="btn btn-warning w-50">
-                            <img src="../../../../../../../assets/images/edit-icon.png" class="w-25"
+                            <img src="assets/images/edit-icon.png" class="w-25"
                                 alt="Imagen de editar categoría">
                             Editar
                         </a>
@@ -43,9 +43,9 @@
                         llamar a un elemento HTML con ese id y además almacena un dato.
                         Si es el usuario que creó la categoría o si es el usuario con el nick admin -->
                         <button type="button" *ngIf="category.user?.id==user?.id||user?.nick=='admin'" 
-                        class="btn btn-danger w-50" data-toggle="modal"
+                            class="btn btn-danger w-50" data-toggle="modal"
                             [attr.data-target]="'#delete'+category.id">
-                            <img src="../../../../../../../assets/images/delete-icon.png" class="w-25"
+                            <img src="assets/images/delete-icon.png" class="w-25"
                                 alt="Imagen de borrar categoría">
                             Borrar
                         </button>
