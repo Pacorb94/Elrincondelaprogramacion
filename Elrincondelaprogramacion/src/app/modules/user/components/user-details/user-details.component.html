@@ -1,4 +1,4 @@
-<div *ngIf="!user.banned; else banned">
+<div *ngIf="!user?.banned; else banned">
     <div class="row">
         <img [src]="profileImage" alt="Imagen de perfil" class="profileImage mr-1">
         <h3 class="mr-3">{{user?.nick}}</h3>
@@ -17,7 +17,7 @@
     <!--Si hay posts-->
     <div *ngIf="!noPosts" class="row mx-auto mt-5">
         <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-            class="table-responsive mt-5 table table-hover text-center">
+            class="table-responsive mt-5 table table-hover text-center bg-light">
             <thead>
                 <tr>
                     <th>Título</th>
