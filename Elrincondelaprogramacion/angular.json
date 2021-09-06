@@ -34,7 +34,10 @@
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss",
               "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css",
-              "node_modules/cookieconsent/build/cookieconsent.min.css"
+              "node_modules/cookieconsent/build/cookieconsent.min.css",
+              "node_modules/quill/dist/quill.core.css",
+              "node_modules/quill/dist/quill.bubble.css",
+              "node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
@@ -43,7 +46,9 @@
               "node_modules/jquery/dist/jquery.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
               "node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js",
-              "node_modules/cookieconsent/build/cookieconsent.min.js"
+              "node_modules/cookieconsent/build/cookieconsent.min.js",
+              "./node_modules/angular-dark-mode/angular-dark-mode.js",
+              "node_modules/quill/dist/quill.min.js"
             ],
             "allowedCommonJsDependencies": [
               "angular2-flash-messages",
@@ -55,8 +60,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",

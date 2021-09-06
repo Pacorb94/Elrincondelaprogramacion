@@ -69,10 +69,15 @@ class CategoryController extends AbstractController
                         if ($category) {
                             //Si la categoría con ese nombre no existe
                             if (!$this->categoryRepo->findOneBy(['name'=>$decodedRequest['name']])) {
-                                $category->setName($decodedRequest['name']);
-                                $category->setUpdatedAt(new \DateTime('now'));
-                                $category->execute($this->em, $category, 'update');
-                                return $this->json($category);        
+                                $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
+                                //Si el usuario es el que creó la categoría
+                                if ($userLoggedIn->getId()==$category->getUser()->getId()) {
+                                    $category->setName($decodedRequest['name']);
+                                    $category->setUpdatedAt(new \DateTime('now'));
+                                    $category->execute($this->em, $category, 'update');
+                                    return $this->json($category);   
+                                }
+                                return $this->json(['message'=>'You can\'t modify that category'], 400);       
                             }
                             return $this->json(['message'=>'That name already exists'], 500);                
                         }
@@ -115,15 +120,21 @@ class CategoryController extends AbstractController
             $category=$this->categoryRepo->find($id);
             //Si existe
             if ($category) {
-                $postRepo=$this->getDoctrine()->getRepository(Post::class);
-                $posts=$postRepo->findBy(['category'=>$category->getId()]);
-                //Debemos modificar la categoría de los posts que vamos a borrar
-                foreach ($posts as $post) {
-                    $post->setCategory(null);
-                    $post->execute($this->em, $post, 'update');
-                }             
-                $category->execute($this->em, $category, 'delete');
-                return $this->json(['message'=>'Deleted category']);
+                $userLoggedIn=$this->get('security.token_storage')->getToken()->getUser();
+                //Si el usuario es el que creó la categoría o el usuario con nick 'admin'
+                if ($userLoggedIn->getId()==$category->getUser()->getId()
+                ||$userLoggedIn->getNick()=='admin') {
+                    $postRepo=$this->getDoctrine()->getRepository(Post::class);
+                    $posts=$postRepo->findBy(['category'=>$category->getId()]);
+                    //Debemos modificar la categoría de los posts que vamos a borrar
+                    foreach ($posts as $post) {
+                        $post->setCategory(null);
+                        $post->execute($this->em, $post, 'update');
+                    }             
+                    $category->execute($this->em, $category, 'delete');
+                    return $this->json(['message'=>'Deleted category']);
+                }
+                return $this->json(['message'=>'You can\'t delete that category'], 400);       
             }
             return $this->json(['message'=>'Category not found'], 404);
         }

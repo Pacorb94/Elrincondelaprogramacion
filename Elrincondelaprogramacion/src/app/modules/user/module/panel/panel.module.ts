@@ -1,8 +1,8 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { UserPanelRoutingModule } from './panel-routing.module';
 import { MainComponent } from './components/main/main.component';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -15,12 +15,15 @@ import { CreateCategoryComponent } from './components/create-category/create-cat
 import { EditCategoryComponent } from './components/edit-category/edit-category.component';
 import { InadequatePostsComponent } from './components/inadequate-posts/inadequate-posts.component';
 import { InadequateCommentsComponent } from './components/inadequate-comments/inadequate-comments.component';
-import { BannedUsersComponent } from './components/banned-users/banned-users.component';
+import { UsersToBanComponent } from './components/users-to-ban/users-to-ban.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { DataTablesModule } from "angular-datatables";
 import { MomentModule } from 'angular2-moment';
 import { FileUploaderPostComponent } from './components/file-uploader-post/file-uploader-post.component';
 import { CategoryListComponent } from './components/category-list/category-list.component';
+import { UpdateRoleComponent } from './components/update-role/update-role.component';
+import { QuillModule } from 'ngx-quill';
+import { quillConfig } from './quill.conf';
 
 @NgModule({
     declarations: [
@@ -34,11 +37,11 @@ import { CategoryListComponent } from './components/category-list/category-list.
         EditCategoryComponent,
         InadequatePostsComponent,
         InadequateCommentsComponent,
-        BannedUsersComponent,
+        UsersToBanComponent,
         UserSettingsComponent,
         FileUploaderPostComponent,
         CategoryListComponent,
-        BannedUsersComponent
+        UpdateRoleComponent
     ],
     imports: [
         CommonModule,
@@ -48,7 +51,8 @@ import { CategoryListComponent } from './components/category-list/category-list.
         UserPanelRoutingModule,
         FileUploadModule,
         DataTablesModule,
-        MomentModule
+        MomentModule,
+        QuillModule.forRoot(quillConfig)
     ]
 })
 export class UserPanelModule { }

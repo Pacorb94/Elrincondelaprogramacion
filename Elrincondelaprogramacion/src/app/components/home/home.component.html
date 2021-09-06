@@ -1,5 +1,13 @@
 <div class="row column">
     <div class="col-xl-9">
+        <!--Si se cambió el rol al usuario-->
+        <h6 *ngIf="roleChanged" class="alert alert-info col-md-6 mx-auto text-center">
+            Te hemos cambiado el rol, cierra sesión para ver los cambios
+        </h6>
+        <!--Si no está logueado el usuario-->
+        <h6 *ngIf="!userLoggedIn" class="alert alert-info col-md-6 mx-auto text-center">
+            Inicia sesión <a routerLink="login">aquí</a> o regístrate <a routerLink="register">aquí</a>
+        </h6>
         <last-added-category></last-added-category>
         <div *ngIf="loading; else data">
             <!--Si terminó de cargar y no hay posts-->
@@ -33,7 +41,9 @@
                         <h5 class="card-title card-header text-center">
                             <a [routerLink]="['/posts', post.title]">{{post.title}}</a>
                         </h5>
-                        <p class="text-center">{{post.content}}</p>
+                        <div class="text-center mt-4">
+                            <a [routerLink]="['/posts', post.title]" class="btn btn-success">Ver más</a>
+                        </div>                    
                     </div>
                 </article>
             <!--Fin de los cards-->

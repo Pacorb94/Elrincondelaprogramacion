@@ -210,15 +210,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JsonSer
         return $this;
     }
 
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
     public function setCreatedAt($createdAt)
     {
         $this->createdAt=$createdAt;
         return $this;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 
     public function getUpdatedAt()

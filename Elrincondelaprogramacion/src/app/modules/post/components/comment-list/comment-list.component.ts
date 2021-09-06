@@ -1,5 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../../user/service/user.service';
 import { PostService } from '../../services/post.service';
@@ -15,15 +14,12 @@ import { environment } from '../../../../../environments/environment';
 })
 export class CommentListComponent implements OnInit, OnDestroy {
     @Input()post:any;
-    @ViewChild('commentContent') private commentContent!:ElementRef;
     comments:any[];
     user:any;
     profileImageUrl:string;
-    form:FormGroup;
-    hiddenForm:boolean;
     updateCommentListSubscription:Subscription;
     getPostCommentsSubscription:Subscription;
-    updateCommentSubscription:Subscription;
+    inadequateSubscription:Subscription;
     deleteCommentSubscription:Subscription;
     //------Paginación-------
     page: any;
@@ -37,13 +33,9 @@ export class CommentListComponent implements OnInit, OnDestroy {
         this.comments=[];
         this.user=this._userService.getUserLoggedIn();
         this.profileImageUrl=`${environment.url}/profile-images/`;
-        this.form=new FormGroup({
-            content:new FormControl('', Validators.required)
-        });
-        this.hiddenForm=true;
         this.updateCommentListSubscription=new Subscription();
         this.getPostCommentsSubscription=new Subscription();
-        this.updateCommentSubscription=new Subscription();
+        this.inadequateSubscription=new Subscription();
         this.deleteCommentSubscription=new Subscription();
         this.prevPage = 0;
         this.nextPage = 0;
@@ -57,7 +49,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
     ngOnDestroy(){
         this.updateCommentListSubscription.unsubscribe();
         this.getPostCommentsSubscription.unsubscribe();
-        this.updateCommentSubscription.unsubscribe();
+        this.inadequateSubscription.unsubscribe();
         this.deleteCommentSubscription.unsubscribe();
     }
 
@@ -86,10 +78,10 @@ export class CommentListComponent implements OnInit, OnDestroy {
      * Función que obtiene los comentarios de un post
      */
     getPostComments(){
-        this.getPostCommentsSubscription=this._postService
-            .getPostComments(this.page, this.post.id).subscribe(
+        this.getPostCommentsSubscription=this._postService.getPostComments(this.page, this.post.id)
+            .subscribe(
                 response=>{
-                    if (response.Comments.length) {
+                    if (response.Comments) {
                         this.comments=response.Comments;
                         this.pagination(response.totalPages);
                     }                   
@@ -99,7 +91,31 @@ export class CommentListComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Función que actualiza la lista de comentarios si hay un nuevo o se ha editado
+     * Función que marca como inadecuado un comentario
+     * @param commentId 
+     */
+    markAsInadequate(commentId:number){
+        this.inadequateSubscription=this._commentService.inadequate(commentId).subscribe(
+            response=>{
+                //Actualizamos la vista sin recargarla
+                if (response) {
+                    this.getRouteParams();
+                    //Desplazamos la ventana
+                    window.scrollTo(0, 400);
+                    this.showFlashMessage('Has marcado como inadecuado el comentario',
+                        'alert alert-success col-md-7 text-center mx-auto', 3000);  
+                }       
+            },
+            error=>{
+                window.scrollTo(0, 400);
+                this.showFlashMessage('No has marcado como inadecuado el comentario',
+                    'alert alert-danger col-md-7 text-center mx-auto', 3000);  
+            }
+        );
+    }
+
+    /**
+     * Función que actualiza la lista de comentarios si hay uno nuevo o se ha editado
      */
     updateCommentList(){
         this.updateCommentListSubscription=this._commentService.getUpdatedCommentList$().subscribe(
@@ -134,65 +150,6 @@ export class CommentListComponent implements OnInit, OnDestroy {
     }
     
     /**
-     * Función que muestra el formulario para modificar un comentario
-     * @param
-     */
-    showUpdateForm(commentContent:string){
-       this.hiddenForm=false;
-       this.form.get('content')?.setValue(commentContent);
-       this.commentContent.nativeElement.remove();
-    }
-    
-    /**
-     * Función que modifica un comentario
-     */
-    update(){
-        let comment=null;
-        this.setCommentFormValues(comment);
-        console.log(comment);
-        this.updateCommentSubscription=this._commentService.update(comment).subscribe(
-            response=>{
-                if (response) {
-                    this.getPostComments();
-                }else{
-
-                }
-            },
-            error=>{
-
-            }
-        );
-    }
-
-    /**
-     * Función que da los valores del formulario al comentario
-     */
-    setCommentFormValues(comment:any){
-        //Con ? evitamos que Angular muestre un mensaje de que el campo puede estar null
-        if (this.form.get('content')?.value) comment.content=this.form.get('content')?.value;
-    }
-
-    /**
-     * Función que comprueba si el foco está en el campo
-     * @param field
-     */
-    checkTouched(field: any): boolean {
-        if (field.touched) return true;
-        return false;
-    }
-
-    /**
-     * Función que muestra un mensaje de validación incorrecta
-     * @param field 
-     * @param fieldName 
-     */
-    wrongValidationMessage(field: any, fieldName: string): string {
-        let message='';
-        if (field.errors?.required) message=`El campo ${fieldName} es obligatorio`;
-        return message;
-    }
-    
-    /**
      * Función que borra un comentario
      * @param id 
      */
@@ -205,12 +162,10 @@ export class CommentListComponent implements OnInit, OnDestroy {
                     window.scrollTo(0, 400);
                     this.showFlashMessage('Has borrado el comentario',
                         'alert alert-success col-md-7 text-center mx-auto', 3000);
-                }else{
-                    this.showFlashMessage('No has borrado el comentario',
-                        'alert alert-danger col-md-7 text-center mx-auto', 3000);
                 }
             },
             error=>{
+                window.scrollTo(0, 400);
                 this.showFlashMessage('No has borrado el comentario',
                     'alert alert-danger col-md-7 text-center mx-auto', 3000);
             }

@@ -41,7 +41,8 @@ export class UserService {
     }
 
     /**
-     * Función que da valor al BehaviourSubject
+     * Función que le dice al BehaviourSubject cuando
+     * inicia sesión el usuario
      * @param value 
      */
     setUserLoggedIn$(value:any){
@@ -126,6 +127,15 @@ export class UserService {
     getRoles():Observable<any>{
         return this._http.get(`${environment.url}/roles`);
     }
+
+    /**
+     * Función que obtiene los posts de un usuario
+     * @param id 
+     * @returns 
+     */
+    getUserPosts(id:number):Observable<any>{
+        return this._http.get(`${environment.url}/users/${id}/posts`);
+    }
     
     /**
      * Función que obtiene los comentarios de un usuario
@@ -134,6 +144,35 @@ export class UserService {
      */
     getComments(id:number):Observable<any>{
         return this._http.get(`${environment.url}/users/${id}/comments`);
+    }
+    
+    /**
+     * Función que obtiene los usuarios
+     * @returns
+     */
+    getUsers():Observable<any>{
+        return this._http.get(`${environment.url}/users`);
+    }
+    
+    /**
+     * Función que modifica el rol de un usuario
+     * @param user 
+     * @returns 
+     */
+    updateRole(user:any):Observable<any>{
+        let data=`json=${JSON.stringify(user)}`;
+        let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        return this._http.put(`${environment.url}/users/${user.id}/update-role`, data, {headers:header});
+    }
+    
+    /**
+     * Función que banea a un usuario
+     * @param id 
+     * @returns 
+     */
+    ban(id:number):Observable<any>{
+        let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        return this._http.put(`${environment.url}/users/${id}/ban`, {headers:header});
     }
 
     /**

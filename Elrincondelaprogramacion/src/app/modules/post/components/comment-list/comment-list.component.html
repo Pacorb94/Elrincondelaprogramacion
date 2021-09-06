@@ -1,45 +1,40 @@
 <h3 class="text-center">Comentarios</h3>
 <!--Si hay comentarios-->
-<div *ngIf="comments">
+<div *ngIf="comments.length">
     <flash-messages></flash-messages> 
     <div *ngFor="let comment of comments" class="comment mt-4 text-justify">
-        <div>  
-            <!--Si hay foto de perfil-->
-            <img *ngIf="comment.user.profileImage" [src]="profileImageUrl+comment.user.profileImage"
-                alt="Imagen de perfil" class="profileImage mr-1">
-            <img *ngIf="!comment.user.profileImage" 
-                src="../../../../../assets/images/no-profile-image.png"
-                alt="Imagen de perfil" class="profileImage mr-1">
-            <a [routerLink]="['/user-details', comment.user.id]" 
-                class="badge badge-primary rounded-pill mr-2">
-                <h6>{{comment.user.nick}}</h6>
-            </a>
-            <span class="badge rounded-pill badge-secondary mr-2">
-                Publicado {{comment.createdAt|amLocale:'es'|amCalendar}}
-            </span>
-            <span class="badge rounded-pill badge-secondary">
-                Modificado {{comment.updatedAt|amLocale:'es'|amCalendar}}
-            </span>
-            <button type="button" *ngIf="user?.id==comment.user.id&&!comment.inadequate" 
-                (click)="showUpdateForm(comment.content)" class="btn btn-success button editButton ml-5">
-                <img src="../../../../../../../assets/images/edit-icon.png" class="w-25"
-                    alt="Imagen de modificar comentario">
-                    Editar
-            </button>
-            <!--Botón que abre el modal si eres el creador del comentario, 
-            la directiva "attr.data-target" es para llamar a un elemento HTML con ese id y 
-            además almacena un dato-->
-            <button type="button" *ngIf="user?.id==comment.user.id&&!comment.inadequate" class="btn btn-danger button float-right" 
-                data-toggle="modal" [attr.data-target]="'#delete'+comment.id">
-                <img src="../../../../../../../assets/images/delete-icon.png" class="w-25"
-                    alt="Imagen de borrar comentario">
-                Borrar
-            </button>
-            <!-- Modal, el id irá sin # y con el id del vídeo -->
+        <div class="row">  
+            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                <!--Si hay foto de perfil-->
+                <img *ngIf="comment.user.profileImage" [src]="profileImageUrl+comment.user.profileImage"
+                    alt="Imagen de perfil" class="profileImage mr-1">
+                <img *ngIf="!comment.user.profileImage" 
+                    src="../../../../../assets/images/no-profile-image.png"
+                    alt="Imagen de perfil" class="profileImage mr-1">
+                <a [routerLink]="['/user-details', comment.user.id]" 
+                    class="badge badge-primary rounded-pill mr-2">
+                    <h6>{{comment.user.nick}}</h6>
+                </a>
+                <span class="badge rounded-pill badge-secondary mr-2">
+                    Publicado {{comment.createdAt|amLocale:'es'|amCalendar}}
+                </span>
+                <edit-comment [comment]="comment" [user]="user"></edit-comment>
+                <!--Botón que abre el modal si eres el creador del comentario, 
+                la directiva "attr.data-target" es para llamar a un elemento HTML con ese id y 
+                además almacena un dato-->
+                <button type="button" *ngIf="user?.id==comment.user.id&&!comment.inadequate" 
+                    class="btn btn-danger button float-right" 
+                    data-toggle="modal" [attr.data-target]="'#delete'+comment.id">
+                    <img src="../../../../../../../assets/images/delete-icon.png" class="w-25"
+                        alt="Imagen de borrar comentario">
+                    Borrar
+                </button>
+            </div>            
+            <!-- Modal, el id irá sin # y con el id del comentario-->
             <div id="{{'delete'+comment.id}}" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <!-- Modal content-->
-                    <div class="modal-content">
+                    <div class="modal-content modal-dark-mode">
                         <div class="modal-header">
                             <h4 class="modal-title">¿Quieres borrar el comentario?</h4>
                             <button type="button" class="close" data-dismiss="modal">
@@ -67,19 +62,9 @@
         <p #commentContent id="commentContent">
             {{!comment.inadequate?comment.content:'El comentario está marcado como inadecuado'}}
         </p>
-        <!--La propiedad "formGroup" asocia este formulario con una propiedad del componente. 
-        En el evento ubmit le pasamos los valores de los campos-->
-        <form [formGroup]="form" [hidden]="hiddenForm" class="text-center" hidden>
-            <label for="content">Modifica tu comentario</label><br>
-            <textarea formControlName="content" name="content" id="content" class="w-50 form-control">{{comment.content}}
-            </textarea>
-            <span *ngIf="checkTouched(form.get('content'))" class="invalid-feedback d-block">
-                {{wrongValidationMessage(form.get('content'), 'contenido')}}
-            </span>
-            <!--El botón estará desactivado si no es correcto el formulario-->
-            <input type="button" value="Aceptar" class="btn btn-success" [disabled]="!form.valid" 
-                (click)="update()">
-        </form>
+        <!--Si es el usuario con rol admin y el comentario no es inadecuado-->
+        <input type="button" *ngIf="user.roles[0]=='ROLE_ADMIN'&&!comment.inadequate" 
+            value="Comentario inadecuado" class="btn btn-info" (click)="markAsInadequate(comment.id)">
         <hr>
     </div>
     <br>
@@ -87,24 +72,25 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
             <li class="page-item">
-                <a class="page-link" [routerLink]="['/posts', post.title, 'page', prevPage]" routerLinkActive="btn-info"
-                    aria-label="Previous">
+                <a class="page-link" [routerLink]="['/posts', post.title, 'page', prevPage]" 
+                    routerLinkActive="btn-info" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <!--Hacemos tantos enlaces como páginas haya-->
             <li *ngFor="let page of totalPages" class="page-item">
-                <a class="page-link" [routerLink]="['/posts', post.title, 'page', page]" routerLinkActive="btn-info">
+                <a class="page-link" [routerLink]="['/posts', post.title, 'page', page]" 
+                    routerLinkActive="btn-info">
                     {{page}}
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" [routerLink]="['/posts', post.title, 'page', nextPage]" routerLinkActive="btn-info"
-                    aria-label="Next">
+                <a class="page-link" [routerLink]="['/posts', post.title, 'page', nextPage]" 
+                    routerLinkActive="btn-info" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
         </ul>
-        <!--Fin de la paginacíon-->
+    <!--Fin de la paginacíon-->
     </nav>
 </div>

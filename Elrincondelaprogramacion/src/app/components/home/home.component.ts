@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PostService } from '../../modules/post/services/post.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/modules/user/service/user.service';
+import { ActivatedRoute } from '@angular/router';
 import { NgcCookieConsentService } from 'ngx-cookieconsent';
 import { environment } from 'src/environments/environment';
 
@@ -12,11 +13,13 @@ import { environment } from 'src/environments/environment';
 })
 export class HomeComponent implements OnInit, OnDestroy{
     pageTitle: string;
+    userLoggedIn:any;
     posts: any[];
     category: any;
     loading: boolean;
     imageUrl:string;
     noPosts:any;
+    roleChanged:boolean;
     subscription:Subscription;
     //------Paginación-------
     page: any;
@@ -24,12 +27,14 @@ export class HomeComponent implements OnInit, OnDestroy{
     nextPage: number;
     totalPages: number[];
 
-    constructor(private _postService: PostService, private _router: Router, 
+    constructor(private _postService: PostService, private _userService:UserService, 
     private _route: ActivatedRoute, private ccService: NgcCookieConsentService) { 
         this.pageTitle = 'Posts';
         this.posts=[];
+        this.userLoggedIn=this._userService.getUserLoggedIn();
         this.loading = true;
         this.imageUrl=`${environment.url}/posts-images/`;
+        this.roleChanged=false;
         this.subscription=new Subscription();
         this.prevPage = 0;
         this.nextPage = 0;
@@ -38,6 +43,7 @@ export class HomeComponent implements OnInit, OnDestroy{
 
     ngOnInit(): void {
         this.getRouteParams();
+        this.checkRoleChanged();
     }
 
     ngOnDestroy(){
@@ -90,9 +96,7 @@ export class HomeComponent implements OnInit, OnDestroy{
                     this.noPosts=true;
                 }
             },
-            error => {
-                this._router.navigate(['']);
-            }
+            error => {}
         );
     }
 
@@ -112,9 +116,7 @@ export class HomeComponent implements OnInit, OnDestroy{
                     this.noPosts=true;
                 }
             },
-            error => {
-                this._router.navigate(['']);
-            }
+            error => {}
         );
     }
 
@@ -140,5 +142,19 @@ export class HomeComponent implements OnInit, OnDestroy{
         } else {
             this.nextPage = totalPages;
         }
+    }
+    
+    /**
+     * Función que comprueba si se cambió el rol al usuario
+     */
+    checkRoleChanged(){
+        if (localStorage.hasOwnProperty('updatedRole')) {
+            let userLoggedIn=this._userService.getUserLoggedIn();
+            //Si está logueado el usuario que le hemos cambiado el rol
+            if (userLoggedIn&&localStorage.getItem('updatedRole')==userLoggedIn.nick) {
+                this.roleChanged=true;
+                localStorage.removeItem('updatedRole');
+            }
+        }  
     }
 }

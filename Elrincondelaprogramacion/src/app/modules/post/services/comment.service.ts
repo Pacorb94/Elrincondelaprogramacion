@@ -16,7 +16,8 @@ export class CommentService {
     }
 
     /**
-     * Función que actualiza el valor del BehaviourSubject
+     * Función que actualiza la lista de comentarios cuando
+     * se crea, modifica o borra un comentario
      * @param value 
      */
     setUpdatedCommentList$(value:boolean){
@@ -56,14 +57,20 @@ export class CommentService {
     
     /**
      * Función que marca como inadecuado un comentario
-     * @param comment
+     * @param id
      * @returns 
      */
-    inadequate(comment:any):Observable<any>{
-        let data=`json=${JSON.stringify(comment)}`;
+    inadequate(id:number):Observable<any>{
         let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return this._http.put(`${environment.url}/comments/${comment.id}/inadequate`, data, 
-                            {headers:header});
+        return this._http.put(`${environment.url}/comments/${id}/inadequate`, {headers:header});
+    }
+    
+    /**
+     * Función que obtiene los comentarios inadecuados
+     * @returns 
+     */
+    getInadequates():Observable<any>{
+        return this._http.get(`${environment.url}/comments/inadequates`);
     }
     
     /**

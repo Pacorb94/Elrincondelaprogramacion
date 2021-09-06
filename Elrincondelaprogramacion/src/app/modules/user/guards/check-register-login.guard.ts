@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { UserService } from '../service/user.service';
 
-@Injectable()
+@Injectable({
+    providedIn:'root'
+})
 export class CheckRegisterLoginGuard implements CanActivate {
     private user:any;
 

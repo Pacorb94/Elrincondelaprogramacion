@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BannedUsersComponent } from './banned-users.component';
+import { DarkModeComponent } from './dark-mode.component';
 
-describe('BannedUsersComponent', () => {
-  let component: BannedUsersComponent;
-  let fixture: ComponentFixture<BannedUsersComponent>;
+describe('DarkModeComponent', () => {
+  let component: DarkModeComponent;
+  let fixture: ComponentFixture<DarkModeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BannedUsersComponent ]
+      declarations: [ DarkModeComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BannedUsersComponent);
+    fixture = TestBed.createComponent(DarkModeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

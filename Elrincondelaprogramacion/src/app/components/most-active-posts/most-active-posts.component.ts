@@ -1,9 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PostService } from '../../modules/post/services/post.service';
-import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-
 
 @Component({
 	selector: 'most-active-posts',
@@ -17,7 +15,7 @@ export class MostActivePostsComponent implements OnInit, OnDestroy {
 	noPosts:any;
 	postsSubscription:Subscription;
 
-	constructor(private _postService:PostService, private _router:Router) {
+	constructor(private _postService:PostService) {
 		this.loading=true;
 		this.imageUrl=`${environment.url}/posts-images/`;
 		this.postsSubscription=new Subscription();
@@ -40,19 +38,14 @@ export class MostActivePostsComponent implements OnInit, OnDestroy {
                 //Si hay posts
                 if (response.length) {
                     this.loading = false;
-					/*Ordenamos de forma descendente los posts por número de comentarios y luego
-					nos quedamos con los 3 primeros posts*/
-					this.posts=response.sort(
-						(a:any, b:any)=>parseInt(b.comments.length)-parseInt(a.comments.length)
-					).slice(0, 3);
+					//Nos quedamos con los 3 primeros posts
+					this.posts=response.slice(0, 3);
                 } else {
                     this.loading = true;
                     this.noPosts=true;
                 }
             },
-            error => {
-                this._router.navigate(['']);
-            }
+            error => {}
         );
     }
 }

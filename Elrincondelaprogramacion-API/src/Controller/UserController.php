@@ -8,10 +8,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
+use App\Entity\Post;
 use App\Entity\Comment;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
 
 class UserController extends AbstractController
 {
@@ -122,12 +124,12 @@ class UserController extends AbstractController
                 if ($user) {
                     //Con true decodificamos la petición a un array
                     $decodedRequest=json_decode($request, true);
-                    $decodedRequest['roles']=trim($decodedRequest['roles']);                      
+                    $decodedRequest['roles'][0]=trim($decodedRequest['roles'][0]);                      
                     /*?: indica que $decodedRequest['roles'] si tiene valor será ese 
                     sino $user->getRoles()*/
                     $decodedRequest['roles']=$decodedRequest['roles']?:$user->getRoles();
                     if ($decodedRequest['roles']) {
-                        $user->setRole([$decodedRequest['role']]);
+                        $user->setRoles($decodedRequest['roles']);
                         $user->setUpdatedAt(new \DateTime('now'));
                         $user->execute($this->em, $user, 'update');                
                         return $this->json($user);          
@@ -205,6 +207,31 @@ class UserController extends AbstractController
     }
 
     /**
+     * Función que obtiene los posts del usuario
+     * @param $id
+     * @return JsonResponse
+     */
+    public function getPosts($id)
+    {
+        if ($this->idValidation($id)) {
+            $user=$this->userRepo->find($id);
+            //Si existe
+            if ($user) {
+                $postRepo=$this->getDoctrine()->getRepository(Post::class);
+                $posts=$postRepo->findBy(['user'=>$id], ['id'=>'DESC']);
+                /*Debido a que dentro de los posts hay referencias a otros modelos
+                dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+                otros modelos*/
+                return $this->json($posts, 200, [], [
+                    ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+                ]);
+            }
+            return $this->json(['message'=>'User not found'], 404);
+        }
+        return $this->json(['message'=>'Wrong id'], 400);
+    }
+
+    /**
      * Función que obtiene los comentarios del usuario
      * @param $id
      * @return JsonResponse
@@ -215,7 +242,7 @@ class UserController extends AbstractController
             $user=$this->userRepo->find($id);
             if ($user) {
                 $commentRepo=$this->em->getRepository(Comment::class);
-                $comments=$commentRepo->findBy(['user'=>$id]);
+                $comments=$commentRepo->findBy(['user'=>$id], ['id'=>'DESC']);
                 /*Debido a que dentro de los comentarios hay referencias a otros modelos
                 dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
                 otros modelos*/
@@ -229,40 +256,41 @@ class UserController extends AbstractController
     }
 
     /**
+     * Función que obtiene los usuarios
+     * @return JsonResponse
+     */
+    public function getUsers()
+    {
+        $users=$this->userRepo->findBy([], ['id'=>'DESC']);
+        return $this->json($users);
+    }
+
+    /**
      * Función que obtiene los roles
      * @return JsonResponse
      */
     public function getRoles()
     {
-        return $this->json(['ROLE_WRITER', 'ROLE_READER']);
+        return $this->json(['ROLE_ADMIN', 'ROLE_WRITER', 'ROLE_READER']);
     }
 
     /**
      * Función que banea a un usuario
      * @param $id
-     * @param $request
      * @return JsonRespose
      */
-    public function ban($id, Request $request)
+    public function ban($id)
     {
         if ($this->idValidation($id)) {
-            $request=$request->get('json', true);
-            if ($request) {
-                $decodedRequest=json_decode($request, true);
-                $decodedRequest['ban']=trim($decodedRequest['ban']);
-                if ($decodedRequest['ban']=='yes') {
-                    $user=$this->userRepo->find($id);
-                    //Si existe
-                    if ($user) {
-                        $user->setBanned(true);
-                        $user->execute($this->em, $user, 'update');
-                        return $this->json($user);
-                    }
-                    return $this->json(['message'=>'User not found'], 404);
-                }
-                return $this->json(['message'=>'You must be send yes as value'], 400); 
+            $user=$this->userRepo->find($id);
+            //Si existe
+            if ($user) {
+                $user->setBanned(true);
+                $user->setUpdatedAt(new \DateTime('now'));
+                $user->execute($this->em, $user, 'update');
+                return $this->json($user);
             }
-            return $this->json(['message'=>'Wrong json'], 400);  
+            return $this->json(['message'=>'User not found'], 404);          
         }
         return $this->json(['message'=>'Wrong id'], 400);
     }

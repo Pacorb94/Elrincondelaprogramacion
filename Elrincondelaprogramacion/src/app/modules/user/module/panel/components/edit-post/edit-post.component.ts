@@ -39,6 +39,8 @@ export class EditPostComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(){
+        //Si el tamaño de la ventana es menor o igual a 575
+        if (window.outerWidth<=parseInt('575')) window.scroll(0, 550);
         this.getCategories();
         this.getRoutePost();
     }
@@ -74,20 +76,27 @@ export class EditPostComponent implements OnInit, OnDestroy {
             response=>{
                 if (response) {
                     let user=this._userService.getUserLoggedIn();
-                    //Si el post es del usuario
+                    //Si el post es del usuario que lo va a modificar
                     if (response.user.id==user.id) {
                         this.post=response;
+                        this.setFormValues();
                     }else{
                         this._router.navigate(['']);
                     }                   
-                }else{
-                    this._router.navigate(['']);
-                }        
+                }       
             },
             error=>{
                 this._router.navigate(['']);
             }
         );
+    }
+    
+    /**
+     * Función que establece los valores de los campos del formulario
+     */
+    setFormValues(){
+        this.form.get('title')?.setValue(this.post.title);
+        this.form.get('content')?.setValue(this.post.content);   
     }
 
     /**
@@ -112,13 +121,15 @@ export class EditPostComponent implements OnInit, OnDestroy {
                 if (response) {
                     this.goodEdit=true;
                     this.post=response;
+                    //Si el tamaño de la ventana es menor o igual a 575
+                    window.outerWidth<=parseInt('575')?window.scroll(0, 550):window.scroll(0, 50);
                 }else{
-                    this.showFlashMessage('No has editado el post correctamente',
-                        'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
+                    this.goodEdit=false;
                 }
             },
             error=>{
-                this.showFlashMessage('No has editado el post correctamente',
+                window.outerWidth<=parseInt('575')?window.scroll(0, 550):window.scroll(0, 50);
+                this.showFlashMessage('No has editado el post',
                     'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
             }
         );

@@ -17,6 +17,7 @@ export class WatchPostComponent implements OnInit, OnDestroy {
     loading:boolean;
     postSubscription:Subscription;
     postImageSubscription:Subscription;
+    inadequateSubscription:Subscription;
     
     constructor(private _postService:PostService, private _userService:UserService,
     private _route:ActivatedRoute, private _router:Router, private _sanitizer:DomSanitizer) {
@@ -24,6 +25,7 @@ export class WatchPostComponent implements OnInit, OnDestroy {
         this.loading=true;
         this.postSubscription=new Subscription();
         this.postImageSubscription=new Subscription();
+        this.inadequateSubscription=new Subscription();
     }
 
     ngOnInit(): void {
@@ -33,6 +35,7 @@ export class WatchPostComponent implements OnInit, OnDestroy {
     ngOnDestroy(){
         this.postSubscription.unsubscribe();
         this.postImageSubscription.unsubscribe();
+        this.inadequateSubscription.unsubscribe();
     }
 
     /**
@@ -89,5 +92,19 @@ export class WatchPostComponent implements OnInit, OnDestroy {
         }else{
             this.postImage='../../../../../assets/images/no-post-image.jpg';
         }
+    }
+    
+    /**
+     * Función que marca como inadecuado un post
+     * @param postId 
+     */
+    markAsInadequate(postId:number){
+        this.inadequateSubscription=this._postService.inadequate(postId).subscribe(
+            response=>{
+                //Actualizamos la vista sin recargarla
+                if (response) this.getRouteParams();         
+            },
+            error=>{}
+        );
     }
 }

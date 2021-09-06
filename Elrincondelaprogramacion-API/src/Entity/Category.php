@@ -115,6 +115,7 @@ class Category implements JsonSerializable
         return [
             'id'=>$this->id,
             'name'=>$this->name,
+            'user'=>$this->user,
             'createdAt'=>$this->createdAt,
             'updatedAt'=>$this->updatedAt
         ];

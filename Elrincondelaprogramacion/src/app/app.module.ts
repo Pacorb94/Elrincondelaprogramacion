@@ -9,13 +9,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpRequestInterceptor } from './interceptor/HttpRequestIncerceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MomentModule } from 'angular2-moment';
+import { DarkModeComponent } from './components/dark-mode/dark-mode.component';
 import { MyFooterComponent } from './components/my-footer/my-footer.component';
 import { NgcCookieConsentModule } from 'ngx-cookieconsent';
 import { cookieConfig } from './cookie.conf';
 import { CookiesPolicyComponent } from './components/cookies-policy/cookies-policy.component';
 import { FlashMessagesModule } from 'angular2-flash-messages';
-import { PostModule } from './modules/post/post.module';
 import { CategoryModule } from './modules/category/category.module';
+import { PostsFinderComponent } from './components/posts-finder/posts-finder.component';
 
 @NgModule({
     declarations: [
@@ -24,13 +25,14 @@ import { CategoryModule } from './modules/category/category.module';
         HomeComponent,
         MostActivePostsComponent,
         MyFooterComponent,
-        CookiesPolicyComponent
+        DarkModeComponent,
+        CookiesPolicyComponent,
+        PostsFinderComponent
     ],
     //Para que funcionen los componentes de otros módulos debemos importar el módulo
     imports: [
         BrowserModule,
         AppRoutingModule,
-        PostModule,
         CategoryModule,
         ReactiveFormsModule,
         HttpClientModule,

@@ -31,15 +31,6 @@ export class PostService {
     getPosts(page:any=1):Observable<any>{
         return this._http.get(`${environment.url}/posts?page=${page}`);
     }
-    
-    /**
-     * Función que obtiene los posts de un usuario
-     * @param id 
-     * @returns 
-     */
-    getUserPosts(id:number):Observable<any>{
-        return this._http.get(`${environment.url}/posts/users/${id}`);
-    }
 
     /**
      * Función que obtiene un post
@@ -87,6 +78,16 @@ export class PostService {
     getMostActivePosts():Observable<any>{
         return this._http.get(`${environment.url}/posts/most-actives`);
     }
+    
+    /**
+     * Función que obtiene posts por el título
+     * @param title
+     * @param page
+     * @returns 
+     */
+    getPostsByTitle(title:string, page:number):Observable<any>{
+        return this._http.get(`${environment.url}/search-posts/${title}?page=${page}`);
+    }
 
     /**
      * Función que modifica un post
@@ -102,13 +103,19 @@ export class PostService {
     /**
      * Función que marca como inadecuado un post
      * @param id 
-     * @param inadequate 
      * @returns 
      */
-    inadequate(id:number, inadequate:string):Observable<any>{
-        let data=`json=${inadequate}`;
+    inadequate(id:number):Observable<any>{
         let header=new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return this._http.put(`${environment.url}/posts/${id}/inadequate`, data, {headers:header});
+        return this._http.put(`${environment.url}/posts/${id}/inadequate`, {headers:header});
+    }
+
+    /**
+     * Función que obtiene los posts inadecuados
+     * @returns 
+     */
+    getInadequates():Observable<any>{
+        return this._http.get(`${environment.url}/postss/inadequates`);
     }
 
     /**

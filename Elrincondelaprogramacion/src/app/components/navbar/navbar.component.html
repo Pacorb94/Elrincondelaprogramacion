@@ -17,7 +17,7 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Categorias
                 </a>
-                <div id="categoriesDropdown" class="dropdown-menu pr-5 mr-5 w-25" aria-labelledby="navbarDropdown">       
+                <div id="categoriesDropdown" class="dropdown-menu pr-5 mr-5" aria-labelledby="navbarDropdown">       
                     <a *ngFor="let category of categories" class="dropdown-item" 
                         [routerLink]="['/posts/categories', category.name]">{{category.name}}
                     </a>        
@@ -27,13 +27,15 @@
             <li *ngIf="user" class="nav-item active">
                 <a class="nav-link active" routerLink="user-panel">Panel de usuario</a>
             </li>
+            <li class="nav-item"><dark-mode></dark-mode></li>
             <!--Buscador-->
             <li class="nav-item ml-5">
                 <form [formGroup]="form" class="d-flex form-inline ml-sm-10 my-2 my-lg-0 ml-5">
                     <input type="search" formControlName="postsSearchText" class="form-control" 
-                        placeholder="Busca post o usuario" aria-label="Search">
+                        placeholder="Busca un post" aria-label="Search">
                     <input type="button" (click)="searchPosts(form.get('postsSearchText')?.value)" 
-                        value="Buscar post" class="btn btn-outline-success my-2 my-sm-0">
+                        value="Buscar post" class="btn btn-success my-2 my-sm-0" 
+                        [disabled]="!form.valid">
                 </form>
             <!--Fin del buscador-->
             </li>

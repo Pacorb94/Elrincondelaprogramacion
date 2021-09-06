@@ -33,14 +33,24 @@ getUser:
     controller: App\Controller\UserController::getDetails
     methods: GET
 
+getUserPosts:
+    path: /users/{id}/posts
+    controller: App\Controller\UserController::getPosts
+    methods: GET
+
 getUserComments:
     path: /users/{id}/comments
     controller: App\Controller\UserController::getComments
     methods: GET
 
+getUsers:
+    path: /users
+    controller: App\Controller\UserController::getUsers
+    methods: GET
+
 getRoles:
     path: /roles
-    controller: App\Controller\UserController:getRoles
+    controller: App\Controller\UserController::getRoles
     methods: GET
 
 banUser:
@@ -110,14 +120,14 @@ getMostActivePosts:
     controller: App\Controller\HomeController::getMostActivePosts
     methods: GET
 
-getUserPosts:
-    path: /posts/users/{userId}
-    controller: App\Controller\PostController::getByUser
-    methods: GET
-
 getPostsByCategory:
     path: /posts/categories/{categoryName}
     controller: App\Controller\HomeController::getPostsByCategory
+    methods: GET
+
+getPostsByTitle:
+    path: /search-posts/{title}
+    controller: App\Controller\HomeController::getPostsByTitle
     methods: GET
 
 getPostDetails:
@@ -136,9 +146,14 @@ deletePost:
     methods: DELETE
 
 indequatePost:
-    path: /posts/{title}/inadequate
+    path: /posts/{id}/inadequate
     controller: App\Controller\PostController::inadequate
     methods: PUT
+
+getInadequatePosts:
+    path: /postss/inadequates
+    controller: App\Controller\PostController::getInadequates
+    methods: GET
 
 #Comment
 createComment:
@@ -155,6 +170,11 @@ indequateComment:
     path: /comments/{id}/inadequate
     controller: App\Controller\CommentController::inadequate
     methods: PUT
+
+getInadequateComments:
+    path: /comments/inadequates
+    controller: App\Controller\CommentController::getInadequates
+    methods: GET
 
 deleteComment:
     path: /comments/{id}/delete

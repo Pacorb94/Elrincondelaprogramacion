@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { CategoryService } from '../../../../../category/service/category.service';
-import { Router } from '@angular/router';
+import { UserService } from 'src/app/modules/user/service/user.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
+
 
 @Component({
     selector: 'category-list',
@@ -10,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
     categories:any[]; 
+    user:any;
     loading:boolean;
     noCategories:any;
     categoriesSubscription:Subscription;
@@ -18,8 +21,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     dtOptions:DataTables.Settings;
     dtTrigger:Subject<any>;
 
-    constructor(private _categoryService:CategoryService, private _router:Router) {
+    constructor(private _categoryService:CategoryService, private _userService:UserService,
+    private _flashMessagesService:FlashMessagesService) {
         this.categories=[];
+        this.user=this._userService.getUserLoggedIn();
         this.loading=true;
         this.categoriesSubscription=new Subscription();
         this.deleteSubscription=new Subscription();
@@ -28,11 +33,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.dtOptions = {
-            pagingType:'full_numbers',
-            pageLength:5,
-            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'}
-        };
+        //Si el ancho de la pantalla es menor o igual a 575
+        if (window.outerWidth<=parseInt('575')) window.scroll(0, 550);
+        this.loadTableConfiguration();
         this.getCategories();
     }
 
@@ -40,6 +43,18 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         this.categoriesSubscription.unsubscribe();
         this.deleteSubscription.unsubscribe();
         this.dtTrigger.unsubscribe();
+    }
+    
+    /**
+     * Función que carga la configuración de la tabla
+     */
+    loadTableConfiguration(){
+        this.dtOptions = {
+            pagingType:'full_numbers',
+            pageLength:5,
+            language:{url:'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'},
+            order:[]
+        };
     }
 
     /**
@@ -74,13 +89,33 @@ export class CategoryListComponent implements OnInit, OnDestroy {
             response=>{
                 if (response) {
                     this.getCategories(true);   
-                    this.noCategories=true;            
-                }else{
-                    this._router.navigate(['/user-panel/category-list']);
-                }         
+                    this.noCategories=true; 
+                    this._categoryService.setUpdateNavbarCategoryList$(true);
+                    //Si el ancho de la pantalla es menor o igual a 575
+                    window.outerWidth<=parseInt('575')?window.scroll(0, 600):window.scroll(0, 50);                 
+                    this.showFlashMessage('Has borrado la categoría',
+                        'alert alert-success col-md-5 mt-3 mx-auto text-center', 3000);           
+                }        
             },
             error=>{
-                this._router.navigate(['/user-panel/category-list']);
+                window.outerWidth<=parseInt('575')?window.scroll(0, 600):window.scroll(0, 50); 
+                this.showFlashMessage('No has borrado la categoría',
+                    'alert alert-danger col-md-5 mt-3 mx-auto text-center', 3000);
+            }
+        );
+    }
+
+    /**
+     * Función que muestra un mensaje flash
+     * @param message
+     * @param cssClass
+     * @param timeout
+     */
+    showFlashMessage(message:string, cssClass:string, timeout:number){
+        this._flashMessagesService.show(message,
+            {
+                cssClass:cssClass,
+                timeout:timeout
             }
         );
     }

@@ -13,11 +13,13 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class HomeController extends AbstractController
 {
+    private $postRepo;
     private $categoryRepo;
     private $paginator;
     private $em;
 
-    public function __construct(EntityManagerInterface $entityManager, PaginatorInterface $paginator) {    
+    public function __construct(EntityManagerInterface $entityManager, PaginatorInterface $paginator) { 
+        $this->postRepo=$entityManager->getRepository(Post::class);   
         $this->categoryRepo=$entityManager->getRepository(Category::class);
         $this->paginator=$paginator;
         $this->em=$entityManager;
@@ -66,6 +68,23 @@ class HomeController extends AbstractController
     }
 
     /**
+     * Función que obtiene todos los posts por el título
+     * @param $request
+     * @return JsonResponse
+     */
+    public function getPostsByTitle($title, Request $request)
+    {
+        $title=trim($title);
+        $posts=$this->paginate($request, 'Post', "where m.title like '%$title%' and m.inadequate=0");
+        /*Debido a que dentro de los posts hay una referencia a otros modelos
+        dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
+        otros modelos*/
+        return $this->json($posts, 200, [], [
+            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function(){}
+        ]);
+    }
+
+    /**
      * Función que obtiene los objetos paginados
      * @param $request
      * @param $modelName
@@ -100,8 +119,11 @@ class HomeController extends AbstractController
      */
     public function getMostActivePosts()
     {
-        $postRepo=$this->em->getRepository(Post::class);
-        $posts=$postRepo->findBy(['inadequate'=>false]);   
+        $posts=$this->postRepo->findBy(['inadequate'=>false]);   
+        //Ordenamos los posts de forma descendente por el número de comentarios
+        usort($posts, function ($post1, $post2) {
+            return sizeof($post2->getComments())<=>sizeof($post1->getComments());
+        });
         /*Debido a que dentro de los posts hay una referencia a otros modelos
         dará error por lo que hay que decirle a Symfony qué hacer cuando vea 
         otros modelos*/
@@ -110,23 +132,13 @@ class HomeController extends AbstractController
         ]);
     }
 
-    public function array_sort_by_column(&$arr, $col, $dir = SORT_DESC) {
-        $sort_col = array();
-        foreach ($arr as $key => $row) {
-            $sort_col[$key] = $row[$col];
-        }
-    
-        array_multisort($sort_col, $dir, $arr);
-    }
-    
-
     /**
      * Función que obtiene las categorías
      * @return JsonResponse
      */
     public function getCategories()
     {
-        $categories=$this->categoryRepo->findAll();
+        $categories=$this->categoryRepo->findBy([], ['id'=>'DESC']);
         return $this->json($categories);
     }
 }

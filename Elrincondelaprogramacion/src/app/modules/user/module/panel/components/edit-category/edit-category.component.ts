@@ -1,6 +1,6 @@
-import { Category } from '../../../../../../models/Category';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CategoryService } from '../../../../../category/service/category.service';
+import { UserService } from 'src/app/modules/user/service/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -12,16 +12,15 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./edit-category.component.scss']
 })
 export class EditCategoryComponent implements OnInit, OnDestroy {
-    pageTitle:string;
     category:any;
     form:FormGroup;
     goodEdit:boolean;
     categorySubscription:Subscription;
     updateSubscription:Subscription;
 
-    constructor(private _categoryService:CategoryService , private _route:ActivatedRoute, 
-    private _router:Router, private _flashMessagesService:FlashMessagesService) {
-        this.pageTitle='Editar categoría';      
+    constructor(private _categoryService:CategoryService, private _userService:UserService, 
+    private _route:ActivatedRoute, private _router:Router, 
+    private _flashMessagesService:FlashMessagesService) {      
         this.form=new FormGroup({
             name:new FormControl('', Validators.required)
         });
@@ -31,6 +30,8 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(){
+        //Si el tamaño de la ventana es menor o igual a 575
+        if (window.outerWidth<=parseInt('575')) window.scroll(0, 550);
         this.getRouteCategory();
     }
 
@@ -62,16 +63,26 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
     getCategory(name:string){
         this.categorySubscription=this._categoryService.getCategory(name).subscribe(
             response=>{
-                if (response) {
-                    this.category=response;                         
+                let userLoggedIn=this._userService.getUserLoggedIn();
+                //Si la categoría es del usuario que la va a modificar
+                if (response&&response.user.id==userLoggedIn.id) {
+                    this.category=response;    
+                    this.setFormValue();                     
                 }else{
                     this._router.navigate(['']);
-                }        
+                }      
             },
             error=>{
                 this._router.navigate(['']);
             }
         );
+    }
+
+    /**
+     * Función que establece el valor del campo del formulario
+     */
+    setFormValue(){
+        this.form.get('name')?.setValue(this.category.name);   
     }
 
     /**
@@ -83,15 +94,18 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
             response=>{
                 if (response) {
                     this.goodEdit=true;
+                    this._categoryService.setUpdateNavbarCategoryList$(true);
                     this.category=response;
+                    //Si el tamaño de la ventana es menor o igual a 575
+                    if (window.outerWidth<=parseInt('575')) window.scroll(0, 550);
                 }else{
-                    this.showFlashMessage('No has editado la categoría correctamente',
-                        'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
+                    this.goodEdit=false;
                 }
             },
             error=>{
-                this.showFlashMessage('No has editado la categoría correctamente',
-                    'alert alert-danger col-md-5 mt-3 mx-auto', 1500);
+                if (window.outerWidth<=parseInt('575')) window.scroll(0, 550);
+                this.showFlashMessage('No has editado la categoría',
+                    'alert alert-danger col-md-5 mt-3 mx-auto', 3000);
             }
         );
     }
