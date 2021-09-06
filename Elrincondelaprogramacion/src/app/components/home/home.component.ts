@@ -20,7 +20,8 @@ export class HomeComponent implements OnInit, OnDestroy{
     imageUrl:string;
     noPosts:any;
     roleChanged:boolean;
-    subscription:Subscription;
+    postsSubscription:Subscription;
+    userSubscription:Subscription;
     //------Paginación-------
     page: any;
     prevPage: number;
@@ -31,23 +32,40 @@ export class HomeComponent implements OnInit, OnDestroy{
     private _route: ActivatedRoute, private ccService: NgcCookieConsentService) { 
         this.pageTitle = 'Posts';
         this.posts=[];
-        this.userLoggedIn=this._userService.getUserLoggedIn();
         this.loading = true;
         this.imageUrl=`${environment.url}/posts-images/`;
         this.roleChanged=false;
-        this.subscription=new Subscription();
+        this.postsSubscription=new Subscription();
+        this.userSubscription=new Subscription();
         this.prevPage = 0;
         this.nextPage = 0;
         this.totalPages = [];
     }
 
     ngOnInit(): void {
+        this.checkUserLoggedIn();
         this.getRouteParams();
         this.checkRoleChanged();
     }
 
     ngOnDestroy(){
-        this.subscription.unsubscribe();
+        this.postsSubscription.unsubscribe();
+        this.userSubscription.unsubscribe();
+    }
+    
+    /**
+     * Función que comprueba si el usuario ha iniciado sesión
+     */
+    checkUserLoggedIn(){
+        this._userService.getUserLoggedIn$().subscribe(
+            user=>{
+                if (user) {
+                    this.userLoggedIn=user;
+                }else{
+                    this.userLoggedIn=null;
+                }
+            }
+        );
     }
 
     /**
@@ -83,7 +101,7 @@ export class HomeComponent implements OnInit, OnDestroy{
      * Función que obtiene los posts por categoría
      */
     getPostsByCategory() {
-        this.subscription=this._postService.getPostsByCategory(this.page, this.category).subscribe(
+        this.postsSubscription=this._postService.getPostsByCategory(this.page, this.category).subscribe(
             response => {
                 //Si hay posts
                 if (response.Posts.length) {
@@ -104,7 +122,7 @@ export class HomeComponent implements OnInit, OnDestroy{
      * Función que obtiene los posts
      */
     getPosts() {
-        this.subscription=this._postService.getPosts(this.page).subscribe(
+        this.postsSubscription=this._postService.getPosts(this.page).subscribe(
             response => {
                 //Si hay posts
                 if (response.Posts.length) {
