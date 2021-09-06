@@ -22,15 +22,15 @@ export class CookiesPolicyComponent implements OnInit {
     loadCookiesPolicies(){
         this.cookiesPolicies=[
             {
-                'name':'token', 
-                'duration':'1 año', 
-                'description':`Permite al usuario identificarse y realizar 
+                name:'token', 
+                duration:'1 año', 
+                description:`Permite al usuario identificarse y realizar 
                                 acciones sólo para usuarios identificados`
             },
             {
-                'name':'cookieconsent_status', 
-                'duration':'1 año', 
-                "description":`Permite saber si el usuario aceptó 
+                name:'cookieconsent_status', 
+                duration:'1 año', 
+                description:`Permite saber si el usuario aceptó 
                                 el consentimiento de las cookies`
             }
         ];
