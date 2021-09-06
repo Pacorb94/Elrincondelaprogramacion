@@ -94,14 +94,14 @@
             "production": {
               "browserTarget": "Elrincondelaprogramacion:build:production",
               "ssl": true,
-              "sslCert": "",
-              "sslKey": ""
+              "sslCert": "/etc/ssl/certificates/proyecto/front/localhost.crt",
+              "sslKey": "/etc/ssl/certificates/proyecto/front/localhost.key"
             },
             "development": {
               "browserTarget": "Elrincondelaprogramacion:build:development",
               "ssl": true,
-              "sslCert": "",
-              "sslKey": ""
+              "sslCert": "/etc/ssl/certificates/proyecto/front/localhost.crt",
+              "sslKey": "/etc/ssl/certificates/proyecto/front/localhost.key"
             }
           },
           "defaultConfiguration": "development"
