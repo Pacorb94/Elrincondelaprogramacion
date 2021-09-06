@@ -65,7 +65,10 @@ DirectoryIndex index.php
 </IfModule>
 
 <IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "https://localhost:4200"
+    #Si coincide el origin con algunos de estos
+    SetEnvIf Origin "http(s)?://(www\.)?(localhost:4200|localhost)$" AccessControlAllowOrigin=$0
+    Header add Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
+    Header merge Vary Origin
     Header set Access-Control-Allow-Credentials "true"
     Header set Access-Control-Allow-Headers "X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization, authorization"
     Header set Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
