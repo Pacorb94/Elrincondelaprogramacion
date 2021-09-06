@@ -35,8 +35,9 @@
                     <td>{{!post.category?'Categoría borrada':post.category.name}}</td>
                     <td>
                         <!--Si hay imagen-->
-                        <img *ngIf="post.image" [src]="imageUrl+post.image" alt="Imagen del post" class="w-25">
-                        <img *ngIf="!post.image" src="../../../../../../../assets/images/no-post-image.jpg"
+                        <img *ngIf="post.image" [src]="imageUrl+post.image" alt="Imagen del post" 
+                            class="w-25">
+                        <img *ngIf="!post.image" src="assets/images/no-post-image.jpg"
                             alt="Imagen del post" class="w-25">
                     </td>
                     <td>{{post.createdAt|amLocale:'es'|amCalendar}}</td>
@@ -46,7 +47,7 @@
                             <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 mx-auto">
                                 <a id="fila" [routerLink]="['/posts', post.title]"
                                     class="btn btn-success w-25 mx-auto">
-                                    <img src="../../../../../../../assets/images/watch-icon.png" class="w-50"
+                                    <img src="assets/images/watch-icon.png" class="w-50"
                                         alt="Imagen de ver post">Ver
                                 </a>
                             </div>
