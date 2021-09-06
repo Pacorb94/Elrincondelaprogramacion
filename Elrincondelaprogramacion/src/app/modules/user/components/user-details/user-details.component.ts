@@ -103,11 +103,11 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
                         this.profileImage=this._sanitizer.bypassSecurityTrustUrl(imageURL);
                     },
                     error=>{
-                        this.profileImage='../../../../../assets/images/no-profile-image.png';
+                        this.profileImage='assets/images/no-profile-image.png';
                     }
                 );
         }else{
-            this.profileImage='../../../../../assets/images/no-profile-image.png';
+            this.profileImage='assets/images/no-profile-image.png';
         }
     }
 
