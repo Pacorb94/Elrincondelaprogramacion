@@ -1,6 +1,6 @@
 export const cookieConfig:any={
     "cookie": {
-        "domain": "localhost"
+        "domain": ""
     },
     "position": "bottom",
     "theme": "classic",
@@ -22,6 +22,6 @@ export const cookieConfig:any={
         "dismiss": "Entendido!",
         "deny": "",
         "link": "¿Qué son las cookies?",
-        "href": "https://localhost:4200/cookies-policy"
+        "href": "https://elrincondelaprogramacion.com/cookies-policy"
     }
 }

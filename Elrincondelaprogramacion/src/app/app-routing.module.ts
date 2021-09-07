@@ -9,7 +9,7 @@ const routes: Routes = [
     { path:'', component:HomeComponent },
     { path:'search-posts/:title', component:PostsFinderComponent },
     { path:'search-posts/:title/page/:page', component:PostsFinderComponent },
-    //Cargamos las rutas hijas por lazyloading
+    //Cargamos las rutas por lazyloading
     { path:'posts', loadChildren:()=>import('./modules/post/post.module').then(m=>m.PostModule) },
     { path:'page/:page', component:HomeComponent },
     { path:'cookies-policy', component:CookiesPolicyComponent },
