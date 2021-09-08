@@ -42,13 +42,14 @@
             <td>
                 <div class="row">                  
                     <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6 col-xl-12 mt-2">
-                        
+                        <!--Si el usuario es el admin o el usuario logueado o está baneado-->
                         <span *ngIf="user.nick=='admin'||user.nick==userLoggedIn.nick||user.banned">
                             No puedes modificar el rol de este usuario
                         </span>
                         <!--Botón que abre el modal, la directiva "attr.data-target" es para
                         llamar a un elemento HTML con ese id y además almacena un dato-->
-                        <button type="button" *ngIf="user.nick!='admin'&&user.nick!=userLoggedIn.nick&&!user.banned" (click)="getRoles()" 
+                        <button type="button" *ngIf="user.nick!='admin'&&user.nick!=userLoggedIn.nick&&!user.banned" 
+                            (click)="getRoles()" 
                             class="btn btn-warning w-75 d-flex justify-content-center mx-auto"
                             data-toggle="modal" [attr.data-target]="'#update'+user.id">
                             <img src="assets/images/edit-icon.png" class="w-25"

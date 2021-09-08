@@ -37,8 +37,7 @@
             <td>
                 <div class="row">                  
                     <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6 col-xl-12 mt-2">
-                        <!--Si el usuario al que se va a banear es el admin o el usuario 
-                        logueado o está baneado-->
+                        <!--Si el usuario es el admin o el usuario logueado o está baneado-->
                         <span *ngIf="user.nick=='admin'||user.nick==userLoggedIn.nick||user.banned">
                             No puedes banear a este usuario
                         </span>
