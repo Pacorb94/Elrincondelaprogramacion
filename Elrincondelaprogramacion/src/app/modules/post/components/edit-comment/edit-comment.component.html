@@ -22,7 +22,7 @@
                 En el evento ubmit le pasamos los valores de los campos-->
                 <form [formGroup]="form" class="text-center">
                     <label for="content">Modifica tu comentario</label><br>
-                    <textarea formControlName="content" name="content" id="content" class="form-control">
+                    <textarea formControlName="content" name="content" class="form-control">
                     </textarea>
                     <span *ngIf="checkTouched(form.get('content'))" class="invalid-feedback d-block">
                         {{wrongValidationMessage(form.get('content'), 'contenido')}}
