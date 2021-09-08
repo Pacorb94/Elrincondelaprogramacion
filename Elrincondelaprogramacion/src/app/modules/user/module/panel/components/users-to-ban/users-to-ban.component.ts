@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 export class UsersToBanComponent implements OnInit, OnDestroy {
     users:any[];
     profileImageUrl:string;
+    userLoggedIn:any;
     usersSubscription:Subscription;
     banSubscription:Subscription;
     loading:boolean;
@@ -24,6 +25,7 @@ export class UsersToBanComponent implements OnInit, OnDestroy {
     constructor(private _userService:UserService, private _flashMessagesService:FlashMessagesService) { 
         this.users=[];
         this.profileImageUrl=`${environment.url}/profile-images/`;
+        this.userLoggedIn=this._userService.getUserLoggedIn();
         this.usersSubscription=new Subscription();
         this.banSubscription=new Subscription();
         this.loading=true;
@@ -62,13 +64,8 @@ export class UsersToBanComponent implements OnInit, OnDestroy {
     getUsers(refreshTable:boolean=false){
         this.usersSubscription=this._userService.getUsers().subscribe(
             response=>{
-                if (response.length) {
-                    let userLoggedIn=this._userService.getUserLoggedIn();
-                    response.forEach((user:any)=>{
-                        /*Para no banear al usuario admin y al propio usuario logueado añadimos 
-                        sólo a los demás*/                  
-                        if (user.nick!='admin'&&userLoggedIn.nick!=user.nick) this.users.push(user);                       
-                    });                   
+                if (response.length) {           
+                    this.users=response;             
                     this.loading=false;
                     this.noUsers=false;
                     if (!refreshTable) this.dtTrigger.next();             

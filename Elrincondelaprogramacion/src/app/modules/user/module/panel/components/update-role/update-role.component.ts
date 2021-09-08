@@ -14,6 +14,7 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
     users:any[];
     roles:any;
     profileImageUrl:string;
+    userLoggedIn:any;
     usersSubscription:Subscription;
     rolesSubscription:Subscription;
     updateRoleSubscription:Subscription;
@@ -28,6 +29,7 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
         this.users=[];
         this.roles=[];
         this.profileImageUrl=`${environment.url}/profile-images/`;
+        this.userLoggedIn=this._userService.getUserLoggedIn();
         this.usersSubscription=new Subscription();
         this.rolesSubscription=new Subscription();
         this.updateRoleSubscription=new Subscription();
@@ -72,13 +74,11 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
         this.usersSubscription=this._userService.getUsers().subscribe(
             response=>{
                 if (response.length) {
-                    let userLoggedIn=this._userService.getUserLoggedIn();
-                    response.forEach((user:any)=>{
+                 
                         /*Para no modificar el rol del usuario admin ni el usuario logueado con rol 
                         de administrador y si el usuario no está baneado añadimos sólo a los demás*/                   
-                        if (user.nick!='admin'&&user.nick!=userLoggedIn.nick&&!user.banned) 
-                            this.users.push(user);                       
-                    });                   
+                        
+                    this.users=response;                                              
                     this.loading=false;
                     this.noUsers=false;
                     if (!refreshTable) this.dtTrigger.next();             
