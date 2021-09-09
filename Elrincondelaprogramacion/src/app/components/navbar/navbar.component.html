@@ -25,7 +25,7 @@
             <!--Fin de lista desplegable-->
             </li>
             <li *ngIf="user" class="nav-item active">
-                <a class="nav-link active" routerLink="user-panel">Panel de usuario</a>
+                <a class="nav-link active" routerLink="user-panel">Panel de usuario/a</a>
             </li>
             <li class="nav-item"><dark-mode></dark-mode></li>
             <!--Buscador-->
@@ -51,7 +51,7 @@
                     <span>{{user.nick}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" routerLink="user-panel">Panel de usuario</a>
+                    <a class="dropdown-item" routerLink="user-panel">Panel de usuario/a</a>
                     <div class="dropdown-divider"></div>
                     <a id="logout" class="dropdown-item" (click)="logout()">Cerrar sesión</a>
                 </div>

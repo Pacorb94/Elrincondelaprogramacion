@@ -6,7 +6,9 @@
                 <ul class="list-unstyled three-column">
                     <li><a routerLink=" ">Inicio</a></li>
                     <!--Si el usuario está logueado-->
-                    <li *ngIf="userLoggedIn" class="ml-3"><a routerLink="user-panel">Panel del usuario</a></li>
+                    <li *ngIf="userLoggedIn" class="ml-3">
+                        <a routerLink="user-panel">Panel del usuario/a</a>
+                    </li>
                     <li><a routerLink="cookies-policy">Política de cookies</a></li>
                 </ul>
             </div>
