@@ -11,7 +11,6 @@ import { FlashMessagesService } from 'angular2-flash-messages';
     styleUrls: ['./user-settings.component.scss']
 })
 export class UserSettingsComponent implements OnInit, OnDestroy{
-    pageTitle:string;
     user:any;
     form:FormGroup;
     loadUserSubscription:Subscription;
@@ -19,7 +18,6 @@ export class UserSettingsComponent implements OnInit, OnDestroy{
 
     constructor(private _userService:UserService,
     private _flashMessagesService:FlashMessagesService) { 
-        this.pageTitle='Ajustes del usuario';
         this.loadUser();      
         this.form=new FormGroup({
             nick:new FormControl(this.user.nick, Validators.required),
