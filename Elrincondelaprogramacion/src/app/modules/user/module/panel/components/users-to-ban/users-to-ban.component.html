@@ -27,9 +27,9 @@
             <td>{{user.banned==true?'Si':'No'}}</td>
             <td>
                 <!--Si hay imagen-->
-                <img *ngIf="user.image" [src]="profileImageUrl+user.image" alt="Imagen del usuario" 
+                <img *ngIf="user.profileImage" [src]="profileImageUrl+user.image" alt="Imagen del usuario" 
                     class="w-50">
-                <img *ngIf="!user.image" src="assets/images/no-profile-image.png"
+                <img *ngIf="!user.profileImage" src="assets/images/no-profile-image.png"
                     alt="Imagen del usuario" class="w-50">
             </td>
             <td>{{user.createdAt|amLocale:'es'|amCalendar}}</td>
