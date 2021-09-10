@@ -25,6 +25,7 @@ export class MyFooterComponent implements OnInit {
     ngOnInit(): void {
         this.checkUserLoggedIn();
         this.getLastThreePosts();
+        this.checkNewPost();
     }
 
     /**
@@ -50,6 +51,17 @@ export class MyFooterComponent implements OnInit {
             response => {
                 //Si hay posts nos quedamos con los 3 primeros
                 if (response.Posts.length) this.posts=response.Posts.slice(0, 3);               
+            }
+        );      
+    }
+    
+    /**
+     * Función que comprueba si se ha creado un post nuevo
+     */
+    checkNewPost(){
+        this._postService.getCreatedPost$().subscribe(
+            created=>{
+                if (created) this.getLastThreePosts();
             }
         );
     }
