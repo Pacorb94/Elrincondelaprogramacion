@@ -32,7 +32,7 @@
             </ng-container>
             <td>
                 <!--Si hay imagen-->
-                <img *ngIf="user.profileImage" [src]="profileImageUrl+user.image" alt="Imagen del usuario" 
+                <img *ngIf="user.profileImage" [src]="profileImageUrl+user.profileImage" alt="Imagen del usuario" 
                     class="w-50">
                 <img *ngIf="!user.profileImage" src="assets/images/no-profile-image.png"
                     alt="Imagen del usuario" class="w-50">
