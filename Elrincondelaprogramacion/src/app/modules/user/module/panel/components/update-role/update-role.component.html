@@ -1,4 +1,4 @@
-<h3 class="text-center">Modificar rol de un usuario</h3>
+<h3 class="text-center">Modificar rol de un/a usuario/a</h3>
 <hr>
 <div *ngIf="loading" class="text-center mt-5">
     <!--Si terminó de cargar y no hay usuarios-->
@@ -26,9 +26,9 @@
         <tr *ngFor="let user of users">
             <td><a [routerLink]="['/user-details', user.id]">{{user.nick}}</a></td>
             <ng-container [ngSwitch]="user.roles[0]">
-                <td *ngSwitchCase="'ROLE_ADMIN'">Administrador</td>
-                <td *ngSwitchCase="'ROLE_WRITER'">Redactor</td>
-                <td *ngSwitchDefault>Lector</td>
+                <td *ngSwitchCase="'ROLE_ADMIN'">Administrador/a</td>
+                <td *ngSwitchCase="'ROLE_WRITER'">Redactor/a</td>
+                <td *ngSwitchDefault>Lector/a</td>
             </ng-container>
             <td>
                 <!--Si hay imagen-->
