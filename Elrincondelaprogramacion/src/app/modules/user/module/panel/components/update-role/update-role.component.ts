@@ -74,10 +74,6 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
         this.usersSubscription=this._userService.getUsers().subscribe(
             response=>{
                 if (response.length) {
-                 
-                        /*Para no modificar el rol del usuario admin ni el usuario logueado con rol 
-                        de administrador y si el usuario no está baneado añadimos sólo a los demás*/                   
-                        
                     this.users=response;                                              
                     this.loading=false;
                     this.noUsers=false;
@@ -98,7 +94,7 @@ export class UpdateRoleComponent implements OnInit, OnDestroy {
         this.rolesSubscription=this._userService.getRoles().subscribe(
             response=>{
                 if (response) {
-                    this.roles.frontend=['Administrador', 'Redactor', 'Lector'];
+                    this.roles.frontend=['Administrador/a', 'Redactor/a', 'Lector/a'];
                     this.roles.backend=response; 
                     this.createRolesSelectsOptions();
                 }            
