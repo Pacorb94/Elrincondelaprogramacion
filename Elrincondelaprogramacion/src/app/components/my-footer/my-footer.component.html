@@ -28,7 +28,7 @@
                     </div>                     
                     <div class="col">
                         <h6><a [routerLink]="['/posts', post.title]">{{post.title}}</a></h6>
-                        <p>{{post.content}}</p>
+                        <a [routerLink]="['/posts', post.title]" class="btn btn-success">Ver más</a>
                     </div>                
                 </div>
             </div>
