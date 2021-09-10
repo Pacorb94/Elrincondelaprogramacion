@@ -2,15 +2,35 @@ import { Injectable } from '@angular/core';
 import { Post } from '../../../models/Post';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
     providedIn:'root'
 })
 export class PostService {
+    createdPost:BehaviorSubject<boolean>;
 
-    constructor(private _http:HttpClient) {}
+    constructor(private _http:HttpClient) {
+        this.createdPost=new BehaviorSubject<boolean>(false);
+    }
+    
+    /**
+     * Función que establece un valor al BehaviourSubject cuando se crea un post
+     * @param cretedPost 
+     */
+    setCreatedPost$(cretedPost:boolean){
+        this.createdPost.next(cretedPost);
+    }
+
+    /**
+     * Función que obtiene el valor del BehaviourSubject
+     * @returns 
+     */
+    getCreatedPost$():Observable<boolean>{
+        return this.createdPost.asObservable();
+    }
+
 
     /**
      * Función que crea un post
