@@ -70,6 +70,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
             response=>{
                 if (response) {
                     this.goodCreate=true;
+                    this._postService.setCreatedPost$(true);
                     this.postTitleCreated=this.post.getTitle();
                     //Si el tamaño de la ventana es menor o igual a 575
                     window.outerWidth<=parseInt('575')?window.scroll(0, 550):window.scroll(0, 50);               
