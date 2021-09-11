@@ -5,9 +5,9 @@ al proyecto.
 ## Descripción
 Es un blog de noticias referentes al sector de la programación.
 
-Puedes ver lo que puede hacer cada tipo de usuario [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/master/Diagramas/Casos%20de%20uso.png).
+Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/master/Diagramas/).
 
-## Requisitos
+## Requisitos para desarrollo
 * Apache
 * SQL
 * PHP 8 (puedes probar tu versión)
