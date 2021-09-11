@@ -29,10 +29,12 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
  5. Reiniciar contenedor del frontend o recargar el navegador
 
 * Si no usas Docker:
- 0. Instalar dependencias `npm i` `composer install`
- 1. Hacemos los pasos 2-4 de arriba
- 2. Crear host virtual para el backend en tu servidor web y en /etc/hosts poner un dominio para el frontend y el backend que apunten a 127.0.0.1. Si el dominio del frontend de /etc/hosts es diferente a https://elrincondelaprogramacion.com debes cambiar la propiedad url de los archivos de [esta](https://github.com/Pacorb94/ProyectoDAW/blob/master/App/Elrincondelaprogramacion/src/environments/) carpeta
- 4. Poner certificados SSL al frontend (en angular.json) y al backend (en el host virtual)
+ 1. Importar ELrincondelaprogramacion-API/database/database.sql a un gestor de bbbdd
+ 2. Instalar dependencias `npm i` `composer install`
+ 3. Hacemos los pasos 2-4 de arriba
+ 4. Crear host virtual para el backend en tu servidor web y en /etc/hosts poner un dominio para el frontend y el backend que apunten a 127.0.0.1. Si el dominio del frontend de /etc/hosts es diferente a https://elrincondelaprogramacion.com debes cambiar la propiedad url de los archivos de [esta](https://github.com/Pacorb94/ProyectoDAW/blob/master/App/Elrincondelaprogramacion/src/environments/) carpeta
+ 
+    1. Poner certificados SSL al frontend (en angular.json) y al backend (en el host virtual) 
  5. Pasar el frontend a producción  `ng b`
  6. Pasar el backend a producción en el archivo .env cambiar APP_ENV a prod
 
