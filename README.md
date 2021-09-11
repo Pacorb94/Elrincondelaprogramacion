@@ -30,13 +30,16 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 
 * Si no usas Docker (modo desarrollo):
  1. Hacemos los pasos 2-4 de arriba
- 2. Crear host virtual para el backend en tu servidor web y en /etc/hosts poner un dominio para el frontend y el backend que apunten a 127.0.0.1. Si el dominio del frontend de /etc/hosts es diferente a https://elrincondelaprogramacion.com debes cambiar la propiedad url de los archivos de [esta] (https://github.com/Pacorb94/ProyectoDAW/blob/master/App/Elrincondelaprogramacion.com/src/environments/)carpeta
+ 2. Crear host virtual para el backend en tu servidor web y en /etc/hosts poner un dominio para el frontend y el backend que apunten a 127.0.0.1. Si el dominio del frontend de /etc/hosts es diferente a https://elrincondelaprogramacion.com debes cambiar la propiedad url de los archivos de [esta](https://github.com/Pacorb94/ProyectoDAW/blob/master/App/Elrincondelaprogramacion.com/src/environments/)carpeta
  4. Poner certificados SSL al frontend (en angular.json) y al backend (en el host virtual)
  5. Instalar dependencias
-       composer install
-       npm i
+
+        composer install
+
+        npm i
  6. Desplegar el servidor 
-       ng s -o o ng s
+
+        ng s -o o ng s
 
 ## Licencia
 MIT
