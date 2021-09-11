@@ -14,8 +14,8 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 * Composer 2
 * Angular 12 (puedes probar tu versión a partir de la 9)
 
-## Despliegue en producción:
-* Si usas Docker:
+## Despliegue:
+* Si usas Docker (modo producción):
  1.     docker compose up --build
  2. En App/Elrincondelaprogramacion-API/config crear una carpeta "jwt", generamos una clave para que se firme el token 
 
@@ -26,12 +26,17 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
         openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
 
  4. En "JWT_PASSPHRASE" del archivo .env ponemos la clave del paso anterior
+ 5. Reiniciar contenedor del frontend o recargar el navegador
 
-* Si no usas Docker:
+* Si no usas Docker (modo desarrollo):
  1. Hacemos los pasos 2-4 de arriba
- 2. Crear host virtual para el backend en tu servidor web y en /etc/hosts poner un dominio para el frontend y el backend que apunten a 127.0.0.1
- 3. Poner certificados SSL al frontend (en angular.json) y al backend (en el host virtual)
- 4. En el navegador `https://tudominio`
+ 2. Crear host virtual para el backend en tu servidor web y en /etc/hosts poner un dominio para el frontend y el backend que apunten a 127.0.0.1. Si el dominio del frontend de /etc/hosts es diferente a https://elrincondelaprogramacion.com debes cambiar la propiedad url de los archivos de [esta] (https://github.com/Pacorb94/ProyectoDAW/blob/master/App/Elrincondelaprogramacion.com/src/environments/)carpeta
+ 4. Poner certificados SSL al frontend (en angular.json) y al backend (en el host virtual)
+ 5. Instalar dependencias
+       composer install
+       npm i
+ 6. Desplegar el servidor 
+       ng s -o o ng s
 
 ## Licencia
 MIT
