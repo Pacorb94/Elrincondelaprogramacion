@@ -1,0 +1,49 @@
+<h3 class="text-center">Posts inadecuados</h3>
+<hr>
+<div *ngIf="loading" class="text-center mt-5">
+    <!--Si terminó de cargar y no hay posts-->
+    <h5 *ngIf="noPosts">No hay posts inadecuados</h5>
+    <button *ngIf="!noPosts" class="btn btn-primary" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Cargando...
+    </button>
+</div>
+<!--Si hay posts-->
+<table #table *ngIf="!noPosts" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+    class="table-responsive mt-5 table table-hover text-center bg-light">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Categoría</th>
+            <th>Imagen</th>
+            <th>Fecha de creación</th>
+            <th>Fecha de modificación</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let post of posts">
+            <td><a [routerLink]="['/posts', post.title]">{{post.title}}</a></td>
+            <!--Si la categoría se borró-->
+            <td>{{!post.category?'Categoría borrada':post.category.name}}</td>
+            <td>
+                <!--Si hay imagen-->
+                <img *ngIf="post.image" [src]="imageUrl+post.image" alt="Imagen del post" class="w-50">
+                <img *ngIf="!post.image" src="../../../../../../../assets/images/no-post-image.jpg"
+                    alt="Imagen del post" class="w-50">
+            </td>
+            <td>{{post.createdAt|amLocale:'es'|amCalendar}}</td>
+            <td>{{post.updatedAt|amLocale:'es'|amCalendar}}</td>
+            <td>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6 mx-auto">
+                        <a [routerLink]="['/posts', post.title]" class="btn btn-success w-100 d-flex align-items-center">
+                            <img src="assets/images/watch-icon.png" class="w-50"
+                                alt="Imagen de ver post">Ver
+                        </a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

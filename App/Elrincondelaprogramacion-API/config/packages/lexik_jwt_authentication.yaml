@@ -1,0 +1,26 @@
+lexik_jwt_authentication:
+    secret_key: '%env(resolve:JWT_SECRET_KEY)%'
+    public_key: '%env(resolve:JWT_PUBLIC_KEY)%'
+    pass_phrase: '%env(JWT_PASSPHRASE)%'
+    token_ttl: 31536000
+
+
+    token_extractors:
+        #Comprueba el token mediante una cookie
+        cookie:
+            enabled: true
+            name: token
+            
+    set_cookies:   
+        token:
+            #Por defecto la que ya configuramos
+            lifetime: null
+            #Al poner none la cookie sólo será establecida en el frontend si la conexión es segura
+            samesite: none
+            path: /
+            #Por defecto nuestro dominio
+            domain: null 
+            #HTTPS
+            secure: true
+            #Irá por la cabecera
+            httpOnly: true   

@@ -1,0 +1,182 @@
+#User
+register:
+    path: /register
+    controller: App\Controller\UserController::register
+    methods: POST
+
+login:
+    path: /login
+    methods: POST
+
+updateUser:
+    path: /users/{id}/update
+    controller: App\Controller\UserController::update
+    methods: PUT
+
+updateRole:
+    path: /users/{id}/update-role
+    controller: App\Controller\UserController::updateRole
+    methods: PUT
+
+uploadProfileImage:
+    path: /profile-image/upload
+    controller: App\Controller\UserController::uploadProfileImage
+    methods: POST
+
+getProfileImage:
+    path: /profile-images/{image-name}
+    controller: App\Controller\UserController::getProfileImage
+    methods: GET
+
+getUser:
+    path: /users/{id}
+    controller: App\Controller\UserController::getDetails
+    methods: GET
+
+getUserPosts:
+    path: /users/{id}/posts
+    controller: App\Controller\UserController::getPosts
+    methods: GET
+
+getUserComments:
+    path: /users/{id}/comments
+    controller: App\Controller\UserController::getComments
+    methods: GET
+
+getUsers:
+    path: /users
+    controller: App\Controller\UserController::getUsers
+    methods: GET
+
+getRoles:
+    path: /roles
+    controller: App\Controller\UserController::getRoles
+    methods: GET
+
+banUser:
+    path: /users/{id}/ban
+    controller: App\Controller\UserController::ban
+    methods: PUT
+
+logout:
+    path: /logout
+    controller: App\Controller\UserController::logout
+    methods: DELETE
+
+#Category
+createCategory:
+    path: /category/create
+    controller: App\Controller\CategoryController::create
+    methods: POST
+
+updateCategory:
+    path: /categories/{id}/update
+    controller: App\Controller\CategoryController::update
+    methods: PUT
+
+getCategories:
+    path: /categories
+    controller: App\Controller\HomeController::getCategories
+    methods: GET
+
+getCategory:
+    path: /categories/{name}
+    controller: App\Controller\CategoryController::getCategory
+    methods: GET
+
+deleteCategory:
+    path: /categories/{id}/delete
+    controller: App\Controller\CategoryController::delete
+    methods: DELETE
+  
+#Post
+createPost:
+    path: /post/create
+    controller: App\Controller\PostController::create
+    methods: POST
+
+updatePost:
+    path: /posts/{id}/update
+    controller: App\Controller\PostController::update
+    methods: PUT
+
+uploadImage:
+    path: /post-image/upload
+    controller: App\Controller\PostController::uploadImage
+    methods: POST
+
+getImage:
+    path: /posts-images/{imageName}
+    controller: App\Controller\PostController::getImage
+    methods: GET
+
+getPosts:
+    path: /posts
+    controller: App\Controller\HomeController::getPosts
+    methods: GET
+
+getMostActivePosts:
+    path: /posts/most-actives
+    controller: App\Controller\HomeController::getMostActivePosts
+    methods: GET
+
+getPostsByCategory:
+    path: /posts/categories/{categoryName}
+    controller: App\Controller\HomeController::getPostsByCategory
+    methods: GET
+
+getPostsByTitle:
+    path: /search-posts/{title}
+    controller: App\Controller\HomeController::getPostsByTitle
+    methods: GET
+
+getPostDetails:
+    path: /posts/{title}
+    controller: App\Controller\PostController::getDetails
+    methods: GET
+
+getPostComments:
+    path: /posts/{id}/comments
+    controller: App\Controller\PostController::getComments
+    methods: GET
+
+deletePost:
+    path: /posts/{id}/delete
+    controller: App\Controller\PostController::delete
+    methods: DELETE
+
+indequatePost:
+    path: /posts/{id}/inadequate
+    controller: App\Controller\PostController::inadequate
+    methods: PUT
+
+getInadequatePosts:
+    path: /postss/inadequates
+    controller: App\Controller\PostController::getInadequates
+    methods: GET
+
+#Comment
+createComment:
+    path: /{postId}/comment/create
+    controller: App\Controller\CommentController::create
+    methods: POST
+
+updateComment:
+    path: /comments/{id}/update
+    controller: App\Controller\CommentController::update
+    methods: PUT    
+
+indequateComment:
+    path: /comments/{id}/inadequate
+    controller: App\Controller\CommentController::inadequate
+    methods: PUT
+
+getInadequateComments:
+    path: /comments/inadequates
+    controller: App\Controller\CommentController::getInadequates
+    methods: GET
+
+deleteComment:
+    path: /comments/{id}/delete
+    controller: App\Controller\CommentController::delete
+    methods: DELETE

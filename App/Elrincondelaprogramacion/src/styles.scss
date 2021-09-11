@@ -1,0 +1,34 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body{
+    background-image: url(assets/images/pattern.png);
+}
+
+body:not(.dark-mode-preloading) {
+    transition: all 0.3s linear;
+}
+  
+body.dark-mode {
+    background-color: #2d3436;
+    color: #dfe6e9;
+    .modal-dark-mode{
+        background-color: #2d3436;
+        .modal-header, .modal-body{
+            color:white;
+        }
+    }
+    #categoryPill{
+        color: black;
+    }
+}
+  
+body.light-mode {
+    color: #2d3436;
+}

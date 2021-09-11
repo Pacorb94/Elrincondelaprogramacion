@@ -1,0 +1,85 @@
+security:
+    # https://symfony.com/doc/current/security/experimental_authenticators.html
+    enable_authenticator_manager: true
+    password_hashers:
+        App\Entity\User:
+            #Podemos usar diferentes tipos de encriptación
+            algorithm: bcrypt
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+        login:
+            pattern: ^/login
+            stateless: true
+            json_login:
+                check_path: /login
+                #Cambiamos la clave "username" por "email" cuando enviamos el json con los datos
+                #del usuario
+                username_path: email
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        api:
+            pattern: ^/
+            stateless: true
+            guard: 
+                authenticators: 
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
+    access_control:
+        #Para usuarios no logueados
+        - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: /register, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: /categories, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: /posts, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { 
+            path: /posts/[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+, 
+            roles: IS_AUTHENTICATED_ANONYMOUSLY, 
+            requires_channel: https 
+          }
+        - { path: /posts/[0-9]+/comments, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { 
+            path: /posts/categories/[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+, 
+            roles: IS_AUTHENTICATED_ANONYMOUSLY, 
+            requires_channel: https 
+          }
+        - { path: /roles, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        #Para usuarios logueados
+        - { path: /[0-9]+/comment/create, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
+        - { path: /users/[0-9]+/update, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
+        - { path: /users/[0-9]+/update-role, roles: ROLE_ADMIN, requires_channel: https }
+        - { 
+            path: /profile-images/[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+, 
+            roles: IS_AUTHENTICATED_FULLY, 
+            requires_channel: https 
+          }
+        - { path: /users/[0-9]+, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
+        - { path: /users/[0-9]+/comments, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
+        - { path: /users, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: /profile-image/upload, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
+        - { path: /users/[0-9]+/ban, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: /logout, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
+        - { path: /[category], roles: ROLE_ADMIN, requires_channel: https }
+        - { path: /categories/[0-9]+/update, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: /categories/[0-9]+/delete, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: /post/create, roles: [ROLE_ADMIN, ROLE_WRITER], requires_channel: https }
+        - { path: /posts/[0-9]+/update, roles: [ROLE_ADMIN, ROLE_WRITER], requires_channel: https }
+        - { path: /post-image/upload, roles: [ROLE_ADMIN, ROLE_WRITER], requires_channel: https } 
+        - { 
+            path: /posts-images/[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+, 
+            roles: IS_AUTHENTICATED_FULLY, 
+            requires_channel: https 
+          }     
+        - { path: /posts/[0-9]+/inadequate, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: /postss/inadequates, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: /posts/[0-9]+/delete, roles: ROLE_ADMIN, requires_channel: https } 
+        - { path: /comments/[0-9]+/update, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
+        - { path: /comments/[0-9]+/inadequate, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: /comments/inadequates, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: /comments/[0-9]+/delete, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
