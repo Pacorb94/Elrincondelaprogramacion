@@ -17,7 +17,7 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 ## Despliegue:
 * Si usas Docker (modo producción):
  1.     docker compose up --build
- 2. En App/Elrincondelaprogramacion-API/config crear una carpeta "jwt", generamos una clave para que se firme el token 
+ 2. En App/Elrincondelaprogramacion-API/config/jwt generamos una clave para que se firme el token 
 
         openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
 
