@@ -25,7 +25,7 @@
             <span *ngIf="checkTouched(form.get('content'))" class="invalid-feedback d-block">
                 {{wrongValidationMessage(form.get('content'), 'contenido')}}
             </span><br>
-            <span>Categoría:<br>{{post?.category.name}}</span>
+            <span>Categoría:<br>{{!post?.category?'Categoría borrada':post.category.name}}</span>
             <select formControlName="category" name="category" id="category" 
                 class="form-control w-100 mt-3">
                 <option hidden value="">Selecciona una categoría</option>
