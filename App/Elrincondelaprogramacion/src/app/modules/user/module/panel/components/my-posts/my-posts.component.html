@@ -43,7 +43,7 @@
                                 alt="Imagen de ver post">Ver
                         </a>
                     </div>
-                    <div class="col-xs-12 col-md-6 col-sm-8 col-lg-6">
+                    <div *ngIf="!post.inadequate" class="col-xs-12 col-md-6 col-sm-8 col-lg-6">
                         <!--Aunque hemos puesto antes rutas hijas, en el routerLink debemos poner la 
                             ruta padre junto a la hija-->
                         <a [routerLink]="['/user-panel/edit-post', post.title]"
