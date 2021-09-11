@@ -16,7 +16,7 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 
 ## Despliegue:
 * Si usas Docker:
- 1. `docker compose up --build`
+ 1.     `docker compose up --build`
  2. En App/Elrincondelaprogramacion-API/config crear una carpeta "jwt", generamos una clave para que se firme el token 
 
         `openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096`
@@ -32,9 +32,9 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
  2. Crear host virtual para el back en tu servidor web y en /etc/hosts poner un dominio para el front y el back que apunten
  a 127.0.0.1
  3. Poner certificados SSL al front (en angular.json) y al back (en el host virtual)
- 4. `composer install`
- 5. `npm i`
- 6. `ng s -o/ng s`
+ 4.     `composer install`
+ 5.     `npm i`
+ 6.     `ng s -o/ng s`
 
 ## Licencia
 MIT
