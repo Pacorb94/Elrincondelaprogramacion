@@ -28,7 +28,7 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
  4. En "JWT_PASSPHRASE" del archivo .env ponemos la clave del paso anterior
 
 * Si no usas Docker:
- 1. Hacemos los pasos 2-4
+ 1. Hacemos los pasos 2-4 de arriba
  2. Crear host virtual para el backend en tu servidor web y en /etc/hosts poner un dominio para el frontend y el backend que apunten a 127.0.0.1
  3. Poner certificados SSL al frontend (en angular.json) y al backend (en el host virtual)
  4. En el navegador `https://tudominio`
