@@ -16,14 +16,14 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 
 ## Despliegue:
 * Si usas Docker:
- 1.     `docker compose up --build`
+ 1.     docker compose up --build
  2. En App/Elrincondelaprogramacion-API/config crear una carpeta "jwt", generamos una clave para que se firme el token 
 
-        `openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096`
+        openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096`
 
  3. Ponemos la clave que hicimos en el paso anterior 
     
-        `openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout`
+       openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
 
  4. En "JWT_PASSPHRASE" del archivo .env ponemos la clave del paso anterior
 
