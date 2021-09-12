@@ -20,7 +20,8 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
  2. Ve al contenedor de mysql `docker-compose exec mysql mysql -uroot -p1`
       
     1. Copia, pega y ejecuta App/Elrincondelaprogramacion-API/database/database.sql en la consola de mysql
-    2. exit;
+    2. Sal de la consola de mysql `exit;`
+    3. Sal del contenedor de mysql con `exit`
 
  3. En el navegador `https://elrincondelaprogramacion:8081`
 
