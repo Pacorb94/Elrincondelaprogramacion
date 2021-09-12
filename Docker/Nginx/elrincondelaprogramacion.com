@@ -7,8 +7,8 @@ server {
 
 server {
         listen 443 ssl;
-	ssl_certificate /etc/nginx/certificates/localhost.crt;
-        ssl_certificate_key /etc/nginx/certificates/localhost.key;        
+	ssl_certificate /etc/ssl/certs/localhost.crt;
+        ssl_certificate_key /etc/ssl/certs/localhost.key;        
 	root /var/www/Proyecto;
         #Dominio que apunta a una dirección ip de /etc/hosts de la máquina host
         server_name elrincondelaprogramacion.com:8081;

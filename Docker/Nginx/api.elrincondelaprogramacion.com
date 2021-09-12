@@ -7,8 +7,8 @@ server {
 
 server {
         listen 443 ssl;
-	ssl_certificate /etc/nginx/certificates/localhost.crt;
-        ssl_certificate_key /etc/nginx/certificates/localhost.key;        
+	ssl_certificate /etc/ssl/certs/localhost.crt;
+        ssl_certificate_key /etc/ssl/certs/localhost.key;        
 	root /var/www/Proyecto/public;
         add_header 'Access-Control-Allow-Origin' 'https://elrincondelaprogramacion.com:8081' always;
         add_header 'Access-Control-Allow-Credentials' 'true' always;
@@ -25,7 +25,8 @@ server {
         } 
         #Cuando el archivo sea index.php cargará el intérprete de PHP
         location ~ ^/index\.php(/|$) {
-            fastcgi_pass php-service:9000;
+            #Proxy que es un contenedor
+            fastcgi_pass php:9000;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             #El buffer es sólo si el frontend sube archivos al servidor
             fastcgi_buffer_size 128k;
