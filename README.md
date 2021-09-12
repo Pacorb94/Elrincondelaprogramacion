@@ -32,12 +32,15 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
  
     1. Pon certificado SSL al frontend (en angular.json) y al backend (en el host virtual) 
     
- 4. En App/Elrincondelaprogramacion-API/config/jwt genera una clave para que se firme el token, el segundo comando pon la clave que pusistes
+ 4. En App/Elrincondelaprogramacion-API/config/jwt genera una clave para que se firme el token
 
         openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
-        openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
 
-    1. En "JWT_PASSPHRASE" del archivo .env pon la clave del paso anterior
+    1. Pon la clave que hicimos en el paso anterior 
+
+        `openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout`
+
+    2. En "JWT_PASSPHRASE" del archivo .env pon la clave del paso anterior
  5. Pasa el backend a producción en el archivo .env cambiar APP_ENV a prod
  6. Pasa el frontend a producción  `ng b`
 
