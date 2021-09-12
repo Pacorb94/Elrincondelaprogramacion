@@ -15,8 +15,8 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 * Angular 12 (puedes probar tu versión a partir de la 9)
 
 ## Despliegue:
-* Si usas Docker:
- 1.     docker compose up --build
+* Si usas Docker Compose:
+ 1. Crear los contenedores `docker-compose up -d --build`
  2. En App/Elrincondelaprogramacion-API/config/jwt generamos una clave para que se firme el token 
 
         openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
