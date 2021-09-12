@@ -2,12 +2,12 @@ version: '3.5'
 
 #Red que compartirán todos los contenedores
 networks:
-    nginx-php-mysql:
+    proyecto:
 
 services:
 
     #Frontend
-    nginx-front-service:
+    nginx-front:
         image: nginx:stable-alpine
         container_name: nginx-front-container
         #Usamos 2 puertos (máquina host:contenedor) ya que si sólo ponemos 443 no se podrá redirigir del 80 al 443
@@ -18,17 +18,19 @@ services:
         volumes:
             - ../App/Elrincondelaprogramacion/dist/Elrincondelaprogramacion:/var/www/Proyecto
             - ./Nginx/elrincondelaprogramacion.com:/etc/nginx/conf.d/default.conf
-            - /etc/ssl/certificates/:/etc/nginx/certificates/
-        #Primero se iniciará mysql, luego php y finalmente nginx-back-service
+            - /etc/ssl/certificates/:/etc/ssl/certs/
+        #Primero se iniciará mysql, luego php y finalmente nginx-back
         depends_on:
-            - nginx-back-service
-            - php-service
-            - mysql-service
+            - nginx-back
+            - php
+            - mysql
+        #Se reiniciará el contenedor a menos que se pare manualmente
+        restart: always
         networks:
-            - nginx-php-mysql
+            - proyecto
 
     #Backend
-    nginx-back-service:
+    nginx-back:
         image: nginx:stable-alpine
         container_name: nginx-back-container
         ports:
@@ -37,15 +39,16 @@ services:
         volumes:
             - ../App/Elrincondelaprogramacion-API:/var/www/Proyecto
             - ./Nginx/api.elrincondelaprogramacion.com:/etc/nginx/conf.d/default.conf
-            - /etc/ssl/certificates/:/etc/nginx/certificates/
+            - /etc/ssl/certificates/:/etc/ssl/certs/
         depends_on:
-            - php-service
-            - mysql-service
+            - php
+            - mysql
+        restart: always
         networks:
-            - nginx-php-mysql
+            - proyecto
 
     #PHP
-    php-service:
+    php:
         #Podemos también construir la imagen nosotros con un archivo dockerfile
         build:
             context: .
@@ -53,25 +56,23 @@ services:
         container_name: php-container
         ports:
             - "9000:9000"
+        volumes: 
+            - ../App/Elrincondelaprogramacion-API:/var/www/Proyecto
+        restart: always
         networks:
-            - nginx-php-mysql
+            - proyecto
 
     #MySQL
-    mysql-service:
+    mysql:
         image: mysql:8.0
         container_name: mysql-container
         ports:
             - "4306:3306"
         volumes:
             - ./Mysql:/var/lib/mysql
-        #Comando que se ejecutará dentro
-        command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-        #Se reiniciará el contenedor a menos que se pare manualmente
         restart: always
-        #Variables de entorno
+        #Variable de entorno
         environment:
-            MYSQL_USER: root
-            MYSQL_ROOT_PASSWORD: ''
-            MYSQL_PASSWORD: ''
+            MYSQL_ROOT_PASSWORD: '1'
         networks:
-            - nginx-php-mysql
+            - proyecto
