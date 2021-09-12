@@ -36,7 +36,7 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 
         openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
 
-   4.1. Ponemos la clave que hicimos en el paso anterior 
+   4\.1. Ponemos la clave que hicimos en el paso anterior 
     
         openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
 
