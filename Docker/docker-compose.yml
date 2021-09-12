@@ -69,10 +69,13 @@ services:
         ports:
             - "4306:3306"
         volumes:
-            - ./Mysql:/var/lib/mysql
+            - database-data:/var/lib/mysql
         restart: always
         #Variable de entorno
         environment:
             MYSQL_ROOT_PASSWORD: '1'
         networks:
             - proyecto
+#
+volumes: 
+    database-data:
