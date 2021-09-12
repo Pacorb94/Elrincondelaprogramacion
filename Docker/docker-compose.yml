@@ -76,6 +76,7 @@ services:
             MYSQL_ROOT_PASSWORD: '1'
         networks:
             - proyecto
-#
+
 volumes: 
+    #Este volumen permanece aunque destruyamos el contenedor de mysql y lo volvamos a crear por lo que la base de datos no se borra
     database-data:
