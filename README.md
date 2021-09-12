@@ -38,7 +38,7 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 
     1. Pon la clave que pusistes en el paso anterior 
 
-      `openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout`
+       `openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout`
 
     2. En "JWT_PASSPHRASE" del archivo .env pon la clave del paso anterior
  5. Pasa el backend a producción en el archivo .env cambiar APP_ENV a prod
