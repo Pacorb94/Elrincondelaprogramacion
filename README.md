@@ -17,11 +17,11 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 ## Despliegue:
 * ### Si usas Docker Compose:
  1. En la carpeta Docker crea los contenedores `docker-compose up -d --build`
-  2. Ve al contenedor de mysql `docker-compose exec mysql mysql -uroot -p1`
+ 2. Ve al contenedor de mysql `docker-compose exec mysql mysql -uroot -p1`
         
-        1. Copia, pega y ejecuta App/Elrincondelaprogramacion-API/database/database.sql en la consola de mysql
+    1. Copia, pega y ejecuta App/Elrincondelaprogramacion-API/database/database.sql en la consola de mysql
 
-    3. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion:8081` 
+ 3. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion:8081` 
     y `https://api.elrincondelaprogramacion:9081`
 
 * ### Si no usas Docker:
