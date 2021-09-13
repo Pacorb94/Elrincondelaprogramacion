@@ -10,8 +10,7 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 ## Tecnologías usadas:
 * Nginx 
 * MySQL
-* PHP 8 (puedes probar tu versión)
-* Symfony 5
+* Symfony 5.3
 * Angular 12 (puedes probar tu versión a partir de la 9)
 
 ## Despliegue:
