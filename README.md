@@ -50,7 +50,7 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 
  5. En App/Elrincondelaprogramacion/src/environment.prod.ts cambia la url por el dominio del backend.
 
-    1. Pasa el frontend a producción `ng b`
+    1. En App/Elrincondelaprogramacion pasa a producción `ng b`
 
  6. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion` y 
  `https://api.elrincondelaprogramacion`
