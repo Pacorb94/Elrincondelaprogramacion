@@ -8,8 +8,8 @@ Es un blog de noticias referentes al sector de la programación.
 Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/master/Diagramas/).
 
 ## Tecnologías usadas:
-* Nginx 
-* MySQL
+* Nginx 1.18
+* MySQL 8
 * Symfony 5.3
 * Angular 12 (puedes probar tu versión a partir de la 9)
 
