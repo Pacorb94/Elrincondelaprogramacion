@@ -42,7 +42,11 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
        ```
 
     3. En "JWT_PASSPHRASE" del archivo .env pon la clave del paso anterior.
- 4. Pasa el frontend a producción con ```ng b```.
+ 4. Pasa el frontend a producción
+
+    ```
+    ng b
+    ```
  5. Crea un host virtual para el backend y para el frontend (la carpeta root será App/Elrincondelaprogramacion/dist/Elrincondelaprogramacion) en tu servidor web, pon un certificado SSL a los 2 host virtuales
 
     1. Copia y pega lo siguiente en /etc/hosts
