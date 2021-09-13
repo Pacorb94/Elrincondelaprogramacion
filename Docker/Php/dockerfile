@@ -7,4 +7,12 @@ RUN apt-get update && apt-get install -y zlib1g-dev g++ git libicu-dev zip libzi
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip
 
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
 WORKDIR /var/www/Proyecto
+
+COPY App/Elrincondelaprogramacion-API ./
+
+RUN composer install
