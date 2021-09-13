@@ -50,8 +50,8 @@ services:
     php:
         #Podemos también construir la imagen nosotros con un archivo dockerfile
         build:
-            context: .
-            dockerfile: ./Php/dockerfile
+            context: ../
+            dockerfile: Docker/Php/dockerfile
         container_name: php-container
         ports:
             - "9000:9000"
