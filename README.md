@@ -41,18 +41,16 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
        openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
        ```
 
-    3. En "JWT_PASSPHRASE" del archivo .env pon la clave del paso anterior.
- 4. Pasa el frontend a producción `ng b`
- 5. Crea un host virtual para el backend y para el frontend (la carpeta root será App/Elrincondelaprogramacion/dist/Elrincondelaprogramacion) en tu servidor web, pon un certificado SSL a los 2 host virtuales
+    3. En "JWT_PASSPHRASE" del archivo .env pon la clave del paso anterior. 
+ 4. Crea un host virtual para el backend y para el frontend (la carpeta root será App/Elrincondelaprogramacion/dist/Elrincondelaprogramacion) en tu servidor web, pon un certificado SSL a los 2 host virtuales
 
-    1. Copia y pega lo siguiente en /etc/hosts
-
-        ```
-        127.0.0.1       elrincondelaprogramacion.com
-        127.0.0.1       api.elrincondelaprogramacion.com
-        ```
+    1. En /etc/hosts pon cada dominio (frontend y backend) que apunten a 127.0.0.1.
 
     2. Reinicia tu servidor web.
+
+ 5. En App/Elrincondelaprogramacion/src/environment.prod.ts cambia la url por el dominio del backend.
+
+    1. Pasa el frontend a producción `ng b`
 
  6. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion` y 
  `https://api.elrincondelaprogramacion`
