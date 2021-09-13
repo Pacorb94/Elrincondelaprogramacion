@@ -54,8 +54,8 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 
     2. Reinicia tu servidor web.
 
- 6. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion` 
-    y `https://api.elrincondelaprogramacion`.
+ 6. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion` y 
+ `https://api.elrincondelaprogramacion`.
 
 ## Licencia
 MIT
