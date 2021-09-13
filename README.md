@@ -27,19 +27,21 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 * ### Si no usas Docker:
  1. Importa o pega App/Elrincondelaprogramacion-API/database/database.sql en un gestor de bbdd.
  2. Instala las dependencias `npm i` `composer install`.  
- 3. En App/Elrincondelaprogramacion-API/config/jwt genera una clave para que se firme el token.
+ 3. En App/Elrincondelaprogramacion-API/config/jwt
+
+    1. Genera una clave para que se firme el token
 
         openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
 
-    1. Pon la clave que pusistes en el paso anterior.
+    2. Pon la clave que pusistes en el paso anterior.
 
        ```
        openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
        ```
 
-    2. En "JWT_PASSPHRASE" del archivo .env pon la clave del paso anterior.
+    3. En "JWT_PASSPHRASE" del archivo .env pon la clave del paso anterior.
  4. Pasa el frontend a producción `ng b`.
- 5. Crea un host virtual para el backend y para el frontend (la carpeta root será App/Elrincondelaprogramacion/dist/Elrincondelaprogramacion) en tu servidor web, pon un certificado SSL a los 2 host virtuales.
+ 5. Crea un host virtual para el backend y para el frontend (la carpeta root será App/Elrincondelaprogramacion/dist/Elrincondelaprogramacion) en tu servidor web, pon un certificado SSL a los 2 host virtuales
 
     1. Copia y pega lo siguiente en /etc/hosts
 
