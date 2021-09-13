@@ -29,9 +29,11 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
  2. Instala las dependencias `npm i` `composer install`.  
  3. En App/Elrincondelaprogramacion-API/config/jwt
 
-    1. Genera una clave para que se firme el token
-
+    1. Genera una clave para que se firme el 
+    
+        ```    
         openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+        ```
 
     2. Pon la clave que pusistes en el paso anterior.
 
