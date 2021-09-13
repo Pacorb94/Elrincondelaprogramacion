@@ -40,8 +40,9 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
  5. Crea un host virtual para el backend y para el frontend (la carpeta root será App/Elrincondelaprogramacion/dist/Elrincondelaprogramacion) en tu servidor web, pon un certificado SSL a los 2 host virtuales.
 
     1. En /etc/hosts pon lo siguiente
-    
+
          127.0.0.1       elrincondelaprogramacion.com
+         
          127.0.0.1       api.elrincondelaprogramacion.com
 
     2. Reinicia tu servidor web.
