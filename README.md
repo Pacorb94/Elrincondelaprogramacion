@@ -54,5 +54,8 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
  6. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion` y 
  `https://api.elrincondelaprogramacion`
 
+## Contribución
+Si quieres contribuir en App/Elrincondelaprogramacion/src/environments/environment.ts cambia la propiedad url por tu dominio (host virtual) o ip de la API que tu quieras y pon certificado SSL en angular.json o si quieres hacer un host virtual pues ahí.
+
 ## Licencia
 MIT
