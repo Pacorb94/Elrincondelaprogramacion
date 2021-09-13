@@ -44,7 +44,7 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
     3. En "JWT_PASSPHRASE" del archivo .env pon la clave del paso anterior. 
  4. Crea un host virtual para el backend y para el frontend (la carpeta root será App/Elrincondelaprogramacion/dist/Elrincondelaprogramacion) en tu servidor web, pon un certificado SSL a los 2 host virtuales
 
-    1. En /etc/hosts pon cada dominio (frontend y backend) que apunten a 127.0.0.1.
+    1. En /etc/hosts pon el dominio del frontend y backend que apunten a 127.0.0.1.
 
     2. Reinicia tu servidor web.
 
