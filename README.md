@@ -21,7 +21,7 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
       
     1. Copia, pega y ejecuta App/Elrincondelaprogramacion-API/database/database.sql en la consola de mysql
 
- 3. En el navegador permite el contenido seguro de `https://elrincondelaprogramacion:8081` y `https://api.elrincondelaprogramacion:9081`
+ 3. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion:8081` y `https://api.elrincondelaprogramacion:9081`
 
 * Si no usas Docker:
  1. Importa App/Elrincondelaprogramacion-API/database/database.sql a un gestor de bbdd
@@ -41,7 +41,7 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
     2. En "JWT_PASSPHRASE" del archivo .env pon la clave del paso anterior
  5. Pasa el backend a producción en el archivo .env cambiar APP_ENV a prod
  6. Pasa el frontend a producción  `ng b`
- 6.1. En el navegador permite el contenido seguro de `https://elrincondelaprogramacion` y `https://api.elrincondelaprogramacion`
+    1. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion` y `https://api.elrincondelaprogramacion`
 
 ## Licencia
 MIT
