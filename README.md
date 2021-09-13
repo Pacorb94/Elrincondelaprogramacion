@@ -21,7 +21,8 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
       
     1. Copia, pega y ejecuta App/Elrincondelaprogramacion-API/database/database.sql en la consola de mysql
 
- 3. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion:8081` y `https://api.elrincondelaprogramacion:9081`
+ 3. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion:8081` 
+ y `https://api.elrincondelaprogramacion:9081`
 
 * Si no usas Docker:
  1. Importa o pega App/Elrincondelaprogramacion-API/database/database.sql en un gestor de bbdd.
@@ -41,7 +42,7 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
     1. En /etc/hosts pon lo siguiente
          127.0.0.1       elrincondelaprogramacion.com
          127.0.0.1       api.elrincondelaprogramacion.com
-         
+
     2. Reinicia tu servidor web.
 
  6. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion` y 
