@@ -14,7 +14,7 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 * Angular 12 (puedes probar tu versión a partir de la 9)
 
 ## Despliegue:
-* ### Si usas Docker Compose:
+* ### Si usas Docker:
  1. Crea los contenedores `docker-compose up -d --build`
  2. Ve al contenedor de mysql `docker-compose exec mysql mysql -uroot -p1`
         
@@ -24,6 +24,7 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
     y `https://api.elrincondelaprogramacion:9081`
 
 * ### Si no usas Docker:
+ 0. Instala un servidor web, MySQL, PHP 8 y Angular (a partir de la versión 9).
  1. Importa o pega App/Elrincondelaprogramacion-API/database/database.sql en un gestor de bbdd.
  2. Instala las dependencias `npm i` `composer install`
  3. Crea un host virtual para el backend y para el frontend (la carpeta root será App/Elrincondelaprogramacion/dist/Elrincondelaprogramacion) en tu servidor web, pon un certificado SSL a los 2 host virtuales
