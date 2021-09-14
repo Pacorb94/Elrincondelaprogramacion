@@ -1,0 +1,78 @@
+version: '3.5'
+
+#Red que compartirán todos los contenedores
+networks:
+    proyecto:
+
+services:
+
+    nginx-front:
+        image: nginx:stable-alpine
+        container_name: nginx-front-container
+        #Usamos 2 puertos (máquina host:contenedor) ya que si sólo ponemos 443 no se podrá redirigir del 80 al 443
+        ports:
+            - "8080:80"
+            - "8081:443"
+        #Lo que esté en la izquierda se renombrará a lo que esté en la derecha
+        volumes:
+            - App/Elrincondelaprogramacion/dist/Elrincondelaprogramacion:/var/www/Proyecto
+            - Nginx/virtual-hosts/elrincondelaprogramacion.com:/etc/nginx/conf.d/default.conf
+            - Nginx/domains/frontend:/etc/hosts
+            - /etc/ssl/certificates/:/etc/ssl/certs/
+        #Primero se iniciará mysql, luego php y finalmente nginx-back
+        depends_on:
+            - nginx-back
+            - php
+            - mysql
+        #Se reiniciará el contenedor a menos que se pare manualmente
+        restart: always
+        networks:
+            - proyecto
+
+    nginx-back:
+        image: nginx:stable-alpine
+        container_name: nginx-back-container
+        ports:
+            - "9080:80"
+            - "9081:443"
+        volumes:
+            - App/Elrincondelaprogramacion-API:/var/www/Proyecto
+            - Nginx/virtual-hosts/api.elrincondelaprogramacion.com:/etc/nginx/conf.d/default.conf
+            - Nginx/domains/backend:/etc/hosts
+            - /etc/ssl/certificates/:/etc/ssl/certs/
+        depends_on:
+            - php
+            - mysql
+        restart: always
+        networks:
+            - proyecto
+
+    php:
+        #Podemos también construir la imagen nosotros con un archivo dockerfile
+        build:
+            context: .
+            dockerfile: App/Elrincondelaprogramacion-API/dockerfile
+        container_name: php-container
+        ports:
+            - "9000:9000"
+        restart: always
+        networks:
+            - proyecto
+
+    mysql:
+        image: mysql:8.0
+        container_name: mysql-container
+        ports:
+            - "4306:3306"
+        volumes:
+            - database-data:/var/lib/mysql
+        restart: always
+        #Variable de entorno
+        environment:
+            MYSQL_ROOT_PASSWORD: '1'
+        networks:
+            - proyecto
+
+volumes: 
+    #Este volumen permanece aunque destruyamos el contenedor de mysql y lo volvamos a crear por lo que la base de datos no se borra
+    database-data:
