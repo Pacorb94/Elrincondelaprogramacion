@@ -9,7 +9,8 @@ services:
     nginx-front:
         image: nginx:stable-alpine
         container_name: nginx-front-container
-        #Usamos 2 puertos (máquina host:contenedor) ya que si sólo ponemos 443 no se podrá redirigir del 80 al 443
+        #Usamos 2 puertos (máquina host:contenedor) ya que si sólo ponemos 443 no 
+        #se podrá redirigir del 80 al 443
         ports:
             - "8080:80"
             - "8081:443"
