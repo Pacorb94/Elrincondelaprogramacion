@@ -9,5 +9,5 @@ RUN apt-get update && apt-get install -y zlib1g-dev g++ git libicu-dev zip libzi
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/Proyecto
 COPY App/Elrincondelaprogramacion-API/ ./
-#Por si se copiaron var y vendor los borramos e instalamos las dependencias
-RUN rm -r ./vendor && rm -r ./var && composer install
+#Por si se copió vendor lo borramos e instalamos las dependencias
+RUN rm -r ./vendor && composer install
