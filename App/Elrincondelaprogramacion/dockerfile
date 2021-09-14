@@ -1,0 +1,12 @@
+FROM node:14.17.4-alpine3.14 as build
+
+WORKDIR /Elrincondelaprogramacion
+
+COPY App/Elrincondelaprogramacion ./
+
+RUN rm -r ./node_modules && npm i && npm run build --prod
+
+
+FROM nginx:stable-alpine
+
+COPY --from=build /app/dist/Elrincondelaprogramacion /var/www/Proyecto

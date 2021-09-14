@@ -1,2 +1,4 @@
-var
-vendor
+/var
+/vendor
+.git
+.gitignore

@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y zlib1g-dev g++ git libicu-dev zip libzi
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip
 
+#Descargamos Composer y copiamos su directorio en nuestro directorio
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/Proyecto
