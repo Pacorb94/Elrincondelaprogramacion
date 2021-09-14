@@ -16,9 +16,9 @@ services:
             - "8081:443"
         #Lo que esté en la izquierda se renombrará a lo que esté en la derecha
         volumes:
-            - App/Elrincondelaprogramacion/dist/Elrincondelaprogramacion:/var/www/Proyecto
-            - Nginx/virtual-hosts/elrincondelaprogramacion.com:/etc/nginx/conf.d/default.conf
-            - Nginx/domains/frontend:/etc/hosts
+            - ./App/Elrincondelaprogramacion/dist/Elrincondelaprogramacion:/var/www/Proyecto
+            - ./Nginx/virtual-hosts/elrincondelaprogramacion.com:/etc/nginx/conf.d/default.conf
+            - ./Nginx/domains/frontend:/etc/hosts
             - /etc/ssl/certificates/:/etc/ssl/certs/
         #Primero se iniciará mysql, luego php y finalmente nginx-back
         depends_on:
@@ -37,9 +37,9 @@ services:
             - "9080:80"
             - "9081:443"
         volumes:
-            - App/Elrincondelaprogramacion-API:/var/www/Proyecto
-            - Nginx/virtual-hosts/api.elrincondelaprogramacion.com:/etc/nginx/conf.d/default.conf
-            - Nginx/domains/backend:/etc/hosts
+            - ./App/Elrincondelaprogramacion-API:/var/www/Proyecto
+            - ./Nginx/virtual-hosts/api.elrincondelaprogramacion.com:/etc/nginx/conf.d/default.conf
+            - ./Nginx/domains/backend:/etc/hosts
             - /etc/ssl/certificates/:/etc/ssl/certs/
         depends_on:
             - php
