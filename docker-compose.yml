@@ -52,7 +52,7 @@ services:
         #Podemos también construir la imagen nosotros con un archivo dockerfile
         build:
             context: .
-            dockerfile: App/Elrincondelaprogramacion-API/dockerfile
+            dockerfile: ./App/Elrincondelaprogramacion-API/dockerfile
         container_name: php-container
         ports:
             - "9000:9000"
