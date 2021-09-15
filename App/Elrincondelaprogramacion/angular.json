@@ -95,7 +95,10 @@
               "browserTarget": "Elrincondelaprogramacion:build:production"
             },
             "development": {
-              "browserTarget": "Elrincondelaprogramacion:build:development"
+              "browserTarget": "Elrincondelaprogramacion:build:development",
+              "ssl": true,
+              "sslCert": "../Nginx/certificates/localhost.crt",
+              "sslKey": "../Nginx/certificates/localhost.key"
             }
           },
           "defaultConfiguration": "development"
