@@ -17,7 +17,7 @@ server {
         if ($request_method = OPTIONS ) {
              return 200;
         }
-        #Dominio que apunta a una dirección ip de /etc/hosts de la máquina host
+        #Dominio que apunta a una dirección ip de /etc/hosts
         server_name api.elrincondelaprogramacion.com:9081;
         #La ruta inicial cargará index.php 
 	location / {

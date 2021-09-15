@@ -10,7 +10,7 @@ server {
 	ssl_certificate /etc/ssl/certs/localhost.crt;
         ssl_certificate_key /etc/ssl/certs/localhost.key;        
 	root /var/www/Proyecto;
-        #Dominio que apunta a una dirección ip de /etc/hosts de la máquina host
+        #Dominio que apunta a una dirección ip de /etc/hosts
         server_name elrincondelaprogramacion.com:8081;
         #La ruta inicial cargará index.html 
 	location / {
