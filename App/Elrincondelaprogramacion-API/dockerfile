@@ -4,5 +4,5 @@ RUN apk --no-cache update && apk --no-cache add bash && docker-php-ext-install p
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/Proyecto
 COPY App/Elrincondelaprogramacion-API/ ./
-#Por si se copió vendor lo borramos e instalamos las dependencias
-RUN rm -r ./vendor && composer install
+#Instalamos las dependencias
+RUN composer install

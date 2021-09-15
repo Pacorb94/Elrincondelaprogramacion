@@ -4,9 +4,8 @@ FROM node:14.17.4-alpine3.14 as build
 WORKDIR /Elrincondelaprogramacion
 #Copiamos al directorio anterior
 COPY App/Elrincondelaprogramacion ./
-#Por si se copiaron node_modules y dist los borramos, instalamos las dependencias y 
-#pasamos a producción
-RUN rm -r ./node_modules && rm -r ./dist && npm i && npm run build --prod
+#Instalamos las dependencias y pasamos a producción
+RUN npm i && npm run build --prod
 
 FROM nginx:stable-alpine
 #Copiamos lo anterior 
