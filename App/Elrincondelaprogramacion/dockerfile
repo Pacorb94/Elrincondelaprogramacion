@@ -6,7 +6,7 @@ WORKDIR /Elrincondelaprogramacion
 COPY App/Elrincondelaprogramacion ./
 #Por si se copiaron node_modules y dist los borramos, instalamos las dependencias y 
 #pasamos a producción
-RUN rm -r ./node_modules && rm -r -/dist && npm i && npm run build --prod
+RUN rm -r ./node_modules && rm -r ./dist && npm i && npm run build --prod
 
 FROM nginx:stable-alpine
 #Copiamos lo anterior 
