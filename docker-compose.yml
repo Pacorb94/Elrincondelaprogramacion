@@ -51,6 +51,9 @@ services:
         container_name: php
         ports:
             - "9000:9000"
+        volumes: 
+            - profile-images:/var/www/Proyecto/public/profile-images
+            - posts-images:/var/www/Proyecto/public/images-posts
         depends_on: 
             - mysql
         restart: always
@@ -72,5 +75,8 @@ services:
             - proyecto
 
 volumes: 
-    #Este volumen permanece aunque destruyamos el contenedor de mysql y lo volvamos a crear por lo que la base de datos no se borra
+    #Este volumen permanece aunque destruyamos el contenedor de mysql y lo volvamos a crear por 
+    #lo que la base de datos no se borra
     database-data:
+    profile-images:
+    posts-images:
