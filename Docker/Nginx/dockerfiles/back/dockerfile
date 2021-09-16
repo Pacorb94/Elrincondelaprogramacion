@@ -1,0 +1,28 @@
+#Ponemos un alias para hacer referencia a este stage
+FROM php:8.0-fpm-alpine as build
+#Actualizamos los paquetes de apk, instalamos bash y las extensiones de PHP
+RUN apk --no-cache update && apk --no-cache add bash && docker-php-ext-install pdo pdo_mysql
+#Descargamos Composer y copiamos su directorio en el mismo directorio del contenedor
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+#Creamos un directorio y nos movemos a él
+WORKDIR /Elrincondelaprogramacion-API
+#Copiamos el backend al directorio del contenedor
+COPY App/Elrincondelaprogramacion-API/ ./
+#Instalamos las dependencias
+RUN composer install
+
+FROM nginx:stable-alpine
+#Copiamos el directorio del anterior stage al directorio de este stage
+COPY --from=build /Elrincondelaprogramacion-API /var/www/Proyecto
+COPY Docker/Nginx/virtual-hosts/api.elrincondelaprogramacion.com /etc/nginx/conf.d/default.conf
+COPY Docker/Nginx/domains/backend /etc/hosts
+#Instalamos openssl para crear el certificado https
+RUN apk add --update openssl && \
+    rm -rf /var/cache/apk/*
+#Nos cambiamos de directorio
+WORKDIR /etc/ssl/certs/
+RUN openssl req -x509 -nodes -new -sha256 -days 1024 -newkey rsa:2048 -keyout RootCA.key -out RootCA.pem -subj "/C=US/CN=Example-Root-CA" && \
+    openssl x509 -outform pem -in RootCA.pem -out RootCA.crt
+COPY Docker/Nginx/virtual-hosts/domains.ext ./
+RUN openssl req -new -nodes -newkey rsa:2048 -keyout localhost.key -out localhost.csr -subj "/C=US/ST=YourState/L=YourCity/O=Example-Certificates/CN=localhost.local" && \
+    openssl x509 -req -sha256 -days 1024 -in localhost.csr -CA RootCA.pem -CAkey RootCA.key -CAcreateserial -extfile domains.ext -out localhost.crt

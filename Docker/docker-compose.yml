@@ -1,0 +1,74 @@
+version: '3.5'
+
+#Red que compartirán todos los contenedores
+networks:
+    proyecto:
+
+services:
+
+    front-deploy:
+        #Podemos también construir la imagen nosotros con un archivo dockerfile
+        build: 
+            context: ../
+            dockerfile: ./Docker/Nginx/dockerfiles/front/dockerfile
+        container_name: front
+        #Usamos 2 puertos (máquina host:contenedor) ya que si sólo ponemos 443 no 
+        #se podrá redirigir del 80 al 443
+        ports:
+            - "8080:80"
+            - "8081:443"
+        #Este contenedor depende de otro
+        depends_on:
+            - back-deploy
+        #Se reiniciará el contenedor a menos que se pare manualmente
+        restart: always
+        networks:
+            - proyecto
+
+    back-deploy:
+        build: 
+            context: ../
+            dockerfile: ./Docker/Nginx/dockerfiles/back/dockerfile
+        container_name: back
+        ports:
+            - "9080:80"
+            - "9081:443"
+        depends_on:
+            - mysql
+            - php
+        restart: always
+        networks:
+            - proyecto
+
+    php:
+        build:
+            context: .
+            dockerfile: ./Php/dockerfile
+        container_name: php
+        ports:
+            - "9000:9000"
+        depends_on: 
+            - mysql
+        restart: always
+        networks:
+            - proyecto
+
+    mysql:
+        image: mysql:8.0
+        container_name: mysql
+        ports:
+            - "4306:3306"
+        #Lo que esté en la izquierda se renombrará a lo que esté en la derecha
+        volumes:
+            - database-data:/var/lib/mysql
+        restart: always
+        #Variable de entorno
+        environment:
+            MYSQL_ROOT_PASSWORD: '1'
+        networks:
+            - proyecto
+
+volumes: 
+    #Este volumen permanece aunque destruyamos el contenedor de mysql y lo volvamos a crear por 
+    #lo que la base de datos no se borra
+    database-data:

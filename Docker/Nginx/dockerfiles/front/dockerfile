@@ -1,0 +1,24 @@
+#Ponemos un alias para hacer referencia a este stage
+FROM node:14.17.4-alpine3.14 as build
+#Creamos un directorio y nos movemos a él
+WORKDIR /Elrincondelaprogramacion
+#Copiamos el frontend al directorio del contenedor
+COPY App/Elrincondelaprogramacion ./
+#Instalamos las dependencias y pasamos a producción
+RUN npm i && npm run build --prod
+
+FROM nginx:stable-alpine
+#Copiamos el directorio del stage anterior al directorio de este stage
+COPY --from=build /Elrincondelaprogramacion/dist/Elrincondelaprogramacion /var/www/Proyecto
+COPY Docker/Nginx/virtual-hosts/elrincondelaprogramacion.com /etc/nginx/conf.d/default.conf
+COPY Docker/Nginx/domains/frontend /etc/hosts
+#Instalamos openssl para crear el certificado https
+RUN apk add --update openssl && \
+    rm -rf /var/cache/apk/*
+#Nos cambiamos de directorio
+WORKDIR /etc/ssl/certs/
+RUN openssl req -x509 -nodes -new -sha256 -days 1024 -newkey rsa:2048 -keyout RootCA.key -out RootCA.pem -subj "/C=US/CN=Example-Root-CA" && \
+    openssl x509 -outform pem -in RootCA.pem -out RootCA.crt
+COPY Docker/Nginx/virtual-hosts/domains.ext ./
+RUN openssl req -new -nodes -newkey rsa:2048 -keyout localhost.key -out localhost.csr -subj "/C=US/ST=YourState/L=YourCity/O=Example-Certificates/CN=localhost.local" && \
+    openssl x509 -req -sha256 -days 1024 -in localhost.csr -CA RootCA.pem -CAkey RootCA.key -CAcreateserial -extfile domains.ext -out localhost.crt
