@@ -34,8 +34,8 @@ services:
             - "9080:80"
             - "9081:443"
         depends_on:
-            - mysql
             - php
+            - mysql
         restart: always
         networks:
             - proyecto
