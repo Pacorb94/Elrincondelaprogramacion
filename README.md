@@ -14,7 +14,7 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 * Angular 12 (puedes probar tu versión a partir de la 9)
 
 ## Despliegue:
-Puedes iniciar sesión con la cuenta con rol de admin o create otra (sin rol admin).
+Puedes iniciar sesión con la cuenta con rol de admin (ver bbdd) o crearte otra (sin rol admin).
 * ### Si usas Docker:
  1. Ve a la carpeta Docker y crea los contenedores `docker-compose up -d --build`
  2. Ve al contenedor de mysql `docker-compose exec mysql mysql -uroot -p1`
