@@ -22,7 +22,7 @@ Puedes iniciar sesión con la cuenta con rol de admin o create otra (sin rol adm
     1. Copia, pega y ejecuta App/Elrincondelaprogramacion-API/database/database.sql en la consola de mysql
 
  3. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion:8081` 
-    y `https://api.elrincondelaprogramacion:9081`. Puede que tengas que actualizar la pantalla del frontend.
+    y `https://api.elrincondelaprogramacion:9081`. Puede que tengas que actualizar el frontend.
 
 * ### Si no usas Docker:
  0. Instala un servidor web, MySQL, PHP 8 y Angular (a partir de la versión 9).
