@@ -11,7 +11,7 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 * Nginx 1.18
 * MySQL 8
 * Symfony 5.3
-* Angular 12 (puedes probar tu versión a partir de la 9)
+* Angular 12
 
 ## Despliegue:
 Puedes iniciar sesión con la cuenta con rol de admin (ver bbdd) o crearte otra (sin rol admin).
@@ -26,7 +26,7 @@ Puedes iniciar sesión con la cuenta con rol de admin (ver bbdd) o crearte otra 
 
 * ### Si no usas Docker:
  0. Instala un servidor web, MySQL, PHP 8 y Angular (a partir de la versión 9).
- 1. Importa o pega App/Elrincondelaprogramacion-API/database/database.sql en un gestor de bbdd.
+ 1. Importa App/Elrincondelaprogramacion-API/database/database.sql en un gestor de bbdd o pégalo en la consola de MySQL.
  2. Instala las dependencias `npm i` `composer install`
  3. Crea un host virtual para el backend y para el frontend (la carpeta root será App/Elrincondelaprogramacion/dist/Elrincondelaprogramacion) en tu servidor web, pon un certificado SSL a los 2 host virtuales
 
@@ -34,12 +34,12 @@ Puedes iniciar sesión con la cuenta con rol de admin (ver bbdd) o crearte otra 
 
     2. Reinicia tu servidor web.
 
- 4. En App/Elrincondelaprogramacion/src/environment.prod.ts cambia la url por el dominio del backend.
+ 4. En App/Elrincondelaprogramacion/src/environment.prod.ts quita el puerto de la url.
 
-    1. En App/Elrincondelaprogramacion pasa a producción `ng b`
+    1. Pasa a producción `ng b`
 
  5. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion` y 
- `https://api.elrincondelaprogramacion`
+ `https://api.elrincondelaprogramacion`. Puede que tengas que actualizar el frontend.
 
 ## Licencia
 MIT
