@@ -16,8 +16,8 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 ## Despliegue:
 Puedes iniciar sesión con la cuenta con rol de admin (ver bbdd) o crearte otra (sin rol admin).
 * ### Si usas Docker:
- 1. Ve a la carpeta Docker y crea los contenedores `docker-compose up -d --build`
- 2. Ve al contenedor de mysql `docker-compose exec mysql mysql -uroot -p1`
+ 1. Ve a la carpeta Docker y crea los contenedores `sudo docker-compose up -d --build`
+ 2. Ve al contenedor de mysql `sudo docker-compose exec mysql mysql -uroot -p1`
         
     1. Copia, pega y ejecuta App/Elrincondelaprogramacion-API/database/database.sql en la consola de mysql
 
