@@ -19,7 +19,7 @@ Puedes iniciar sesión con la cuenta con rol de admin (ver bbdd) o crearte otra 
  1. Ve a la carpeta Docker y crea los contenedores `sudo docker-compose up -d --build`
  2. Ve al contenedor de mysql `sudo docker-compose exec mysql mysql -uroot -p1`
         
-    1. Copia, pega y ejecuta App/Elrincondelaprogramacion-API/database/database.sql en la consola de mysql
+    1. Copia, pega y ejecuta App/Elrincondelaprogramacion-API/database/database.sql en la consola de MySQL.
 
  3. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion:8081` 
     y `https://api.elrincondelaprogramacion:9081`. Puede que tengas que actualizar el frontend.
