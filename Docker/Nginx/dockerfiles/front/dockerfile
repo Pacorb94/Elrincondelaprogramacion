@@ -13,7 +13,6 @@ RUN apk --no-cache add bash
 #Copiamos el directorio del stage anterior al directorio de este stage
 COPY --from=build /Elrincondelaprogramacion/dist/Elrincondelaprogramacion /var/www/Proyecto
 COPY Docker/Nginx/virtual-hosts/elrincondelaprogramacion.com /etc/nginx/conf.d/default.conf
-COPY Docker/Nginx/domains/frontend /etc/hosts
 #Instalamos openssl para crear el certificado https
 RUN apk add --update openssl && \
     rm -rf /var/cache/apk/*

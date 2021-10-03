@@ -15,7 +15,6 @@ FROM nginx:stable-alpine
 #Copiamos el directorio del anterior stage al directorio de este stage
 COPY --from=build /Elrincondelaprogramacion-API /var/www/Proyecto
 COPY Docker/Nginx/virtual-hosts/api.elrincondelaprogramacion.com /etc/nginx/conf.d/default.conf
-COPY Docker/Nginx/domains/backend /etc/hosts
 #Instalamos openssl para crear el certificado https
 RUN apk add --update openssl && \
     rm -rf /var/cache/apk/*
