@@ -1,26 +1,25 @@
 #Redirección HTTP a HTTPS
 server {
        listen 80;
-       server_name api.elrincondelaprogramacion.com:9080;
-       return 301 https://api.elrincondelaprogramacion.com:9081;
+       server_name localhost:9080;
+       return 301 https://localhost:9081;
 }
 
 server {
         listen 443 ssl;
-	ssl_certificate /etc/ssl/certs/localhost.crt;
+	    ssl_certificate /etc/ssl/certs/localhost.crt;
         ssl_certificate_key /etc/ssl/certs/localhost.key;        
-	root /var/www/Proyecto/public;
-        add_header 'Access-Control-Allow-Origin' 'https://elrincondelaprogramacion.com:8081' always;
+	    root /var/www/Proyecto/public;
+        add_header 'Access-Control-Allow-Origin' 'https://localhost:8081' always;
         add_header 'Access-Control-Allow-Credentials' 'true' always;
         add_header 'Access-Control-Allow-Methods' 'GET, POST, DELETE, PUT, OPTIONS' always;
         add_header 'Access-Control-Allow-Headers' 'X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization, authorization' always;
         if ($request_method = OPTIONS ) {
              return 200;
         }
-        #Dominio que apunta a una dirección ip de /etc/hosts
-        server_name api.elrincondelaprogramacion.com:9081;
+        server_name localhost:9081;
         #La ruta inicial cargará index.php 
-	location / {
+	    location / {
             try_files $uri /index.php?$args;
         } 
         #Cuando el archivo sea index.php cargará el intérprete de PHP
