@@ -21,8 +21,8 @@ Puedes iniciar sesión con la cuenta con rol de admin (ver bbdd) o crearte otra 
         
     1. Copia, pega y ejecuta App/Elrincondelaprogramacion-API/database/database.sql en la consola de MySQL.
 
- 3. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion:8081` 
-    y `https://api.elrincondelaprogramacion:9081`. Puede que tengas que actualizar el frontend.
+ 3. En el navegador permite el contenido inseguro de `https://localhost:8081` 
+    y `https://localhost:9081`. Puede que tengas que actualizar el frontend.
 
 * ### Si no usas Docker:
  0. Instala un servidor web, MySQL, PHP 8 y Angular (a partir de la versión 9).
@@ -38,8 +38,8 @@ Puedes iniciar sesión con la cuenta con rol de admin (ver bbdd) o crearte otra 
 
     1. Pasa a producción `ng b`
 
- 5. En el navegador permite el contenido inseguro de `https://elrincondelaprogramacion` y 
- `https://api.elrincondelaprogramacion`. Puede que tengas que actualizar el frontend.
+ 5. En el navegador permite el contenido inseguro de `https://dominio-frontend` y 
+ `https://dominio-backend`. Puede que tengas que actualizar el frontend.
 
 ## Licencia
 MIT
