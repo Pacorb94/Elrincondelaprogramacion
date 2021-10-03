@@ -14,7 +14,6 @@ Puedes ver los diagramas [aquí](https://github.com/Pacorb94/ProyectoDAW/blob/ma
 * Angular 12
 
 ## Despliegue:
-Puedes iniciar sesión con la cuenta con rol de admin (ver bbdd) o crearte otra (sin rol admin).
 
  0. Si no tienes Docker con Docker Compose instálalo.
  1. Ve a la carpeta Docker y crea los contenedores `sudo docker-compose up -d --build`
@@ -24,6 +23,7 @@ Puedes iniciar sesión con la cuenta con rol de admin (ver bbdd) o crearte otra 
 
  3. En el navegador permite el contenido inseguro de `https://localhost:8081` 
     y `https://localhost:9081`. Puede que tengas que actualizar el frontend.
+ 4. Puedes iniciar sesión con la cuenta con rol de admin (ver bbdd) o crearte otra (sin rol admin).
 
 ## Licencia
 MIT
