@@ -92,13 +92,14 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Elrincondelaprogramacion:build:production"
-            },
-            "development": {
-              "browserTarget": "Elrincondelaprogramacion:build:development",
+              "browserTarget": "Elrincondelaprogramacion:build:production",
               "ssl": true,
               "sslCert": "/etc/ssl/certificates/localhost.crt",
               "sslKey": "/etc/ssl/certificates/localhost.key"
+            },
+            "development": {
+              "browserTarget": "Elrincondelaprogramacion:build:development",
+              "ssl":true
             }
           },
           "defaultConfiguration": "development"
