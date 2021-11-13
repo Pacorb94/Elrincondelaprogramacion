@@ -60,10 +60,11 @@ services:
             - "4306:3306"
         #Lo que esté en la izquierda se renombrará a lo que esté en la derecha
         volumes:
-            - database-data:/var/lib/mysql
+            - database-el_rincon_de_la_programacion:/var/lib/mysql
         restart: always
         #Variable de entorno
         environment:
+            MYSQL_DATABASE: el_rincon_de_la_programacion
             MYSQL_ROOT_PASSWORD: '1'
         networks:
             - proyecto
@@ -71,4 +72,4 @@ services:
 volumes: 
     #Este volumen permanece aunque destruyamos el contenedor de mysql y lo volvamos a crear por 
     #lo que la base de datos no se borra
-    database-data:
+    database-el_rincon_de_la_programacion:
