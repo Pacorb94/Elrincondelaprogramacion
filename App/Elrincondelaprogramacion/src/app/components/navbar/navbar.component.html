@@ -12,7 +12,7 @@
                 <a class="nav-link" routerLink="/">Inicio<span class="sr-only"></span></a>
             </li>
             <!--Lista desplegable-->
-            <li class="nav-item active dropdown">
+            <li *ngIf="categories.length>0" class="nav-item active dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Categorias
