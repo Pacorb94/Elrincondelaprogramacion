@@ -1,3 +1,8 @@
+#Dejará pasar la petición del front si coincide con la regex
+map $http_origin $allow_origin {
+    ~^http(s)?://(www\.)?[a-zA-Z]+(\.[a-zA-Z]+)?(:[0-9]+)?$ $http_origin;
+}
+
 #Redirección HTTP a HTTPS
 server {
        listen 80;
@@ -10,7 +15,7 @@ server {
 	    ssl_certificate /etc/ssl/certs/localhost.crt;
         ssl_certificate_key /etc/ssl/certs/localhost.key;        
 	    root /var/www/Proyecto/public;
-        add_header 'Access-Control-Allow-Origin' 'https://localhost:8081' always;
+        add_header 'Access-Control-Allow-Origin' $allow_origin always;
         add_header 'Access-Control-Allow-Credentials' 'true' always;
         add_header 'Access-Control-Allow-Methods' 'GET, POST, DELETE, PUT, OPTIONS' always;
         add_header 'Access-Control-Allow-Headers' 'X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization, authorization' always;
