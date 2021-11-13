@@ -19,6 +19,7 @@ class CommentController extends AbstractController
     private $em;
 
     public function __construct(EntityManagerInterface $entityManager) {
+        date_default_timezone_set('Europe/Madrid');
         $this->commentRepo=$entityManager->getRepository(Comment::class);
         $this->postRepo=$entityManager->getRepository(Post::class);
         $this->em=$entityManager;

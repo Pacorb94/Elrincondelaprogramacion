@@ -21,6 +21,7 @@ class UserController extends AbstractController
     private $em;
 
     public function __construct(EntityManagerInterface $entityManager) {
+        date_default_timezone_set('Europe/Madrid');
         $this->userRepo=$entityManager->getRepository(User::class);
         $this->em=$entityManager;
     }

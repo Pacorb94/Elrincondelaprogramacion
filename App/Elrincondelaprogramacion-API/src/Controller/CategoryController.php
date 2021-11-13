@@ -17,6 +17,7 @@ class CategoryController extends AbstractController
     private $em;
 
     public function __construct(EntityManagerInterface $entityManager) {
+        date_default_timezone_set('Europe/Madrid');
         $this->categoryRepo=$entityManager->getRepository(Category::class);
         $this->em=$entityManager;
     }

@@ -26,6 +26,7 @@ class PostController extends AbstractController
 
     public function __construct(EntityManagerInterface $entityManager, PaginatorInterface $paginator, 
     Filesystem $filesystem) {
+        date_default_timezone_set('Europe/Madrid');
         $this->postRepo=$entityManager->getRepository(Post::class);
         $this->categoryRepo=$entityManager->getRepository(Category::class);
         $this->em=$entityManager;
