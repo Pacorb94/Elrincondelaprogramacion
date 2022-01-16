@@ -9,8 +9,8 @@ services:
     front-deploy:
         #Podemos también construir la imagen nosotros con un archivo dockerfile
         build: 
-            context: ../
-            dockerfile: ./Docker/Nginx/dockerfiles/front/dockerfile
+            context: ./
+            dockerfile: Elrincondelaprogramacion/docker/nginx/dockerfile
         container_name: front
         #Usamos 2 puertos (máquina host:contenedor) ya que si sólo ponemos 443 no 
         #se podrá redirigir del 80 al 443
@@ -27,8 +27,8 @@ services:
 
     back-deploy:
         build: 
-            context: ../
-            dockerfile: ./Docker/Nginx/dockerfiles/back/dockerfile
+            context: ./
+            dockerfile: Elrincondelaprogramacion-API/docker/nginx/dockerfile
         container_name: back
         ports:
             - "9080:80"
@@ -42,8 +42,8 @@ services:
 
     php:
         build:
-            context: ../
-            dockerfile: ./Docker/Php/dockerfile
+            context: ./
+            dockerfile: Elrincondelaprogramacion-API/docker/php/dockerfile
         container_name: php
         ports:
             - "9000:9000"
