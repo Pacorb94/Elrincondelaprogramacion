@@ -30,7 +30,7 @@ final class Version20211113170305 extends AbstractMigration
                 updated_at datetime not null,
                 constraint pk_comments primary key (id),
                 constraint fk_comments_users foreign key (user_id) references users(id),
-                constraint fk_comments_posts foreign key (post_id) references posts(id)
+                constraint fk_comments_posts foreign key (post_id) references posts(id) on delete cascade
             )ENGINE=InnoDB;  
         ');
     }
