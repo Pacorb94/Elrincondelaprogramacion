@@ -15,8 +15,8 @@ services:
         #Usamos 2 puertos (máquina host:contenedor) ya que si sólo ponemos 443 no 
         #se podrá redirigir del 80 al 443
         ports:
-            - "8080:80"
-            - "8081:443"
+            - "8081:80"
+            - "8082:443"
         #Este contenedor depende de otro
         depends_on:
             - back-deploy
@@ -31,8 +31,8 @@ services:
             dockerfile: Elrincondelaprogramacion-API/nginx/dockerfile
         container_name: back
         ports:
-            - "9080:80"
-            - "9081:443"
+            - "9081:80"
+            - "9082:443"
         depends_on:
             - php
             - mysql
