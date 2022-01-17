@@ -5,7 +5,7 @@
 //TODO: cambia la propiedad url si tu backend está desplegado en otro sitio
 export const environment = {
     production: false,
-    url: "https://localhost:9081"
+    url: "https://localhost:9082"
 };
 
 /*
