@@ -1,5 +1,5 @@
 ## Descripción
-Es un blog de noticias referentes al sector de la programación.
+Aplicación la cual es un blog de noticias referentes al sector de la programación.
 
 ## Despliegue en producción:
 
